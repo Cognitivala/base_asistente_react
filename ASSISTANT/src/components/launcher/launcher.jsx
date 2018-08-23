@@ -89,9 +89,8 @@ export default class Launcher extends Component {
   }
 }
 
-// Launcher.propTypes = {
-//   logo: PropTypes.string.isRequired,
-//   titulo: PropTypes.string.isRequired,
-//   subtitulo: PropTypes.string.isRequired,
-//   closeAssistant: PropTypes.func.isRequired
-// }
+Launcher.propTypes = {
+  customParamsStates: PropTypes.any.isRequired,
+  saludoStates: PropTypes.any.isRequired,
+  launcherStates: PropTypes.any.isRequired
+}

@@ -39,7 +39,7 @@ export default class Assistant extends Component {
 
   content(assistantStates) {
     if (assistantStates.get("active")) {
-      const { customParamsStates,conversationsStates } = this.props,
+      const { customParamsStates } = this.props,
         ayuda = customParamsStates.get("customParams").get("settings").get("help");
       return (
         <div>
