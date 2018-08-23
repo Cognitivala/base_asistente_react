@@ -2,7 +2,7 @@
     "name": "boilerplate",
     "version": "0.1.0",
     "private": true,
-    "homepage": "https://josezunigadyehs.github.io/assistant_test/",
+    "homepage": "https://github.com/Cognitivala/assistant_react",
     "dependencies": {
         "axios": "^0.18.0",
         "gh-pages": "^1.2.0",

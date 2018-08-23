@@ -63,7 +63,7 @@ export default class Conversations extends Component {
           buttons = conversation.get("buttons"),
           selects = conversation.get("selects");
         if (buttons !== undefined || selects !== undefined) {
-          if(this.props.ayudaStates.get('open')) this.props.closeHelp();
+          if (this.props.ayudaStates.get("open")) this.props.closeHelp();
           this.props.disabledHelp();
         } else {
           this.props.enabledHelp();
@@ -72,7 +72,7 @@ export default class Conversations extends Component {
     }, 50);
   }
 
-  fillConversation(avatar, conversationsStates) {
+  fillConversation(avatar, conversationsStates, updateConversationButton, colorHeader) {
     return conversationsStates.get("conversations").map((map, i) => {
       const conversation = map,
         buttons = conversation.get("buttons"),
@@ -95,6 +95,7 @@ export default class Conversations extends Component {
             msgs={msg}
             animation={animation}
             send={send}
+            colorHeader={colorHeader}
           />
         );
       }
@@ -107,6 +108,8 @@ export default class Conversations extends Component {
             buttons={buttons}
             animation={animation}
             send={send}
+            updateConversationButton={updateConversationButton}
+            colorHeader={colorHeader}
           />
         );
       }
@@ -128,7 +131,8 @@ export default class Conversations extends Component {
 
   render() {
     const { conversationsStates, customParamsStates, ayudaStates } = this.props,
-      avatar = customParamsStates.getIn(["customParams", "avatar"]);
+      avatar = customParamsStates.getIn(["customParams", "avatar"]),
+      colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "";
     return (
       <section
@@ -136,7 +140,12 @@ export default class Conversations extends Component {
         data-conversation=""
         ref={this.test}
       >
-        {this.fillConversation(avatar, conversationsStates)}
+        {this.fillConversation(
+          avatar,
+          conversationsStates,
+          this.props.updateConversationButton,
+          colorHeader
+        )}
       </section>
     );
   }

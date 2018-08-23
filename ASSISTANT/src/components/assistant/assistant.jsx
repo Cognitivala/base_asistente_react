@@ -4,6 +4,7 @@ import Input from "../input/input";
 import Help from "../help/help";
 import Conversations from "../conversation/conversations";
 import IsFetching from "../modules/is-fetching";
+import Valoracion from "../valoracion/valoracion";
 
 export default class Assistant extends Component {
   constructor(props) {
@@ -19,6 +20,11 @@ export default class Assistant extends Component {
     if (ayuda) {
       return <Help {...this.props} />;
     }
+  }
+
+  valoracion(){
+    const { valoracionStates } = this.props;
+    if(valoracionStates.get('enabled')) return <Valoracion valoracionStates={valoracionStates} />
   }
 
   content(assistantStates) {
@@ -43,6 +49,7 @@ export default class Assistant extends Component {
           {this.fillHelp(ayuda)}
           <Conversations {...this.props}/>
           <Input {...this.props}/>
+          {this.valoracion()}
         </div>
       );
     } else {

@@ -6,6 +6,8 @@ import { assistantStates } from "./assistant";
 import { cidStates } from "./cid";
 import { ayudaStates } from "./ayuda";
 import { conversationsStates } from "./conversations";
+import { inputStates } from "./input";
+import { valoracionStates } from "./valoracion";
 
 export const reducers = combineReducers({
   launcherStates,
@@ -14,5 +16,7 @@ export const reducers = combineReducers({
   assistantStates,
   cidStates,
   ayudaStates,
-  conversationsStates
+  conversationsStates,
+  inputStates,
+  valoracionStates
 });

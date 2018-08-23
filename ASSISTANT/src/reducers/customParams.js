@@ -6,7 +6,7 @@ export function customParamsStates(
     error: "",
     customParams: {
       avatar: "",
-      colorBubble: "",
+      //colorBubble: "",
       colorHeader: "",
       colorBtn: "",
       estado: "",

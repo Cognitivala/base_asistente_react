@@ -11,24 +11,30 @@ export default class Input extends Component {
     this.updateMsg = this.updateMsg.bind(this);
   }
 
-  updateMsg(event){
-    this.setState({msg:event.target.value});
+  updateMsg(event) {
+    this.setState({ msg: event.target.value });
   }
 
   submitMessage(event) {
     event.preventDefault();
     const msg = this.state.msg,
-    conversation = {msg:[msg],send:"to"};
-    if(msg.length>0){
+      conversation = { msg: [msg], send: "to" };
+    if (msg.length > 0) {
       this.props.updateConversation(conversation);
-      this.setState({msg:""});
+      this.setState({ msg: "" });
     }
   }
 
   render() {
-    if(this.props.conversationsStates.get('loading')){
-      return <ConversationLoader active={true}/>;
-    }else{
+    if (this.props.conversationsStates.get("loading")) {
+      return <ConversationLoader active={true} />;
+    } else if (!this.props.inputStates.get("enabled")) {
+      return (
+        <form className="input-user-holder" noValidate="">
+          <div className="form-wrapp inactive" />
+        </form>
+      );
+    } else {
       return (
         <form className="input-user-holder" noValidate="">
           <div className="form-wrapp">

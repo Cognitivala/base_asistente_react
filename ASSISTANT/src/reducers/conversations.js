@@ -29,7 +29,6 @@ export function conversationsStates(
     case "UPDATE_HISTORY":
       return state.set("history", action.data);
     case "PUSH_CONVERSATION":
-      
       return state.withMutations(map => {
         // debugger
         const conversation = Immutable.fromJS(action.data);

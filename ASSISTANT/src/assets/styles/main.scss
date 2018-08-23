@@ -357,7 +357,7 @@ h6 {
     // font-size: 15px;
     @include border-radius(18px);
     &:hover {
-        background: $primary-hover; // background-color: lighten($primary, 3%);
+        background: $primary-hover !important; // background-color: lighten($primary, 3%);
         // box-shadow: 0 0 15px rgba(218,94,75,.7);
     }
     &.btn-rounded {
@@ -366,7 +366,7 @@ h6 {
         // height: 42px;
         &:hover {
             box-shadow: none;
-            background: transparent;
+            background: transparent !important;
         }
     }
     &.btn-big {
@@ -897,7 +897,7 @@ select {
     position: fixed;
     left: 0;
     right: 0;
-    top: 0;
+    top: 80px;
     bottom: 0;
     overflow: hidden;
     opacity: 0;
@@ -1334,7 +1334,7 @@ select {
     position: relative;
     .btn {
         color: darken( $bubble-bg, 25%);
-        background: $bubble-bg; // background: -moz-linear-gradient(top, $bubble-to 0%, darken( $bubble-to, 10%) 150%);
+        background: $bubble-bg !important; // background: -moz-linear-gradient(top, $bubble-to 0%, darken( $bubble-to, 10%) 150%);
         // background: -webkit-linear-gradient(top, $bubble-to 0%, darken( $bubble-to, 10%) 150%);
         // background: linear-gradient(to bottom, $bubble-to 0%, darken( $bubble-to, 10%) 150%);
         // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$bubble-to, endColorstr=$bubble-to,GradientType=0 );

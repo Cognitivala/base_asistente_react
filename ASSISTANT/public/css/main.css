@@ -1609,10 +1609,10 @@ h6 {
   -webkit-border-radius: 18px;
   border-radius: 18px; }
   .btn:hover {
-    background: #999; }
+    background: #999 !important; }
   .btn.btn-rounded:hover {
     box-shadow: none;
-    background: transparent; }
+    background: transparent !important; }
   .btn.btn-big {
     padding: 9px 20px 10px 20px;
     margin: 5px; }
@@ -2065,7 +2065,7 @@ select {
   position: fixed;
   left: 0;
   right: 0;
-  top: 0;
+  top: 80px;
   bottom: 0;
   overflow: hidden;
   opacity: 0;
@@ -2424,7 +2424,7 @@ select {
   position: relative; }
   .bloqued .btn {
     color: #aeaeae;
-    background: #eee; }
+    background: #eee !important; }
     .bloqued .btn:hover {
       box-shadow: 0 0 15px rgba(247, 247, 247, 0.7); }
   .bloqued:after {

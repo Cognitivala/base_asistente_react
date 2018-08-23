@@ -1,19 +1,6 @@
 import axios, { post } from "axios";
 
-//GENERALES
-export function testClick() {
-  return {
-    type: "TEST"
-  };
-}
-
 //CID
-export function getCid() {
-  return function action(dispatch) {
-    dispatch({ type: "GET_CID" });
-  };
-}
-
 export function setCid(data) {
   return function action(dispatch) {
     dispatch({ type: "SET_CID", data });
@@ -36,7 +23,7 @@ export function getCustomParams() {
       let item;
       item = {
         avatar: "https://image.ibb.co/fpuiZJ/chat.png",
-        colorBubble: "#e7e7e7",
+        //colorBubble: "#e7e7e7",
         colorHeader: "#d64b36",
         colorBtn: "#333333",
         estado: "1",
@@ -235,11 +222,13 @@ export function closeHelp() {
 export function enabledHelp() {
   return function action(dispatch) {
     dispatch({ type: "ENABLED_HELP" });
+    dispatch({ type: "ENABLED_INPUT" });
   };
 }
 export function disabledHelp() {
   return function action(dispatch) {
     dispatch({ type: "DISABLED_HELP" });
+    dispatch({ type: "DISABLED_INPUT" });
   };
 }
 export function showWarningHelp() {
@@ -257,6 +246,7 @@ export function hideWarningHelp() {
 export function updateConversation(data) {
   return function action(dispatch) {
     dispatch({ type: "PUSH_CONVERSATION", data });
+    //Respuesta
     setTimeout(() => {
       let data = {
         cid: "",
@@ -273,374 +263,55 @@ export function updateConversation(data) {
         ]
       };
       data.send = "from";
-      dispatch({ type: "PUSH_CONVERSATION", data });
+      messageResponse(dispatch,data);
     }, 500);
   };
 }
 
-//PROYECTOS
-export function getProyectos() {
+//Verifica los tipos de cosas que puede traer el response
+function messageResponse(dispatch,data){
+  if(data.liftUp!==undefined){//Si trae para levantar modales
+    switch (data.liftUp) {
+      case "valoracion":
+        dispatch({ type:"ENABLED_VALORACION" });
+        break;
+      default:
+        break;
+    }
+  }else{
+    dispatch({ type: "PUSH_CONVERSATION", data });
+  }
+
+}
+
+//BOTONES
+export function updateConversationButton(data) {
   return function action(dispatch) {
-    dispatch(getProyectosStart());
-
     setTimeout(() => {
-      let items = [];
-      items.push({
-        id: 1,
-        title: "Cruz Blanca (Bupa)",
-        pms: ["Alejandra García"],
-        productos: [
-          "Asistente Digital Cognitivo de Derivación",
-          "Asistente Digital Cognitivo FAQ"
-        ],
-        fechas: {
-          fechaPrev: "25/06/2018",
-          fechaPlan: "25/06/2018",
-          fechaReal: "25/06/2018"
-        },
-        riesgo: [
-          "1: El Gestor de Campañas aún no lo ha revisado el cliente. Cambios o necesidad de derivaciones no consideradas, puede generar atrasos.",
-          "*Acciones de mitigación son: El equipo está haciendo un QA de la data. Pedimos el 100% de la información de prestadores, especialidades, planes, para lograr tener más casos de derivación. Generaremos reunión de revisión con cliente, previo a la fecha de entrega, para trabajar estos casos durante la semana del 22. ",
-          "2: La integración del motor de derivación con los sistemas internos de Cruz Blanca, Genesys y CBCLIC no está hecha. Es atraso del cliente, pero éste puede considerar no pagar el 100% de la factura. ",
-          "*Acciones de Mitigación: Entrega de todos los Web services con la documentación al detalle para que su integración sea efectiva en cualquiero momento. riesgos: terminar gestor de campañas (cognitiva), por el lado del cliente por integrar nuestra solución a sus sistemas."
-        ],
-
-        comments: [
-          "*14 de junio: Reunión de entrega NO formal, del Gestor de Cobranza con el Cliente.",
-          "*18 de Junio: Entrega del Sprint Review completo del hito 2, donde estará Andrés Coglan. Esta reunión es para asegurar que cualquier, detalle, duda o falla que se presente, sea remediada durante la semana, para llegar a la reunión del 22 de junio: -Entrega Oficial- Sin fallas Reunión exitosa",
-          "*22 reunión de entrega a directorio martes 12 PM 4 personas QA ",
-          "Comenzó hito 3 el 19 de junio"
-        ],
-        estado: "curso"
-      });
-      items.push({
-        id: 2,
-        title: "Scotiabank",
-        pms: ["Claudio Oyarzún"],
-        productos: ["Asistente Digital"],
-        fechas: {
-          fechaPrev: "25/06/2018",
-          fechaPlan: "25/06/2018",
-          fechaReal: "25/06/2018"
-        },
-        riesgo: [
-          "No pueden desplegar en sus ambientes, debemos hacer un levantamiento y asesoría para ver cómo resolverlo. "
-        ],
-        comments: [
-          "*14 de junio: Reunión de entrega NO formal, del Gestor de Cobranza con el Cliente."
-        ],
-        estado: "riesgo"
-      });
-      items.push({
-        id: 3,
-        title: "Provida",
-        pms: ["Alejandra García", "Alfonso Quijano"],
-        productos: [
-          "Asistente Digital Cognitivo de Derivación",
-          "Asistente Digital Cognitivo FAQ"
-        ],
-        fechas: {
-          fechaPrev: "25/06/2018",
-          fechaPlan: "25/06/2018",
-          fechaReal: "25/06/2018"
-        },
-        riesgo: [
-          "No pueden desplegar en sus ambientes, debemos hacer un levantamiento y asesoría para ver cómo resolverlo. "
-        ],
-        comments: [
-          "*14 de junio: Reunión de entrega NO formal, del Gestor de Cobranza con el Cliente."
-        ],
-        estado: "atrasado"
-      });
-
-      dispatch(getProyectosEnd(items));
-    }, 500);
-  };
-}
-
-function getProyectosStart() {
-  return {
-    type: "GET_PROYECTOS_START"
-  };
-}
-
-function getProyectosEnd(data) {
-  return {
-    type: "GET_PROYECTOS_END",
-    data
-  };
-}
-
-function getProyectosError(error) {
-  return {
-    type: "GET_PROYECTOS_ERROR",
-    error
-  };
-}
-
-//PROYECTO
-export function getProyecto(id) {
-  return function action(dispatch) {
-    dispatch(getProyectoStart());
-
-    setTimeout(() => {
-      let item = null;
-      item = {
-        id: 1,
-        title: "Cruz Blanca (Bupa)",
-        pms: ["Alejandra García"],
-        productos: [
-          "Asistente Digital Cognitivo de Derivación",
-          "Asistente Digital Cognitivo FAQ"
-        ],
-        fechas: {
-          fechaPrev: "25/06/2018",
-          fechaPlan: "25/06/2018",
-          fechaReal: "25/06/2018"
-        },
-        riesgo: [
-          "1: El Gestor de Campañas aún no lo ha revisado el cliente. Cambios o necesidad de derivaciones no consideradas, puede generar atrasos.",
-          "*Acciones de mitigación son: El equipo está haciendo un QA de la data. Pedimos el 100% de la información de prestadores, especialidades, planes, para lograr tener más casos de derivación. Generaremos reunión de revisión con cliente, previo a la fecha de entrega, para trabajar estos casos durante la semana del 22. ",
-          "2: La integración del motor de derivación con los sistemas internos de Cruz Blanca, Genesys y CBCLIC no está hecha. Es atraso del cliente, pero éste puede considerar no pagar el 100% de la factura. ",
-          "*Acciones de Mitigación: Entrega de todos los Web services con la documentación al detalle para que su integración sea efectiva en cualquiero momento. riesgos: terminar gestor de campañas (cognitiva), por el lado del cliente por integrar nuestra solución a sus sistemas."
-        ],
-
-        comments: [
-          "*14 de junio: Reunión de entrega NO formal, del Gestor de Cobranza con el Cliente.",
-          "*18 de Junio: Entrega del Sprint Review completo del hito 2, donde estará Andrés Coglan. Esta reunión es para asegurar que cualquier, detalle, duda o falla que se presente, sea remediada durante la semana, para llegar a la reunión del 22 de junio: -Entrega Oficial- Sin fallas Reunión exitosa",
-          "*22 reunión de entrega a directorio martes 12 PM 4 personas QA ",
-          "Comenzó hito 3 el 19 de junio"
-        ],
-        estado: "riesgo"
+      let data = {
+        cid: "",
+        liftUp: "valoracion", 
+        intent: "remanente", 
+        nodo_id: "node_3_1520961671401"
       };
-
-      dispatch(getProyectoEnd(item));
-    }, 600);
+      data.send = "from";
+      messageResponse(dispatch,data);
+    }, 500);
   };
 }
 
-function getProyectoStart() {
-  return {
-    type: "GET_PROYECTO_START"
-  };
-}
-
-function getProyectoEnd(data) {
-  return {
-    type: "GET_PROYECTO_END",
-    data
-  };
-}
-
-function getProyectoError(error) {
-  return {
-    type: "GET_PROYECTO_ERROR",
-    error
-  };
-}
-
-//HITOS
-export function getHitos(id) {
+//INPUT
+export function enabledInput() {
   return function action(dispatch) {
-    dispatch(getHitosStart());
-
-    setTimeout(() => {
-      let hitos = null;
-
-      hitos = [
-        {
-          id: 1,
-          numero: "1",
-          valor: "6K",
-          estado: "cerrado",
-          riesgo: {
-            descripcion: "Esta es una descripción de un riesgo",
-            mitigacion: "Esta es una descripción de una mitigación",
-            probabilidad: "Baja",
-            impacto: "Alta",
-            problema: {
-              descripcion: "Esta es una descripción de un riesgo",
-              mitigacion: "Esta es una descripción de una mitigación",
-              impacto: "Alta"
-            }
-          },
-          entregables: [
-            {
-              title: "Lorem ipsum, dolor sit amet consectetur.",
-              estado: "cerrado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "2232651K"
-            },
-            {
-              title: "Adipisicing elit. Voluptate.",
-              estado: "cerrado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "2K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "cerrado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "2K"
-            }
-          ]
-        },
-        {
-          id: 2,
-          numero: "2",
-          valor: "10K",
-          estado: "curso",
-          riesgo: {
-            descripcion: "Esta es una descripción de un riesgo",
-            mitigacion: "Esta es una descripción de una mitigación",
-            probabilidad: "Baja",
-            impacto: "Alta",
-            problema: {
-              descripcion: "Esta es una descripción de un riesgo",
-              mitigacion: "Esta es una descripción de una mitigación",
-              impacto: "Alta"
-            }
-          },
-          entregables: [
-            {
-              title: "Lorem ipsum, dolor sit amet consectetur.",
-              estado: "cerrado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "3.5K"
-            },
-            {
-              title: "Adipisicing elit. Voluptate.",
-              estado: "curso",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "3K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "curso",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "3.5K"
-            }
-          ]
-        },
-        {
-          id: 3,
-          numero: "3",
-          valor: "9K",
-          estado: "riesgo",
-          riesgo: {
-            descripcion: "",
-            mitigacion: "Esta es una descripción de una mitigación",
-            probabilidad: "Baja",
-            impacto: "Alta",
-            problema: {
-              descripcion: "Esta es una descripción de un riesgo",
-              mitigacion: "Esta es una descripción de una mitigación",
-              impacto: "Alta"
-            }
-          },
-          entregables: [
-            {
-              title: "Lorem ipsum, dolor sit amet consectetur.",
-              estado: "curso",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "1K"
-            },
-            {
-              title: "Adipisicing elit. Voluptate.",
-              estado: "riesgo",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "2K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "riesgo",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "6K"
-            }
-          ]
-        },
-        {
-          id: 4,
-          numero: "4",
-          valor: "12K",
-          estado: "atrasado",
-          riesgo: {
-            descripcion: "Esta es una descripción de un riesgo",
-            mitigacion: "Esta es una descripción de una mitigación",
-            probabilidad: "Baja",
-            impacto: "Alta",
-            problema: {
-              descripcion: "Esta es una descripción de un riesgo",
-              mitigacion: "Esta es una descripción de una mitigación",
-              impacto: "Alta"
-            }
-          },
-          entregables: [
-            {
-              title: "Lorem ipsum, dolor sit amet consectetur.",
-              estado: "atrasado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "4K"
-            },
-            {
-              title: "Adipisicing elit. Voluptate.",
-              estado: "atrasado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "4K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "atrasado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "4K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "atrasado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "4K"
-            }
-          ]
-        }
-      ];
-
-      dispatch(getHitosEnd(hitos));
-    }, 600);
+    dispatch({ type: "ENABLED_INPUT" });
+  };
+}
+export function disabledInput() {
+  return function action(dispatch) {
+    dispatch({ type: "DISABLED_INPUT" });
   };
 }
 
-function getHitosStart() {
-  return {
-    type: "GET_HITOS_START"
-  };
-}
-
-function getHitosEnd(data) {
-  return {
-    type: "GET_HITOS_END",
-    data
-  };
-}
-
-function getHitosError(error) {
-  return {
-    type: "GET_HITOS_ERROR",
-    error
-  };
-}
 
 // //LOGIN
 // export function recoverPassChange(username, password){
