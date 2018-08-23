@@ -2687,7 +2687,8 @@ table {
     height: calc(50vh - 65px); }
   .assitant-helper .bloqueo {
     opacity: 0;
-    transition: opacity .35s ease-in-out; }
+    transition: opacity .35s ease-in-out;
+    height: 0; }
     .assitant-helper .bloqueo.help-bloqued {
       opacity: 1;
       background-color: #5f5f5f;

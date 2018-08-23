@@ -1666,6 +1666,7 @@ table {
     .bloqueo {
         opacity: 0;
         transition: opacity .35s ease-in-out;
+        height: 0;
         &.help-bloqued {
             opacity: 1;
             background-color: #5f5f5f;
