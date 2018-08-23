@@ -61,14 +61,13 @@ export class Router extends Component {
         </BrowserRouter>
       );
     }else{
-      return <div></div>;
+      return null;
     }
   }
   render() {
-    const {customParamsStates} = this.props,
-      content = this.getContent(customParamsStates);
+    const {customParamsStates} = this.props;
 
-    return <div> {content} </div>;
+    return this.getContent(customParamsStates);
   }
 }
 

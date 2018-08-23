@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import IsFetching from "../modules/is-fetching";
 import Notification from "./notification";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
 export default class Launcher extends Component {
   constructor(props) {
@@ -13,20 +13,36 @@ export default class Launcher extends Component {
     this.props.getSaludo();
   }
 
-  closeLauncher(){
+  closeLauncher() {
     this.props.closeLauncher();
+    window.top.postMessage(
+      {
+        test: [
+          {
+            msg: "assistant"
+          }
+        ]
+      },
+      "*"
+    );
     this.props.openAssistant();
-    if(!this.props.saludoStates.get('send')){//Si no se ha enviado el saludo
+    if (!this.props.saludoStates.get("send")) {
+      //Si no se ha enviado el saludo
       setTimeout(() => {
-        this.props.sendSaludo(this.props.saludoStates.get('saludo').toJS());
+        this.props.sendSaludo(this.props.saludoStates.get("saludo").toJS());
       }, 500);
     }
-    if(this.props.ayudaStates.get('open')) this.props.closeHelp();
+    if (this.props.ayudaStates.get("open")) this.props.closeHelp();
   }
 
-  content(customParamsStates, saludoStates,launcherStates) {
+  notification(saludoStates, launcherStates) {
+    if (launcherStates.get("notification"))
+      return <Notification saludo={saludoStates.get("saludo").get("msg")} />;
+  }
+
+  content(customParamsStates, saludoStates, launcherStates) {
     if (
-      launcherStates.get('active') &&
+      launcherStates.get("active") &&
       customParamsStates.get("customParams").get("status") !== 0 &&
       saludoStates.get("saludo").get("msg") !== ""
     ) {
@@ -36,43 +52,24 @@ export default class Launcher extends Component {
         right: "10px",
         zIndex: 99999999
       };
-
-      if(launcherStates.get('notification')){
-        return (
-          <div style={divStyle} id="main-cognitive-assistant-container">
-            <button
-              className="launcher-button"
-              onClick={this.closeLauncher}
-              style={{
-                backgroundColor: customParamsStates
-                  .get("customParams")
-                  .get("colorBtn")
-              }}
-            >
-              <i className="fas fa-comments" />
-            </button>
-            <Notification saludo={saludoStates.get("saludo").get("msg")} />
-          </div>
-        );
-      }else{
-        return (
-          <div style={divStyle} id="main-cognitive-assistant-container">
-            <button
-              className="launcher-button"
-              onClick={this.closeLauncher}
-              style={{
-                backgroundColor: customParamsStates
-                  .get("customParams")
-                  .get("colorBtn")
-              }}
-            >
-              <i className="fas fa-comments" />
-            </button>
-          </div>
-        );
-      }
+      return (
+        <div style={divStyle} id="main-cognitive-assistant-container">
+          <button
+            className="launcher-button"
+            onClick={this.closeLauncher}
+            style={{
+              backgroundColor: customParamsStates
+                .get("customParams")
+                .get("colorBtn")
+            }}
+          >
+            <i className="fas fa-comments" />
+          </button>
+          {this.notification(saludoStates, launcherStates)}
+        </div>
+      );
     } else {
-      return <div />;
+      return null;
     }
   }
 

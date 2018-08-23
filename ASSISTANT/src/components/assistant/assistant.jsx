@@ -13,6 +13,16 @@ export default class Assistant extends Component {
   }
 
   closeAssistant() {
+    window.top.postMessage(
+      {
+        test: [
+          {
+            msg: 'notification'
+          }
+        ]
+      },
+      "*"
+    );
     this.props.closeAssistant();
   }
 
@@ -53,7 +63,7 @@ export default class Assistant extends Component {
         </div>
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 

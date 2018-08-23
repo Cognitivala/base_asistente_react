@@ -22,7 +22,6 @@ export default class Help extends Component {
       return (
         <div className={"assitant-helper"+css}>
           <HelpWarning ayudaStates={ayudaStates}/>
-          <div className="bloqueo" />
           <p className="subtittle">
             Haz <strong>clic</strong> en los siguientes tópicos para{" "}
             <strong>obtener ayuda</strong> de cómo utilizar la asistencia online
