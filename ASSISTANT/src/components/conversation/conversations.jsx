@@ -57,73 +57,94 @@ export default class Conversations extends Component {
 
   toggleEnabledHelp() {
     setTimeout(() => {
-      const algo = this.props.conversationsStates.get("conversations");
+      
+      const algo = this.props.conversationsStates.get("conversations"),
+        ayudaStates = this.props.ayudaStates;
       if (algo.size > 0) {
         const conversation = algo.get(-1),
           buttons = conversation.get("buttons"),
-          selects = conversation.get("selects");
-        if (buttons !== undefined || selects !== undefined) {
-          if (this.props.ayudaStates.get("open")) this.props.closeHelp();
-          this.props.disabledHelp();
+          selects = conversation.get("selects"),
+          modal = conversation.get("modal"),
+          largo =
+            document.getElementsByClassName("conversation-bubble").length - 1,
+          lastButton = document.getElementsByClassName("conversation-bubble")[
+            largo
+          ],
+          bloqued = lastButton.classList.contains("bloqued");
+        if (
+          (buttons !== undefined && !bloqued) ||
+          (selects !== undefined && !bloqued) ||
+          modal !== undefined
+        ) {
+          if (ayudaStates.get("open")) this.props.closeHelp();
+          if (ayudaStates.get("enabled")) this.props.disabledHelp();
         } else {
-          this.props.enabledHelp();
+          if (!ayudaStates.get("enabled")) this.props.enabledHelp();
         }
       }
     }, 50);
   }
 
-  fillConversation(avatar, conversationsStates, updateConversationButton, colorHeader) {
+  fillConversation(
+    avatar,
+    conversationsStates,
+    updateConversationButton,
+    colorHeader,
+    generalStates
+  ) {
     return conversationsStates.get("conversations").map((map, i) => {
       const conversation = map,
-        buttons = conversation.get("buttons"),
-        selects = conversation.get("selects"),
-        msg = conversation.get("msg"),
-        send = conversation.get("send"),
-        sizeMap = conversationsStates.get("conversations").size;
+        enabled = conversation.get("enabled"); // Si se pinta o nó
+      let retorno = [];
+      if (enabled) {
+        const buttons = conversation.get("buttons"),
+          selects = conversation.get("selects"),
+          msg = conversation.get("msg"),
+          send = conversation.get("send"),
+          sizeMap = conversationsStates.get("conversations").size;
+        let animation =
+          i + 1 === sizeMap ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
-      //Si es la última conversa
-      let animation =
-          i + 1 === sizeMap ? "animated-av fadeInUp-av " : "bloqued ",
-        retorno = [];
+        if (msg !== undefined) {
+          //Si tiene mensaje
+          retorno.push(
+            <ConversationMsg
+              key={i}
+              avatar={avatar}
+              msgs={msg}
+              animation={animation}
+              send={send}
+              colorHeader={colorHeader}
+            />
+          );
+        }
 
-      if (msg !== undefined) {
-        //Si tiene mensaje
-        retorno.push(
-          <ConversationMsg
-            key={i}
-            avatar={avatar}
-            msgs={msg}
-            animation={animation}
-            send={send}
-            colorHeader={colorHeader}
-          />
-        );
-      }
+        if (buttons !== undefined) {
+          //Si tiene botones
+          retorno.push(
+            <ConversationButtons
+              key={i * 10}
+              buttons={buttons}
+              animation={animation}
+              send={send}
+              updateConversationButton={updateConversationButton}
+              colorHeader={colorHeader}
+              generalStates={generalStates}
+            />
+          );
+        }
 
-      if (buttons !== undefined) {
-        //Si tiene botones
-        retorno.push(
-          <ConversationButtons
-            key={i * 10}
-            buttons={buttons}
-            animation={animation}
-            send={send}
-            updateConversationButton={updateConversationButton}
-            colorHeader={colorHeader}
-          />
-        );
-      }
-
-      if (selects !== undefined) {
-        //si tiene selects
-        retorno.push(
-          <ConversationSelects
-            key={i * 20}
-            selects={selects}
-            animation={animation}
-            send={send}
-          />
-        );
+        if (selects !== undefined) {
+          //si tiene selects
+          retorno.push(
+            <ConversationSelects
+              key={i * 20}
+              selects={selects}
+              animation={animation}
+              send={send}
+            />
+          );
+        }
       }
       return retorno;
     });
@@ -144,7 +165,8 @@ export default class Conversations extends Component {
           avatar,
           conversationsStates,
           this.props.updateConversationButton,
-          colorHeader
+          colorHeader,
+          this.props.generalStates
         )}
       </section>
     );

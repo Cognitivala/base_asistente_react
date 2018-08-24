@@ -6,14 +6,12 @@ export function setCid(data) {
     dispatch({ type: "SET_CID", data });
   };
 }
-
 //LAUNCHER
 export function closeLauncher() {
   return function action(dispatch) {
     dispatch({ type: "CLOSE_LAUNCHER" });
   };
 }
-
 //CUSTOM PARAMS
 export function getCustomParams() {
   return function action(dispatch) {
@@ -46,26 +44,22 @@ export function getCustomParams() {
     }, 500);
   };
 }
-
 function getCustomParamsStart() {
   return {
     type: "GET_CUSTOM_PARAMS_START"
   };
 }
-
 function getCustomParamsEnd(data) {
   return {
     type: "GET_CUSTOM_PARAMS_END",
     data
   };
 }
-
 export function setCustomParams(data) {
   return function action(dispatch) {
     dispatch({ type: "SET_CUSTOM_PARAMS", data });
   };
 }
-
 //SALUDO
 export function getSaludo() {
   return function action(dispatch) {
@@ -80,48 +74,41 @@ export function getSaludo() {
     }, 500);
   };
 }
-
 export function sendSaludo(data) {
   return function action(dispatch) {
     dispatch({ type: "PUSH_CONVERSATION", data });
     dispatch({ type: "SEND_SALUDO" }); //No lo envía de nuevo
   };
 }
-
 function getSaludoStart() {
   return {
     type: "GET_SALUDO_START"
   };
 }
-
 function getSaludoEnd(data) {
   return {
     type: "GET_SALUDO_END",
     data
   };
 }
-
 function getSaludoError(error) {
   return {
     type: "GET_SALUDO_ERROR",
     error
   };
 }
-
 //ASSISTANT
 export function openAssistant(data) {
   return function action(dispatch) {
     dispatch({ type: "OPEN_ASSISTANT" });
   };
 }
-
 export function closeAssistant() {
   return function action(dispatch) {
     dispatch({ type: "CLOSE_ASSISTANT" });
     dispatch({ type: "OPEN_LAUNCHER" });
   };
 }
-
 //AYUDA
 export function getAyuda() {
   return function action(dispatch) {
@@ -188,27 +175,23 @@ export function getAyuda() {
     }, 500);
   };
 }
-
 function getAyudaStart() {
   return {
     type: "GET_AYUDA_START"
   };
 }
-
 function getAyudaEnd(data) {
   return {
     type: "GET_AYUDA_END",
     data
   };
 }
-
 function getAyudaError(error) {
   return {
     type: "GET_AYUDA_ERROR",
     error
   };
 }
-
 export function openHelp() {
   return function action(dispatch) {
     dispatch({ type: "OPEN_HELP" });
@@ -238,10 +221,9 @@ export function showWarningHelp() {
 }
 export function hideWarningHelp() {
   return function action(dispatch) {
-      dispatch({ type: "SHOW_WARNING_HELP_END" });
+    dispatch({ type: "SHOW_WARNING_HELP_END" });
   };
 }
-
 //CONVERSATION
 export function updateConversation(data) {
   return function action(dispatch) {
@@ -249,57 +231,97 @@ export function updateConversation(data) {
     //Respuesta
     setTimeout(() => {
       let data = {
-        cid: "",
-        msg: ["Soy una respuesta"],
+        general: {
+          cid: null,
+          origen: "Desktop",
+          nodo_id: null,
+          intent: null,
+          auth: null,
+          token: null,
+          location: null
+        },
+        msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
         buttons: [
           {
-            title: "boton #1",
-            value: 0
+            title: "SI",
+            value: "siValorar"
           },
           {
-            title: "boton #2",
-            value: 1
+            title: "NO",
+            value: "noValorar"
           }
         ]
       };
       data.send = "from";
-      messageResponse(dispatch,data);
+      data.enabled = true;
+
+      messageResponse(dispatch, data);
     }, 500);
   };
 }
-
-//Verifica los tipos de cosas que puede traer el response
-function messageResponse(dispatch,data){
-  if(data.liftUp!==undefined){//Si trae para levantar modales
+//Verifica los tipos de datos que puede traer el response
+function messageResponse(dispatch, data) {
+  if (data.liftUp !== undefined) {
+    //Si trae para levantar modales
     switch (data.liftUp) {
       case "valoracion":
-        dispatch({ type:"ENABLED_VALORACION" });
+        dispatch({ type: "ENABLED_VALORACION" });
+        data.modal = true;
+        dispatch({ type: "PUSH_CONVERSATION", data });
         break;
       default:
         break;
     }
-  }else{
+  } else {
     dispatch({ type: "PUSH_CONVERSATION", data });
   }
-
 }
-
 //BOTONES
 export function updateConversationButton(data) {
-  return function action(dispatch) {
-    setTimeout(() => {
-      let data = {
-        cid: "",
-        liftUp: "valoracion", 
-        intent: "remanente", 
-        nodo_id: "node_3_1520961671401"
-      };
-      data.send = "from";
-      messageResponse(dispatch,data);
-    }, 500);
-  };
+  if (data.msg[0] === "siValorar") {
+    return function action(dispatch) {
+      dispatch({ type: "PUSH_CONVERSATION", data });
+      setTimeout( () => {
+        let data = {
+          general: {
+            cid: null,
+            origen: "Desktop",
+            nodo_id: "node_3_1520961671401",
+            intent: "remanente",
+            auth: null,
+            token: null,
+            location: null
+          },
+          send: "from",
+          enabled: false,
+          liftUp: "valoracion"
+        };
+        messageResponse(dispatch, data);
+      }, 500);
+    };
+  } else {
+    return function action(dispatch) {
+      dispatch({ type: "PUSH_CONVERSATION", data });
+      setTimeout(() => {
+        let data = {
+          general: {
+            cid: null,
+            origen: "Desktop",
+            nodo_id: null,
+            intent: null,
+            auth: null,
+            token: null,
+            location: null
+          },
+          msg: ["Puedes preguntarme otra cosa..."],
+          send: "from",
+          enabled: true
+        };
+        messageResponse(dispatch, data);
+      }, 500);
+    };
+  }
 }
-
 //INPUT
 export function enabledInput() {
   return function action(dispatch) {
@@ -311,8 +333,83 @@ export function disabledInput() {
     dispatch({ type: "DISABLED_INPUT" });
   };
 }
+//VALORACIÓN
+export function setStar(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_STARS_VALORACION", data });
+    dispatch({ type: "SET_BUTTON_VALORACION", data: true });
+  };
+}
+export function setCommentValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_COMMENT_VALORACION", data });
+  };
+}
+export function setPudoResolverValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_PUDO_RESOLVER_VALORACION", data });
+  };
+}
+export function setErrorValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_ERROR_VALORACION", data });
+    setTimeout(() => {
+      dispatch({ type: "SET_ERROR_VALORACION", data: false });
+    }, 4000);
+  };
+}
+export function sendValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SEND_VALORACION_START" });
 
+    dispatch({ type: "PUSH_CONVERSATION", data });
+    setTimeout(() => {
+      //Respuesta
+      let data = {
+        general: {
+          cid: null,
+          origen: "Desktop",
+          nodo_id: null,
+          intent: null,
+          auth: null,
+          token: null,
+          location: null
+        },
+        msg: ["Soy una respuesta de la valoracion", "Pregúntame algo más..."]
+      };
+      data.send = "from";
+      data.enabled = true;
+      messageResponse(dispatch, data);
+      dispatch({ type: "SEND_VALORACION_END" });
+    }, 1000);
+  };
+}
+export function closeValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "DISABLED_VALORACION" });
 
+    dispatch({ type: "PUSH_CONVERSATION", data });
+    //Respuesta
+    setTimeout(() => {
+      let data = {
+        general: {
+          cid: null,
+          origen: "Desktop",
+          nodo_id: null,
+          intent: null,
+          auth: null,
+          token: null,
+          location: null
+        },
+        msg: ["Se ha cerrado la valoración"]
+      };
+      data.send = "from";
+      data.enabled = true;
+      messageResponse(dispatch, data);
+    }, 500);
+    //updateConversation(data);
+  };
+}
 // //LOGIN
 // export function recoverPassChange(username, password){
 //   return function action(dispatch){

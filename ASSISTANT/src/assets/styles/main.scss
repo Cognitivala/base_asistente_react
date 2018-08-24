@@ -657,7 +657,7 @@ select {
         background: rgba(0, 0, 0, .6);
         @include border-radius(0);
     }
-    &.active{
+    &.active {
         height: calc(50vh - 65px);
         top: calc(50vh - 65px);
     }
@@ -675,7 +675,7 @@ select {
             border-radius: 15px 15px 0 15px;
             margin-right: 60px;
         }
-        img{
+        img {
             left: initial;
             right: 0;
         }
@@ -878,7 +878,7 @@ select {
         height: 8px;
         border-radius: 50%;
         margin-right: 3px;
-        background: $primary;
+        background-color: black;
         animation: wave 1s linear infinite;
         &:nth-child(2) {
             animation-delay: -0.8s;
@@ -1001,12 +1001,19 @@ select {
                 background: $bubble-to;
                 margin: 0 -32px 16px -32px;
                 padding: 16px 32px;
-                display: none;
+                height: auto;
+                opacity: 1;
+                transition: opacity 300ms ease-in-out;
                 fieldset {
                     legend {
                         line-height: 1rem;
                         text-align: center;
                     }
+                }
+                &.inactive {
+                    height: 0px;
+                    opacity: 0;
+                    padding: 0;
                 }
             }
             fieldset {
@@ -1920,6 +1927,9 @@ table {
 
 .iframe-cognitive-assistant-container-header {
     padding: 16px; // background: red;
+    box-shadow: 3px 2px 10px rgba(0,0,0,.3);
+    position: relative;
+    z-index: 10;
     // background: -moz-linear-gradient(45deg, red 0%, #8a2b1c 150%);
     // background: -webkit-linear-gradient(45deg, red 0%, #8a2b1c 150%);
     // background: linear-gradient(-135deg, red 0%, #8a2b1c 150%);

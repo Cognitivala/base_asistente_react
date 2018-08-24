@@ -16,7 +16,7 @@ export default class Help extends Component {
     }
   }
 
-  content(ayudaStates) {
+  content(ayudaStates,generalStates) {
     if (ayudaStates.getIn(["ayuda", 0]).get("title") !== "") {
       let css = ayudaStates.get('open')?" active":"";
       return (
@@ -27,7 +27,7 @@ export default class Help extends Component {
             <strong>obtener ayuda</strong> de cómo utilizar la asistencia online
           </p>
           {ayudaStates.get("ayuda").map((map, i) => {
-            return <HelpBox ayuda={map} key={i} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp}/>;
+            return <HelpBox ayuda={map} key={i} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp} generalStates={this.props.generalStates}/>;
           })}
         </div>
       );
@@ -37,14 +37,14 @@ export default class Help extends Component {
   }
 
   render() {
-    const { ayudaStates } = this.props;
+    const { ayudaStates, generalStates } = this.props;
 
     return (
       <IsFetching
         isFetching={ayudaStates.get("isFetching")}
         showChildren={true}
       >
-        {this.content(ayudaStates)}
+        {this.content(ayudaStates,generalStates)}
       </IsFetching>
     );
   }

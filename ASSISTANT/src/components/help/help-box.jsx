@@ -31,7 +31,7 @@ export default class HelpBox extends Component {
         <div className="nodo-abuelo">
           <p>{ayuda.get("description")}</p>
           {ayuda.get("listChild").map((map, i) => {
-            return <HelpBoxChild ayuda={map} key={i} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp}/>;
+            return <HelpBoxChild ayuda={map} key={i} generalStates={this.props.generalStates} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp}/>;
           })}
         </div>
       );
@@ -59,5 +59,6 @@ export default class HelpBox extends Component {
 HelpBox.propTypes = {
   ayuda: PropTypes.object.isRequired,
   updateConversation: PropTypes.func.isRequired,
-  closeHelp: PropTypes.func.isRequired
+  closeHelp: PropTypes.func.isRequired,
+  generalStates: PropTypes.any.isRequired
 };

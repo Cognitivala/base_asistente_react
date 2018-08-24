@@ -4,14 +4,25 @@ export function conversationsStates(
   state = Immutable.fromJS({
     isFetching: false,
     error: "",
-    cid: null,
     conversations: [
       // {
-      //   msg: null, send:null
-      // } Lo quité porque lo pintaba al recorrer este array
+      //   general:{
+      //     cid: null,
+      //     origen: null,
+      //     nodo_id: null,
+      //     intent: null,
+      //     auth: null,
+      //     token: null,
+      //     location: null
+      //   },
+      //   msg:null,
+      //   buttons:null,
+      //   send:null,
+      //   enabled: false
+      // }
     ],
-    history: null,
-    loading: false
+    loading: false,
+    modal: false
   }),
   action
 ) {
@@ -30,7 +41,6 @@ export function conversationsStates(
       return state.set("history", action.data);
     case "PUSH_CONVERSATION":
       return state.withMutations(map => {
-        // debugger
         const conversation = Immutable.fromJS(action.data);
         action.data.send === 'to'? map.set('loading',true) : map.set('loading',false);
         map.update("conversations", list => list.push(conversation));

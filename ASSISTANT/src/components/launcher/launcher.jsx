@@ -29,7 +29,17 @@ export default class Launcher extends Component {
     if (!this.props.saludoStates.get("send")) {
       //Si no se ha enviado el saludo
       setTimeout(() => {
-        this.props.sendSaludo(this.props.saludoStates.get("saludo").toJS());
+        const { generalStates, saludoStates } = this.props,
+        msg = saludoStates.getIn(["saludo","msg"]),
+        send = saludoStates.getIn(["saludo","send"]),
+        general = generalStates.toJS();
+        let conversation = {
+          general,
+          msg: [msg],
+          send,
+          enabled: true
+        };
+        this.props.sendSaludo(conversation);
       }, 500);
     }
     if (this.props.ayudaStates.get("open")) this.props.closeHelp();

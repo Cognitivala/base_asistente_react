@@ -8,8 +8,10 @@ import { ayudaStates } from "./ayuda";
 import { conversationsStates } from "./conversations";
 import { inputStates } from "./input";
 import { valoracionStates } from "./valoracion";
+import { generalStates } from "./general";
 
 export const reducers = combineReducers({
+  generalStates,
   launcherStates,
   customParamsStates,
   saludoStates,

@@ -17,17 +17,30 @@ export default class Input extends Component {
 
   submitMessage(event) {
     event.preventDefault();
-    const msg = this.state.msg,
-      conversation = { msg: [msg], send: "to" };
-    if (msg.length > 0) {
-      this.props.updateConversation(conversation);
-      this.setState({ msg: "" });
-    }
+    const { generalStates } = this.props,
+      general = generalStates.toJS(),
+      msg = this.state.msg,
+      conversation = {
+        general,
+        msg: [msg],
+        send: "to",
+        enabled: true
+      };
+    this.props.updateConversation(conversation);
+    this.setState({ msg: "" });
   }
 
   render() {
     if (this.props.conversationsStates.get("loading")) {
-      return <ConversationLoader active={true} />;
+      return (
+        <ConversationLoader
+          active={true}
+          backgroundColor={this.props.customParamsStates.getIn([
+            "customParams",
+            "colorHeader"
+          ])}
+        />
+      );
     } else if (!this.props.inputStates.get("enabled")) {
       return (
         <form className="input-user-holder" noValidate="">

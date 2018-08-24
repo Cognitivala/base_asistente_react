@@ -17,7 +17,7 @@ export default class Assistant extends Component {
       {
         test: [
           {
-            msg: 'notification'
+            msg: "notification"
           }
         ]
       },
@@ -32,15 +32,39 @@ export default class Assistant extends Component {
     }
   }
 
-  valoracion(){
-    const { valoracionStates } = this.props;
-    if(valoracionStates.get('enabled')) return <Valoracion valoracionStates={valoracionStates} />
+  valoracion() {
+    const {
+      valoracionStates,
+      setStar,
+      setPudoResolverValoracion,
+      sendValoracion,
+      setCommentValoracion,
+      generalStates,
+      setErrorValoracion,
+      closeValoracion
+    } = this.props;
+    if (valoracionStates.get("enabled"))
+      return (
+        <Valoracion
+          generalStates={generalStates}
+          setErrorValoracion={setErrorValoracion}
+          sendValoracion={sendValoracion}
+          valoracionStates={valoracionStates}
+          setStar={setStar}
+          setCommentValoracion={setCommentValoracion}
+          setPudoResolverValoracion={setPudoResolverValoracion}
+          closeValoracion={closeValoracion}
+        />
+      );
   }
 
   content(assistantStates) {
     if (assistantStates.get("active")) {
       const { customParamsStates } = this.props,
-        ayuda = customParamsStates.get("customParams").get("settings").get("help");
+        ayuda = customParamsStates
+          .get("customParams")
+          .get("settings")
+          .get("help");
       return (
         <div>
           <Header
@@ -49,7 +73,9 @@ export default class Assistant extends Component {
             subtitulo={customParamsStates.get("customParams").get("subtitulo")}
             closeAssistant={this.closeAssistant}
             ayuda={ayuda}
-            colorHeader={customParamsStates.get("customParams").get("colorHeader")}
+            colorHeader={customParamsStates
+              .get("customParams")
+              .get("colorHeader")}
             ayudaStates={this.props.ayudaStates}
             openHelp={this.props.openHelp}
             closeHelp={this.props.closeHelp}
@@ -57,8 +83,8 @@ export default class Assistant extends Component {
             hideWarningHelp={this.props.hideWarningHelp}
           />
           {this.fillHelp(ayuda)}
-          <Conversations {...this.props}/>
-          <Input {...this.props}/>
+          <Conversations {...this.props} />
+          <Input {...this.props} />
           {this.valoracion()}
         </div>
       );

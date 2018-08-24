@@ -10,19 +10,17 @@ export default class ConversationButtons extends Component {
   sendButtonresponse(event) {
     const $item = event.target,
       msg = $item.dataset.msg.toString();
-
     //Bloquea botones
     $item.parentElement.className += " bloqued";
-
-    //Ve si está en un formulario o modal
-    // if (
-    //   !$item.parentElement === document.getElementsByClassName("close-form")[0]
-    // ) {
-    //   $item.parentElement.remove();
-    // }
-
     //Envia mensaje
-    const conversation = { msg: [msg], send: "to" };
+    const { generalStates } = this.props,
+      general = generalStates.toJS(),
+      conversation = {
+        general,
+        msg: [msg],
+        send: "to",
+        enabled: false
+      };
     this.props.updateConversationButton(conversation);
   }
 

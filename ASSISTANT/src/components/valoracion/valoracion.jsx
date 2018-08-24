@@ -1,96 +1,18 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import IsFetching from "../modules/is-fetching";
 
 export default class Valoracion extends Component {
   constructor(props) {
     super(props);
+    this.clickStar = this.clickStar.bind(this);
+    this.setPudoResolver = this.setPudoResolver.bind(this);
+    this.setComment = this.setComment.bind(this);
+    this.valorar = this.valorar.bind(this);
+    this.closeValoracion = this.closeValoracion.bind(this);
   }
-  
+
   //// VALORACION ////
-  //   $(".ratingStars a").click(function(ev) {
-  //     ev.preventDefault();
-  //     $(".ratingStars a").removeClass("active");
-  //     $(this)
-  //       .parents("form")
-  //       .find("button")
-  //       .prop("disabled", false);
-  //     $(this).addClass("active");
-  //     getIndex = $(this).index();
-
-  //     stars = getIndex + 1;
-
-  //     if (stars <= 3) {
-  //       $("#more-than-3").slideUp(300);
-  //       $("#less-than-3").slideDown(300);
-  //     } else {
-  //       $("#more-than-3").slideDown(300);
-  //       $("#less-than-3").slideUp(300);
-  //     }
-
-  //     for(var i = 0; i <= getIndex; i++) {
-  //       $('.ratingStars a:nth-child('+i+')').addClass('active');
-  //     }
-
-  //   });
-  //   valorar(index) {
-  //     decision = $('#valoracion input[name="decision"]');
-
-  //     let porQue = $("#por-que").val(),
-  //       porNota = $("#por-nota").val();
-
-  //     if (index <= 3) {
-  //       for (var i = 0; i < decision.length; i++) {
-  //         if (decision[i].checked == true) {
-  //           resolver = decision[i].value;
-  //           break;
-  //         }
-  //       }
-  //       if (resolver != "") {
-  //         commentMejorarias = porQue;
-  //         Main.requestValue();
-  //       } else {
-  //         Main.showError();
-  //       }
-  //     } else {
-  //       commentMejorarias = porNota;
-  //       Main.requestValue();
-  //     }
-  //   }
-
-  //   sendValue(ev) {
-  //     ev.preventDefault();
-  //     Main.valorar(stars);
-  //   }
-
-  //   requestValue() {
-  //     var args = {
-  //       comentario: commentMejorarias,
-  //       valor: stars,
-  //       origen: origen,
-  //       cid: getCid,
-  //       id_nodo: nodoid,
-  //       intent: getIntent,
-  //       pudo_resolver: resolver,
-  //       auth: auth
-  //     };
-  //     var promise = $.ajax({
-  //       type: "POST",
-  //       url: getPath + "mad/valorar",
-  //       crossDomain: true,
-  //       data: JSON.stringify(args),
-  //       contentType: "application/json",
-  //       dataType: "json"
-  //     });
-  //     promise.done(response => {
-  //       yaValoro = "True";
-  //       Main.sendValueMsg(yaValoro, yaContacto, yaSolicito, yaSuma, 'No');
-  //       $("#modal-valoracion").removeClass("show");
-  //       modalOpen = false;
-  //       if (Main.inIframe() == true) {
-  //         Main.toggleActiveAyuda();
-  //       }
-  //     });
-  //   }
 
   //   sendValueMsg(yaVal, yaCont, yaSol, yaSum, msg) {
   //     var args = {
@@ -120,115 +42,303 @@ export default class Valoracion extends Component {
   //   }
   //// FIN VALORACION ////
 
-  content() {
-    const { valoracionStates } = this.props;
+  clickStar(e) {
+    e.preventDefault();
+    const _this = e.target.tagName === "I" ? e.target.closest("a") : e.target,
+      star = parseInt(_this.getElementsByTagName("span")[0].innerText);
+    this.setStar(star);
+  }
+
+  requestValue() {
+    const { valoracionStates, generalStates } = this.props,
+      general = generalStates.toJS(),
+      comentario = valoracionStates.get("comment"),
+      pudo_resolver = valoracionStates.get("pudoResolver") ? "Si" : "No",
+      valor = valoracionStates.get("stars"),
+      args = {
+        general,
+        valoracion:{
+          comentario,
+          pudo_resolver,
+          valor
+        },
+        enabled: false
+      };
+    this.props.sendValoracion(args);
+
+    // var promise = $.ajax({
+    //   type: "POST",
+    //   url: getPath + "mad/valorar",
+    //   crossDomain: true,
+    //   data: JSON.stringify(args),
+    //   contentType: "application/json",
+    //   dataType: "json"
+    // });
+
+    // promise.done(response => {
+    //   yaValoro = "True";
+    //   Main.sendValueMsg(yaValoro, yaContacto, yaSolicito, yaSuma, "No");
+    //   $("#modal-valoracion").removeClass("show");
+    //   modalOpen = false;
+    //   if (Main.inIframe() == true) {
+    //     Main.toggleActiveAyuda();
+    //   }
+    // });
+  }
+
+  closeValoracion(e){
+    const { generalStates } = this.props,
+    msg = e.target.dataset.msg,
+    general = generalStates.toJS(),
+    conversation = {
+      general,
+      msg: [msg],
+      send: "to",
+      enabled: false
+    };
+    this.props.closeValoracion(conversation);
+  }
+
+  valorar(e) {
+    const { valoracionStates } = this.props,
+      stars = valoracionStates.get("stars"),
+      pudoResolver = valoracionStates.get("pudoResolver"),
+      comment = valoracionStates.get("comment");
+    let pudoResolverError = false ,commentError = false;
+
+    if(!comment){
+      commentError = true;
+    }
+    if (stars <= 3) {
+      if (!pudoResolver) {
+        pudoResolverError = true;
+      }
+    }
+    if(commentError || pudoResolverError){
+      const data = {
+        error:true,
+        commentError,
+        pudoResolverError
+      }
+      this.props.setErrorValoracion(data);
+    }else{
+      this.requestValue();
+    }
+  }
+
+  setStar(star) {
+    this.props.setStar(star);
+  }
+
+  setPudoResolver(e) {
+    this.props.setPudoResolverValoracion(e.target.value);
+  }
+
+  setComment(e) {
+    this.props.setCommentValoracion(e.target.value);
+  }
+
+  header() {
     return (
-      <div id="modal-valoracion" class="mymodal show">
-        <div class="overflow">
-          <div class="myflex">
-            <div id="valoracion" class="container-form">
-              <form name="form2" id="form-valoracion" autocomplete="off">
-                <div class="header">
-                  <div class="close-form">
-                    <button data-msg="No" data-func="sendButtonresponse">
-                      <i class="fas fa-times" />
-                    </button>
-                  </div>
-                  <div class="icon">
-                    <i class="fas fa-check" />
-                  </div>
-                  <p class="title">
-                    ¿Cómo evalúas en general esta conversación?
-                  </p>
-                  <p>
-                    Califica en una de 1 a 5, donde 5 es muy buena y 1 es muy
-                    mala
-                  </p>
-                </div>
-
-                <fieldset>
-                  <div class="ratingStars">
-                    <a href="#;" rel="mx">
-                      <span>1</span>
-                      <i class="fas fa-star" />
-                    </a>
-                    <a href="#;" rel="mx">
-                      <span>2</span>
-                      <i class="fas fa-star" />
-                    </a>
-                    <a href="#;" rel="mx">
-                      <span>3</span>
-                      <i class="fas fa-star" />
-                    </a>
-                    <a href="#;" rel="mx">
-                      <span>4</span>
-                      <i class="fas fa-star" />
-                    </a>
-                    <a href="#;" rel="mx">
-                      <span>5</span>
-                      <i class="fas fa-star" />
-                    </a>
-                  </div>
-                </fieldset>
-
-                <div class="bkg-gray" id="more-than-3">
-                  <fieldset>
-                    <legend>Cuéntanos ¿por qué evalúas con esta nota?</legend>
-                    <textarea name="por-que" id="por-nota" rows="3" />
-                  </fieldset>
-                </div>
-
-                <div class="bkg-gray" id="less-than-3">
-                  <fieldset class="radios">
-                    <legend>
-                      ¿Pudiste resolver tu inquietud en esta conversación?
-                    </legend>
-                    <label>
-                      <div class="round">
-                        Sí
-                        <input type="radio" name="decision" value="si" />
-                        <div class="circle" />
-                      </div>
-                    </label>
-                    <label>
-                      <div class="round">
-                        No
-                        <input type="radio" name="decision" value="no" />
-                        <div class="circle" />
-                      </div>
-                    </label>
-                  </fieldset>
-                  <fieldset>
-                    <legend>Cuéntanos ¿qué mejorarías?</legend>
-                    <textarea name="por-que" id="por-que" rows="3" />
-                  </fieldset>
-                </div>
-
-                <button data-msg="Sí" data-func="sendValue" disabled>
-                  Valorar
-                </button>
-              </form>
-            </div>
-          </div>
+      <div className="header">
+        <div className="close-form">
+          <button type="button" onClick={this.closeValoracion}>
+            <i className="fas fa-times" />
+          </button>
         </div>
+        <div className="icon">
+          <i className="fas fa-check" />
+        </div>
+        <p className="title">¿Cómo evalúas en general esta conversación?</p>
+        <p>Califica en una de 1 a 5, donde 5 es muy buena y 1 es muy mala</p>
+      </div>
+    );
+  }
 
-        <div class="error-msg">
+  star(i, classCss) {
+    return (
+      <a
+        key={i}
+        href="#;"
+        className={classCss}
+        rel="mx"
+        onClick={this.clickStar}
+      >
+        <span>{i}</span>
+        <i className="fas fa-star" />
+      </a>
+    );
+  }
+
+  ratingStars(stars) {
+    let content = [];
+    for (let i = 0; i < 5; i++) {
+      if (stars === 0) {
+        content.push(this.star(i + 1, ""));
+      } else if (i < stars) {
+        content.push(this.star(i + 1, "active"));
+      } else {
+        content.push(this.star(i + 1, ""));
+      }
+    }
+    return (
+      <fieldset>
+        <div className="ratingStars">{content}</div>
+      </fieldset>
+    );
+  }
+
+  thanThree(stars,commentError,pudoResolverError) {    
+    let commentCss = commentError?"error":"",
+      pudoResolverCss = pudoResolverError?"error":"";
+    if (stars === 0) {
+      return <div className="bkg-gray hide" />;
+    } else if (stars <= 3) {
+      return (
+        <div className="bkg-gray" id="less-than-3">
+          {this.radios(pudoResolverCss)}
+          <fieldset>
+            <legend>Cuéntanos ¿qué mejorarías?</legend>
+            <textarea
+              name="por-que"
+              id="por-que"
+              rows="3"
+              onKeyUp={this.setComment}
+              className={commentCss}
+            />
+          </fieldset>
+        </div>
+      );
+    } else {
+      return (
+        <div className="bkg-gray" id="more-than-3">
+          <fieldset>
+            <legend>Cuéntanos ¿por qué evalúas con esta nota?</legend>
+            <textarea
+              name="por-que"
+              id="por-nota"
+              rows="3"
+              onKeyUp={this.setComment}
+              className={commentCss}
+            />
+          </fieldset>
+        </div>
+      );
+    }
+  }
+
+  radios(pudoResolverCss) {
+    return (
+      <fieldset className="radios">
+        <legend>¿Pudiste resolver tu inquietud en esta conversación?</legend>
+        <label>
+          <div className="round">
+            Sí
+            <input
+              type="radio"
+              name="decision"
+              value="si"
+              onClick={this.setPudoResolver}
+              className={pudoResolverCss}
+            />
+            <div className="circle" />
+          </div>
+        </label>
+        <label>
+          <div className="round">
+            No
+            <input
+              type="radio"
+              name="decision"
+              value="no"
+              onClick={this.setPudoResolver}
+              className={pudoResolverCss}
+            />
+            <div className="circle" />
+          </div>
+        </label>
+      </fieldset>
+    );
+  }
+
+  error(error) {
+    if (error) {
+      return (
+        <div className="error-msg show">
           <p>
             <strong>Ups! Tenemos un problema</strong>
           </p>
           <p>Favor verifique sus datos e intente nuevamente.</p>
         </div>
+      );
+    } else {
+      return (
+        <div className="error-msg">
+        </div>
+      );
+    }
+  }
 
-        <div class="overlay" />
+  button(button) {
+    if (button) {
+      return (
+        <button type="button" data-msg="Sí" onClick={this.valorar}>
+          Valorar
+        </button>
+      );
+    } else {
+      return (
+        <button type="button" data-msg="Sí" disabled>
+          Valorar
+        </button>
+      );
+    }
+  }
+
+  content() {
+    const { valoracionStates } = this.props,
+      stars = valoracionStates.get("stars"),
+      button = valoracionStates.get("button"),
+      error = valoracionStates.get("error"),
+      commentError = valoracionStates.get("commentError"),
+      pudoResolverError = valoracionStates.get("pudoResolverError");
+    return (
+      <div id="modal-valoracion" className="mymodal show">
+        <div className="overflow">
+          <div className="myflex">
+            <div id="valoracion" className="container-form">
+              <form name="form2" id="form-valoracion" autoComplete="off">
+                {this.header()}
+                {this.ratingStars(stars)}
+                {this.thanThree(stars,commentError,pudoResolverError)}
+                {this.button(button)}
+              </form>
+            </div>
+          </div>
+        </div>
+        {this.error(error)}
+        <div className="overlay" />
       </div>
     );
   }
 
   render() {
-    return this.content();
+    const { valoracionStates } = this.props;
+    return (
+      <IsFetching
+        isFetching={valoracionStates.get("isFetching")}
+        showChildren={true}
+      >
+        {this.content()}
+      </IsFetching>
+    );
   }
 }
 
 Valoracion.propTypes = {
-    valoracionStates: PropTypes.any.isRequired
+  valoracionStates: PropTypes.any.isRequired,
+  setStar: PropTypes.func.isRequired,
+  setPudoResolverValoracion: PropTypes.func.isRequired,
+  setCommentValoracion: PropTypes.func.isRequired,
+  closeValoracion: PropTypes.func.isRequired
 };
