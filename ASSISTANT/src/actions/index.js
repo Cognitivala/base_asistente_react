@@ -300,11 +300,6 @@ export function setModal(data) {
     dispatch({ type: "SET_MODAL", data });
   };
 }
-export function setStatus(data) {
-  return function action(dispatch) {
-    dispatch({ type: "SET_STATUS", data });
-  };
-}
 
 
 //BOTONES

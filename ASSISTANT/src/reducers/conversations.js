@@ -21,10 +21,8 @@ export function conversationsStates(
       //   enabled: false
       // }
     ],
-    historyStatus: false,
     loading: false,
     modal: false,
-    status: false
   }),
   action
 ) {
@@ -42,11 +40,8 @@ export function conversationsStates(
     case "SET_HISTORY":
       return state
         .set("conversations", Immutable.fromJS(action.data))
-        .set("historyStatus", false);
     case "SET_MODAL":
       return state.set("modal", action.data);
-    case "SET_STATUS":
-      return state.set("status", action.data);
     case "PUSH_CONVERSATION":
       return state.withMutations(map => {
         const conversation = Immutable.fromJS(action.data);
@@ -54,7 +49,6 @@ export function conversationsStates(
           ? map.set("loading", true)
           : map.set("loading", false);
         map.update("conversations", list => list.push(conversation));
-        map.set("historyStatus", false);
       });
     default:
       return state;

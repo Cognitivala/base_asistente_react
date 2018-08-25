@@ -35,8 +35,7 @@ export default class Conversations extends Component {
 
   setHistory() {
     const { conversationsStates, customParamsStates } = this.props,
-      conversations = conversationsStates.get("conversations"),
-      historyStatus = conversationsStates.get("historyStatus");
+      conversations = conversationsStates.get("conversations")
 
     if (
       customParamsStates.getIn([
@@ -44,8 +43,7 @@ export default class Conversations extends Component {
         "settings",
         "keep_conversation"
       ]) &&
-      conversations.size > 1 &&
-      !historyStatus
+      conversations.size > 1
     ) {
       let hc = [];
       conversations.map(map => {
