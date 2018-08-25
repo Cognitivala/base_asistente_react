@@ -1,9 +1,14 @@
 import axios, { post } from "axios";
 
-//CID
-export function setCid(data) {
-  return function action(dispatch) {
-    dispatch({ type: "SET_CID", data });
+//GENERAL
+function defaultGeneral() {
+  return {
+    type: "DEFAULT_GENERAL"
+  };
+}
+function setGeneral(data) {
+  return {
+    type: "SET_GENERAL", data
   };
 }
 //LAUNCHER
@@ -32,7 +37,7 @@ export function getCustomParams() {
         titulo: "ASSISTANT TITLE",
         url: "https://example.com",
         settings: {
-          keep_conversation: false,
+          keep_conversation: true,
           geolocalization: false,
           help: true,
           attach: false,
@@ -78,6 +83,7 @@ export function sendSaludo(data) {
   return function action(dispatch) {
     dispatch({ type: "PUSH_CONVERSATION", data });
     dispatch({ type: "SEND_SALUDO" }); //No lo envía de nuevo
+    
   };
 }
 function getSaludoStart() {
@@ -105,6 +111,7 @@ export function openAssistant(data) {
 }
 export function closeAssistant() {
   return function action(dispatch) {
+    dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
     dispatch({ type: "OPEN_LAUNCHER" });
   };
@@ -227,12 +234,14 @@ export function hideWarningHelp() {
 //CONVERSATION
 export function updateConversation(data) {
   return function action(dispatch) {
+    dispatch(setGeneral(data.general));
     dispatch({ type: "PUSH_CONVERSATION", data });
+    
     //Respuesta
     setTimeout(() => {
       let data = {
         general: {
-          cid: null,
+          cid: "SOYELCID",
           origen: "Desktop",
           nodo_id: null,
           intent: null,
@@ -267,24 +276,48 @@ function messageResponse(dispatch, data) {
       case "valoracion":
         dispatch({ type: "ENABLED_VALORACION" });
         data.modal = true;
+        dispatch(setGeneral(data.general));
         dispatch({ type: "PUSH_CONVERSATION", data });
+        
         break;
       default:
         break;
     }
   } else {
+    dispatch(setGeneral(data.general));
     dispatch({ type: "PUSH_CONVERSATION", data });
+    
   }
 }
+export function setHistory(data) {
+  return function action(dispatch) {
+    dispatch(setGeneral(data[data.length-1].general));
+    dispatch({ type: "SET_HISTORY", data });
+  };
+}
+export function setModal(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_MODAL", data });
+  };
+}
+export function setStatus(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_STATUS", data });
+  };
+}
+
+
 //BOTONES
 export function updateConversationButton(data) {
   if (data.msg[0] === "siValorar") {
     return function action(dispatch) {
+      dispatch(setGeneral(data.general));
       dispatch({ type: "PUSH_CONVERSATION", data });
-      setTimeout( () => {
+      
+      setTimeout(() => {
         let data = {
           general: {
-            cid: null,
+            cid: "SOYELCID",
             origen: "Desktop",
             nodo_id: "node_3_1520961671401",
             intent: "remanente",
@@ -301,11 +334,13 @@ export function updateConversationButton(data) {
     };
   } else {
     return function action(dispatch) {
+      dispatch(setGeneral(data.general));
       dispatch({ type: "PUSH_CONVERSATION", data });
+      
       setTimeout(() => {
         let data = {
           general: {
-            cid: null,
+            cid: "SOYELCID",
             origen: "Desktop",
             nodo_id: null,
             intent: null,
@@ -361,7 +396,7 @@ export function setErrorValoracion(data) {
 export function sendValoracion(data) {
   return function action(dispatch) {
     dispatch({ type: "SEND_VALORACION_START" });
-
+    dispatch(setGeneral(data.general));
     dispatch({ type: "PUSH_CONVERSATION", data });
     setTimeout(() => {
       //Respuesta
@@ -387,13 +422,14 @@ export function sendValoracion(data) {
 export function closeValoracion(data) {
   return function action(dispatch) {
     dispatch({ type: "DISABLED_VALORACION" });
-
+    dispatch(setGeneral(data.general));
     dispatch({ type: "PUSH_CONVERSATION", data });
+    
     //Respuesta
     setTimeout(() => {
       let data = {
         general: {
-          cid: null,
+          cid: "SOYELCID",
           origen: "Desktop",
           nodo_id: null,
           intent: null,

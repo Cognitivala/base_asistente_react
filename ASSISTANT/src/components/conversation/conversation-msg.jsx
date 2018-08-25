@@ -34,6 +34,6 @@ ConversationMsg.propTypes = {
   animation: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   msgs: PropTypes.any.isRequired,
-  send: PropTypes.string.isRequired,
+  send: PropTypes.any.isRequired,
   colorHeader: PropTypes.string.isRequired
 };

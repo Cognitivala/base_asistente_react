@@ -21,7 +21,7 @@ const ConversationBubble = ({msg, colorHeader,send}) => {
 export default ConversationBubble;
 
 ConversationBubble.propTypes = {
-    msg: PropTypes.string.isRequired,
+    msg: PropTypes.any.isRequired,
     colorHeader: PropTypes.string.isRequired,
-    send: PropTypes.string.isRequired
+    send: PropTypes.any.isRequired
 }

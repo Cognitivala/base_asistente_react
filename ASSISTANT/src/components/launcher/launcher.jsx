@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import IsFetching from "../modules/is-fetching";
 import Notification from "./notification";
+import NotificationCircle from "./notification-circle";
 import PropTypes from "prop-types";
 
 export default class Launcher extends Component {
@@ -10,10 +11,13 @@ export default class Launcher extends Component {
     this.callAsyncData();
   }
   callAsyncData() {
-    this.props.getSaludo();
+    const { customParamsStates } = this.props,
+      hc = localStorage.getItem("hc");
+    if (!hc) this.props.getSaludo();
   }
 
   closeLauncher() {
+    const { saludoStates, generalStates, ayudaStates } = this.props;
     this.props.closeLauncher();
     window.top.postMessage(
       {
@@ -26,13 +30,12 @@ export default class Launcher extends Component {
       "*"
     );
     this.props.openAssistant();
-    if (!this.props.saludoStates.get("send")) {
+    if (!localStorage.getItem("hc") && !saludoStates.get("send")) {
       //Si no se ha enviado el saludo
       setTimeout(() => {
-        const { generalStates, saludoStates } = this.props,
-        msg = saludoStates.getIn(["saludo","msg"]),
-        send = saludoStates.getIn(["saludo","send"]),
-        general = generalStates.toJS();
+        const msg = saludoStates.getIn(["saludo", "msg"]),
+          send = saludoStates.getIn(["saludo", "send"]),
+          general = generalStates.toJS();
         let conversation = {
           general,
           msg: [msg],
@@ -42,19 +45,22 @@ export default class Launcher extends Component {
         this.props.sendSaludo(conversation);
       }, 500);
     }
-    if (this.props.ayudaStates.get("open")) this.props.closeHelp();
+    if (ayudaStates.get("open")) this.props.closeHelp();
   }
 
   notification(saludoStates, launcherStates) {
-    if (launcherStates.get("notification"))
+    if (
+      launcherStates.get("notification") &&
+      !localStorage.getItem("hc")
+    )
       return <Notification saludo={saludoStates.get("saludo").get("msg")} />;
+    else return <NotificationCircle />;
   }
 
   content(customParamsStates, saludoStates, launcherStates) {
     if (
       launcherStates.get("active") &&
-      customParamsStates.get("customParams").get("status") !== 0 &&
-      saludoStates.get("saludo").get("msg") !== ""
+      customParamsStates.get(["customParams", "status"]) !== 0
     ) {
       const divStyle = {
         position: "fixed",
@@ -84,9 +90,7 @@ export default class Launcher extends Component {
   }
 
   render() {
-    const { customParamsStates } = this.props,
-      { saludoStates } = this.props,
-      { launcherStates } = this.props;
+    const { customParamsStates, saludoStates, launcherStates } = this.props;
 
     return (
       <IsFetching
@@ -102,5 +106,6 @@ export default class Launcher extends Component {
 Launcher.propTypes = {
   customParamsStates: PropTypes.any.isRequired,
   saludoStates: PropTypes.any.isRequired,
-  launcherStates: PropTypes.any.isRequired
-}
+  launcherStates: PropTypes.any.isRequired,
+  generalStates: PropTypes.any.isRequired
+};

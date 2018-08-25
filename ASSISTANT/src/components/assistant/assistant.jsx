@@ -12,6 +12,23 @@ export default class Assistant extends Component {
     this.closeAssistant = this.closeAssistant.bind(this);
   }
 
+  componentDidMount() {
+    this.getHistory();
+  }
+
+  getHistory() {
+    const { customParamsStates } = this.props,
+      keep_conversation = customParamsStates.getIn([
+        "customParams",
+        "settings",
+        "keep_conversation"
+      ]),
+      hc = JSON.parse(localStorage.getItem("hc"));
+    if (keep_conversation && hc) {
+      this.props.setHistory(hc);
+    }
+  }
+
   closeAssistant() {
     window.top.postMessage(
       {
@@ -60,7 +77,9 @@ export default class Assistant extends Component {
 
   content(assistantStates) {
     if (assistantStates.get("active")) {
-      const { customParamsStates } = this.props,
+      const {
+          customParamsStates,
+        } = this.props,
         ayuda = customParamsStates
           .get("customParams")
           .get("settings")
@@ -83,7 +102,9 @@ export default class Assistant extends Component {
             hideWarningHelp={this.props.hideWarningHelp}
           />
           {this.fillHelp(ayuda)}
-          <Conversations {...this.props} />
+          <Conversations
+            {...this.props}
+          />
           <Input {...this.props} />
           {this.valoracion()}
         </div>

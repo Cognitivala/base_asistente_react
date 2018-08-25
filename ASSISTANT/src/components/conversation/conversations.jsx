@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
 import ConversationSelects from "./conversation-selects";
+import Valoracion from "../valoracion/valoracion";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -12,12 +14,83 @@ export default class Conversations extends Component {
 
   componentWillMount() {
     this.scrollToBottom();
-    this.toggleEnabledHelp();
+    this.toggleEnabledHelp(
+      this.props.conversationsStates,
+      this.props.ayudaStates
+    );
   }
 
   componentWillReceiveProps() {
     this.scrollToBottom();
-    this.toggleEnabledHelp();
+    this.toggleEnabledHelp(
+      this.props.conversationsStates,
+      this.props.ayudaStates
+    );
+    this.setHistory();
+  }
+
+  componentDidUpdate() {
+    this.setHistory();
+  }
+
+  setHistory() {
+    const { conversationsStates, customParamsStates } = this.props,
+      conversations = conversationsStates.get("conversations"),
+      historyStatus = conversationsStates.get("historyStatus");
+
+    if (
+      customParamsStates.getIn([
+        "customParams",
+        "settings",
+        "keep_conversation"
+      ]) &&
+      conversations.size > 1 &&
+      !historyStatus
+    ) {
+      let hc = [];
+      conversations.map(map => {
+        hc.push(map.toJS());
+      });
+      +localStorage.setItem("hc", JSON.stringify(hc));
+      console.log(localStorage.getItem("hc"));
+    }
+  }
+
+  setStatus(status) {
+    this.props.setStatus(status);
+  }
+
+  setModal() {
+    debugger;
+    this.props.setModal(true);
+  }
+
+  toggleEnabledHelp(conversationsStates, ayudaStates) {
+    setTimeout(() => {
+      const algo = conversationsStates.get("conversations");
+      if (algo.size > 0) {
+        const conversation = algo.get(-1),
+          buttons = conversation.get("buttons"),
+          selects = conversation.get("selects"),
+          modal = conversation.get("modal"),
+          largo =
+            document.getElementsByClassName("conversation-bubble").length - 1,
+          lastButton = document.getElementsByClassName("conversation-bubble")[
+            largo
+          ],
+          bloqued = lastButton.classList.contains("bloqued");
+        if (
+          (buttons !== undefined && !bloqued) ||
+          (selects !== undefined && !bloqued) ||
+          modal !== undefined
+        ) {
+          if (ayudaStates.get("open")) this.props.closeHelp();
+          if (ayudaStates.get("enabled")) this.props.disabledHelp();
+        } else {
+          if (!ayudaStates.get("enabled")) this.props.enabledHelp();
+        }
+      }
+    }, 300);
   }
 
   //Scroll Bottom
@@ -55,36 +128,6 @@ export default class Conversations extends Component {
   }
   //Fin Scroll Bottom
 
-  toggleEnabledHelp() {
-    setTimeout(() => {
-      
-      const algo = this.props.conversationsStates.get("conversations"),
-        ayudaStates = this.props.ayudaStates;
-      if (algo.size > 0) {
-        const conversation = algo.get(-1),
-          buttons = conversation.get("buttons"),
-          selects = conversation.get("selects"),
-          modal = conversation.get("modal"),
-          largo =
-            document.getElementsByClassName("conversation-bubble").length - 1,
-          lastButton = document.getElementsByClassName("conversation-bubble")[
-            largo
-          ],
-          bloqued = lastButton.classList.contains("bloqued");
-        if (
-          (buttons !== undefined && !bloqued) ||
-          (selects !== undefined && !bloqued) ||
-          modal !== undefined
-        ) {
-          if (ayudaStates.get("open")) this.props.closeHelp();
-          if (ayudaStates.get("enabled")) this.props.disabledHelp();
-        } else {
-          if (!ayudaStates.get("enabled")) this.props.enabledHelp();
-        }
-      }
-    }, 50);
-  }
-
   fillConversation(
     avatar,
     conversationsStates,
@@ -94,14 +137,17 @@ export default class Conversations extends Component {
   ) {
     return conversationsStates.get("conversations").map((map, i) => {
       const conversation = map,
-        enabled = conversation.get("enabled"); // Si se pinta o nó
+        enabled = conversation.get("enabled"),
+        sizeMap = conversationsStates.get("conversations").size,
+        modal = conversationsStates.get("modal"),
+        modalConversation = conversation.get("modal");
       let retorno = [];
+
       if (enabled) {
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
-          send = conversation.get("send"),
-          sizeMap = conversationsStates.get("conversations").size;
+          send = conversation.get("send");
         let animation =
           i + 1 === sizeMap ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
@@ -145,13 +191,51 @@ export default class Conversations extends Component {
             />
           );
         }
+      } else if (i + 1 === sizeMap && modalConversation) {
+        switch (conversation.get("liftUp")) {
+          case "valoracion":
+            const {
+              valoracionStates,
+              setStar,
+              setPudoResolverValoracion,
+              sendValoracion,
+              setCommentValoracion,
+              generalStates,
+              setErrorValoracion,
+              closeValoracion
+            } = this.props;
+
+            retorno.push(
+              <Valoracion
+                key={i}
+                generalStates={generalStates}
+                setErrorValoracion={setErrorValoracion}
+                sendValoracion={sendValoracion}
+                valoracionStates={valoracionStates}
+                setStar={setStar}
+                setCommentValoracion={setCommentValoracion}
+                setPudoResolverValoracion={setPudoResolverValoracion}
+                closeValoracion={closeValoracion}
+              />
+            );
+            break;
+          default:
+            break;
+        }
       }
       return retorno;
     });
   }
 
   render() {
-    const { conversationsStates, customParamsStates, ayudaStates } = this.props,
+    const {
+        conversationsStates,
+        customParamsStates,
+        ayudaStates,
+        valoracionStates,
+        updateConversationButton,
+        generalStates
+      } = this.props,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "";
@@ -164,11 +248,27 @@ export default class Conversations extends Component {
         {this.fillConversation(
           avatar,
           conversationsStates,
-          this.props.updateConversationButton,
+          updateConversationButton,
           colorHeader,
-          this.props.generalStates
+          generalStates,
+          valoracionStates
         )}
       </section>
     );
   }
 }
+
+// Conversations.propTypes = {
+//   conversationsStates: PropTypes.any.isRequired,
+//   customParamsStates: PropTypes.any.isRequired,
+//   ayudaStates: PropTypes.any.isRequired,
+//   valoracionStates: PropTypes.any.isRequired,
+//   updateConversationButton: PropTypes.func.isRequired,
+//   generalStates: PropTypes.any.isRequired,
+//   closeHelp: PropTypes.func.isRequired,
+//   disabledHelp: PropTypes.func.isRequired,
+//   enabledHelp: PropTypes.func.isRequired,
+//   setStatus: PropTypes.func.isRequired,
+//   setModal: PropTypes.func.isRequired,
+//   setStar: PropTypes.func.isRequired
+// };

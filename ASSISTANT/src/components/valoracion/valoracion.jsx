@@ -50,6 +50,7 @@ export default class Valoracion extends Component {
   }
 
   requestValue() {
+    debugger
     const { valoracionStates, generalStates } = this.props,
       general = generalStates.toJS(),
       comentario = valoracionStates.get("comment"),

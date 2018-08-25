@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
+import NotificationCircle from "./notification-circle";
 
 export default class Notification extends Component {
   constructor(props) {
@@ -8,11 +9,10 @@ export default class Notification extends Component {
 
   render() {
     const { saludo } = this.props;
-
     return saludo.map((map,i)=>{
       return (
         <div key={i}>
-          <span className="bubble-cognitive-assistant">1</span>
+          <NotificationCircle />
           <div className="cognitive-assistant-notification-container">
             <div>{map}</div>
             <button className="cognitive-assistant-notification-button-close">

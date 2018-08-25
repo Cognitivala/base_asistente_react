@@ -38,20 +38,20 @@ export class Router extends Component {
       weekdaysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
       weekdaysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"]
     });
-    this.getCid();
+    this.customParams();
   }
-  getCid(){
-    if(localStorage.getItem('cid')!==null){
-      const cid = localStorage.getItem('cid'),
-        params = JSON.parse(localStorage.getItem('customParams'));
-      this.props.setCid(cid);
-      this.props.setCustomParams(params);
-    }else{
+
+  customParams() {
+    const customParams = localStorage.getItem("customParams");
+    if (customParams) {
+      this.props.setCustomParams(customParams);
+    } else {
       this.props.getCustomParams();
     }
   }
+
   getContent(customParamsStates) {
-    if(customParamsStates.get("customParams").get("status") !== 0){
+    if (customParamsStates.getIn(["customParams","avatar"])) {
       return (
         <BrowserRouter>
           <div>
@@ -60,12 +60,12 @@ export class Router extends Component {
           </div>
         </BrowserRouter>
       );
-    }else{
+    } else {
       return null;
     }
   }
   render() {
-    const {customParamsStates} = this.props;
+    const { customParamsStates } = this.props;
 
     return this.getContent(customParamsStates);
   }

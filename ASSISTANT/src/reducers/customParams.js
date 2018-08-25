@@ -5,16 +5,13 @@ export function customParamsStates(
     isFetching: false,
     error: "",
     customParams: {
-      avatar: "",
-      //colorBubble: "",
-      colorHeader: "",
-      colorBtn: "",
-      estado: "",
-      logo: "",
-      status: 0,
-      subtitulo: "",
-      titulo: "",
-      url: "",
+      avatar: null,
+      colorHeader: null,
+      colorBtn: null,
+      logo: null,
+      subtitulo: null,
+      titulo: null,
+      url: null,
       settings: {
         keep_conversation: false,
         geolocalization: false,
@@ -43,12 +40,12 @@ export function customParamsStates(
         map.set("isFetching", false).set("error", action.error);
       });
     case "SET_CUSTOM_PARAMS":
-      localStorage.setItem('customParams',JSON.stringify(action.data));
+      localStorage.setItem('customParams',action.data);
       return state.withMutations(map => {
         map
           .set("isFetching", false)
           .set("error", false)
-          .set("customParams", Immutable.fromJS(action.data));
+          .set("customParams", Immutable.fromJS(JSON.parse(action.data)));
       });
     default:
       return state;
