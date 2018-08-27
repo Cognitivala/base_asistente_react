@@ -8,7 +8,6 @@ import Valoracion from "../valoracion/valoracion";
 export default class Conversations extends Component {
   constructor(props) {
     super(props);
-    this.toggleEnabledHelp = this.toggleEnabledHelp.bind(this);
     this.test = React.createRef();
   }
 
@@ -19,8 +18,27 @@ export default class Conversations extends Component {
   componentDidUpdate() {
     this.scrollToBottom();
     this.setHistory();
+    this.toggleEnabled();
   }
 
+  toggleEnabled() {
+    const { ayudaStates, inputStates, customParamsStates, conversationsStates } = this.props,
+      lastConversation = conversationsStates.get('conversations').get(-1),
+      buttons = lastConversation.get('buttons'),
+      selects = lastConversation.get('selects'),
+      help = customParamsStates.getIn(["customParams", "settings", "help"]),
+      liftUp = lastConversation.get('liftUp');
+    if(buttons!==undefined || selects!==undefined || liftUp!==undefined){
+      if (help && ayudaStates.get("open")) this.props.closeHelp();
+      if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
+      if (inputStates.get("enabled")) this.props.disabledInput();
+    }else{
+      if (help && !ayudaStates.get("enabled")) this.props.enabledHelp();
+      if (!inputStates.get("enabled")) this.props.enabledInput();
+    }
+  }
+
+  // Guarda historial
   setHistory() {
     const { conversationsStates, customParamsStates } = this.props,
       conversations = conversationsStates.get("conversations");
@@ -114,6 +132,15 @@ export default class Conversations extends Component {
 
         if (buttons !== undefined) {
           //Si tiene botones
+          const {
+              ayudaStates,
+              disabledHelp,
+              closeHelp,
+              disabledInput,
+              inputStates,
+              customParamsStates
+            } = this.props,
+            last = i + 1 === sizeMap ? true : false;
           retorno.push(
             <ConversationButtons
               key={i * 10}
@@ -123,6 +150,13 @@ export default class Conversations extends Component {
               updateConversationButton={updateConversationButton}
               colorHeader={colorHeader}
               generalStates={generalStates}
+              ayudaStates={ayudaStates}
+              disabledHelp={disabledHelp}
+              closeHelp={closeHelp}
+              disabledInput={disabledInput}
+              inputStates={inputStates}
+              customParamsStates={customParamsStates}
+              last={last}
             />
           );
         }
@@ -140,7 +174,7 @@ export default class Conversations extends Component {
         }
 
         //Sólo si es la última conversación y tiene para levantar modal
-        if (i + 1 === sizeMap && liftUp !== undefined) { 
+        if (i + 1 === sizeMap && liftUp !== undefined) {
           switch (liftUp) {
             case "valoracion":
               const { valoracionStates } = this.props,

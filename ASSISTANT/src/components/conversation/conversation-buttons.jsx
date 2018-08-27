@@ -7,6 +7,16 @@ export default class ConversationButtons extends Component {
     this.sendButtonresponse = this.sendButtonresponse.bind(this);
   }
 
+  componentWillMount() {
+    if (this.props.last) {
+      const { ayudaStates, inputStates, customParamsStates } = this.props,
+        help = customParamsStates.getIn(["customParams", "settings", "help"]);
+      if (help && ayudaStates.get("open")) this.props.closeHelp();
+      if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
+      if (inputStates.get("enabled")) this.props.disabledInput();
+    }
+  }
+
   sendButtonresponse(event) {
     const $item = event.target,
       msg = $item.dataset.msg.toString();
@@ -54,5 +64,8 @@ ConversationButtons.propTypes = {
   animation: PropTypes.string.isRequired,
   send: PropTypes.string.isRequired,
   updateConversationButton: PropTypes.func.isRequired,
-  colorHeader: PropTypes.string.isRequired
+  colorHeader: PropTypes.string.isRequired,
+  ayudaStates: PropTypes.any.isRequired,
+  inputStates: PropTypes.any.isRequired,
+  customParamsStates: PropTypes.any.isRequired
 };

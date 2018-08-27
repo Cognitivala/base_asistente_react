@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import IsFetching from "../modules/is-fetching";
+import ValoracionHeader from "./valoracion-header";
+import RatingStars from "./rating-stars";
+import ValoracionThanThree from "./valoracion-than-three";
+import ValoracionError from "./valoracion-error";
 
 export default class Valoracion extends Component {
   constructor(props) {
@@ -12,13 +16,14 @@ export default class Valoracion extends Component {
     this.closeValoracion = this.closeValoracion.bind(this);
   }
 
-  componentWillMount(){
-    const { ayudaStates,inputStates, customParamsStates } = this.props,
-      help = customParamsStates.getIn(["customParams","settings","help"]);
+  componentWillMount() {
+    const { ayudaStates, inputStates, customParamsStates } = this.props,
+      help = customParamsStates.getIn(["customParams", "settings", "help"]);
     if (help && ayudaStates.get("open")) this.props.closeHelp();
     if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
-    if (inputStates.get('enabled')) this.props.disabledInput();
+    if (inputStates.get("enabled")) this.props.disabledInput();
   }
+
   //// VALORACION ////
 
   //   sendValueMsg(yaVal, yaCont, yaSol, yaSum, msg) {
@@ -57,7 +62,7 @@ export default class Valoracion extends Component {
   }
 
   requestValue() {
-    debugger
+    debugger;
     const { valoracionStates, generalStates } = this.props,
       general = generalStates.toJS(),
       comentario = valoracionStates.get("comment"),
@@ -65,7 +70,7 @@ export default class Valoracion extends Component {
       valor = valoracionStates.get("stars"),
       args = {
         general,
-        valoracion:{
+        valoracion: {
           comentario,
           pudo_resolver,
           valor
@@ -94,16 +99,16 @@ export default class Valoracion extends Component {
     // });
   }
 
-  closeValoracion(e){
+  closeValoracion(e) {
     const { generalStates } = this.props,
-    msg = e.target.dataset.msg,
-    general = generalStates.toJS(),
-    conversation = {
-      general,
-      msg: [msg],
-      send: "to",
-      enabled: false
-    };
+      msg = e.target.dataset.msg,
+      general = generalStates.toJS(),
+      conversation = {
+        general,
+        msg: [msg],
+        send: "to",
+        enabled: false
+      };
     this.props.closeValoracion(conversation);
   }
 
@@ -112,9 +117,10 @@ export default class Valoracion extends Component {
       stars = valoracionStates.get("stars"),
       pudoResolver = valoracionStates.get("pudoResolver"),
       comment = valoracionStates.get("comment");
-    let pudoResolverError = false ,commentError = false;
+    let pudoResolverError = false,
+      commentError = false;
 
-    if(!comment){
+    if (!comment) {
       commentError = true;
     }
     if (stars <= 3) {
@@ -122,14 +128,14 @@ export default class Valoracion extends Component {
         pudoResolverError = true;
       }
     }
-    if(commentError || pudoResolverError){
+    if (commentError || pudoResolverError) {
       const data = {
-        error:true,
+        error: true,
         commentError,
         pudoResolverError
-      }
+      };
       this.props.setErrorValoracion(data);
-    }else{
+    } else {
       this.requestValue();
     }
   }
@@ -144,147 +150,6 @@ export default class Valoracion extends Component {
 
   setComment(e) {
     this.props.setCommentValoracion(e.target.value);
-  }
-
-  header() {
-    return (
-      <div className="header">
-        <div className="close-form">
-          <button type="button" onClick={this.closeValoracion}>
-            <i className="fas fa-times" />
-          </button>
-        </div>
-        <div className="icon">
-          <i className="fas fa-check" />
-        </div>
-        <p className="title">¿Cómo evalúas en general esta conversación?</p>
-        <p>Califica en una de 1 a 5, donde 5 es muy buena y 1 es muy mala</p>
-      </div>
-    );
-  }
-
-  star(i, classCss) {
-    return (
-      <a
-        key={i}
-        href="#;"
-        className={classCss}
-        rel="mx"
-        onClick={this.clickStar}
-      >
-        <span>{i}</span>
-        <i className="fas fa-star" />
-      </a>
-    );
-  }
-
-  ratingStars(stars) {
-    let content = [];
-    for (let i = 0; i < 5; i++) {
-      if (stars === 0) {
-        content.push(this.star(i + 1, ""));
-      } else if (i < stars) {
-        content.push(this.star(i + 1, "active"));
-      } else {
-        content.push(this.star(i + 1, ""));
-      }
-    }
-    return (
-      <fieldset>
-        <div className="ratingStars">{content}</div>
-      </fieldset>
-    );
-  }
-
-  thanThree(stars,commentError,pudoResolverError) {    
-    let commentCss = commentError?"error":"",
-      pudoResolverCss = pudoResolverError?"error":"";
-    if (stars === 0) {
-      return <div className="bkg-gray hide" />;
-    } else if (stars <= 3) {
-      return (
-        <div className="bkg-gray" id="less-than-3">
-          {this.radios(pudoResolverCss)}
-          <fieldset>
-            <legend>Cuéntanos ¿qué mejorarías?</legend>
-            <textarea
-              name="por-que"
-              id="por-que"
-              rows="3"
-              onKeyUp={this.setComment}
-              className={commentCss}
-            />
-          </fieldset>
-        </div>
-      );
-    } else {
-      return (
-        <div className="bkg-gray" id="more-than-3">
-          <fieldset>
-            <legend>Cuéntanos ¿por qué evalúas con esta nota?</legend>
-            <textarea
-              name="por-que"
-              id="por-nota"
-              rows="3"
-              onKeyUp={this.setComment}
-              className={commentCss}
-            />
-          </fieldset>
-        </div>
-      );
-    }
-  }
-
-  radios(pudoResolverCss) {
-    return (
-      <fieldset className="radios">
-        <legend>¿Pudiste resolver tu inquietud en esta conversación?</legend>
-        <label>
-          <div className="round">
-            Sí
-            <input
-              type="radio"
-              name="decision"
-              value="si"
-              onClick={this.setPudoResolver}
-              className={pudoResolverCss}
-            />
-            <div className="circle" />
-          </div>
-        </label>
-        <label>
-          <div className="round">
-            No
-            <input
-              type="radio"
-              name="decision"
-              value="no"
-              onClick={this.setPudoResolver}
-              className={pudoResolverCss}
-            />
-            <div className="circle" />
-          </div>
-        </label>
-      </fieldset>
-    );
-  }
-
-  error(error) {
-    if (error) {
-      return (
-        <div className="error-msg show">
-          <p>
-            <strong>Ups! Tenemos un problema</strong>
-          </p>
-          <p>Favor verifique sus datos e intente nuevamente.</p>
-        </div>
-      );
-    } else {
-      return (
-        <div className="error-msg">
-        </div>
-      );
-    }
   }
 
   button(button) {
@@ -304,7 +169,6 @@ export default class Valoracion extends Component {
   }
 
   content() {
-    debugger
     const { valoracionStates } = this.props,
       stars = valoracionStates.get("stars"),
       button = valoracionStates.get("button"),
@@ -317,15 +181,21 @@ export default class Valoracion extends Component {
           <div className="myflex">
             <div id="valoracion" className="container-form">
               <form name="form2" id="form-valoracion" autoComplete="off">
-                {this.header()}
-                {this.ratingStars(stars)}
-                {this.thanThree(stars,commentError,pudoResolverError)}
+                <ValoracionHeader closeValoracion={this.closeValoracion} />
+                <RatingStars clickStar={this.clickStar} stars={stars} />
+                <ValoracionThanThree
+                  stars={stars}
+                  commentError={commentError}
+                  pudoResolverError={pudoResolverError}
+                  setPudoResolver={this.setPudoResolver}
+                  setComment={this.setComment}
+                />
                 {this.button(button)}
               </form>
             </div>
           </div>
         </div>
-        {this.error(error)}
+        <ValoracionError error={error} />
         <div className="overlay" />
       </div>
     );
@@ -355,5 +225,5 @@ Valoracion.propTypes = {
   disabledHelp: PropTypes.func.isRequired,
   inputStates: PropTypes.any.isRequired,
   disabledInput: PropTypes.func.isRequired,
-  customParamsStates:PropTypes.any.isRequired
+  customParamsStates: PropTypes.any.isRequired
 };
