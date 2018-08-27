@@ -1,4 +1,5 @@
 import axios, { post } from "axios";
+import Geocode from "react-geocode";
 
 //GENERAL
 function defaultGeneral() {
@@ -8,7 +9,45 @@ function defaultGeneral() {
 }
 function setGeneral(data) {
   return {
-    type: "SET_GENERAL", data
+    type: "SET_GENERAL",
+    data
+  };
+}
+export function getLocation() {
+  return function action(dispatch) {
+    const geolocation = navigator.geolocation;
+    const location = new Promise((resolve, reject) => {
+      if (!geolocation) {
+        reject(new Error("Not Supported"));
+      }
+
+      geolocation.getCurrentPosition(
+        position => {
+          resolve(position);
+        },
+        () => {
+          reject(new Error("Permission denied"));
+        }
+      );
+    });
+
+    location.then(res => {
+      const keyGoogleMaps = 'AIzaSyADG7P3Zw2isanqpUlGOHftJuB84FE8Efc',
+      latitud = res.coords.latitude,
+      longitud = res.coords.longitude;
+      Geocode.setApiKey(keyGoogleMaps);
+      Geocode.enableDebug();
+      Geocode.fromLatLng(latitud,longitud).then(
+        response => {
+          const address = response.results[0].address_components[2].long_name;
+          dispatch({ type: "SET_LOCATION", data: address });
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    });
+
   };
 }
 export function setOrigen(data) {
@@ -31,8 +70,7 @@ export function getCustomParams() {
       let item;
       item = {
         avatar: "https://image.ibb.co/fpuiZJ/chat.png",
-        //colorBubble: "#e7e7e7",
-        colorHeader: "#d64b36",
+        colorHeader: "#564a86",
         colorBtn: "#333333",
         estado: "1",
         logo:
@@ -43,7 +81,7 @@ export function getCustomParams() {
         url: "https://example.com",
         settings: {
           keep_conversation: true,
-          geolocalization: false,
+          geolocalization: true,
           help: true,
           attach: false,
           emoji: false,
@@ -86,9 +124,9 @@ export function getSaludo() {
 }
 export function sendSaludo(data) {
   return function action(dispatch) {
-    dispatch({ type: "PUSH_CONVERSATION", data });
+    dispatch(pushConversation(data));
+    // 
     dispatch({ type: "SEND_SALUDO" }); //No lo envía de nuevo
-    
   };
 }
 function getSaludoStart() {
@@ -235,10 +273,16 @@ export function hideWarningHelp() {
   };
 }
 //CONVERSATION
+function pushConversation(data) {
+  return {
+    type: "PUSH_CONVERSATION",
+    data
+  };
+}
 export function updateConversation(data) {
   return function action(dispatch) {
     dispatch(setGeneral(data.general));
-    dispatch({ type: "PUSH_CONVERSATION", data });
+    dispatch(pushConversation(data));
     
     //Respuesta
     setTimeout(() => {
@@ -271,33 +315,33 @@ export function updateConversation(data) {
     }, 500);
   };
 }
-  //Verifica los tipos de datos que puede traer el response
+//Verifica los tipos de datos que puede traer el response
 function messageResponse(dispatch, data) {
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
       case "valoracion":
         dispatch(setGeneral(data.general));
-        dispatch({type:"ENABLED_VALORACION"});
-        dispatch({ type: "PUSH_CONVERSATION", data });
+        dispatch({ type: "ENABLED_VALORACION" });
+        dispatch(pushConversation(data));
+        
         break;
       default:
         break;
     }
   } else {
     dispatch(setGeneral(data.general));
-    dispatch({ type: "PUSH_CONVERSATION", data });
-    
+    dispatch(pushConversation(data));
   }
 }
 export function setHistory(data) {
   return function action(dispatch) {
-    const lastConversation = data[data.length-1],
-    liftUp = lastConversation.liftUp;
-    if(liftUp!==undefined){
+    const lastConversation = data[data.length - 1],
+      liftUp = lastConversation.liftUp;
+    if (liftUp !== undefined) {
       switch (liftUp) {
         case "valoracion":
-          dispatch({ type: "ENABLED_VALORACION"});
+          dispatch({ type: "ENABLED_VALORACION" });
           break;
         default:
           break;
@@ -312,12 +356,12 @@ export function setModal(data) {
     dispatch({ type: "SET_MODAL", data });
   };
 }
-  //BOTONES
+//BOTONES
 export function updateConversationButton(data) {
   if (data.msg[0] === "siValorar") {
     return function action(dispatch) {
       dispatch(setGeneral(data.general));
-      dispatch({ type: "PUSH_CONVERSATION", data });
+      dispatch(pushConversation(data));
       
       setTimeout(() => {
         let data = {
@@ -340,7 +384,7 @@ export function updateConversationButton(data) {
   } else {
     return function action(dispatch) {
       dispatch(setGeneral(data.general));
-      dispatch({ type: "PUSH_CONVERSATION", data });
+      dispatch(pushConversation(data));
       
       setTimeout(() => {
         let data = {
@@ -362,7 +406,7 @@ export function updateConversationButton(data) {
     };
   }
 }
-  //INPUT
+//INPUT
 export function enabledInput() {
   return function action(dispatch) {
     dispatch({ type: "ENABLED_INPUT" });
@@ -402,7 +446,8 @@ export function sendValoracion(data) {
   return function action(dispatch) {
     // dispatch({ type: "SEND_VALORACION_START" });
     dispatch(setGeneral(data.general));
-    dispatch({ type: "PUSH_CONVERSATION", data });
+    dispatch(pushConversation(data));
+    
     setTimeout(() => {
       //Respuesta
       let data = {
@@ -428,7 +473,7 @@ export function closeValoracion(data) {
   return function action(dispatch) {
     dispatch({ type: "DISABLED_VALORACION" });
     dispatch(setGeneral(data.general));
-    dispatch({ type: "PUSH_CONVERSATION", data });
+    dispatch(pushConversation(data));
     
     //Respuesta
     setTimeout(() => {

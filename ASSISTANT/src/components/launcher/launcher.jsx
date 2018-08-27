@@ -11,9 +11,19 @@ export default class Launcher extends Component {
     this.callAsyncData();
   }
   callAsyncData() {
+    this.saludar();
+  }
+
+  saludar(){
     const { customParamsStates } = this.props,
+      keep_conversation= customParamsStates.getIn(["customParams","settings","keep_conversation"]),
       hc = localStorage.getItem("hc");
-    if (!hc) this.props.getSaludo();
+    if(!keep_conversation){
+      if(hc) localStorage.removeItem("hc");
+      this.props.getSaludo();
+    }else{
+      if(!hc) this.props.getSaludo();
+    }
   }
 
   closeLauncher() {

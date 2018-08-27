@@ -25,34 +25,34 @@ export default class HelpBox extends Component {
     }
   }
 
-  fillHelp(ayuda) {
+  fillHelp(ayuda,colorHeader) {
     if (ayuda.get("listChild").size > 0) {
       return (
         <div className="nodo-abuelo">
           <p>{ayuda.get("description")}</p>
           {ayuda.get("listChild").map((map, i) => {
-            return <HelpBoxChild ayuda={map} key={i} generalStates={this.props.generalStates} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp}/>;
+            return <HelpBoxChild colorHeader={colorHeader} ayuda={map} key={i} generalStates={this.props.generalStates} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp}/>;
           })}
         </div>
       );
     }
   }
 
-  content(ayuda) {
+  content(ayuda,colorHeader) {
     return (
       <div className="assitant-helper-child">
         <div className="assistant-title" onClick={this.toggleIndex}>
-          <a>{ayuda.get("title")}</a>
-          <i className="icon-li fas fa-angle-down" />
+          <a style={{color:colorHeader}}>{ayuda.get("title")}</a>
+          <i style={{color:colorHeader}} className="icon-li fas fa-angle-down" />
         </div>
-        {this.fillHelp(ayuda)}
+        {this.fillHelp(ayuda, colorHeader)}
       </div>
     );
   }
 
   render() {
-    const { ayuda } = this.props;
-    return this.content(ayuda);
+    const { ayuda, colorHeader } = this.props;
+    return this.content(ayuda, colorHeader);
   }
 }
 
@@ -60,5 +60,6 @@ HelpBox.propTypes = {
   ayuda: PropTypes.object.isRequired,
   updateConversation: PropTypes.func.isRequired,
   closeHelp: PropTypes.func.isRequired,
-  generalStates: PropTypes.any.isRequired
+  generalStates: PropTypes.any.isRequired,
+  colorHeader: PropTypes.string.isRequired
 };

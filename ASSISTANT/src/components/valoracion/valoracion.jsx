@@ -152,10 +152,11 @@ export default class Valoracion extends Component {
     this.props.setCommentValoracion(e.target.value);
   }
 
-  button(button) {
+  button(button, colorHeader) {
+
     if (button) {
       return (
-        <button type="button" data-msg="Sí" onClick={this.valorar}>
+        <button type="button" data-msg="Sí" onClick={this.valorar} style={{backgroundColor:colorHeader}}>
           Valorar
         </button>
       );
@@ -169,10 +170,11 @@ export default class Valoracion extends Component {
   }
 
   content() {
-    const { valoracionStates } = this.props,
+    const { valoracionStates, customParamsStates } = this.props,
       stars = valoracionStates.get("stars"),
       button = valoracionStates.get("button"),
       error = valoracionStates.get("error"),
+      colorHeader = customParamsStates.getIn(["customParams","colorHeader"]),
       commentError = valoracionStates.get("commentError"),
       pudoResolverError = valoracionStates.get("pudoResolverError");
     return (
@@ -181,8 +183,8 @@ export default class Valoracion extends Component {
           <div className="myflex">
             <div id="valoracion" className="container-form">
               <form name="form2" id="form-valoracion" autoComplete="off">
-                <ValoracionHeader closeValoracion={this.closeValoracion} />
-                <RatingStars clickStar={this.clickStar} stars={stars} />
+                <ValoracionHeader closeValoracion={this.closeValoracion} colorHeader={colorHeader}/>
+                <RatingStars clickStar={this.clickStar} stars={stars} colorHeader={colorHeader}/>
                 <ValoracionThanThree
                   stars={stars}
                   commentError={commentError}
@@ -190,7 +192,7 @@ export default class Valoracion extends Component {
                   setPudoResolver={this.setPudoResolver}
                   setComment={this.setComment}
                 />
-                {this.button(button)}
+                {this.button(button,colorHeader)}
               </form>
             </div>
           </div>

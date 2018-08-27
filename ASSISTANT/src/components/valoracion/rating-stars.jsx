@@ -2,14 +2,14 @@ import React from "react";
 
 const RatingStars = props => {
     let content = [];
-    const {stars, clickStar} = props;
+    const {stars, clickStar, colorHeader} = props;
     for (let i = 0; i < 5; i++) {
       if (stars === 0) {
-        content.push(star(i + 1, "",clickStar));
+        content.push(star(i + 1, "",clickStar, colorHeader));
       } else if (i < stars) {
-        content.push(star(i + 1, "active",clickStar));
+        content.push(star(i + 1, "active",clickStar, colorHeader));
       } else {
-        content.push(star(i + 1, "",clickStar));
+        content.push(star(i + 1, "",clickStar, colorHeader));
       }
     }
     return (
@@ -19,12 +19,17 @@ const RatingStars = props => {
     );
 };
 
-const star = (i, classCss, clickStar) => {
+const star = (i, classCss, clickStar, colorHeader) => {
+    const style = classCss!==""?{
+      color: colorHeader
+    }: {};
+
+    
     return (
       <a
         key={i}
         href="#;"
-        className={classCss}
+        style={style}
         rel="mx"
         onClick={clickStar}
       >

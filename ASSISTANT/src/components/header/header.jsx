@@ -16,6 +16,7 @@ export default class Header extends Component {
           closeHelp={this.props.closeHelp}
           showWarningHelp={this.props.showWarningHelp}
           hideWarningHelp={this.props.hideWarningHelp}
+          colorHeader={this.props.colorHeader}
         />
       );
     }

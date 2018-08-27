@@ -20,6 +20,7 @@
         ifrm.classList.add('iframe-cognitive-assistant-container');
         ifrm.classList.add('active');
         ifrm.classList.add('notification');
+        ifrm.setAttribute("allow","geolocation *;");
       ifrm.setAttribute('src', this.src);
       div.appendChild(ifrm);
       document.body.appendChild(div);

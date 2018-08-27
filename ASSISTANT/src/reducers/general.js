@@ -25,6 +25,8 @@ export function generalStates(
       return state.set("auth", action.data);
     case "SET_TOKEN":
       return state.set("token", action.data);
+    case "SET_LOCATION":
+      return state.set("location", action.data);
     case "DEFAULT_GENERAL":
       return state.withMutations(map =>{
         map.set("cid", null)

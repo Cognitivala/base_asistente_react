@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
 import ConversationSelects from "./conversation-selects";
@@ -11,10 +10,6 @@ export default class Conversations extends Component {
     this.test = React.createRef();
   }
 
-  componentWillMount() {
-    this.scrollToBottom();
-  }
-
   componentDidUpdate() {
     this.scrollToBottom();
     this.setHistory();
@@ -23,18 +18,21 @@ export default class Conversations extends Component {
 
   toggleEnabled() {
     const { ayudaStates, inputStates, customParamsStates, conversationsStates } = this.props,
-      lastConversation = conversationsStates.get('conversations').get(-1),
-      buttons = lastConversation.get('buttons'),
-      selects = lastConversation.get('selects'),
-      help = customParamsStates.getIn(["customParams", "settings", "help"]),
-      liftUp = lastConversation.get('liftUp');
-    if(buttons!==undefined || selects!==undefined || liftUp!==undefined){
-      if (help && ayudaStates.get("open")) this.props.closeHelp();
-      if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
-      if (inputStates.get("enabled")) this.props.disabledInput();
-    }else{
-      if (help && !ayudaStates.get("enabled")) this.props.enabledHelp();
-      if (!inputStates.get("enabled")) this.props.enabledInput();
+      sizeConv = conversationsStates.get('conversations').size;
+    if(sizeConv>1){
+      const lastConversation = conversationsStates.get('conversations').get(-1),
+        buttons = lastConversation.get('buttons'),
+        selects = lastConversation.get('selects'),
+        help = customParamsStates.getIn(["customParams", "settings", "help"]),
+        liftUp = lastConversation.get('liftUp');
+      if(buttons!==undefined || selects!==undefined || liftUp!==undefined){
+        if (help && ayudaStates.get("open")) this.props.closeHelp();
+        if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
+        if (inputStates.get("enabled")) this.props.disabledInput();
+      }else{
+        if (help && !ayudaStates.get("enabled")) this.props.enabledHelp();
+        if (!inputStates.get("enabled")) this.props.enabledInput();
+      }
     }
   }
 
@@ -56,7 +54,7 @@ export default class Conversations extends Component {
         hc.push(map.toJS());
       });
       localStorage.setItem("hc", JSON.stringify(hc));
-      console.log(localStorage.getItem("hc"));
+      //console.log(localStorage.getItem("hc"));
     }
   }
 

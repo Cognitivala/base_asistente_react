@@ -4,7 +4,6 @@ import Input from "../input/input";
 import Help from "../help/help";
 import Conversations from "../conversation/conversations";
 import IsFetching from "../modules/is-fetching";
-import Valoracion from "../valoracion/valoracion";
 
 export default class Assistant extends Component {
   constructor(props) {
@@ -13,8 +12,49 @@ export default class Assistant extends Component {
   }
 
   componentDidMount() {
+    this.setGeneralStates();
     this.getHistory();
   }
+
+  setGeneralStates(){
+    const {customParamsStates} = this.props,
+      geolocalization =  customParamsStates.getIn(["customParams","settings","geolocalization"]);
+      
+    this.getOrigen();
+    if(geolocalization) this.getLocation();
+  }
+
+  //ORIGEN
+  getOrigen(){
+    const token = false;
+    if(token){
+      if(!this.isMobileDevice){
+        this.props.setOrigen("Mobile Privado");
+      }else{
+        this.props.setOrigen("Sitio Privado");
+      }
+    }else{
+      if(!this.isMobileDevice){
+        this.props.setOrigen("Mobile Público");
+      }else{
+        this.props.setOrigen("Sitio Público");
+      }
+    }
+
+  }
+
+  getLocation(){
+    this.props.getLocation();
+  }
+
+  isMobileDevice() {
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+  }
+  //END ORIGEN
+
+  //LOCATION
+
+  //END LOCATION
 
   getHistory() {
     const { customParamsStates } = this.props,

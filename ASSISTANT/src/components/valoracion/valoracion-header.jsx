@@ -2,7 +2,7 @@ import React from "react";
 
 const ValoracionHeader = props => {
     return (
-        <div className="header">
+        <div className="header" style={{backgroundColor:props.colorHeader}}>
           <div className="close-form">
             <button type="button" onClick={props.closeValoracion}>
               <i className="fas fa-times" />

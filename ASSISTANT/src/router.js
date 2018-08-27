@@ -41,21 +41,13 @@ export class Router extends Component {
     this.customParams();
   }
 
-  componentDidMount(){
-    this.getOrigen();
-  }
-
-  getOrigen(){
-    this.props.setOrigen("Sitio Público");
-  }
-
   customParams() {
-    const customParams = localStorage.getItem("customParams");
-    if (customParams) {
-      this.props.setCustomParams(customParams);
-    } else {
+    // const customParams = localStorage.getItem("customParams");
+    // if (customParams) {
+    //   this.props.setCustomParams(customParams);
+    // } else {
       this.props.getCustomParams();
-    }
+    // }
   }
 
   getContent(customParamsStates) {
@@ -72,9 +64,9 @@ export class Router extends Component {
       return null;
     }
   }
+
   render() {
     const { customParamsStates } = this.props;
-
     return this.getContent(customParamsStates);
   }
 }
