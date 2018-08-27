@@ -10,6 +10,10 @@ export default class Conversations extends Component {
     this.test = React.createRef();
   }
 
+  componentWillMount(){
+    this.scrollToBottom();
+  }
+
   componentDidUpdate() {
     this.scrollToBottom();
     this.setHistory();
@@ -180,6 +184,7 @@ export default class Conversations extends Component {
               if (enabledValoracion) {
                 const {
                   setStar,
+                  setOverStar,
                   setPudoResolverValoracion,
                   sendValoracion,
                   setCommentValoracion,
@@ -201,6 +206,7 @@ export default class Conversations extends Component {
                     sendValoracion={sendValoracion}
                     valoracionStates={valoracionStates}
                     setStar={setStar}
+                    setOverStar={setOverStar}
                     setCommentValoracion={setCommentValoracion}
                     setPudoResolverValoracion={setPudoResolverValoracion}
                     closeValoracion={closeValoracion}

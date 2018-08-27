@@ -10,6 +10,8 @@ export default class Valoracion extends Component {
   constructor(props) {
     super(props);
     this.clickStar = this.clickStar.bind(this);
+    this.overStar = this.overStar.bind(this);
+    this.overStarDefault = this.overStarDefault.bind(this);
     this.setPudoResolver = this.setPudoResolver.bind(this);
     this.setComment = this.setComment.bind(this);
     this.valorar = this.valorar.bind(this);
@@ -56,13 +58,24 @@ export default class Valoracion extends Component {
 
   clickStar(e) {
     e.preventDefault();
-    const _this = e.target.tagName === "I" ? e.target.closest("a") : e.target,
-      star = parseInt(_this.getElementsByTagName("span")[0].innerText);
-    this.setStar(star);
+    const _this = e.target.tagName === "I" ? e.target.closest("a") : e.target;
+    const star = parseInt(_this.tagName==="SPAN"?_this.innerText:_this.getElementsByTagName("span")[0].innerText);
+    this.props.setStar(star);
+  }
+
+  overStar(e){
+    e.preventDefault();
+    const _this = e.target.tagName === "I" ? e.target.closest("a") : e.target;
+    const star = parseInt(_this.tagName==="SPAN"?_this.innerText:_this.getElementsByTagName("span")[0].innerText);
+    this.props.setOverStar(star);
+  }
+
+  overStarDefault(e){
+    e.preventDefault();
+    this.props.setOverStar(0);
   }
 
   requestValue() {
-    debugger;
     const { valoracionStates, generalStates } = this.props,
       general = generalStates.toJS(),
       comentario = valoracionStates.get("comment"),
@@ -140,10 +153,6 @@ export default class Valoracion extends Component {
     }
   }
 
-  setStar(star) {
-    this.props.setStar(star);
-  }
-
   setPudoResolver(e) {
     this.props.setPudoResolverValoracion(e.target.value);
   }
@@ -172,8 +181,10 @@ export default class Valoracion extends Component {
   content() {
     const { valoracionStates, customParamsStates } = this.props,
       stars = valoracionStates.get("stars"),
+      over = valoracionStates.get("overStar"),
       button = valoracionStates.get("button"),
       error = valoracionStates.get("error"),
+      pudoResolver = valoracionStates.get('pudoResolver'),
       colorHeader = customParamsStates.getIn(["customParams","colorHeader"]),
       commentError = valoracionStates.get("commentError"),
       pudoResolverError = valoracionStates.get("pudoResolverError");
@@ -184,13 +195,15 @@ export default class Valoracion extends Component {
             <div id="valoracion" className="container-form">
               <form name="form2" id="form-valoracion" autoComplete="off">
                 <ValoracionHeader closeValoracion={this.closeValoracion} colorHeader={colorHeader}/>
-                <RatingStars clickStar={this.clickStar} stars={stars} colorHeader={colorHeader}/>
+                <RatingStars clickStar={this.clickStar} stars={stars} over={over} colorHeader={colorHeader} overStar={this.overStar} overStarDefault={this.overStarDefault}/>
                 <ValoracionThanThree
                   stars={stars}
                   commentError={commentError}
                   pudoResolverError={pudoResolverError}
                   setPudoResolver={this.setPudoResolver}
                   setComment={this.setComment}
+                  pudoResolver={pudoResolver}
+                  colorHeader={colorHeader}
                 />
                 {this.button(button,colorHeader)}
               </form>
@@ -227,5 +240,6 @@ Valoracion.propTypes = {
   disabledHelp: PropTypes.func.isRequired,
   inputStates: PropTypes.any.isRequired,
   disabledInput: PropTypes.func.isRequired,
-  customParamsStates: PropTypes.any.isRequired
+  customParamsStates: PropTypes.any.isRequired,
+  setOverStar: PropTypes.func.isRequired
 };

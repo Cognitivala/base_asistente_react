@@ -1,38 +1,34 @@
 import React from "react";
+import ValoracionRadio from "./valoracion-radio";
 
 const ValoracionRadios = props => {
-    const { pudoResolverCss, setPudoResolver } = props;
+  const { pudoResolverCss, setPudoResolver, pudoResolver, colorHeader } = props;
+  let style = { background: colorHeader };
+  if (!pudoResolver) {
     return (
       <fieldset className="radios">
         <legend>¿Pudiste resolver tu inquietud en esta conversación?</legend>
-        <label>
-          <div className="round">
-            Sí
-            <input
-              type="radio"
-              name="decision"
-              value="si"
-              onClick={setPudoResolver}
-              className={pudoResolverCss}
-            />
-            <div className="circle" />
-          </div>
-        </label>
-        <label>
-          <div className="round">
-            No
-            <input
-              type="radio"
-              name="decision"
-              value="no"
-              onClick={setPudoResolver}
-              className={pudoResolverCss}
-            />
-            <div className="circle" />
-          </div>
-        </label>
+        {<ValoracionRadio label="Sí" name="desicion" value="si" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}}/>}
+        {<ValoracionRadio label="No" name="desicion" value="no" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}}/>}
+      </fieldset>
+    );
+  } else if (pudoResolver === "no") {
+    return (
+      <fieldset className="radios">
+        <legend>¿Pudiste resolver tu inquietud en esta conversación?</legend>
+        {<ValoracionRadio label="Sí" name="desicion" value="si" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}}/>}
+        {<ValoracionRadio label="No" name="desicion" value="no" click={setPudoResolver} classCss={pudoResolverCss} styleCss={style}/>}
+      </fieldset>
+    );
+  } else {
+    return (
+      <fieldset className="radios">
+        <legend>¿Pudiste resolver tu inquietud en esta conversación?</legend>
+        {<ValoracionRadio label="Sí" name="desicion" value="si" click={setPudoResolver} classCss={pudoResolverCss} styleCss={style}/>}
+        {<ValoracionRadio label="No" name="desicion" value="no" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}}/>}
       </fieldset>
     );
   }
+};
 
 export default ValoracionRadios;

@@ -10,7 +10,8 @@ export function valoracionStates(
     error: false,
     button: false,
     commentError: false,
-    pudoResolverError: false
+    pudoResolverError: false,
+    overStar: 0
   }),
   action
 ) {
@@ -18,20 +19,22 @@ export function valoracionStates(
     case "ENABLED_VALORACION":
       return state.set("enabled", true);
     case "DISABLED_VALORACION":
-    return state.withMutations(map => {
-      map
-        .set("isFetching", false)
-        .set("enabled", false)
-        .set("stars", 0)
-        .set("comment", null)
-        .set("pudoResolver", false)
-        .set("error", false)
-        .set("pudoResolverError", false)
-        .set("commentError", false)
-        .set("button", false);
-    });
+      return state.withMutations(map => {
+        map
+          .set("isFetching", false)
+          .set("enabled", false)
+          .set("stars", 0)
+          .set("comment", null)
+          .set("pudoResolver", false)
+          .set("error", false)
+          .set("pudoResolverError", false)
+          .set("commentError", false)
+          .set("button", false);
+      });
     case "SET_STARS_VALORACION":
       return state.set("stars", action.data);
+    case "SET_OVER_STAR_VALORACION":
+      return state.set("overStar", action.data);
     case "SET_PUDO_RESOLVER_VALORACION":
       return state.set("pudoResolver", action.data);
     case "SET_COMMENT_VALORACION":
@@ -39,12 +42,12 @@ export function valoracionStates(
     case "SET_BUTTON_VALORACION":
       return state.set("button", action.data);
     case "SET_ERROR_VALORACION":
-    return state.withMutations(map => {
-      map
-        .set("error", action.data.error)
-        .set("pudoResolverError", action.data.pudoResolverError)
-        .set("commentError", action.data.commentError);
-    });
+      return state.withMutations(map => {
+        map
+          .set("error", action.data.error)
+          .set("pudoResolverError", action.data.pudoResolverError)
+          .set("commentError", action.data.commentError);
+      });
     case "SEND_VALORACION_START":
       return state.set("isFetching", true);
     case "SEND_VALORACION_END":

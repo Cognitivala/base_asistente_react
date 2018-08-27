@@ -2267,24 +2267,6 @@ select {
             margin-bottom: 10px;
             display: block;
             color: #666; }
-        .mymodal .container-form form .ratingStars:hover a,
-        .mymodal .container-form form .ratingStars.active a.active,
-        .mymodal .container-form form .ratingStars.active:hover a.active,
-        .mymodal .container-form form .ratingStars a.active {
-          color: #d64b36; }
-        .mymodal .container-form form .ratingStars.active:hover a,
-        .mymodal .container-form form .ratingStars:hover a span {
-          color: #666; }
-        .mymodal .container-form form .ratingStars.active:before {
-          content: '';
-          position: absolute;
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          z-index: 10;
-          color: rgba(0, 0, 0, 0);
-          display: block; }
       .mymodal .container-form form .round {
         height: 36px;
         border: 1px solid #999;

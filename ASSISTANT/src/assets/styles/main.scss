@@ -1152,27 +1152,27 @@ select {
                         color: #666;
                     }
                 }
-                &:hover a,
-                &.active a.active,
-                &.active:hover a.active,
-                a.active {
-                    color: $primary;
-                }
-                &.active:hover a,
-                &:hover a span {
-                    color: #666;
-                }
-                &.active:before {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    top: 0;
-                    bottom: 0;
-                    z-index: 10;
-                    color: rgba(0, 0, 0, 0);
-                    display: block;
-                }
+                // &:hover a,
+                // &.active a.active,
+                // &.active:hover a.active,
+                // a.active {
+                //     color: $primary;
+                // }
+                // &.active:hover a,
+                // &:hover a span {
+                //     color: #666;
+                // }
+                // &.active:before {
+                //     content: '';
+                //     position: absolute;
+                //     left: 0;
+                //     right: 0;
+                //     top: 0;
+                //     bottom: 0;
+                //     z-index: 10;
+                //     color: rgba(0, 0, 0, 0);
+                //     display: block;
+                // }
             }
             .round {
                 height: 36px;

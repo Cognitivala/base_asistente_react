@@ -2,7 +2,7 @@ import React from "react";
 import ValoracionRadios from "./valoracion-radios";
 
 const ValoracionThanThree = props => {
-  const { stars, commentError, pudoResolverError, setPudoResolver,setComment } = props;
+  const { stars, commentError, pudoResolverError, setPudoResolver,setComment, pudoResolver, colorHeader } = props;
   let commentCss = commentError ? "error" : "",
     pudoResolverCss = pudoResolverError ? "error" : "";
   if (stars === 0) {
@@ -10,7 +10,7 @@ const ValoracionThanThree = props => {
   } else if (stars <= 3) {
     return (
       <div className="bkg-gray" id="less-than-3">
-        <ValoracionRadios pudoResolverCss={pudoResolverCss} setPudoResolver={setPudoResolver} />
+        <ValoracionRadios pudoResolverCss={pudoResolverCss} setPudoResolver={setPudoResolver} pudoResolver={pudoResolver} colorHeader={colorHeader}/>
         <fieldset>
           <legend>Cuéntanos ¿qué mejorarías?</legend>
           <textarea
