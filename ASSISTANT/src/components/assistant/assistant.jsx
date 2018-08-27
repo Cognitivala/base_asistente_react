@@ -49,32 +49,6 @@ export default class Assistant extends Component {
     }
   }
 
-  valoracion() {
-    const {
-      valoracionStates,
-      setStar,
-      setPudoResolverValoracion,
-      sendValoracion,
-      setCommentValoracion,
-      generalStates,
-      setErrorValoracion,
-      closeValoracion
-    } = this.props;
-    if (valoracionStates.get("enabled"))
-      return (
-        <Valoracion
-          generalStates={generalStates}
-          setErrorValoracion={setErrorValoracion}
-          sendValoracion={sendValoracion}
-          valoracionStates={valoracionStates}
-          setStar={setStar}
-          setCommentValoracion={setCommentValoracion}
-          setPudoResolverValoracion={setPudoResolverValoracion}
-          closeValoracion={closeValoracion}
-        />
-      );
-  }
-
   content(assistantStates) {
     if (assistantStates.get("active")) {
       const {
@@ -106,7 +80,6 @@ export default class Assistant extends Component {
             {...this.props}
           />
           <Input {...this.props} />
-          {this.valoracion()}
         </div>
       );
     } else {

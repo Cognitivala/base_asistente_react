@@ -11,6 +11,11 @@ function setGeneral(data) {
     type: "SET_GENERAL", data
   };
 }
+export function setOrigen(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_ORIGEN", data });
+  };
+}
 //LAUNCHER
 export function closeLauncher() {
   return function action(dispatch) {
@@ -104,7 +109,7 @@ function getSaludoError(error) {
   };
 }
 //ASSISTANT
-export function openAssistant(data) {
+export function openAssistant() {
   return function action(dispatch) {
     dispatch({ type: "OPEN_ASSISTANT" });
   };
@@ -212,13 +217,11 @@ export function closeHelp() {
 export function enabledHelp() {
   return function action(dispatch) {
     dispatch({ type: "ENABLED_HELP" });
-    dispatch({ type: "ENABLED_INPUT" });
   };
 }
 export function disabledHelp() {
   return function action(dispatch) {
     dispatch({ type: "DISABLED_HELP" });
-    dispatch({ type: "DISABLED_INPUT" });
   };
 }
 export function showWarningHelp() {
@@ -242,7 +245,7 @@ export function updateConversation(data) {
       let data = {
         general: {
           cid: "SOYELCID",
-          origen: "Desktop",
+          origen: "Sitio Público",
           nodo_id: null,
           intent: null,
           auth: null,
@@ -268,17 +271,15 @@ export function updateConversation(data) {
     }, 500);
   };
 }
-//Verifica los tipos de datos que puede traer el response
+  //Verifica los tipos de datos que puede traer el response
 function messageResponse(dispatch, data) {
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
       case "valoracion":
-        dispatch({ type: "ENABLED_VALORACION" });
-        data.modal = true;
         dispatch(setGeneral(data.general));
+        dispatch({type:"ENABLED_VALORACION"});
         dispatch({ type: "PUSH_CONVERSATION", data });
-        
         break;
       default:
         break;
@@ -291,7 +292,18 @@ function messageResponse(dispatch, data) {
 }
 export function setHistory(data) {
   return function action(dispatch) {
-    dispatch(setGeneral(data[data.length-1].general));
+    const lastConversation = data[data.length-1],
+    liftUp = lastConversation.liftUp;
+    if(liftUp!==undefined){
+      switch (liftUp) {
+        case "valoracion":
+          dispatch({ type: "ENABLED_VALORACION"});
+          break;
+        default:
+          break;
+      }
+    }
+    dispatch(setGeneral(lastConversation.general));
     dispatch({ type: "SET_HISTORY", data });
   };
 }
@@ -300,9 +312,7 @@ export function setModal(data) {
     dispatch({ type: "SET_MODAL", data });
   };
 }
-
-
-//BOTONES
+  //BOTONES
 export function updateConversationButton(data) {
   if (data.msg[0] === "siValorar") {
     return function action(dispatch) {
@@ -313,7 +323,7 @@ export function updateConversationButton(data) {
         let data = {
           general: {
             cid: "SOYELCID",
-            origen: "Desktop",
+            origen: "Sitio Público",
             nodo_id: "node_3_1520961671401",
             intent: "remanente",
             auth: null,
@@ -321,7 +331,7 @@ export function updateConversationButton(data) {
             location: null
           },
           send: "from",
-          enabled: false,
+          enabled: true,
           liftUp: "valoracion"
         };
         messageResponse(dispatch, data);
@@ -336,7 +346,7 @@ export function updateConversationButton(data) {
         let data = {
           general: {
             cid: "SOYELCID",
-            origen: "Desktop",
+            origen: "Sitio Público",
             nodo_id: null,
             intent: null,
             auth: null,
@@ -352,7 +362,7 @@ export function updateConversationButton(data) {
     };
   }
 }
-//INPUT
+  //INPUT
 export function enabledInput() {
   return function action(dispatch) {
     dispatch({ type: "ENABLED_INPUT" });
@@ -390,7 +400,7 @@ export function setErrorValoracion(data) {
 }
 export function sendValoracion(data) {
   return function action(dispatch) {
-    dispatch({ type: "SEND_VALORACION_START" });
+    // dispatch({ type: "SEND_VALORACION_START" });
     dispatch(setGeneral(data.general));
     dispatch({ type: "PUSH_CONVERSATION", data });
     setTimeout(() => {
@@ -398,7 +408,7 @@ export function sendValoracion(data) {
       let data = {
         general: {
           cid: null,
-          origen: "Desktop",
+          origen: "Sitio Público",
           nodo_id: null,
           intent: null,
           auth: null,
@@ -425,7 +435,7 @@ export function closeValoracion(data) {
       let data = {
         general: {
           cid: "SOYELCID",
-          origen: "Desktop",
+          origen: "Sitio Público",
           nodo_id: null,
           intent: null,
           auth: null,
@@ -460,7 +470,7 @@ export function closeValoracion(data) {
 //       (response) => {
 //         if(response.data.estado.codigo === 200){
 //           dispatch(loginUser({
-//             dispositivo: 'Desktop',
+//             dispositivo: 'Sitio Público',
 //             geolocalizacion: '',
 //             ip: '',
 //             navegador: '',

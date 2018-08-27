@@ -41,6 +41,14 @@ export class Router extends Component {
     this.customParams();
   }
 
+  componentDidMount(){
+    this.getOrigen();
+  }
+
+  getOrigen(){
+    this.props.setOrigen("Sitio Público");
+  }
+
   customParams() {
     const customParams = localStorage.getItem("customParams");
     if (customParams) {

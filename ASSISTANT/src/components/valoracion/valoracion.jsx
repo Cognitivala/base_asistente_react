@@ -12,6 +12,13 @@ export default class Valoracion extends Component {
     this.closeValoracion = this.closeValoracion.bind(this);
   }
 
+  componentWillMount(){
+    const { ayudaStates,inputStates, customParamsStates } = this.props,
+      help = customParamsStates.getIn(["customParams","settings","help"]);
+    if (help && ayudaStates.get("open")) this.props.closeHelp();
+    if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
+    if (inputStates.get('enabled')) this.props.disabledInput();
+  }
   //// VALORACION ////
 
   //   sendValueMsg(yaVal, yaCont, yaSol, yaSum, msg) {
@@ -297,6 +304,7 @@ export default class Valoracion extends Component {
   }
 
   content() {
+    debugger
     const { valoracionStates } = this.props,
       stars = valoracionStates.get("stars"),
       button = valoracionStates.get("button"),
@@ -341,5 +349,11 @@ Valoracion.propTypes = {
   setStar: PropTypes.func.isRequired,
   setPudoResolverValoracion: PropTypes.func.isRequired,
   setCommentValoracion: PropTypes.func.isRequired,
-  closeValoracion: PropTypes.func.isRequired
+  closeValoracion: PropTypes.func.isRequired,
+  ayudaStates: PropTypes.any.isRequired,
+  closeHelp: PropTypes.func.isRequired,
+  disabledHelp: PropTypes.func.isRequired,
+  inputStates: PropTypes.any.isRequired,
+  disabledInput: PropTypes.func.isRequired,
+  customParamsStates:PropTypes.any.isRequired
 };

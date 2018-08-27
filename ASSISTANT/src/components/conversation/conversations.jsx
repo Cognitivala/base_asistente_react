@@ -14,28 +14,16 @@ export default class Conversations extends Component {
 
   componentWillMount() {
     this.scrollToBottom();
-    this.toggleEnabledHelp(
-      this.props.conversationsStates,
-      this.props.ayudaStates
-    );
-  }
-
-  componentWillReceiveProps() {
-    this.scrollToBottom();
-    this.toggleEnabledHelp(
-      this.props.conversationsStates,
-      this.props.ayudaStates
-    );
-    this.setHistory();
   }
 
   componentDidUpdate() {
+    this.scrollToBottom();
     this.setHistory();
   }
 
   setHistory() {
     const { conversationsStates, customParamsStates } = this.props,
-      conversations = conversationsStates.get("conversations")
+      conversations = conversationsStates.get("conversations");
 
     if (
       customParamsStates.getIn([
@@ -49,46 +37,9 @@ export default class Conversations extends Component {
       conversations.map(map => {
         hc.push(map.toJS());
       });
-      +localStorage.setItem("hc", JSON.stringify(hc));
+      localStorage.setItem("hc", JSON.stringify(hc));
       console.log(localStorage.getItem("hc"));
     }
-  }
-
-  setStatus(status) {
-    this.props.setStatus(status);
-  }
-
-  setModal() {
-    debugger;
-    this.props.setModal(true);
-  }
-
-  toggleEnabledHelp(conversationsStates, ayudaStates) {
-    setTimeout(() => {
-      const algo = conversationsStates.get("conversations");
-      if (algo.size > 0) {
-        const conversation = algo.get(-1),
-          buttons = conversation.get("buttons"),
-          selects = conversation.get("selects"),
-          modal = conversation.get("modal"),
-          largo =
-            document.getElementsByClassName("conversation-bubble").length - 1,
-          lastButton = document.getElementsByClassName("conversation-bubble")[
-            largo
-          ],
-          bloqued = lastButton.classList.contains("bloqued");
-        if (
-          (buttons !== undefined && !bloqued) ||
-          (selects !== undefined && !bloqued) ||
-          modal !== undefined
-        ) {
-          if (ayudaStates.get("open")) this.props.closeHelp();
-          if (ayudaStates.get("enabled")) this.props.disabledHelp();
-        } else {
-          if (!ayudaStates.get("enabled")) this.props.enabledHelp();
-        }
-      }
-    }, 300);
   }
 
   //Scroll Bottom
@@ -136,16 +87,14 @@ export default class Conversations extends Component {
     return conversationsStates.get("conversations").map((map, i) => {
       const conversation = map,
         enabled = conversation.get("enabled"),
-        sizeMap = conversationsStates.get("conversations").size,
-        modal = conversationsStates.get("modal"),
-        modalConversation = conversation.get("modal");
+        sizeMap = conversationsStates.get("conversations").size;
       let retorno = [];
-
-      if (enabled) {
+      if (enabled !== undefined && enabled) {
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
-          send = conversation.get("send");
+          send = conversation.get("send"),
+          liftUp = conversation.get("liftUp");
         let animation =
           i + 1 === sizeMap ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
@@ -189,36 +138,53 @@ export default class Conversations extends Component {
             />
           );
         }
-      } else if (i + 1 === sizeMap && modalConversation) {
-        switch (conversation.get("liftUp")) {
-          case "valoracion":
-            const {
-              valoracionStates,
-              setStar,
-              setPudoResolverValoracion,
-              sendValoracion,
-              setCommentValoracion,
-              generalStates,
-              setErrorValoracion,
-              closeValoracion
-            } = this.props;
 
-            retorno.push(
-              <Valoracion
-                key={i}
-                generalStates={generalStates}
-                setErrorValoracion={setErrorValoracion}
-                sendValoracion={sendValoracion}
-                valoracionStates={valoracionStates}
-                setStar={setStar}
-                setCommentValoracion={setCommentValoracion}
-                setPudoResolverValoracion={setPudoResolverValoracion}
-                closeValoracion={closeValoracion}
-              />
-            );
-            break;
-          default:
-            break;
+        //Sólo si es la última conversación y tiene para levantar modal
+        if (i + 1 === sizeMap && liftUp !== undefined) { 
+          switch (liftUp) {
+            case "valoracion":
+              const { valoracionStates } = this.props,
+                enabledValoracion = valoracionStates.get("enabled");
+              if (enabledValoracion) {
+                const {
+                  setStar,
+                  setPudoResolverValoracion,
+                  sendValoracion,
+                  setCommentValoracion,
+                  generalStates,
+                  setErrorValoracion,
+                  closeValoracion,
+                  ayudaStates,
+                  disabledHelp,
+                  closeHelp,
+                  disabledInput,
+                  inputStates,
+                  customParamsStates
+                } = this.props;
+                retorno.push(
+                  <Valoracion
+                    key={i}
+                    generalStates={generalStates}
+                    setErrorValoracion={setErrorValoracion}
+                    sendValoracion={sendValoracion}
+                    valoracionStates={valoracionStates}
+                    setStar={setStar}
+                    setCommentValoracion={setCommentValoracion}
+                    setPudoResolverValoracion={setPudoResolverValoracion}
+                    closeValoracion={closeValoracion}
+                    ayudaStates={ayudaStates}
+                    disabledHelp={disabledHelp}
+                    closeHelp={closeHelp}
+                    disabledInput={disabledInput}
+                    inputStates={inputStates}
+                    customParamsStates={customParamsStates}
+                  />
+                );
+              }
+              break;
+            default:
+              break;
+          }
         }
       }
       return retorno;
@@ -255,18 +221,3 @@ export default class Conversations extends Component {
     );
   }
 }
-
-// Conversations.propTypes = {
-//   conversationsStates: PropTypes.any.isRequired,
-//   customParamsStates: PropTypes.any.isRequired,
-//   ayudaStates: PropTypes.any.isRequired,
-//   valoracionStates: PropTypes.any.isRequired,
-//   updateConversationButton: PropTypes.func.isRequired,
-//   generalStates: PropTypes.any.isRequired,
-//   closeHelp: PropTypes.func.isRequired,
-//   disabledHelp: PropTypes.func.isRequired,
-//   enabledHelp: PropTypes.func.isRequired,
-//   setStatus: PropTypes.func.isRequired,
-//   setModal: PropTypes.func.isRequired,
-//   setStar: PropTypes.func.isRequired
-// };
