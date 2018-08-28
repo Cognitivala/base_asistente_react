@@ -9,6 +9,7 @@ export default class Assistant extends Component {
   constructor(props) {
     super(props);
     this.closeAssistant = this.closeAssistant.bind(this);
+    this.closeEscape = this.closeEscape.bind(this);
   }
 
   componentDidMount() {
@@ -83,6 +84,13 @@ export default class Assistant extends Component {
     this.props.closeAssistant();
   }
 
+  closeEscape(e){
+    const tecla = e.keyCode;
+    if(tecla===27){
+      this.closeAssistant();
+    }
+  }
+
   fillHelp(ayuda) {
     if (ayuda) {
       return <Help {...this.props} />;
@@ -99,7 +107,7 @@ export default class Assistant extends Component {
           .get("settings")
           .get("help");
       return (
-        <div>
+        <div onKeyUp={this.closeEscape} tabIndex="0">
           <Header
             logo={customParamsStates.get("customParams").get("logo")}
             titulo={customParamsStates.get("customParams").get("titulo")}

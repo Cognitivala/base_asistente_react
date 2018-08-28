@@ -3,6 +3,7 @@ import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
 import ConversationSelects from "./conversation-selects";
 import Valoracion from "../valoracion/valoracion";
+import Formulario from "../formulario/formulario";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -10,30 +11,38 @@ export default class Conversations extends Component {
     this.test = React.createRef();
   }
 
-  componentWillMount(){
-    this.scrollToBottom();
-  }
-
   componentDidUpdate() {
     this.scrollToBottom();
-    this.setHistory();
     this.toggleEnabled();
   }
 
+  componentWillReceiveProps() {
+    this.setHistory();
+  }
+
   toggleEnabled() {
-    const { ayudaStates, inputStates, customParamsStates, conversationsStates } = this.props,
-      sizeConv = conversationsStates.get('conversations').size;
-    if(sizeConv>1){
-      const lastConversation = conversationsStates.get('conversations').get(-1),
-        buttons = lastConversation.get('buttons'),
-        selects = lastConversation.get('selects'),
+    const {
+        ayudaStates,
+        inputStates,
+        customParamsStates,
+        conversationsStates
+      } = this.props,
+      sizeConv = conversationsStates.get("conversations").size;
+    if (sizeConv > 1) {
+      const lastConversation = conversationsStates.get("conversations").get(-1),
+        buttons = lastConversation.get("buttons"),
+        selects = lastConversation.get("selects"),
         help = customParamsStates.getIn(["customParams", "settings", "help"]),
-        liftUp = lastConversation.get('liftUp');
-      if(buttons!==undefined || selects!==undefined || liftUp!==undefined){
+        liftUp = lastConversation.get("liftUp");
+      if (
+        buttons !== undefined ||
+        selects !== undefined ||
+        liftUp !== undefined
+      ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
         if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
         if (inputStates.get("enabled")) this.props.disabledInput();
-      }else{
+      } else {
         if (help && !ayudaStates.get("enabled")) this.props.enabledHelp();
         if (!inputStates.get("enabled")) this.props.enabledInput();
       }
@@ -53,22 +62,35 @@ export default class Conversations extends Component {
       ]) &&
       conversations.size > 1
     ) {
-      let hc = [];
-      conversations.map(map => {
-        hc.push(map.toJS());
+      let hc = [],
+        largo = conversations.size - 1;
+      conversations.map((conversation, i) => {
+        const buttons = conversation.get("buttons"),
+          selects = conversation.get("selects"),
+          msg = conversation.get("msg"),
+          send = conversation.get("send"),
+          liftUp = conversation.get("liftUp"),
+          enabled = conversation.get("enabled"),
+          map = {
+            buttons: buttons !== undefined ? buttons.toJS() : buttons,
+            selects: selects !== undefined ? selects.toJS() : selects,
+            msg: msg !== undefined ? msg.toJS() : msg,
+            send: send !== undefined ? send : send,
+            liftUp: liftUp !== undefined ? liftUp : liftUp,
+            enabled: enabled !== undefined ? enabled : enabled
+          };
+        if (largo === i) map.general = conversation.get("general").toJS();
+        hc.push(map);
       });
       localStorage.setItem("hc", JSON.stringify(hc));
-      //console.log(localStorage.getItem("hc"));
     }
   }
 
   //Scroll Bottom
   scrollToBottom() {
-    setTimeout(() => {
-      if (!this.props.ayudaStates.get("open")) {
-        this.scrollTo(this.test.current, this.test.current.scrollHeight, 300);
-      }
-    }, 150);
+    if (!this.props.ayudaStates.get("open")) {
+      this.scrollTo(this.test.current, this.test.current.scrollHeight, 300);
+    }
   }
 
   scrollTo(element, to, duration) {
@@ -104,25 +126,24 @@ export default class Conversations extends Component {
     colorHeader,
     generalStates
   ) {
-    return conversationsStates.get("conversations").map((map, i) => {
+    return conversationsStates.get("conversations").map((map, j) => {
       const conversation = map,
         enabled = conversation.get("enabled"),
-        sizeMap = conversationsStates.get("conversations").size;
-      let retorno = [];
+        sizeMap = conversationsStates.get("conversations").size,
+        last = j + 1 === sizeMap ? true : false;
+      let retorno = [],
+        animation = j + 1 === sizeMap ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
       if (enabled !== undefined && enabled) {
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
           send = conversation.get("send"),
           liftUp = conversation.get("liftUp");
-        let animation =
-          i + 1 === sizeMap ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
-
         if (msg !== undefined) {
           //Si tiene mensaje
           retorno.push(
             <ConversationMsg
-              key={i}
+              key={j}
               avatar={avatar}
               msgs={msg}
               animation={animation}
@@ -142,10 +163,10 @@ export default class Conversations extends Component {
               inputStates,
               customParamsStates
             } = this.props,
-            last = i + 1 === sizeMap ? true : false;
+            last = j + 1 === sizeMap ? true : false;
           retorno.push(
             <ConversationButtons
-              key={i * 10}
+              key={j * 10}
               buttons={buttons}
               animation={animation}
               send={send}
@@ -167,7 +188,7 @@ export default class Conversations extends Component {
           //si tiene selects
           retorno.push(
             <ConversationSelects
-              key={i * 20}
+              key={j * 20}
               selects={selects}
               animation={animation}
               send={send}
@@ -176,7 +197,7 @@ export default class Conversations extends Component {
         }
 
         //Sólo si es la última conversación y tiene para levantar modal
-        if (i + 1 === sizeMap && liftUp !== undefined) {
+        if (last && liftUp !== undefined) {
           switch (liftUp) {
             case "valoracion":
               const { valoracionStates } = this.props,
@@ -200,7 +221,7 @@ export default class Conversations extends Component {
                 } = this.props;
                 retorno.push(
                   <Valoracion
-                    key={i}
+                    key={j}
                     generalStates={generalStates}
                     setErrorValoracion={setErrorValoracion}
                     sendValoracion={sendValoracion}
@@ -217,6 +238,15 @@ export default class Conversations extends Component {
                     inputStates={inputStates}
                     customParamsStates={customParamsStates}
                   />
+                );
+              }
+              break;
+            case "formContacto":
+              const { formularioStates } = this.props,
+                enabledFormulario = formularioStates.get("enabled");
+              if (enabledFormulario) {
+                retorno.push(
+                  <Formulario formularioStates={formularioStates} />
                 );
               }
               break;

@@ -21,8 +21,7 @@ export function conversationsStates(
       //   enabled: false
       // }
     ],
-    loading: false,
-    modal: false,
+    loading: false
   }),
   action
 ) {

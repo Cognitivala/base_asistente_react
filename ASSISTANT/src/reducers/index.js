@@ -9,6 +9,7 @@ import { conversationsStates } from "./conversations";
 import { inputStates } from "./input";
 import { valoracionStates } from "./valoracion";
 import { generalStates } from "./general";
+import { formularioStates } from "./formulario";
 
 export const reducers = combineReducers({
   generalStates,
@@ -20,5 +21,6 @@ export const reducers = combineReducers({
   ayudaStates,
   conversationsStates,
   inputStates,
-  valoracionStates
+  valoracionStates,
+  formularioStates
 });

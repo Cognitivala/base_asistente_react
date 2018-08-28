@@ -32,12 +32,12 @@ export function getLocation() {
     });
 
     location.then(res => {
-      const keyGoogleMaps = 'AIzaSyADG7P3Zw2isanqpUlGOHftJuB84FE8Efc',
-      latitud = res.coords.latitude,
-      longitud = res.coords.longitude;
+      const keyGoogleMaps = "AIzaSyADG7P3Zw2isanqpUlGOHftJuB84FE8Efc",
+        latitud = res.coords.latitude,
+        longitud = res.coords.longitude;
       Geocode.setApiKey(keyGoogleMaps);
       Geocode.enableDebug();
-      Geocode.fromLatLng(latitud,longitud).then(
+      Geocode.fromLatLng(latitud, longitud).then(
         response => {
           const address = response.results[0].address_components[2].long_name;
           dispatch({ type: "SET_LOCATION", data: address });
@@ -47,7 +47,6 @@ export function getLocation() {
         }
       );
     });
-
   };
 }
 export function setOrigen(data) {
@@ -125,7 +124,7 @@ export function getSaludo() {
 export function sendSaludo(data) {
   return function action(dispatch) {
     dispatch(pushConversation(data));
-    // 
+    //
     dispatch({ type: "SEND_SALUDO" }); //No lo envía de nuevo
   };
 }
@@ -283,9 +282,32 @@ export function updateConversation(data) {
   return function action(dispatch) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-    
+
     //Respuesta
     setTimeout(() => {
+      // let data = {
+      //   general: {
+      //     cid: "SOYELCID",
+      //     origen: "Sitio Público",
+      //     nodo_id: null,
+      //     intent: null,
+      //     auth: null,
+      //     token: null,
+      //     location: null
+      //   },
+      //   msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
+      //   buttons: [
+      //     {
+      //       title: "SI",
+      //       value: "siValorar"
+      //     },
+      //     {
+      //       title: "NO",
+      //       value: "noValorar"
+      //     }
+      //   ]
+      // };
+
       let data = {
         general: {
           cid: "SOYELCID",
@@ -296,18 +318,19 @@ export function updateConversation(data) {
           token: null,
           location: null
         },
-        msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
+        msg: ["Contactar?"],
         buttons: [
           {
             title: "SI",
-            value: "siValorar"
+            value: "siContacto"
           },
           {
             title: "NO",
-            value: "noValorar"
+            value: "noContacto"
           }
         ]
       };
+
       data.send = "from";
       data.enabled = true;
 
@@ -321,11 +344,16 @@ function messageResponse(dispatch, data) {
     //Si trae para levantar modales
     switch (data.liftUp) {
       case "valoracion":
+      debugger
         dispatch(setGeneral(data.general));
         dispatch({ type: "ENABLED_VALORACION" });
         dispatch(pushConversation(data));
-        
         break;
+      case "formContacto":
+      debugger
+        dispatch(setGeneral(data.general));
+        dispatch({ type: "ENABLED_FORM" });
+        dispatch(pushConversation(data));
       default:
         break;
     }
@@ -336,12 +364,16 @@ function messageResponse(dispatch, data) {
 }
 export function setHistory(data) {
   return function action(dispatch) {
+    debugger
     const lastConversation = data[data.length - 1],
       liftUp = lastConversation.liftUp;
     if (liftUp !== undefined) {
       switch (liftUp) {
         case "valoracion":
           dispatch({ type: "ENABLED_VALORACION" });
+          break;
+        case "formContacto":
+          dispatch({ type: "ENABLED_FORM" });
           break;
         default:
           break;
@@ -358,52 +390,77 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-  if (data.msg[0] === "siValorar") {
-    return function action(dispatch) {
-      dispatch(setGeneral(data.general));
-      dispatch(pushConversation(data));
-      
-      setTimeout(() => {
-        let data = {
-          general: {
-            cid: "SOYELCID",
-            origen: "Sitio Público",
-            nodo_id: "node_3_1520961671401",
-            intent: "remanente",
-            auth: null,
-            token: null,
-            location: null
-          },
-          send: "from",
-          enabled: true,
-          liftUp: "valoracion"
-        };
-        messageResponse(dispatch, data);
-      }, 500);
-    };
-  } else {
-    return function action(dispatch) {
-      dispatch(setGeneral(data.general));
-      dispatch(pushConversation(data));
-      
-      setTimeout(() => {
-        let data = {
-          general: {
-            cid: "SOYELCID",
-            origen: "Sitio Público",
-            nodo_id: null,
-            intent: null,
-            auth: null,
-            token: null,
-            location: null
-          },
-          msg: ["Puedes preguntarme otra cosa..."],
-          send: "from",
-          enabled: true
-        };
-        messageResponse(dispatch, data);
-      }, 500);
-    };
+  debugger
+  switch (data.msg[0]) {
+    case "siValorar":
+      return function action(dispatch) {
+        dispatch(setGeneral(data.general));
+        dispatch(pushConversation(data));
+
+        setTimeout(() => {
+          let data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: "node_3_1520961671401",
+              intent: "remanente",
+              auth: null,
+              token: null,
+              location: null
+            },
+            send: "from",
+            enabled: true,
+            liftUp: "valoracion"
+          };
+          messageResponse(dispatch, data);
+        }, 500);
+      };
+    case "siContacto":
+      return function action(dispatch) {
+        dispatch(setGeneral(data.general));
+        dispatch(pushConversation(data));
+
+        setTimeout(() => {
+          let data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            send: "from",
+            enabled: true,
+            liftUp: "formContacto"
+          };
+          messageResponse(dispatch, data);
+        }, 500);
+      };
+    default:
+      return function action(dispatch) {
+        dispatch(setGeneral(data.general));
+        dispatch(pushConversation(data));
+
+        setTimeout(() => {
+          let data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Puedes preguntarme otra cosa..."],
+            send: "from",
+            enabled: true
+          };
+          messageResponse(dispatch, data);
+        }, 500);
+      };
   }
 }
 //INPUT
@@ -452,7 +509,7 @@ export function sendValoracion(data) {
     // dispatch({ type: "SEND_VALORACION_START" });
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-    
+
     setTimeout(() => {
       //Respuesta
       let data = {
@@ -479,7 +536,7 @@ export function closeValoracion(data) {
     dispatch({ type: "DISABLED_VALORACION" });
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-    
+
     //Respuesta
     setTimeout(() => {
       let data = {
