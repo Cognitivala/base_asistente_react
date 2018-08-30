@@ -287,7 +287,7 @@ export function updateConversation(data) {
 
     //Respuesta
     setTimeout(() => {
-      const rand = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+      const rand = Math.floor(Math.random() * (3 - 1 + 1) + 1);
       let data;
       switch (rand) {
         case 1:
@@ -336,6 +336,20 @@ export function updateConversation(data) {
                 value: "noContacto"
               }
             ]
+          };
+          break;
+          case 3:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["No se que responder..."]
           };
           break;
       }
