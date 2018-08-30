@@ -136,6 +136,7 @@ debugger
 
   fillConversation(
     avatar,
+    userImg,
     conversationsStates,
     updateConversationButton,
     colorHeader,
@@ -156,6 +157,7 @@ debugger
           liftUp = conversation.get("liftUp");
         if (msg !== undefined) {
           //Si tiene mensaje
+          debugger
           retorno.push(
             <ConversationMsg
               key={j}
@@ -163,6 +165,7 @@ debugger
               msgs={msg}
               animation={animation}
               send={send}
+              userImg={userImg}
               colorHeader={colorHeader}
             />
           );
@@ -293,6 +296,7 @@ debugger
         generalStates
       } = this.props,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
+      userImg = customParamsStates.getIn(["customParams", "userImg"]),
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "";
     return (
@@ -303,6 +307,7 @@ debugger
       >
         {this.fillConversation(
           avatar,
+          userImg,
           conversationsStates,
           updateConversationButton,
           colorHeader,

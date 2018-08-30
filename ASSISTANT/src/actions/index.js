@@ -79,6 +79,7 @@ export function getCustomParams() {
         subtitulo: "SUBTITLE",
         titulo: "ASSISTANT TITLE",
         url: "https://example.com",
+        userImg:"https://yt3.ggpht.com/a-/ACSszfH3hIxrtLXIrQhu3lLOvy-Hvidrl5p8nGWq2w=s900-mo-c-c0xffffffff-rj-k-no",
         settings: {
           keep_conversation: true,
           geolocalization: true,
@@ -481,15 +482,12 @@ export function updateConversationButton(data) {
                   }
                 },
                 {
-                  legend: "Apellido",
-                  type: "text",
-                  name: "apellido",
-                  placeholder: "Ej. Pérez",
-                  autocomplete: "off",
+                  legend: "Checkbox",
+                  type: "checkbox",
+                  name: "checkboxName",
                   validate: {
-                    types: ["required", "text"],
-                    rules: { min: 3, max: 10 },
-                    error: "Debes completar el nombre (mínimo 3, máximo 10)"
+                    types: ["required", "checkbox"],
+                    error: "Debes completar el checkbox"
                   }
                 },
                 {

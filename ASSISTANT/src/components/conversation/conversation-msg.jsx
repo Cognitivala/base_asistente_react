@@ -8,8 +8,8 @@ export default class ConversationMsg extends Component {
   }
 
   render() {
-    const { msgs, animation, send, avatar, colorHeader } = this.props;
-
+    const { msgs, animation, send, avatar, colorHeader , userImg} = this.props;
+    debugger
     return msgs.map((map, i) => {
       return (
         <div
@@ -20,7 +20,7 @@ export default class ConversationMsg extends Component {
         >
           <img
             className="rounded-img response-img"
-            src={avatar}
+            src={send==="to"?userImg:avatar}
             alt="Respuesta"
           />
           <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
@@ -35,5 +35,6 @@ ConversationMsg.propTypes = {
   avatar: PropTypes.string.isRequired,
   msgs: PropTypes.any.isRequired,
   send: PropTypes.any.isRequired,
-  colorHeader: PropTypes.string.isRequired
+  colorHeader: PropTypes.string.isRequired,
+  userImg: PropTypes.string
 };

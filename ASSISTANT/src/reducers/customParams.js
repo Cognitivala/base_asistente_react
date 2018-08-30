@@ -12,6 +12,7 @@ export function customParamsStates(
       subtitulo: null,
       titulo: null,
       url: null,
+      userImg: null,
       settings: {
         keep_conversation: false,
         geolocalization: false,
