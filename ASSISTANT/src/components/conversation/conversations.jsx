@@ -12,12 +12,24 @@ export default class Conversations extends Component {
   }
 
   componentDidUpdate() {
+    
     this.scrollToBottom();
+    this.setHistory();
     this.toggleEnabled();
   }
 
+  componentWillUpdate(){
+    
+  }
+  
+  componentDidMount(){
+    this.scrollToBottom();
+  }
+  
   componentWillReceiveProps() {
-    this.setHistory();
+    debugger
+    //this.toggleEnabled();
+    //this.scrollToBottom();
   }
 
   toggleEnabled() {
@@ -53,7 +65,7 @@ export default class Conversations extends Component {
   setHistory() {
     const { conversationsStates, customParamsStates } = this.props,
       conversations = conversationsStates.get("conversations");
-
+debugger
     if (
       customParamsStates.getIn([
         "customParams",
@@ -71,13 +83,15 @@ export default class Conversations extends Component {
           send = conversation.get("send"),
           liftUp = conversation.get("liftUp"),
           enabled = conversation.get("enabled"),
+          form = conversation.get("form"),
           map = {
             buttons: buttons !== undefined ? buttons.toJS() : buttons,
             selects: selects !== undefined ? selects.toJS() : selects,
             msg: msg !== undefined ? msg.toJS() : msg,
             send: send !== undefined ? send : send,
             liftUp: liftUp !== undefined ? liftUp : liftUp,
-            enabled: enabled !== undefined ? enabled : enabled
+            enabled: enabled !== undefined ? enabled : enabled,
+            form: form !== undefined ? form : form
           };
         if (largo === i) map.general = conversation.get("general").toJS();
         hc.push(map);
@@ -88,6 +102,7 @@ export default class Conversations extends Component {
 
   //Scroll Bottom
   scrollToBottom() {
+    // debugger
     if (!this.props.ayudaStates.get("open")) {
       this.scrollTo(this.test.current, this.test.current.scrollHeight, 300);
     }
@@ -242,11 +257,20 @@ export default class Conversations extends Component {
               }
               break;
             case "formContacto":
-              const { formularioStates } = this.props,
-                enabledFormulario = formularioStates.get("enabled");
+              const { formularioStates, closeForm, generalStates } = this.props,
+                enabledFormulario = formularioStates.get("enabled"),
+                form = conversation.get("form");
+
               if (enabledFormulario) {
                 retorno.push(
-                  <Formulario formularioStates={formularioStates} />
+                  <Formulario
+                    key={j}
+                    formularioStates={formularioStates}
+                    form={form}
+                    general={generalStates}
+                    closeForm={closeForm}
+                    colorHeader={colorHeader}
+                  />
                 );
               }
               break;

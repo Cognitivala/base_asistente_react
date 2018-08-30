@@ -62,9 +62,14 @@ export default class Launcher extends Component {
     if (
       launcherStates.get("notification") &&
       !localStorage.getItem("hc")
-    )
+    ){
       return <Notification saludo={saludoStates.get("saludo").get("msg")} />;
-    else return <NotificationCircle />;
+    }
+    else if (launcherStates.get('circle')) {
+      return <NotificationCircle />;
+    }else{
+      return null;
+    }
   }
 
   content(customParamsStates, saludoStates, launcherStates) {

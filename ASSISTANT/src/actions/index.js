@@ -58,6 +58,7 @@ export function setOrigen(data) {
 export function closeLauncher() {
   return function action(dispatch) {
     dispatch({ type: "CLOSE_LAUNCHER" });
+    dispatch({ type: "SET_NOTIFICATION", data: false });
   };
 }
 //CUSTOM PARAMS
@@ -124,7 +125,6 @@ export function getSaludo() {
 export function sendSaludo(data) {
   return function action(dispatch) {
     dispatch(pushConversation(data));
-    //
     dispatch({ type: "SEND_SALUDO" }); //No lo envía de nuevo
   };
 }
@@ -155,7 +155,9 @@ export function closeAssistant() {
   return function action(dispatch) {
     dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
+    dispatch({ type: "SET_NOTIFICATION", data: false });
     dispatch({ type: "OPEN_LAUNCHER" });
+    dispatch(deleteHistory());
   };
 }
 //AYUDA
@@ -285,51 +287,58 @@ export function updateConversation(data) {
 
     //Respuesta
     setTimeout(() => {
-      // let data = {
-      //   general: {
-      //     cid: "SOYELCID",
-      //     origen: "Sitio Público",
-      //     nodo_id: null,
-      //     intent: null,
-      //     auth: null,
-      //     token: null,
-      //     location: null
-      //   },
-      //   msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
-      //   buttons: [
-      //     {
-      //       title: "SI",
-      //       value: "siValorar"
-      //     },
-      //     {
-      //       title: "NO",
-      //       value: "noValorar"
-      //     }
-      //   ]
-      // };
-
-      let data = {
-        general: {
-          cid: "SOYELCID",
-          origen: "Sitio Público",
-          nodo_id: null,
-          intent: null,
-          auth: null,
-          token: null,
-          location: null
-        },
-        msg: ["Contactar?"],
-        buttons: [
-          {
-            title: "SI",
-            value: "siContacto"
-          },
-          {
-            title: "NO",
-            value: "noContacto"
-          }
-        ]
-      };
+      const rand = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+      let data;
+      switch (rand) {
+        case 1:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
+            buttons: [
+              {
+                title: "SI",
+                value: "siValorar"
+              },
+              {
+                title: "NO",
+                value: "noValorar"
+              }
+            ]
+          };
+          break;
+        case 2:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Contactar?"],
+            buttons: [
+              {
+                title: "SI",
+                value: "siContacto"
+              },
+              {
+                title: "NO",
+                value: "noContacto"
+              }
+            ]
+          };
+          break;
+      }
 
       data.send = "from";
       data.enabled = true;
@@ -338,19 +347,16 @@ export function updateConversation(data) {
     }, 500);
   };
 }
-//Verifica los tipos de datos que puede traer el response
 function messageResponse(dispatch, data) {
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
       case "valoracion":
-      debugger
         dispatch(setGeneral(data.general));
         dispatch({ type: "ENABLED_VALORACION" });
         dispatch(pushConversation(data));
         break;
       case "formContacto":
-      debugger
         dispatch(setGeneral(data.general));
         dispatch({ type: "ENABLED_FORM" });
         dispatch(pushConversation(data));
@@ -364,7 +370,6 @@ function messageResponse(dispatch, data) {
 }
 export function setHistory(data) {
   return function action(dispatch) {
-    debugger
     const lastConversation = data[data.length - 1],
       liftUp = lastConversation.liftUp;
     if (liftUp !== undefined) {
@@ -383,6 +388,10 @@ export function setHistory(data) {
     dispatch({ type: "SET_HISTORY", data });
   };
 }
+function deleteHistory() {
+  localStorage.removeItem("hc");
+  return { type: "DELETE_HISTORY" };
+}
 export function setModal(data) {
   return function action(dispatch) {
     dispatch({ type: "SET_MODAL", data });
@@ -390,7 +399,6 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-  debugger
   switch (data.msg[0]) {
     case "siValorar":
       return function action(dispatch) {
@@ -433,7 +441,106 @@ export function updateConversationButton(data) {
             },
             send: "from",
             enabled: true,
-            liftUp: "formContacto"
+            liftUp: "formContacto",
+            form: {
+              header: {
+                icon: "fas fa-user-tie",
+                textA: "Por favor ingrese sus datos y",
+                textStrong:
+                  "uno de nuestros ejecutivos le responderá a la brevedad posible",
+                textB: "o en horario hábil siguiente",
+                closeMsg: "No"
+              },
+              bajada: "Todos los campos son obligatorios",
+              url: "",
+              fields: [
+                {
+                  legend: "Nombre",
+                  type: "text",
+                  name: "nombre",
+                  placeholder: "Ej. Juan",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "text"],
+                    rules: { min: 3, max: 10 },
+                    error: "Debes completar el nombre (mínimo 3, máximo 10)"
+                  }
+                },
+                {
+                  legend: "Apellido",
+                  type: "text",
+                  name: "apellido",
+                  placeholder: "Ej. Pérez",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "text"],
+                    rules: { min: 3, max: 10 },
+                    error: "Debes completar el nombre (mínimo 3, máximo 10)"
+                  }
+                },
+                {
+                  legend: "Rut",
+                  type: "text",
+                  name: "rut",
+                  placeholder: "Ej. 11111111-1",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "rut"],
+                    error: "Debes ingresar un rut válido"
+                  }
+                },
+                {
+                  legend: "Teléfono",
+                  type: "tel",
+                  name: "telefono",
+                  placeholder: "Ej. 912345678",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["tel"],
+                    error: "Debes ingresar un teléfono válido"
+                  }
+                },
+                {
+                  legend: "Correo electrónico",
+                  type: "email",
+                  name: "email",
+                  placeholder: "Ej. nombre@micorreo.cl",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "email"],
+                    error: "Debes ingresar un correo electrónico válido"
+                  }
+                },
+                {
+                  legend: "Select prueba",
+                  type: "select",
+                  name: "opciones",
+                  options: [
+                    { text: "Seleccione", value: -1 },
+                    { text: "Opocion #1", value: 1 },
+                    { text: "Opocion #2", value: 2 },
+                    { text: "Opocion #3", value: 3 }
+                  ],
+                  validate: {
+                    types: ["select"],
+                    error: "Debes seleccionar una opción"
+                  }
+                },
+                {
+                  legend: "Comentario",
+                  type: "textarea",
+                  name: "comentario",
+                  placeholder: "Escriba aquí su comentario",
+                  autocomplete: "off",
+                  rows: 5,
+                  validate: {
+                    types: ["text"],
+                    rules: { min: 3, max: 150 },
+                    error: "Debes completar el nombre (mínimo 3, máximo 150)"
+                  }
+                }
+              ]
+            }
           };
           messageResponse(dispatch, data);
         }, 500);
@@ -555,6 +662,32 @@ export function closeValoracion(data) {
       data.enabled = true;
       messageResponse(dispatch, data);
     }, 500);
-    //updateConversation(data);
+  };
+}
+//FORM
+export function closeForm(data) {
+  return function action(dispatch) {
+    dispatch({ type: "DISABLED_FORM" });
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+
+    //Respuesta
+    setTimeout(() => {
+      let data = {
+        general: {
+          cid: "SOYELCID",
+          origen: "Sitio Público",
+          nodo_id: null,
+          intent: null,
+          auth: null,
+          token: null,
+          location: null
+        },
+        msg: ["Se ha cerrado el formulario"]
+      };
+      data.send = "from";
+      data.enabled = true;
+      messageResponse(dispatch, data);
+    }, 500);
   };
 }

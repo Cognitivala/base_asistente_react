@@ -37,8 +37,7 @@ export function conversationsStates(
         map.set("isFetching", false).set("error", action.error);
       });
     case "SET_HISTORY":
-      return state
-        .set("conversations", Immutable.fromJS(action.data))
+      return state.set("conversations", Immutable.fromJS(action.data));
     case "SET_MODAL":
       return state.set("modal", action.data);
     case "PUSH_CONVERSATION":
@@ -48,6 +47,11 @@ export function conversationsStates(
           ? map.set("loading", true)
           : map.set("loading", false);
         map.update("conversations", list => list.push(conversation));
+      });
+    case "DELETE_HISTORY":
+    debugger
+      return state.withMutations(map => {
+        map.set("conversations",Immutable.fromJS([]));
       });
     default:
       return state;

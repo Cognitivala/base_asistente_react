@@ -2178,6 +2178,8 @@ select {
           border: 1px solid #d9534f; }
         .mymodal .container-form form fieldset.error legend {
           color: #d9534f; }
+        .mymodal .container-form form fieldset small.error {
+          color: #d9534f; }
         .mymodal .container-form form fieldset legend {
           color: #333;
           font-weight: 700;
@@ -2195,6 +2197,7 @@ select {
             display: inline-block;
             margin-left: 5px; }
         .mymodal .container-form form fieldset input,
+        .mymodal .container-form form fieldset select,
         .mymodal .container-form form fieldset textarea {
           margin: 0;
           height: 36px;
@@ -2207,6 +2210,10 @@ select {
           -webkit-border-radius: 18px;
           border-radius: 18px; }
           .mymodal .container-form form fieldset input:-webkit-autofill, .mymodal .container-form form fieldset input:-webkit-autofill:hover, .mymodal .container-form form fieldset input:-webkit-autofill:focus, .mymodal .container-form form fieldset input:-webkit-autofill:active,
+          .mymodal .container-form form fieldset select:-webkit-autofill,
+          .mymodal .container-form form fieldset select:-webkit-autofill:hover,
+          .mymodal .container-form form fieldset select:-webkit-autofill:focus,
+          .mymodal .container-form form fieldset select:-webkit-autofill:active,
           .mymodal .container-form form fieldset textarea:-webkit-autofill,
           .mymodal .container-form form fieldset textarea:-webkit-autofill:hover,
           .mymodal .container-form form fieldset textarea:-webkit-autofill:focus,
@@ -2214,22 +2221,27 @@ select {
             -webkit-text-fill-color: #666 !important;
             transition: background-color 5000s ease-in-out 0s; }
           .mymodal .container-form form fieldset input::-webkit-input-placeholder,
+          .mymodal .container-form form fieldset select::-webkit-input-placeholder,
           .mymodal .container-form form fieldset textarea::-webkit-input-placeholder {
             color: #ccc;
             font-weight: 300; }
           .mymodal .container-form form fieldset input::-moz-placeholder,
+          .mymodal .container-form form fieldset select::-moz-placeholder,
           .mymodal .container-form form fieldset textarea::-moz-placeholder {
             color: #ccc;
             font-weight: 300; }
           .mymodal .container-form form fieldset input:-ms-input-placeholder,
+          .mymodal .container-form form fieldset select:-ms-input-placeholder,
           .mymodal .container-form form fieldset textarea:-ms-input-placeholder {
             color: #ccc;
             font-weight: 300; }
           .mymodal .container-form form fieldset input:-moz-placeholder,
+          .mymodal .container-form form fieldset select:-moz-placeholder,
           .mymodal .container-form form fieldset textarea:-moz-placeholder {
             color: #ccc;
             font-weight: 300; }
           .mymodal .container-form form fieldset input.error,
+          .mymodal .container-form form fieldset select.error,
           .mymodal .container-form form fieldset textarea.error {
             border-color: #d9534f;
             color: #d9534f; }

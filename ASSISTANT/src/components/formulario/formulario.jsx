@@ -1,113 +1,206 @@
 import React, { Component } from "react";
 import FormHeader from "./form-header";
 import FormError from "./form-error";
-
+import FormInput from "./form-input";
+import FormTextarea from "./form-textarea";
+import * as Validator from "./validator";
+import FormSelect from "./form-select";
 
 export default class Formulario extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      invalidFiels: [],
+      validator: false
+    };
+    this.validate = this.validate.bind(this);
+    this.sendDataForm = this.sendDataForm.bind(this);
+  }
+
+  validate(validates, name, e) {
+    const typesValidate = validates.get("types");
+    let error = false,
+      input = e.target === undefined ? e : e.target,
+      arr = this.state.invalidFiels;
+    arr = arr.filter(item => item !== name);
+    let required = typesValidate.filter(item => item === "required");
+    required = required.size>0;
+    debugger
+      typesValidate.map((map, i) => {
+        if (!Validator[map](input, validates,required)) error = true;
+      });
+      if (error) {
+        arr.push(name);
+      }
+      this.setState({
+        invalidFiels: arr
+      });
+  }
+
+  validateAll(fields, fieldsDOM) {
+    let arr = [];
+    for (let i = 0; i < fieldsDOM.length; i++) {
+      const map = fieldsDOM[i],
+        field = fields.get(i),
+        name = field.get("name"),
+        validates = field.get("validate"),
+        input = map.elements[0],
+        typesValidate = validates.get("types");
+
+      let error = false;
+
+      arr = arr.filter(item => item !== name);
+
+      typesValidate.map((map, i) => {
+        if (!Validator[map](input, validates)) error = true;
+      });
+
+      if (error) {
+        arr.push(name);
+      }
+    }
+    return arr;
+  }
+
+  closeForm(){
+    const { general } = this.props,
+      conversation = {
+        general,
+        msg: ['No'],
+        send: "to",
+        enabled: false
+      };
+    this.props.closeForm(conversation);
+  }
+
+  sendDataForm(e) {
+    const { form } = this.props,
+      fields = form.get("fields"),
+      fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset"),
+      arr = this.validateAll(fields, fieldsDOM);
+    if (arr.length > 0) {
+      this.setState({
+        invalidFiels: arr
+      });
+    } else {
+      this.closeForm();
+    }
+  }
+
+  fillHeader(header) {
+    if (header.size > 0) {
+      const { general, closeForm, colorHeader } = this.props;
+      return (
+        <FormHeader
+          icon={header.get("icon")}
+          textA={header.get("textA")}
+          textStrong={header.get("textStrong")}
+          textB={header.get("textB")}
+          closeMsg={header.get("closeMsg")}
+          general={general}
+          closeForm={closeForm}
+          colorHeader={colorHeader}
+        />
+      );
+    } else {
+      return null;
+    }
+  }
+
+  fillError(withError, error) {
+    return withError ? (
+      <p>
+        <small className="error">{error}</small>
+      </p>
+    ) : null;
+  }
+
+  fillContent(fields) {
+    if (fields.size > 0) {
+      const retorno = [];
+      fields.map((map, i) => {
+        const withError = this.state.invalidFiels.includes(map.get("name"));
+        switch (map.get("type")) {
+          case "textarea":
+            retorno.push(
+              <fieldset key={i + map.get("name")}>
+                <legend>{map.get("legend")}</legend>
+                <FormTextarea
+                  rows={map.get("rows")}
+                  name={map.get("name")}
+                  placeholder={map.get("placeholder")}
+                  autocomplete={map.get("autocomplete")}
+                  validateFunc={this.validate}
+                  validate={map.get("validate")}
+                  withError={withError}
+                />
+                {this.fillError(withError, map.getIn(["validate", "error"]))}
+              </fieldset>
+            );
+            break;
+          case "select":
+            retorno.push(
+              <fieldset key={i + map.get("name")}>
+                <legend>{map.get("legend")}</legend>
+                <FormSelect
+                  name={map.get("name")}
+                  validateFunc={this.validate}
+                  validate={map.get("validate")}
+                  withError={withError}
+                  options={map.get('options')}
+                />
+                {this.fillError(withError, map.getIn(["validate", "error"]))}
+              </fieldset>
+            );
+            break;
+          default:
+            retorno.push(
+              <fieldset key={i + map.get("name")}>
+                <legend>{map.get("legend")}</legend>
+                <FormInput
+                  type={map.get("type")}
+                  name={map.get("name")}
+                  placeholder={map.get("placeholder")}
+                  autocomplete={map.get("autocomplete")}
+                  validateFunc={this.validate}
+                  validate={map.get("validate")}
+                  withError={withError}
+                />
+                {this.fillError(withError, map.getIn(["validate", "error"]))}
+              </fieldset>
+            );
+            break;
+        }
+      });
+      return retorno;
+    } else {
+      return null;
+    }
   }
 
   content() {
-    const { formularioStates } = this.props,
-      error = formularioStates.get('error');
-
+    const { formularioStates, form } = this.props,
+      header = form.get("header"),
+      bajada = form.get("bajada"),
+      fields = form.get("fields"),
+      error = formularioStates.get("error");
     return (
-      <div class="mymodal show">
-        <div class="overflow">
-          <div id="login" class="container-form">
-            <form
-              name="form3"
-              id="form-contacto"
-              data-end="formularioContacto"
-              autocomplete="off"
-            >
-              <FormHeader
-                icon={"fas fa-user-tie"}
-                textA={"Por favor ingrese sus datos y"}
-                textStrong={
-                  "uno de nuestros ejecutivos le responderá a la brevedad posible"
-                }
-                textB={"o en horario hábil siguiente"}
-              />
-
-              <p class="red">Todos los campos son obligatorios</p>
-
-              <fieldset>
-                <legend>Nombre</legend>
-                <input
-                  type="text"
-                  name="nombre"
-                  placeholder="Ej. Juan"
-                  autocomplete="off"
-                />
-              </fieldset>
-
-              <fieldset>
-                <legend>Apellido</legend>
-                <input
-                  type="text"
-                  name="apellido"
-                  placeholder="Ej. Pérez"
-                  autocomplete="off"
-                />
-              </fieldset>
-
-              <fieldset>
-                <legend>RUT</legend>
-                <input
-                  type="text"
-                  name="rut2"
-                  placeholder="Ej. 11111111-1"
-                  maxlength="12"
-                  autocomplete="off"
-                />
-              </fieldset>
-
-              <fieldset>
-                <legend>Teléfono</legend>
-                <input
-                  type="tel"
-                  name="telefono"
-                  placeholder="Ej. 912345678"
-                  autocomplete="off"
-                />
-              </fieldset>
-
-              <fieldset>
-                <legend>Correo electrónico</legend>
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Ej. nombre@micorreo.cl"
-                  autocomplete="off"
-                />
-              </fieldset>
-
-              <fieldset>
-                <legend>Comentario</legend>
-                <textarea
-                  name="comentario"
-                  rows="5"
-                  placeholder="Escriba aquí su comentario"
-                  autocomplete="off"
-                />
-              </fieldset>
-
-              {/* <button type="button" data-func="validateFieldsTest">Enviar</button> */}
-
-              <button id="send-form-contacto" data-func="sendDataForm">
-                Enviar
+      <div className="mymodal show">
+        <div className="overflow">
+          <div className="container-form">
+            <form autoComplete="off">
+              {this.fillHeader(header)}
+              <p className="red">{bajada}</p>
+              {this.fillContent(fields)}
+              <button type="button" onClick={this.sendDataForm}>
+                {" "}
+                Enviar{" "}
               </button>
-
-              {/* <div class="spinner-holder">
-                <div class="spinner">Loading...</div>
-              </div> */}
             </form>
           </div>
         </div>
         <FormError error={error} />
-        <div class="overlay" />
+        <div className="overlay" />
       </div>
     );
   }

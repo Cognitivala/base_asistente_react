@@ -7,8 +7,20 @@ export default class Input extends Component {
     this.state = {
       msg: ""
     };
+    this.input = React.createRef();
     this.submitMessage = this.submitMessage.bind(this);
     this.updateMsg = this.updateMsg.bind(this);
+  }
+
+  componentWillReceiveProps(){
+    this.focus();
+  }
+
+  focus(){
+    setTimeout(() => {      
+      const input = this.input.current;
+      input!==null?input.focus():null
+    }, 300);
   }
 
   updateMsg(event) {
@@ -57,7 +69,8 @@ export default class Input extends Component {
               name="message"
               onChange={this.updateMsg}
               value={this.state.msg}
-              autoFocus={true}
+              ref={this.input}
+              tabIndex="0"
             />
             <button
               id="button-send-msg"

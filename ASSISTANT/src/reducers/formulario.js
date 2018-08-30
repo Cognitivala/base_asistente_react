@@ -10,6 +10,8 @@ export function formularioStates(
   switch (action.type) {
     case "ENABLED_FORM":
       return state.set("enabled", true);
+    case "DISABLED_FORM":
+      return state.set("enabled", false);
     default:
       return state;
   }

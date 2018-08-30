@@ -4,24 +4,41 @@ import PropTypes from "prop-types";
 export default class FormHeader extends Component {
   constructor(props) {
     super(props);
+    this.closeForm = this.closeForm.bind(this);
+  }
+
+  closeForm(e){
+    const { general } = this.props,
+      msg = e.target.dataset.msg,
+      conversation = {
+        general,
+        msg: [msg],
+        send: "to",
+        enabled: false
+      };
+    this.props.closeForm(conversation);
   }
 
   content() {
-    const { icon, textA, textB, textStrong } = this.props;
+    const { icon, textA, textB, textStrong, closeMsg, colorHeader } = this.props,
+    style = {
+      backgroundColor: colorHeader
+    }
+
     return (
-      <div class="header">
-        <div class="close-form">
-          <button data-msg="No" data-func="sendButtonresponse">
-            <i class="fas fa-times" />
+      <div className="header" style={style}>
+        <div className="close-form">
+          <button type="button" data-msg={closeMsg} onClick={this.closeForm}>
+            <i className="fas fa-times" data-msg={closeMsg}/>
           </button>
         </div>
-        <div class="icon">
-          <i class={icon} />
+        <div className="icon">
+          <i className={icon!==undefined?icon:null} />
         </div>
         <p>
-          {textA}{" "}
-          <strong>{textStrong}</strong>{" "}
-          {textB}
+          {textA!==undefined?textA:null}{" "}
+          <strong>{textStrong!==undefined?textStrong:null}</strong>{" "}
+          {textB!==undefined?textB:null}
         </p>
       </div>
     );
@@ -36,5 +53,7 @@ FormHeader.propTypes = {
   icon: PropTypes.string.isRequired,
   textA: PropTypes.string.isRequired,
   textB: PropTypes.string.isRequired,
-  textStrong: PropTypes.string.isRequired
+  textStrong: PropTypes.string.isRequired,
+  closeMsg: PropTypes.string.isRequired,
+  colorHeader: PropTypes.string.isRequired
 }

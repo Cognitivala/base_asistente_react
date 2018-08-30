@@ -17,39 +17,45 @@ export default class Assistant extends Component {
     this.getHistory();
   }
 
-  setGeneralStates(){
-    const {customParamsStates} = this.props,
-      geolocalization =  customParamsStates.getIn(["customParams","settings","geolocalization"]);
-      
+  setGeneralStates() {
+    const { customParamsStates } = this.props,
+      geolocalization = customParamsStates.getIn([
+        "customParams",
+        "settings",
+        "geolocalization"
+      ]);
+
     this.getOrigen();
-    if(geolocalization) this.getLocation();
+    if (geolocalization) this.getLocation();
   }
 
   //ORIGEN
-  getOrigen(){
+  getOrigen() {
     const token = false;
-    if(token){
-      if(!this.isMobileDevice){
+    if (token) {
+      if (!this.isMobileDevice) {
         this.props.setOrigen("Mobile Privado");
-      }else{
+      } else {
         this.props.setOrigen("Sitio Privado");
       }
-    }else{
-      if(!this.isMobileDevice){
+    } else {
+      if (!this.isMobileDevice) {
         this.props.setOrigen("Mobile Público");
-      }else{
+      } else {
         this.props.setOrigen("Sitio Público");
       }
     }
-
   }
 
-  getLocation(){
+  getLocation() {
     this.props.getLocation();
   }
 
   isMobileDevice() {
-    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1);
+    return (
+      typeof window.orientation !== "undefined" ||
+      navigator.userAgent.indexOf("IEMobile") !== -1
+    );
   }
   //END ORIGEN
 
@@ -81,12 +87,19 @@ export default class Assistant extends Component {
       },
       "*"
     );
-    this.props.closeAssistant();
+    debugger;
+    const { closeAssistant, conversationsStates, sendSaludo, enabledHelp, enabledInput } = this.props;
+    const saludo = conversationsStates.get('conversations').get(0).toJS();
+    closeAssistant();
+    saludo.enabled = true;
+    sendSaludo(saludo);
+    enabledHelp();
+    enabledInput();
   }
 
-  closeEscape(e){
+  closeEscape(e) {
     const tecla = e.keyCode;
-    if(tecla===27){
+    if (tecla === 27) {
       this.closeAssistant();
     }
   }
@@ -99,15 +112,16 @@ export default class Assistant extends Component {
 
   content(assistantStates) {
     if (assistantStates.get("active")) {
-      const {
-          customParamsStates,
-        } = this.props,
+      const { customParamsStates } = this.props,
         ayuda = customParamsStates
           .get("customParams")
           .get("settings")
           .get("help");
       return (
-        <div onKeyUp={this.closeEscape} tabIndex="0">
+        <div
+          onKeyUp={this.closeEscape}
+          //tabIndex="1"
+        >
           <Header
             logo={customParamsStates.get("customParams").get("logo")}
             titulo={customParamsStates.get("customParams").get("titulo")}
@@ -124,9 +138,7 @@ export default class Assistant extends Component {
             hideWarningHelp={this.props.hideWarningHelp}
           />
           {this.fillHelp(ayuda)}
-          <Conversations
-            {...this.props}
-          />
+          <Conversations {...this.props} />
           <Input {...this.props} />
         </div>
       );
