@@ -29,17 +29,19 @@ export default class Input extends Component {
 
   submitMessage(event) {
     event.preventDefault();
-    const { generalStates } = this.props,
-      general = generalStates.toJS(),
-      msg = this.state.msg,
-      conversation = {
-        general,
-        msg: [msg],
-        send: "to",
-        enabled: true
-      };
-    this.props.updateConversation(conversation);
-    this.setState({ msg: "" });
+    if(this.state.msg.length>0){
+      const { generalStates } = this.props,
+        general = generalStates.toJS(),
+        msg = this.state.msg,
+        conversation = {
+          general,
+          msg: [msg],
+          send: "to",
+          enabled: true
+        };
+      this.props.updateConversation(conversation);
+      this.setState({ msg: "" });
+    }
   }
 
   render() {
