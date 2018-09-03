@@ -51,7 +51,9 @@ export class Router extends Component {
   }
 
   getContent(customParamsStates) {
-    if (customParamsStates.getIn(["customParams","avatar"])) {
+    const avatar = customParamsStates.getIn(["customParams","avatar"]),
+      estado = customParamsStates.getIn(["customParams","estado"])
+    if (avatar && estado!==0) {
       return (
         <BrowserRouter>
           <div>

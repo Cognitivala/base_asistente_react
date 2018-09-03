@@ -79,7 +79,8 @@ export function getCustomParams() {
         subtitulo: "SUBTITLE",
         titulo: "ASSISTANT TITLE",
         url: "https://example.com",
-        userImg:"https://yt3.ggpht.com/a-/ACSszfH3hIxrtLXIrQhu3lLOvy-Hvidrl5p8nGWq2w=s900-mo-c-c0xffffffff-rj-k-no",
+        userImg:
+          "https://yt3.ggpht.com/a-/ACSszfH3hIxrtLXIrQhu3lLOvy-Hvidrl5p8nGWq2w=s900-mo-c-c0xffffffff-rj-k-no",
         settings: {
           keep_conversation: true,
           geolocalization: true,
@@ -288,7 +289,7 @@ export function updateConversation(data) {
 
     //Respuesta
     setTimeout(() => {
-      const rand = Math.floor(Math.random() * (3 - 1 + 1) + 1);
+      const rand = Math.floor(Math.random() * (4 - 1 + 1) + 1);
       let data;
       switch (rand) {
         case 1:
@@ -339,7 +340,7 @@ export function updateConversation(data) {
             ]
           };
           break;
-          case 3:
+        case 3:
           data = {
             general: {
               cid: "SOYELCID",
@@ -351,6 +352,49 @@ export function updateConversation(data) {
               location: null
             },
             msg: ["No se que responder..."]
+          };
+        case 4:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Por favor, selecciona una opción: "],
+            selects: [
+              {
+                text: "Seleccione",
+                value: "-1"
+              },
+              {
+                text: "Option 1",
+                value: "1"
+              },
+              {
+                text: "Option 2",
+                value: "2"
+              },
+              {
+                text: "Option 3",
+                value: "3"
+              },
+              {
+                text: "Option 4",
+                value: "4"
+              },
+              {
+                text: "Option 5",
+                value: "5"
+              },
+              {
+                text: "Option 6",
+                value: "6"
+              }
+            ]
           };
           break;
       }
@@ -371,7 +415,7 @@ function messageResponse(dispatch, data) {
         dispatch({ type: "ENABLED_VALORACION" });
         dispatch(pushConversation(data));
         break;
-      case "formContacto":
+      case "form":
         dispatch(setGeneral(data.general));
         dispatch({ type: "ENABLED_FORM" });
         dispatch(pushConversation(data));
@@ -392,7 +436,7 @@ export function setHistory(data) {
         case "valoracion":
           dispatch({ type: "ENABLED_VALORACION" });
           break;
-        case "formContacto":
+        case "form":
           dispatch({ type: "ENABLED_FORM" });
           break;
         default:
@@ -456,7 +500,7 @@ export function updateConversationButton(data) {
             },
             send: "from",
             enabled: true,
-            liftUp: "formContacto",
+            liftUp: "form",
             form: {
               header: {
                 icon: "fas fa-user-tie",
@@ -466,11 +510,11 @@ export function updateConversationButton(data) {
                 textB: "o en horario hábil siguiente",
                 closeMsg: "No"
               },
-              bajada: "Todos los campos son obligatorios",
+              bajada: "Campos obligatorios (*)",
               url: "",
               fields: [
                 {
-                  legend: "Nombre",
+                  legend: "Nombre*",
                   type: "text",
                   name: "nombre",
                   placeholder: "Ej. Juan",
@@ -482,16 +526,7 @@ export function updateConversationButton(data) {
                   }
                 },
                 {
-                  legend: "Checkbox",
-                  type: "checkbox",
-                  name: "checkboxName",
-                  validate: {
-                    types: ["required", "checkbox"],
-                    error: "Debes completar el checkbox"
-                  }
-                },
-                {
-                  legend: "Rut",
+                  legend: "Rut*",
                   type: "text",
                   name: "rut",
                   placeholder: "Ej. 11111111-1",
@@ -513,7 +548,7 @@ export function updateConversationButton(data) {
                   }
                 },
                 {
-                  legend: "Correo electrónico",
+                  legend: "Correo electrónico*",
                   type: "email",
                   name: "email",
                   placeholder: "Ej. nombre@micorreo.cl",
@@ -524,7 +559,16 @@ export function updateConversationButton(data) {
                   }
                 },
                 {
-                  legend: "Select prueba",
+                  legend: "Switch*",
+                  type: "checkbox",
+                  name: "switch",
+                  validate: {
+                    types: ["checkbox"],
+                    error: "Debes seleccionar el checkbox"
+                  }
+                },
+                {
+                  legend: "Select prueba*",
                   type: "select",
                   name: "opciones",
                   options: [

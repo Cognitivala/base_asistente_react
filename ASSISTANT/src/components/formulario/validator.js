@@ -1,18 +1,30 @@
-export function required(input) {
+export function required(input, validates, required) {
   //Verificar tipo de input
-  debugger;
   switch (input.tagName) {
     case "INPUT":
-      return !input.value.length == 0;
-    case "SELECT":
-      return select(input);
-    case "CHECKBOX":
-      return !input.value.length == 0;
+      if(input.type==="checkbox"){
+        return !input.value == "off";
+      }else{
+        return !input.value.length == 0;
+      }
+    case "DIV"://Select
+      if(input.classList.contains("options")){
+        return select(input, validates, required);
+      }else{
+        break;
+      }
     case "TEXTAREA":
       return !input.value.length == 0;
     default:
       break;
   }
+}
+
+export function checkbox(input, validates, required){
+  if (required) {
+    return !input.value == "off";
+  }
+  return true;
 }
 
 export function email(input, validates, required) {
@@ -145,7 +157,7 @@ export function formatRut(rut) {
 }
 
 export function select(value, validates, required) {
-  const optionSelected = value.selectedOptions[0].value;
+  let optionSelected = value.dataset.valor===undefined?-1:value.dataset.valor;
   if (required) {
     return optionSelected != -1;
   } else if (optionSelected != -1) {

@@ -5,6 +5,8 @@ import FormInput from "./form-input";
 import FormTextarea from "./form-textarea";
 import * as Validator from "./validator";
 import FormSelect from "./form-select";
+import FormCheckbox from "./form-checkbox";
+import FormSwitch from "./form-switch";
 
 export default class Formulario extends Component {
   constructor(props) {
@@ -18,23 +20,23 @@ export default class Formulario extends Component {
   }
 
   validate(validates, name, e) {
+    debugger
     const typesValidate = validates.get("types");
     let error = false,
       input = e.target === undefined ? e : e.target,
       arr = this.state.invalidFiels;
     arr = arr.filter(item => item !== name);
     let required = typesValidate.filter(item => item === "required");
-    required = required.size>0;
-    debugger
-      typesValidate.map((map, i) => {
-        if (!Validator[map](input, validates,required)) error = true;
-      });
-      if (error) {
-        arr.push(name);
-      }
-      this.setState({
-        invalidFiels: arr
-      });
+    required = required.size > 0;
+    typesValidate.map((map, i) => {
+      if (!Validator[map](input, validates, required)) error = true;
+    });
+    if (error) {
+      arr.push(name);
+    }
+    this.setState({
+      invalidFiels: arr
+    });
   }
 
   validateAll(fields, fieldsDOM) {
@@ -44,15 +46,19 @@ export default class Formulario extends Component {
         field = fields.get(i),
         name = field.get("name"),
         validates = field.get("validate"),
-        input = map.elements[0],
         typesValidate = validates.get("types");
+      let input = map.elements[0],
+        error = false,
+        required = typesValidate.filter(item => item === "required");
 
-      let error = false;
+      required = required.size > 0;
+
+      input = input !== undefined ? input : map.getElementsByClassName("options")[0];
 
       arr = arr.filter(item => item !== name);
 
       typesValidate.map((map, i) => {
-        if (!Validator[map](input, validates)) error = true;
+        if (!Validator[map](input, validates, required)) error = true;
       });
 
       if (error) {
@@ -62,11 +68,11 @@ export default class Formulario extends Component {
     return arr;
   }
 
-  closeForm(){
+  closeForm() {
     const { general } = this.props,
       conversation = {
         general,
-        msg: ['No'],
+        msg: ["No"],
         send: "to",
         enabled: false
       };
@@ -147,7 +153,21 @@ export default class Formulario extends Component {
                   validateFunc={this.validate}
                   validate={map.get("validate")}
                   withError={withError}
-                  options={map.get('options')}
+                  options={map.get("options")}
+                />
+                {this.fillError(withError, map.getIn(["validate", "error"]))}
+              </fieldset>
+            );
+            break;
+          case "checkbox":
+            retorno.push(
+              <fieldset key={i + map.get("name")}>
+                <legend>{map.get("legend")}</legend>
+                <FormSwitch
+                  name={map.get("name")}
+                  validateFunc={this.validate}
+                  validate={map.get("validate")}
+                  withError={withError}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>

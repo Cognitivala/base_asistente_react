@@ -12,24 +12,13 @@ export default class Conversations extends Component {
   }
 
   componentDidUpdate() {
-    
     this.scrollToBottom();
     this.setHistory();
     this.toggleEnabled();
   }
 
-  componentWillUpdate(){
-    
-  }
-  
-  componentDidMount(){
+  componentDidMount() {
     this.scrollToBottom();
-  }
-  
-  componentWillReceiveProps() {
-    debugger
-    //this.toggleEnabled();
-    //this.scrollToBottom();
   }
 
   toggleEnabled() {
@@ -65,7 +54,6 @@ export default class Conversations extends Component {
   setHistory() {
     const { conversationsStates, customParamsStates } = this.props,
       conversations = conversationsStates.get("conversations");
-debugger
     if (
       customParamsStates.getIn([
         "customParams",
@@ -100,9 +88,7 @@ debugger
     }
   }
 
-  //Scroll Bottom
   scrollToBottom() {
-    // debugger
     if (!this.props.ayudaStates.get("open")) {
       this.scrollTo(this.test.current, this.test.current.scrollHeight, 300);
     }
@@ -146,7 +132,8 @@ debugger
       const conversation = map,
         enabled = conversation.get("enabled"),
         sizeMap = conversationsStates.get("conversations").size,
-        last = j + 1 === sizeMap ? true : false;
+        last = j + 1 === sizeMap ? true : false,
+        updateConversation = this.props.updateConversation;
       let retorno = [],
         animation = j + 1 === sizeMap ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
       if (enabled !== undefined && enabled) {
@@ -157,7 +144,6 @@ debugger
           liftUp = conversation.get("liftUp");
         if (msg !== undefined) {
           //Si tiene mensaje
-          debugger
           retorno.push(
             <ConversationMsg
               key={j}
@@ -207,9 +193,11 @@ debugger
           retorno.push(
             <ConversationSelects
               key={j * 20}
-              selects={selects}
+              options={selects}
               animation={animation}
               send={send}
+              generalStates={generalStates}
+              updateConversation={updateConversation}
             />
           );
         }
@@ -259,7 +247,7 @@ debugger
                 );
               }
               break;
-            case "formContacto":
+            case "form":
               const { formularioStates, closeForm, generalStates } = this.props,
                 enabledFormulario = formularioStates.get("enabled"),
                 form = conversation.get("form");

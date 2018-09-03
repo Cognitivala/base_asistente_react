@@ -9,7 +9,6 @@ export default class ConversationMsg extends Component {
 
   render() {
     const { msgs, animation, send, avatar, colorHeader , userImg} = this.props;
-    debugger
     return msgs.map((map, i) => {
       return (
         <div
