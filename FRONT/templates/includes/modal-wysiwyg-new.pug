@@ -1,0 +1,44 @@
+.modal.fade#myModalWysiwygNew(tabindex="-1" role="dialog" aria-labelledby="myModalWysiwygNewLabel")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        button.close(type="button" data-dismiss="modal" aria-label="Close" data-func="closeDialogW")
+          i.fa.fa-close
+        h6.modal-title
+      .modal-body
+        .form#my-wysiwyg-new(autocomplete="off")
+          #toolbar-new
+            ul.my-toolbar
+              li
+                a(href="#;" data-wysihtml5-command="bold" title="CTRL+B")
+                  i.fa.fa-bold
+              li
+                a(href="#;" data-wysihtml5-command="italic" title="CTRL+I")
+                  i.fa.fa-italic
+              li
+                a(href="#;" data-wysihtml5-command="createLink")
+                  i.fa.fa-link
+              li
+                a(href="#;" data-wysihtml5-command="insertUnorderedList")
+                  i.fa.fa-list-ul
+              li
+                a(href="#;" data-wysihtml5-command="insertOrderedList")
+                  i.fa.fa-list-ol
+
+            div.createLink(data-wysihtml5-dialog="createLink" style="display: none;")
+              label
+                span Enlace
+                input(data-wysihtml5-dialog-field="href" autocomplete="off" placeholder="http://")
+              ul.save-link
+                li
+                  a(href="#;" data-wysihtml5-dialog-action="save")
+                    i.fa.fa-save
+                li
+                  a(href="#;" data-wysihtml5-dialog-action="cancel")
+                    i.fa.fa-ban
+
+            textarea#textareaNew(autocomplete="off")
+
+          .buttons
+            button.pull-left(button data-dismiss="modal" data-func="saveNewDialogW") Guardar
+            button.pull-right(button close data-dismiss="modal" data-func="closeNewDialogW") Cancelar

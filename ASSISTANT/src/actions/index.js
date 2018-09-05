@@ -289,7 +289,7 @@ export function updateConversation(data) {
 
     //Respuesta
     setTimeout(() => {
-      const rand = Math.floor(Math.random() * (4 - 1 + 1) + 1);
+      const rand = Math.floor(Math.random() * (5 - 1 + 1) + 1);
       let data;
       switch (rand) {
         case 1:
@@ -353,6 +353,7 @@ export function updateConversation(data) {
             },
             msg: ["No se que responder..."]
           };
+          break;
         case 4:
           data = {
             general: {
@@ -397,6 +398,26 @@ export function updateConversation(data) {
             ]
           };
           break;
+        case 5:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, selecciona uno o varios botones:"],
+            multibuttons:[
+              { text:"hola", value:"1" },
+              { text:"holanda", value:"2" },
+              { text:"holiwis", value:"3" },
+              { text:"holo", value:"4" },
+              { text:"holawa", value:"5" }
+            ]
+          };
       }
 
       data.send = "from";

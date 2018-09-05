@@ -1,0 +1,10 @@
+.modal.fade#myModalDelete(tabindex="-1" role="dialog" aria-labelledby="myModalDeleteLabel")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        h6.modal-title
+      .modal-body
+      .modal-footer
+        button.pull-left(type="button" data-dismiss="modal" button) Cerrar
+        button(type="button" data-dismiss="modal" button delete onclick="deleteDoc()") Eliminar 
+          i.fa.fa-trash-o(aria-hidden="true")

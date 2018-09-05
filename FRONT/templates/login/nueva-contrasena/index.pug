@@ -1,0 +1,121 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#" heightfull)
+  head
+    title Nueva Contraseña. MAD Cognitiva
+    include ../../includes/meta.pug
+
+  body.no-scroll(heightfull)
+  
+    #wrapper.login(heightfull)
+      .f-row.align-center(heightfull)
+        .f-col.content(padding)
+          .row
+            .col-sm-4.col-sm-offset-4
+              .logo(text-center)
+                img(src="../../assets/img/cognitiva-logo.png")
+              .form#ingresaCorreo(autocomplete="off")
+                fieldset
+                  label Ingresa la contraseña enviado a tu correo
+                  input#email-pass(type="password", name="email-pass", placeholder="Ingresa la contraseña", autocomplete="off")
+                fieldset
+                  label Ingresa tu nueva contraseña
+                  input#pass(type="password", name="pass", placeholder="Ingresa tu nueva contraseña", autocomplete="off")
+                fieldset
+                  label Re ingresa tu nueva contraseña
+                  input#repeat-pass(type="password", name="repeat-pass", placeholder="Ingresa tu nueva contraseña", autocomplete="off")
+
+                button(button type="submit" onclick="getTkn()") Guardar
+    #bkg-login
+    include ../../includes/modal.pug
+
+    script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
+    script(type="text/javascript" src= myPath +'/assets/js/main.js')
+
+    script.
+   
+      var getPath = "https://dev-coopeuch.mycognitiva.io/";
+
+      var uri = window.location.toString();
+      if (uri.indexOf("?") > 0) {
+        var clean_uri = uri.substring(0, uri.indexOf("?"));
+        window.history.replaceState({}, document.title, clean_uri);
+      }
+
+      function $id(id) {
+        return document.getElementById(id);
+      }
+
+      var emailPass = $id('email-pass');
+      var pass = $id('pass');
+      var repeatPass = $id('repeat-pass');
+
+      $id('ingresaCorreo').onsubmit = function() {
+        return false;
+      };
+
+      function OpenModal(title, body){
+        $id('myModal').getElementsByTagName('h6')[0].innerHTML = title;
+        $id('myModal').getElementsByClassName('modal-body')[0].innerHTML = body;
+        $('#myModal').modal({
+          backdrop: 'static',
+          show: true
+        });
+      }
+
+      function getTkn(){
+        var promise = $.ajax({
+          type: 'POST',
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader ("Authorization", "Basic " + btoa("coopeuch:coop1234.."));
+          },
+          url: getPath + 'mant/token'
+        }).done(function(response){
+          if(response.status == 200){
+            changePass(response.token);
+            //- login($('#user').val(), $('#pass').val(), response.token, response.refresh_token);
+            $(function () {
+              $(document).ajaxSend(function(e, xhr, options) {
+                xhr.setRequestHeader("X-XSRF-TOKEN", response.token);
+              });
+            });
+
+          }
+        });
+      }
+
+      function changePass(getTkn) {
+        
+        var emailPassVal  = emailPass.value,
+            passVal       = pass.value,
+            repeatPassVal = repeatPass.value;
+
+        if(passVal != repeatPassVal || passVal == '' || repeatPassVal == ''){
+          OpenModal('Contraseñas no coindicen', 'Revisa tus nuevas contraseñas');
+        } else {
+          var args = {
+            email: "null",
+            passant: emailPassVal,
+            passnew: passVal
+          }
+          var promise = $.ajax({
+            type: 'POST',
+            url: getPath+'mant/updatePass',
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer "+getTkn
+            },
+            data: JSON.stringify(args),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function(response){
+            if (response.status == 200) {
+              OpenModal('Genial!', 'Se ha cambiado tu contraseña', 'success');
+              $('.modal-content .modal-header .close').click(function(){
+                window.location = getPath+"login/";
+              });
+            } else {
+              OpenModal('Auch!', 'Tenemos un problema. El usuario no existe', 'error');
+            }
+          })
+        }
+      }
