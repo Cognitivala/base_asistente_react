@@ -905,7 +905,8 @@ select {
 .bubble {
     display: inline-block;
     background-color: $bubble-bg;
-    padding: 16px;
+    padding: 14px;
+    font-size: 14px;
     min-width: 200px;
     max-width: calc(100% - 56px);
     color: $bubble-bg-message-text;
@@ -982,7 +983,7 @@ select {
     transition: all 300ms ease;
     &.show {
         opacity: 1;
-        z-index: 5;
+        z-index: 14;
         .container-form {
             -moz-transform: translateY(0);
             -webkit-transform: translateY(0);
@@ -1150,24 +1151,26 @@ select {
                 }
                 .switch {
                     position: relative;
-                    display: inline-block;
-                    width: 60px;
+                    width: 100%;
                     height: 34px;
                     margin-bottom: 0px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    p {
+                        margin: 0px;
+                    }
                 }
                 .switch input {
                     display: none;
                 }
                 .slider {
-                    position: absolute;
                     cursor: pointer;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
+                    width: 65px;
                     background-color: #ccc;
                     -webkit-transition: 0.4s;
                     transition: 0.4s;
+                    margin: 0px 10px;
                     &:before {
                         position: absolute;
                         content: "";

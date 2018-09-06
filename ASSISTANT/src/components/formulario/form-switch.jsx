@@ -7,15 +7,11 @@ export default class FormSwitch extends Component {
   }
 
   content() {
-    const {
-      name,
-      validateFunc,
-      validate,
-      withError
-    } = this.props;
+    const { name, validateFunc, validate, withError } = this.props;
     let cssClass = withError ? " error" : "";
     return (
       <label className="switch">
+        <p>NO</p>
         <input
           type="checkbox"
           className={cssClass}
@@ -23,6 +19,7 @@ export default class FormSwitch extends Component {
           onChange={validateFunc.bind(this, validate, name)}
         />
         <span className="slider round" />
+        <p>SI</p>
       </label>
     );
   }

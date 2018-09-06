@@ -589,7 +589,7 @@ export function updateConversationButton(data) {
                   }
                 },
                 {
-                  legend: "Select prueba*",
+                  legend: "Select prueba",
                   type: "select",
                   name: "opciones",
                   options: [
