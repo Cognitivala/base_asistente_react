@@ -1947,6 +1947,14 @@ select {
       .conversation-bubble .select .options div.disabled {
         background: #d0d0d0;
         opacity: 1; }
+  .conversation-bubble button.hover {
+    background: #999 !important; }
+  .conversation-bubble .multi-buttons {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end; }
+    .conversation-bubble .multi-buttons button i {
+      margin-left: 5px; }
 
 .response-img {
   display: inline-block;

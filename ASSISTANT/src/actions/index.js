@@ -26,7 +26,8 @@ export function getLocation() {
           resolve(position);
         },
         () => {
-          reject(new Error("Permission denied"));
+          console.log("Permiso denegado");
+          //reject(new Error("Permission denied"));
         }
       );
     });
@@ -286,7 +287,6 @@ export function updateConversation(data) {
   return function action(dispatch) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-
     //Respuesta
     setTimeout(() => {
       const rand = Math.floor(Math.random() * (5 - 1 + 1) + 1);
@@ -410,14 +410,15 @@ export function updateConversation(data) {
               location: null
             },
             msg: ["Hola, selecciona uno o varios botones:"],
-            multibuttons:[
-              { text:"hola", value:"1" },
-              { text:"holanda", value:"2" },
-              { text:"holiwis", value:"3" },
-              { text:"holo", value:"4" },
-              { text:"holawa", value:"5" }
+            multibuttons: [
+              { title: "hola", value: "1" },
+              { title: "holanda", value: "2" },
+              { title: "holiwis", value: "3" },
+              { title: "holo", value: "4" },
+              { title: "holawa", value: "5" }
             ]
           };
+          break;
       }
 
       data.send = "from";

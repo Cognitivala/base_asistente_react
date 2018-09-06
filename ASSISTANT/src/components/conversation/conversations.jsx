@@ -4,6 +4,7 @@ import ConversationButtons from "./conversation-buttons";
 import ConversationSelects from "./conversation-selects";
 import Valoracion from "../valoracion/valoracion";
 import Formulario from "../formulario/formulario";
+import ConversationMultiButtons from "./conversation-multi-buttons";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -33,12 +34,14 @@ export default class Conversations extends Component {
       const lastConversation = conversationsStates.get("conversations").get(-1),
         buttons = lastConversation.get("buttons"),
         selects = lastConversation.get("selects"),
+        multibuttons = lastConversation.get("multibuttons"),
         help = customParamsStates.getIn(["customParams", "settings", "help"]),
         liftUp = lastConversation.get("liftUp");
       if (
         buttons !== undefined ||
         selects !== undefined ||
-        liftUp !== undefined
+        liftUp !== undefined ||
+        multibuttons !== undefined
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
         if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
@@ -66,6 +69,7 @@ export default class Conversations extends Component {
         largo = conversations.size - 1;
       conversations.map((conversation, i) => {
         const buttons = conversation.get("buttons"),
+          multibuttons = conversation.get("multibuttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
           send = conversation.get("send"),
@@ -75,11 +79,12 @@ export default class Conversations extends Component {
           map = {
             buttons: buttons !== undefined ? buttons.toJS() : buttons,
             selects: selects !== undefined ? selects.toJS() : selects,
+            multibuttons: buttons !== undefined ? buttons.toJS() : multibuttons,
             msg: msg !== undefined ? msg.toJS() : msg,
             send: send !== undefined ? send : send,
             liftUp: liftUp !== undefined ? liftUp : liftUp,
             enabled: enabled !== undefined ? enabled : enabled,
-            form: form !== undefined ? form : form
+            form: form !== undefined ? form : form,
           };
         if (largo === i) map.general = conversation.get("general").toJS();
         hc.push(map);
@@ -141,6 +146,7 @@ export default class Conversations extends Component {
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
           send = conversation.get("send"),
+          multibuttons = conversation.get("multibuttons"),
           liftUp = conversation.get("liftUp");
         if (msg !== undefined) {
           //Si tiene mensaje
@@ -198,6 +204,37 @@ export default class Conversations extends Component {
               send={send}
               generalStates={generalStates}
               updateConversation={updateConversation}
+            />
+          );
+        }
+
+        if (multibuttons !== undefined) {
+          //si tiene selects
+          const {
+              ayudaStates,
+              disabledHelp,
+              closeHelp,
+              disabledInput,
+              inputStates,
+              customParamsStates
+            } = this.props,
+            last = j + 1 === sizeMap ? true : false;
+          retorno.push(
+            <ConversationMultiButtons
+              key={j * 30}
+              buttons={multibuttons}
+              animation={animation}
+              send={send}
+              updateConversationButton={updateConversationButton}
+              colorHeader={colorHeader}
+              generalStates={generalStates}
+              ayudaStates={ayudaStates}
+              disabledHelp={disabledHelp}
+              closeHelp={closeHelp}
+              disabledInput={disabledInput}
+              inputStates={inputStates}
+              customParamsStates={customParamsStates}
+              last={last}
             />
           );
         }

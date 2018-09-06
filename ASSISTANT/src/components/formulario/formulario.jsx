@@ -20,7 +20,6 @@ export default class Formulario extends Component {
   }
 
   validate(validates, name, e) {
-    debugger
     const typesValidate = validates.get("types");
     let error = false,
       input = e.target === undefined ? e : e.target,
