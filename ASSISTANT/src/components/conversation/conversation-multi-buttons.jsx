@@ -13,11 +13,6 @@ export default class ConversationMultiButtons extends Component {
   }
 
   sendButtonresponse(event) {
-    const $item = event.target;
-
-    //Bloquea botones
-    $item.parentElement.parentElement.className += " bloqued";
-    //Envia mensaje
     const { generalStates } = this.props,
       general = generalStates.toJS(),
       conversation = {
@@ -62,7 +57,7 @@ export default class ConversationMultiButtons extends Component {
       });
 
     return (
-      <div className={"conversation-bubble align-center " + animation + send}>
+      <div className={"conversation-bubble align-center buttons " + animation + send}>
         {botones}
         <div className="multi-buttons">
           <button
@@ -83,10 +78,7 @@ ConversationMultiButtons.propTypes = {
   buttons: PropTypes.any.isRequired,
   animation: PropTypes.string.isRequired,
   send: PropTypes.string.isRequired,
-  updateConversationButton: PropTypes.func.isRequired,
   colorHeader: PropTypes.string.isRequired,
-  ayudaStates: PropTypes.any.isRequired,
-  inputStates: PropTypes.any.isRequired,
-  customParamsStates: PropTypes.any.isRequired,
-  last: PropTypes.any.isRequired
+  updateConversationButton: PropTypes.func.isRequired,
+  generalStates: PropTypes.any.isRequired
 };

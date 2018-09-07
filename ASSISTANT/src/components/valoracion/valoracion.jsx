@@ -18,14 +18,6 @@ export default class Valoracion extends Component {
     this.closeValoracion = this.closeValoracion.bind(this);
   }
 
-  componentWillMount() {
-    const { ayudaStates, inputStates, customParamsStates } = this.props,
-      help = customParamsStates.getIn(["customParams", "settings", "help"]);
-    if (help && ayudaStates.get("open")) this.props.closeHelp();
-    if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
-    if (inputStates.get("enabled")) this.props.disabledInput();
-  }
-
   //// VALORACION ////
 
   //   sendValueMsg(yaVal, yaCont, yaSol, yaSum, msg) {
@@ -113,6 +105,7 @@ export default class Valoracion extends Component {
   }
 
   closeValoracion(e) {
+    debugger
     const { generalStates } = this.props,
       msg = e.target.dataset.msg,
       general = generalStates.toJS(),
@@ -230,16 +223,14 @@ export default class Valoracion extends Component {
 }
 
 Valoracion.propTypes = {
+  generalStates: PropTypes.any.isRequired,
+  setErrorValoracion: PropTypes.func.isRequired,
+  sendValoracion: PropTypes.func.isRequired,
   valoracionStates: PropTypes.any.isRequired,
   setStar: PropTypes.func.isRequired,
-  setPudoResolverValoracion: PropTypes.func.isRequired,
+  setOverStar: PropTypes.func.isRequired,
   setCommentValoracion: PropTypes.func.isRequired,
+  setPudoResolverValoracion: PropTypes.func.isRequired,
   closeValoracion: PropTypes.func.isRequired,
-  ayudaStates: PropTypes.any.isRequired,
-  closeHelp: PropTypes.func.isRequired,
-  disabledHelp: PropTypes.func.isRequired,
-  inputStates: PropTypes.any.isRequired,
-  disabledInput: PropTypes.func.isRequired,
-  customParamsStates: PropTypes.any.isRequired,
-  setOverStar: PropTypes.func.isRequired
+  customParamsStates: PropTypes.any.isRequired
 };

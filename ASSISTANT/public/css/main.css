@@ -1847,11 +1847,12 @@ select {
   height: calc(100vh - 130px);
   overflow: hidden;
   overflow-y: scroll;
-  position: relative;
-  padding-bottom: 32px;
   background: #fff;
   transition: all 300ms ease-in-out;
-  top: 0; }
+  display: flex;
+  flex-flow: column; }
+  .conversation-holder.holder {
+    height: calc(100vh - 80px); }
   .conversation-holder::-webkit-scrollbar {
     width: 3px;
     max-width: 3px; }
@@ -1865,22 +1866,32 @@ select {
     border-radius: 0; }
   .conversation-holder.active {
     height: calc(50vh - 65px);
-    top: calc(50vh - 65px); }
+    margin-top: calc(50vh - 65px); }
 
 .conversation-bubble {
   margin-bottom: 16px;
-  position: relative; }
+  display: flex;
+  width: 100%;
+  align-items: flex-end;
+  justify-content: flex-start;
+  position: relative;
+  flex-wrap: wrap;
+  z-index: 0; }
   .conversation-bubble.to {
-    text-align: right; }
+    justify-content: flex-end; }
     .conversation-bubble.to .bubble {
       background-color: #0078c7;
       color: #FFFFFF;
-      text-align: left;
       border-radius: 15px 15px 0 15px;
-      margin-right: 60px; }
-    .conversation-bubble.to img {
-      left: initial;
-      right: 0; }
+      margin-right: 10px; }
+  .conversation-bubble img {
+    width: 40px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
+    border: none; }
+  .conversation-bubble.buttons {
+    justify-content: center; }
+  .conversation-bubble.datepickers {
+    justify-content: space-between; }
   .conversation-bubble .assessment {
     display: block;
     padding: 5px 15px;
@@ -1893,68 +1904,114 @@ select {
       text-decoration: none;
       font-weight: normal; }
   .conversation-bubble.from .bubble {
-    border-radius: 15px 15px 15px 0;
-    margin-left: 56px; }
-  .conversation-bubble .select:before {
-    content: "";
-    position: absolute;
-    top: 14px;
-    right: 15px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 10px solid #333;
-    z-index: 11; }
-  .conversation-bubble .select .options {
-    margin: 0;
-    height: 36px;
-    background: transparent;
-    color: #666;
-    font-weight: 300;
-    -webkit-border-radius: 18px;
-    overflow: hidden;
-    display: flex;
-    flex-flow: column; }
-    .conversation-bubble .select .options.active {
-      overflow: initial; }
-      .conversation-bubble .select .options.active div:first-child {
-        border-radius: 18px 18px 0px 0px; }
-      .conversation-bubble .select .options.active.error div:first-child {
-        border-radius: 18px 18px 0px 0px; }
-    .conversation-bubble .select .options.error div:first-child {
-      border-radius: 18px;
-      border: 1px solid;
-      border-color: #d9534f;
-      color: #d9534f; }
-    .conversation-bubble .select .options div {
-      cursor: pointer;
-      padding: 5px 17px;
-      z-index: 10;
-      background: #f8f8f8;
-      position: relative;
-      border-right: 1px solid #999;
-      border-bottom: 1px solid #999;
-      border-left: 1px solid #999; }
-      .conversation-bubble .select .options div:hover {
-        background: #eee; }
-      .conversation-bubble .select .options div:first-child {
+    border-radius: 15px 15px 15px 0; }
+  .conversation-bubble .select {
+    width: 100%; }
+    .conversation-bubble .select:before {
+      content: "";
+      position: absolute;
+      top: 14px;
+      right: 15px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 10px solid #333;
+      z-index: 11; }
+    .conversation-bubble .select .options {
+      width: 100%;
+      margin: 0;
+      height: 36px;
+      background: transparent;
+      color: #666;
+      font-weight: 300;
+      -webkit-border-radius: 18px;
+      overflow: hidden;
+      display: flex;
+      flex-flow: column; }
+      .conversation-bubble .select .options.active {
+        overflow: initial; }
+        .conversation-bubble .select .options.active div:first-child {
+          border-radius: 18px 18px 0px 0px; }
+        .conversation-bubble .select .options.active.error div:first-child {
+          border-radius: 18px 18px 0px 0px; }
+      .conversation-bubble .select .options.error div:first-child {
         border-radius: 18px;
-        border: 1px solid #999; }
-      .conversation-bubble .select .options div:last-child {
+        border: 1px solid;
+        border-color: #d9534f;
+        color: #d9534f; }
+      .conversation-bubble .select .options div {
+        cursor: pointer;
+        padding: 5px 17px;
+        z-index: 10;
+        background: #f8f8f8;
+        position: relative;
+        border-right: 1px solid #999;
         border-bottom: 1px solid #999;
-        border-radius: 0px 0px 18px 18px; }
-      .conversation-bubble .select .options div.disabled {
-        background: #d0d0d0;
-        opacity: 1; }
+        border-left: 1px solid #999; }
+        .conversation-bubble .select .options div:hover {
+          background: #eee; }
+        .conversation-bubble .select .options div:first-child {
+          border-radius: 18px;
+          border: 1px solid #999; }
+        .conversation-bubble .select .options div:last-child {
+          border-bottom: 1px solid #999;
+          border-radius: 0px 0px 18px 18px; }
+        .conversation-bubble .select .options div.disabled {
+          background: #d0d0d0;
+          opacity: 1; }
   .conversation-bubble button.hover {
     background: #999 !important; }
   .conversation-bubble .multi-buttons {
     display: flex;
     width: 100%;
     justify-content: flex-end; }
-    .conversation-bubble .multi-buttons button i {
-      margin-left: 5px; }
+    .conversation-bubble .multi-buttons button {
+      margin-top: 10px; }
+      .conversation-bubble .multi-buttons button i {
+        margin-left: 5px; }
+  .conversation-bubble .react-datepicker-popper {
+    z-index: 10; }
+  .conversation-bubble .single-date {
+    width: 50%; }
+    .conversation-bubble .single-date label {
+      font-size: 13px;
+      margin-bottom: 0px; }
+  .conversation-bubble .double-date {
+    width: 48%; }
+    .conversation-bubble .double-date label {
+      font-size: 13px;
+      margin-bottom: 0px; }
+  .conversation-bubble .datepicker-cognitive {
+    margin: 0;
+    height: 36px;
+    background: transparent;
+    padding: 0 18px;
+    border: 1px solid #999;
+    color: #666;
+    resize: none;
+    font-weight: 300;
+    width: 100%;
+    -webkit-border-radius: 18px;
+    border-radius: 18px; }
+    .conversation-bubble .datepicker-cognitive:-webkit-autofill, .conversation-bubble .datepicker-cognitive:-webkit-autofill:hover, .conversation-bubble .datepicker-cognitive:-webkit-autofill:focus, .conversation-bubble .datepicker-cognitive:-webkit-autofill:active {
+      -webkit-text-fill-color: #666 !important;
+      transition: background-color 5000s ease-in-out 0s; }
+    .conversation-bubble .datepicker-cognitive::-webkit-input-placeholder {
+      color: #ccc;
+      font-weight: 300; }
+    .conversation-bubble .datepicker-cognitive::-moz-placeholder {
+      color: #ccc;
+      font-weight: 300; }
+    .conversation-bubble .datepicker-cognitive:-ms-input-placeholder {
+      color: #ccc;
+      font-weight: 300; }
+    .conversation-bubble .datepicker-cognitive:-moz-placeholder {
+      color: #ccc;
+      font-weight: 300; }
+    .conversation-bubble .datepicker-cognitive.error {
+      border-color: #d9534f;
+      color: #d9534f; }
 
 .response-img {
   display: inline-block;
@@ -2066,13 +2123,13 @@ select {
     transform: scale(1); } }
 
 .bubble {
-  display: inline-block;
   background-color: #eee;
   padding: 14px;
   font-size: 14px;
   min-width: 200px;
   max-width: calc(100% - 56px);
   color: #666666;
+  margin-left: 10px;
   -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16); }
   .bubble a {
@@ -2577,33 +2634,39 @@ select {
       -webkit-border-radius: 0;
       border-radius: 0; }
 
-.bloqued {
-  position: relative; }
-  .bloqued .btn {
-    color: #aeaeae;
-    background: #eee !important; }
-    .bloqued .btn:hover {
-      box-shadow: 0 0 15px rgba(247, 247, 247, 0.7); }
-  .bloqued:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    z-index: 3;
-    background: rgba(0, 0, 0, 0); }
-  .bloqued .select:after {
-    content: "";
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    z-index: 11;
-    background-color: #eeeeeead;
-    cursor: not-allowed;
-    border-radius: 18px; }
+.bloqued .btn {
+  color: #aeaeae;
+  background: #eee !important; }
+  .bloqued .btn:hover {
+    box-shadow: 0 0 15px rgba(247, 247, 247, 0.7); }
+
+.bloqued:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  background: rgba(0, 0, 0, 0); }
+
+.bloqued .select:after {
+  content: "";
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  z-index: 0;
+  background-color: #eeeeeead;
+  cursor: not-allowed;
+  border-radius: 18px; }
+
+.bloqued .select:before {
+  z-index: 0; }
+
+.bloqued .select .options div {
+  z-index: 0; }
 
 /*------------------------------------------------------------------------------ Tables */
 table {

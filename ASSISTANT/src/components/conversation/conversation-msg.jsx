@@ -8,23 +8,42 @@ export default class ConversationMsg extends Component {
   }
 
   render() {
-    const { msgs, animation, send, avatar, colorHeader , userImg} = this.props;
+    const { msgs, animation, send, avatar, colorHeader , userImg} = this.props,
+    to = send==="to"?true:false;
     return msgs.map((map, i) => {
-      return (
-        <div
-          key={i}
-          className={
-            "conversation-bubble " + animation + send
-          }
-        >
-          <img
-            className="rounded-img response-img"
-            src={send==="to"?userImg:avatar}
-            alt="Respuesta"
-          />
-          <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
-        </div>
-      );
+      if(to){
+        return (
+          <div
+            key={i}
+            className={
+              "conversation-bubble " + animation + send
+            }
+          >
+            <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
+            <img
+              className="rounded-img"
+              src={send==="to"?userImg:avatar}
+              alt="Respuesta"
+            />
+          </div>
+        );
+      }else{
+        return (
+          <div
+            key={i}
+            className={
+              "conversation-bubble " + animation + send
+            }
+          >
+            <img
+              className="rounded-img"
+              src={send==="to"?userImg:avatar}
+              alt="Respuesta"
+            />
+            <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
+          </div>
+        );
+      }
     });
   }
 }

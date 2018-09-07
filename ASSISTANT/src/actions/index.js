@@ -283,14 +283,25 @@ function pushConversation(data) {
     data
   };
 }
+export function updateConversationCalendar(data){
+  return function action(dispatch){
+    dispatch({type:"UPDATE_CONVERSATION_CALENDAR",data})
+  }
+}
 export function updateConversation(data) {
   return function action(dispatch) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
     //Respuesta
     setTimeout(() => {
-      const rand = Math.floor(Math.random() * (5 - 1 + 1) + 1);
+      const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
       let data;
+      //1 = MSG + Buttons (Valoración)
+      //2 = MSG + Buttons (Contactar)
+      //3 = MSG
+      //4 = MSG + Select
+      //5 = MSG + Multibutton
+      //6 = MSG + Datepicker
       switch (rand) {
         case 1:
           data = {
@@ -417,6 +428,36 @@ export function updateConversation(data) {
               { title: "holo", value: "4" },
               { title: "holawa", value: "5" }
             ]
+          };
+          break;
+        case 6:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, seleccione una fecha:"],
+            datepicker: [{name:"inicial",value:"22/05/1991"},{name:"final",value:"22/05/1991"}]
+          };
+          break;
+        case 7:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, seleccione una fecha:"],
+            datepicker: [{name:"",value:""},{name:"",value:""}]
           };
           break;
       }

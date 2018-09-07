@@ -13,12 +13,10 @@ export default class FormSelect extends Component {
     this.setSelected = this.setSelected.bind(this);
   }
 
-  componentDidUpdate() {}
 
   sendSelectResponse(event) {
     const $item = event.target,
       msg = $item.dataset.value;
-    $item.parentElement.className += " bloqued";
     const { generalStates } = this.props,
       general = generalStates.toJS(),
       conversation = {
@@ -121,9 +119,9 @@ export default class FormSelect extends Component {
 }
 
 FormSelect.ConversationSelects = {
-  name: PropTypes.string.isRequired,
   options: PropTypes.any.isRequired,
-  validateFunc: PropTypes.func.isRequired,
-  validate: PropTypes.object,
-  withError: PropTypes.bool
+  animation: PropTypes.string.isRequired,
+  send: PropTypes.string.isRequired,
+  updateConversation: PropTypes.func.isRequired,
+  generalStates: PropTypes.any.isRequired
 };

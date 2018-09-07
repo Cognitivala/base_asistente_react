@@ -5,6 +5,7 @@ import ConversationSelects from "./conversation-selects";
 import Valoracion from "../valoracion/valoracion";
 import Formulario from "../formulario/formulario";
 import ConversationMultiButtons from "./conversation-multi-buttons";
+import ConversationCalendar from "./conversation-calendar";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -36,12 +37,14 @@ export default class Conversations extends Component {
         selects = lastConversation.get("selects"),
         multibuttons = lastConversation.get("multibuttons"),
         help = customParamsStates.getIn(["customParams", "settings", "help"]),
+        datepicker = lastConversation.get("datepicker"),
         liftUp = lastConversation.get("liftUp");
       if (
         buttons !== undefined ||
         selects !== undefined ||
         liftUp !== undefined ||
-        multibuttons !== undefined
+        multibuttons !== undefined ||
+        datepicker !== undefined
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
         if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
@@ -76,15 +79,18 @@ export default class Conversations extends Component {
           liftUp = conversation.get("liftUp"),
           enabled = conversation.get("enabled"),
           form = conversation.get("form"),
+          datepicker = conversation.get("datepicker"),
           map = {
             buttons: buttons !== undefined ? buttons.toJS() : buttons,
             selects: selects !== undefined ? selects.toJS() : selects,
-            multibuttons: buttons !== undefined ? buttons.toJS() : multibuttons,
+            multibuttons:
+              multibuttons !== undefined ? multibuttons.toJS() : multibuttons,
             msg: msg !== undefined ? msg.toJS() : msg,
             send: send !== undefined ? send : send,
             liftUp: liftUp !== undefined ? liftUp : liftUp,
             enabled: enabled !== undefined ? enabled : enabled,
             form: form !== undefined ? form : form,
+            datepicker: datepicker !== undefined ? datepicker : datepicker
           };
         if (largo === i) map.general = conversation.get("general").toJS();
         hc.push(map);
@@ -125,29 +131,30 @@ export default class Conversations extends Component {
   }
   //Fin Scroll Bottom
 
-  fillConversation(
-    avatar,
-    userImg,
-    conversationsStates,
-    updateConversationButton,
-    colorHeader,
-    generalStates
-  ) {
+  fillConversation() {
+    const { updateConversation, updateConversationButton ,conversationsStates, customParamsStates, generalStates } = this.props,
+      sizeConversation = conversationsStates.get("conversations").size,
+      avatar = customParamsStates.getIn(["customParams", "avatar"]),
+      colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
+      userImg = customParamsStates.getIn(["customParams", "userImg"]);
+
     return conversationsStates.get("conversations").map((map, j) => {
       const conversation = map,
-        enabled = conversation.get("enabled"),
-        sizeMap = conversationsStates.get("conversations").size,
-        last = j + 1 === sizeMap ? true : false,
-        updateConversation = this.props.updateConversation;
-      let retorno = [],
-        animation = j + 1 === sizeMap ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
+        enabled = conversation.get("enabled");
+      let retorno = [];
+
+      //SI ESTÁ ENABLED 
       if (enabled !== undefined && enabled) {
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
           send = conversation.get("send"),
           multibuttons = conversation.get("multibuttons"),
-          liftUp = conversation.get("liftUp");
+          datepicker = conversation.get("datepicker"),
+          liftUp = conversation.get("liftUp"),
+          last = j + 1 === sizeConversation ? true : false,
+          animation = last ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
+
         if (msg !== undefined) {
           //Si tiene mensaje
           retorno.push(
@@ -164,32 +171,15 @@ export default class Conversations extends Component {
         }
 
         if (buttons !== undefined) {
-          //Si tiene botones
-          const {
-              ayudaStates,
-              disabledHelp,
-              closeHelp,
-              disabledInput,
-              inputStates,
-              customParamsStates
-            } = this.props,
-            last = j + 1 === sizeMap ? true : false;
           retorno.push(
             <ConversationButtons
               key={j * 10}
               buttons={buttons}
               animation={animation}
               send={send}
-              updateConversationButton={updateConversationButton}
               colorHeader={colorHeader}
+              updateConversationButton={updateConversationButton}
               generalStates={generalStates}
-              ayudaStates={ayudaStates}
-              disabledHelp={disabledHelp}
-              closeHelp={closeHelp}
-              disabledInput={disabledInput}
-              inputStates={inputStates}
-              customParamsStates={customParamsStates}
-              last={last}
             />
           );
         }
@@ -209,31 +199,31 @@ export default class Conversations extends Component {
         }
 
         if (multibuttons !== undefined) {
-          //si tiene selects
-          const {
-              ayudaStates,
-              disabledHelp,
-              closeHelp,
-              disabledInput,
-              inputStates,
-              customParamsStates
-            } = this.props,
-            last = j + 1 === sizeMap ? true : false;
           retorno.push(
             <ConversationMultiButtons
               key={j * 30}
-              buttons={multibuttons}
+              buttons={buttons}
               animation={animation}
               send={send}
-              updateConversationButton={updateConversationButton}
               colorHeader={colorHeader}
+              updateConversationButton={updateConversationButton}
               generalStates={generalStates}
-              ayudaStates={ayudaStates}
-              disabledHelp={disabledHelp}
-              closeHelp={closeHelp}
-              disabledInput={disabledInput}
-              inputStates={inputStates}
-              customParamsStates={customParamsStates}
+            />
+          );
+        }
+
+        if (datepicker !== undefined) {
+          const { updateConversationCalendar } = this.props;
+          retorno.push(
+            <ConversationCalendar
+              key={j * 40}
+              animation={animation}
+              send={send}
+              colorHeader={colorHeader}
+              updateConversation={updateConversation}
+              updateConversationCalendar={updateConversationCalendar}
+              datepicker={datepicker}
+              generalStates={generalStates}
               last={last}
             />
           );
@@ -252,15 +242,9 @@ export default class Conversations extends Component {
                   setPudoResolverValoracion,
                   sendValoracion,
                   setCommentValoracion,
-                  generalStates,
                   setErrorValoracion,
                   closeValoracion,
-                  ayudaStates,
-                  disabledHelp,
-                  closeHelp,
-                  disabledInput,
-                  inputStates,
-                  customParamsStates
+                  generalStates
                 } = this.props;
                 retorno.push(
                   <Valoracion
@@ -274,11 +258,6 @@ export default class Conversations extends Component {
                     setCommentValoracion={setCommentValoracion}
                     setPudoResolverValoracion={setPudoResolverValoracion}
                     closeValoracion={closeValoracion}
-                    ayudaStates={ayudaStates}
-                    disabledHelp={disabledHelp}
-                    closeHelp={closeHelp}
-                    disabledInput={disabledInput}
-                    inputStates={inputStates}
                     customParamsStates={customParamsStates}
                   />
                 );
@@ -312,33 +291,16 @@ export default class Conversations extends Component {
   }
 
   render() {
-    const {
-        conversationsStates,
-        customParamsStates,
-        ayudaStates,
-        valoracionStates,
-        updateConversationButton,
-        generalStates
-      } = this.props,
-      avatar = customParamsStates.getIn(["customParams", "avatar"]),
-      userImg = customParamsStates.getIn(["customParams", "userImg"]),
-      colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
-    let css = ayudaStates.get("open") ? " active" : "";
+    const { ayudaStates, inputStates } = this.props;
+    let css = ayudaStates.get("open") ? " active" : "",
+      cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
       <section
-        className={"conversation-holder box-wrapp" + css}
+        className={"conversation-holder box-wrapp" + css + cssHolder}
         data-conversation=""
         ref={this.test}
       >
-        {this.fillConversation(
-          avatar,
-          userImg,
-          conversationsStates,
-          updateConversationButton,
-          colorHeader,
-          generalStates,
-          valoracionStates
-        )}
+        <div>{this.fillConversation()}</div>
       </section>
     );
   }

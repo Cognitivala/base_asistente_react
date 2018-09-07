@@ -40,6 +40,9 @@ export function conversationsStates(
       return state.set("conversations", Immutable.fromJS(action.data));
     case "SET_MODAL":
       return state.set("modal", action.data);
+    case "UPDATE_CONVERSATION_CALENDAR":
+    debugger
+      return state.setIn(["conversations", (state.get('conversations').size - 1).toString() , "datepicker"],Immutable.fromJS(action.data.datepicker))
     case "PUSH_CONVERSATION":
       return state.withMutations(map => {
         const conversation = Immutable.fromJS(action.data);
