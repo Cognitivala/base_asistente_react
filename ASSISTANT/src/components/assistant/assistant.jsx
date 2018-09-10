@@ -153,7 +153,7 @@ export default class Assistant extends Component {
     if (keep_conversation && hc) {
       localStorage.setItem("hcm", !minimized);
     }
-    if(!minimized) minimizedCDN();
+    if(!minimized) this.minimizedCDN();
     toggleMinimizedAssistant(!minimized);
   }
 
