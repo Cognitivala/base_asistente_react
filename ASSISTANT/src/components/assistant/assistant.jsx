@@ -87,16 +87,7 @@ export default class Assistant extends Component {
       if (hcm) toggleMinimizedAssistant(hcm);
       if (hcc) {
         openAssistant();
-        window.top.postMessage(
-          {
-            test: [
-              {
-                msg: "assistant"
-              }
-            ]
-          },
-          "*"
-        );
+        this.openAssitantCDN();
       }
       if (hc && hcc) closeLauncher(); //Deshabilitar launcher
     } else {
@@ -107,16 +98,7 @@ export default class Assistant extends Component {
   }
 
   closeAssistant() {
-    window.top.postMessage(
-      {
-        test: [
-          {
-            msg: "notification"
-          }
-        ]
-      },
-      "*"
-    );
+    this.notificationCDN();
     const { closeAssistant, conversationsStates, sendSaludo } = this.props,
       saludo = conversationsStates
         .get("conversations")
@@ -145,6 +127,32 @@ export default class Assistant extends Component {
     );
   }
 
+  openAssitantCDN() {
+    window.top.postMessage(
+      {
+        test: [
+          {
+            msg: "assistant"
+          }
+        ]
+      },
+      "*"
+    );
+  }
+
+  notificationCDN() {
+    window.top.postMessage(
+      {
+        test: [
+          {
+            msg: "notification"
+          }
+        ]
+      },
+      "*"
+    );
+  }
+
   minimizedAssistant() {
     const {
         assistantStates,
@@ -161,7 +169,11 @@ export default class Assistant extends Component {
     if (keep_conversation && hc) {
       localStorage.setItem("hcm", !minimized);
     }
-    if (!minimized) this.minimizedCDN();
+    if (!minimized) {
+      this.minimizedCDN();
+    }else{
+      this.openAssitantCDN();
+    }
     toggleMinimizedAssistant(!minimized);
   }
 
