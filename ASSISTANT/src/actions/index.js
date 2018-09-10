@@ -574,7 +574,7 @@ export function updateConversationButton(data) {
                 closeMsg: "No"
               },
               bajada: "Campos obligatorios (*)",
-              url: "",
+              url: "https://www.google.cl",
               fields: [
                 {
                   legend: "Correo electrónico*",
@@ -846,6 +846,38 @@ export function closeForm(data) {
       data.send = "from";
       data.enabled = true;
       messageResponse(dispatch, data);
+    }, 500);
+  };
+}
+
+export function sendForm(data, url) {
+  return function action(dispatch) {
+
+    dispatch({ type: "SEND_FORM_START" });
+
+    // dispatch(setGeneral(data.general));
+    // dispatch(pushConversation(data));
+
+    //Respuesta
+    setTimeout(() => {
+      console.log('url ==> ',url)
+      let data = {
+        general: {
+          cid: "SOYELCID",
+          origen: "Sitio Público",
+          nodo_id: null,
+          intent: null,
+          auth: null,
+          token: null,
+          location: null
+        },
+        msg: ["Se ha enviado el formulario"]
+      };
+      data.send = "from";
+      data.enabled = true;
+      messageResponse(dispatch, data);
+      dispatch({ type: "SEND_FORM_END" });
+      dispatch({ type: "DISABLED_FORM" });
     }, 500);
   };
 }

@@ -58,7 +58,6 @@ export default class Conversations extends Component {
 
   // Guarda historial
   setHistory() {
-    debugger
     const { conversationsStates, customParamsStates } = this.props,
       conversations = conversationsStates.get("conversations");
     if (
@@ -266,7 +265,7 @@ export default class Conversations extends Component {
               }
               break;
             case "form":
-              const { formularioStates, closeForm, generalStates } = this.props,
+              const { formularioStates, closeForm, generalStates, sendForm } = this.props,
                 enabledFormulario = formularioStates.get("enabled"),
                 form = conversation.get("form");
 
@@ -279,6 +278,7 @@ export default class Conversations extends Component {
                     general={generalStates}
                     closeForm={closeForm}
                     colorHeader={colorHeader}
+                    sendForm={sendForm}
                   />
                 );
               }

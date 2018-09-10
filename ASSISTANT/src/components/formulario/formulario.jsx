@@ -7,6 +7,7 @@ import * as Validator from "./validator";
 import FormSelect from "./form-select";
 import FormCheckbox from "./form-checkbox";
 import FormSwitch from "./form-switch";
+import IsFetching from "../modules/is-fetching";
 
 export default class Formulario extends Component {
   constructor(props) {
@@ -52,7 +53,8 @@ export default class Formulario extends Component {
 
       required = required.size > 0;
 
-      input = input !== undefined ? input : map.getElementsByClassName("options")[0];
+      input =
+        input !== undefined ? input : map.getElementsByClassName("options")[0];
 
       arr = arr.filter(item => item !== name);
 
@@ -68,27 +70,37 @@ export default class Formulario extends Component {
   }
 
   closeForm() {
-    const { general } = this.props,
+    debugger;
+    const { general, closeForm } = this.props,
       conversation = {
         general,
         msg: ["No"],
         send: "to",
         enabled: false
       };
-    this.props.closeForm(conversation);
+      
+      closeForm(conversation);
   }
 
   sendDataForm(e) {
-    const { form } = this.props,
+    const { form, sendForm } = this.props,
       fields = form.get("fields"),
       fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset"),
-      arr = this.validateAll(fields, fieldsDOM);
+      arr = this.validateAll(fields, fieldsDOM),
+      url = form.get('url')
     if (arr.length > 0) {
       this.setState({
         invalidFiels: arr
       });
     } else {
-      this.closeForm();
+      let arrayOut = [];
+      for (let i = 0; i < fieldsDOM.length; i++) {
+        let input = fieldsDOM[i].elements[0],
+          value = input.value,
+          name = input.name;
+        arrayOut.push({ name, value });
+      }
+      sendForm(arrayOut, url);
     }
   }
 
@@ -224,6 +236,14 @@ export default class Formulario extends Component {
   }
 
   render() {
-    return this.content();
+    const { formularioStates } = this.props;
+    return (
+      <IsFetching
+        isFetching={formularioStates.get("isFetching")}
+        showChildren={true}
+      >
+        {this.content()}
+      </IsFetching>
+    );
   }
 }
