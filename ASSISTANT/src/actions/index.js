@@ -302,7 +302,7 @@ export function updateConversation(data) {
       //4 = MSG + Select
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
-      switch (rand) {
+      switch (5) {
         case 1:
           data = {
             general: {

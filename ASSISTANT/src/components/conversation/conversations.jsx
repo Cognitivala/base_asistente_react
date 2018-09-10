@@ -199,10 +199,11 @@ export default class Conversations extends Component {
         }
 
         if (multibuttons !== undefined) {
+          debugger
           retorno.push(
             <ConversationMultiButtons
               key={j * 30}
-              buttons={buttons}
+              buttons={multibuttons}
               animation={animation}
               send={send}
               colorHeader={colorHeader}
