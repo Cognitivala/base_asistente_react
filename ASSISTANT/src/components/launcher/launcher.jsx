@@ -8,7 +8,7 @@ export default class Launcher extends Component {
   constructor(props) {
     super(props);
     this.closeLauncher = this.closeLauncher.bind(this);
-    this.callAsyncData();
+    //this.callAsyncData();
   }
   callAsyncData() {
     this.saludar();

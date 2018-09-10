@@ -39,6 +39,7 @@ export class Router extends Component {
       weekdaysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"]
     });
     this.customParams();
+    this.saludar();
   }
 
   customParams() {
@@ -50,10 +51,24 @@ export class Router extends Component {
     // }
   }
 
-  getContent(customParamsStates) {
+  saludar(){
+    const { customParamsStates } = this.props,
+      keep_conversation= customParamsStates.getIn(["customParams","settings","keep_conversation"]),
+      hc = localStorage.getItem("hc");
+    if(!keep_conversation){
+      if(hc) localStorage.removeItem("hc");
+      this.props.getSaludo();
+    }else{
+      if(!hc) this.props.getSaludo();
+    }
+  }
+
+  getContent(customParamsStates, saludoStates) {
     const avatar = customParamsStates.getIn(["customParams","avatar"]),
-      estado = customParamsStates.getIn(["customParams","estado"])
-    if (avatar && estado!==0) {
+      estado = customParamsStates.getIn(["customParams","estado"]),
+      saludo = saludoStates.getIn(["saludo", "msg"]);
+      debugger
+    if (avatar && estado!==0 && saludo.size > 0) {
       return (
         <BrowserRouter>
           <div>
@@ -68,8 +83,8 @@ export class Router extends Component {
   }
 
   render() {
-    const { customParamsStates } = this.props;
-    return this.getContent(customParamsStates);
+    const { customParamsStates, saludoStates } = this.props;
+    return this.getContent(customParamsStates, saludoStates);
   }
 }
 

@@ -6,7 +6,7 @@ export function saludoStates(
     error: "",
     saludo: {
       cid: null,
-      msg: [""],
+      msg: [],
       send: ""
     },
     send: false
