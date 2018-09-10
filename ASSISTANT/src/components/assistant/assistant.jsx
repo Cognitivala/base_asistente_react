@@ -124,6 +124,19 @@ export default class Assistant extends Component {
     localStorage.removeItem("hc");
   }
 
+  minimizedCDN(){
+    window.top.postMessage(
+      {
+        test: [
+          {
+            msg: "minimized"
+          }
+        ]
+      },
+      "*"
+    );
+  }
+
   minimizedAssistant() {
     const {
         assistantStates,
@@ -140,6 +153,7 @@ export default class Assistant extends Component {
     if (keep_conversation && hc) {
       localStorage.setItem("hcm", !minimized);
     }
+    if(!minimized) minimizedCDN();
     toggleMinimizedAssistant(!minimized);
   }
 
