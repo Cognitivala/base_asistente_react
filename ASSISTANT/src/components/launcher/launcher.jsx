@@ -31,7 +31,12 @@ export default class Launcher extends Component {
   }
 
   closeLauncher() {
-    const { saludoStates, generalStates, ayudaStates } = this.props;
+    const { saludoStates, generalStates, ayudaStates, customParamsStates } = this.props,
+    keep_conversation = customParamsStates.getIn([
+      "customParams",
+      "settings",
+      "keep_conversation"
+    ])
     this.props.closeLauncher();
     window.top.postMessage(
       {
@@ -44,6 +49,9 @@ export default class Launcher extends Component {
       "*"
     );
     this.props.openAssistant();
+    debugger
+    if(localStorage.getItem("hc") && keep_conversation) localStorage.setItem("hcc",true);
+
     if (!localStorage.getItem("hc") && !saludoStates.get("send")) {
       //Si no se ha enviado el saludo
       setTimeout(() => {

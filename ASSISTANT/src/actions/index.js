@@ -159,10 +159,19 @@ export function closeAssistant() {
     dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
     dispatch({ type: "SET_NOTIFICATION", data: false });
+    dispatch({type:"ENABLED_INPUT"});
+    dispatch({type:"ENABLED_HELP"});
     dispatch({ type: "OPEN_LAUNCHER" });
+    dispatch({ type: "TOGGLE_MINIMIZED", data: false });
     dispatch(deleteHistory());
   };
 }
+export function toggleMinimizedAssistant(data) {
+  return function action(dispatch) {
+    dispatch({ type: "TOGGLE_MINIMIZED", data });
+  };
+}
+
 //AYUDA
 export function getAyuda() {
   return function action(dispatch) {
@@ -302,7 +311,7 @@ export function updateConversation(data) {
       //4 = MSG + Select
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
-      switch (2) {
+      switch (rand) {
         case 1:
           data = {
             general: {

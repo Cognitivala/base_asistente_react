@@ -1605,6 +1605,7 @@ h6 {
   height: auto;
   color: #ffffff;
   transition: all 300ms ease;
+  font-size: 14px;
   background: #d64b36;
   -webkit-border-radius: 18px;
   border-radius: 18px; }
@@ -3030,16 +3031,14 @@ table {
   animation-fill-mode: both;
   color: #fff;
   font-size: 24px; }
-
-.launcher-button:hover {
-  -moz-transform: scale(1.1);
-  -webkit-transform: scale(1.1);
-  -o-transform: scale(1.1);
-  -ms-transform: scale(1.1);
-  transform: scale(1.1); }
-
-.launcher-button:focus {
-  outline: 0 none; }
+  .launcher-button:hover {
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1); }
+  .launcher-button:focus {
+    outline: 0 none; }
 
 .close-button {
   width: 42px;
@@ -3076,15 +3075,13 @@ table {
   border-radius: 24px 24px 0 24px;
   color: #666;
   font-family: "Lato"; }
-
-.cognitive-assistant-notification-container p {
-  color: #666;
-  font-family: "Lato", sans-serif;
-  font-size: 12px; }
-
-.cognitive-assistant-notification-container .cognitive-assistant-notification-title {
-  font: 300 12px "Lato", sans-serif;
-  color: #333; }
+  .cognitive-assistant-notification-container p {
+    color: #666;
+    font-family: "Lato", sans-serif;
+    font-size: 12px; }
+  .cognitive-assistant-notification-container .cognitive-assistant-notification-title {
+    font: 300 12px "Lato", sans-serif;
+    color: #333; }
 
 .cognitive-assistant-notification-button-close {
   display: block;
@@ -3129,26 +3126,24 @@ table {
   padding: 16px;
   box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.3);
   position: relative;
-  z-index: 10; }
-
-.iframe-cognitive-assistant-container-header {
-  padding: 16px; }
-
-.iframe-cognitive-assistant-container-header h3 {
-  margin: 0;
-  color: #fff;
-  font: 800 16px "Lato", sans-serif !important;
-  text-transform: inherit;
-  letter-spacing: normal;
-  padding: 0; }
-
-.iframe-cognitive-assistant-container-header p {
-  margin: 0;
-  color: #fff;
-  font-family: "Lato", sans-serif;
-  font-size: 12px;
-  opacity: 0.8;
-  line-height: normal !important; }
+  padding: 16px;
+  z-index: 10;
+  transform: translate3d(0, 0vh, 0);
+  transition: all 200ms ease; }
+  .iframe-cognitive-assistant-container-header h3 {
+    margin: 0;
+    color: #fff;
+    font: 800 16px "Lato", sans-serif !important;
+    text-transform: inherit;
+    letter-spacing: normal;
+    padding: 0; }
+  .iframe-cognitive-assistant-container-header p {
+    margin: 0;
+    color: #fff;
+    font-family: "Lato", sans-serif;
+    font-size: 12px;
+    opacity: 0.8;
+    line-height: normal !important; }
 
 .iframe-cognitive-assistant-container-header-image {
   width: 100%;
@@ -3164,6 +3159,25 @@ table {
   display: inline-block;
   vertical-align: middle; }
 
+i.iframe-cognitive-minimize {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 0px;
+  right: 47px;
+  cursor: pointer; }
+  i.iframe-cognitive-minimize:before {
+    content: "";
+    background: white;
+    width: 14px;
+    height: 3px;
+    position: absolute;
+    bottom: 7px;
+    left: 8px; }
+
+.iframe-cognitive-assistant-container-minimized {
+  transform: translate3d(0, calc(100vh - 80px), 0); }
+
 #button-helper {
   transition: all 300ms ease-in-out;
   display: inline-block;
@@ -3178,18 +3192,15 @@ table {
   right: 15px;
   border: 1px solid #fff;
   color: #fff; }
-
-#button-helper.disabled {
-  opacity: 0.5;
-  pointer-events: initial; }
-
-#button-helper.active {
-  background-color: #fff;
-  color: #d64b36; }
-
-#button-helper:hover {
-  background-color: #fff;
-  color: #d64b36; }
+  #button-helper.disabled {
+    opacity: 0.5;
+    pointer-events: initial; }
+  #button-helper.active {
+    background-color: #fff;
+    color: #d64b36; }
+  #button-helper:hover {
+    background-color: #fff;
+    color: #d64b36; }
 
 @keyframes cognitive-assistant-fade-in-up {
   from {

@@ -10,11 +10,12 @@ export default class Assistant extends Component {
     super(props);
     this.closeAssistant = this.closeAssistant.bind(this);
     this.closeEscape = this.closeEscape.bind(this);
+    this.minimizedAssistant = this.minimizedAssistant.bind(this);
   }
 
   componentDidMount() {
     this.setGeneralStates();
-    this.getHistory();
+    this.getBehaviors();
   }
 
   setGeneralStates() {
@@ -63,16 +64,33 @@ export default class Assistant extends Component {
 
   //END LOCATION
 
-  getHistory() {
-    const { customParamsStates } = this.props,
+  getBehaviors() {
+    const {
+        customParamsStates,
+        toggleMinimizedAssistant,
+        openAssistant,
+        setHistory,
+        closeLauncher
+      } = this.props,
       keep_conversation = customParamsStates.getIn([
         "customParams",
         "settings",
         "keep_conversation"
       ]),
-      hc = JSON.parse(localStorage.getItem("hc"));
-    if (keep_conversation && hc) {
-      this.props.setHistory(hc);
+      hc = JSON.parse(localStorage.getItem("hc")),
+      hcm = JSON.parse(localStorage.getItem("hcm")),
+      hcc = JSON.parse(localStorage.getItem("hcc"));
+
+    //Si está abierto o cerrado
+    if (keep_conversation) {
+      if (hc) setHistory(hc);
+      if (hcm) toggleMinimizedAssistant(hcm);
+      if (hcc) openAssistant();
+      if (hc && hcc) closeLauncher(); //Deshabilitar launcher
+    } else {
+      localStorage.removeItem("hcm");
+      localStorage.removeItem("hcc");
+      localStorage.removeItem("hc");
     }
   }
 
@@ -87,14 +105,42 @@ export default class Assistant extends Component {
       },
       "*"
     );
-    debugger;
-    const { closeAssistant, conversationsStates, sendSaludo, enabledHelp, enabledInput } = this.props;
-    const saludo = conversationsStates.get('conversations').get(0).toJS();
+    const {
+        closeAssistant,
+        conversationsStates,
+        sendSaludo
+      } = this.props,
+      saludo = conversationsStates
+        .get("conversations")
+        .get(0)
+        .toJS();
+
     closeAssistant();
     saludo.enabled = true;
     sendSaludo(saludo);
-    enabledHelp();
-    enabledInput();
+
+    localStorage.removeItem("hcm");
+    localStorage.removeItem("hcc");
+    localStorage.removeItem("hc");
+  }
+
+  minimizedAssistant() {
+    const {
+        assistantStates,
+        toggleMinimizedAssistant,
+        customParamsStates
+      } = this.props,
+      minimized = assistantStates.get("minimized"),
+      keep_conversation = customParamsStates.getIn([
+        "customParams",
+        "settings",
+        "keep_conversation"
+      ]),
+      hc = localStorage.getItem("hc");
+    if (keep_conversation && hc) {
+      localStorage.setItem("hcm", !minimized);
+    }
+    toggleMinimizedAssistant(!minimized);
   }
 
   closeEscape(e) {
@@ -116,32 +162,66 @@ export default class Assistant extends Component {
         ayuda = customParamsStates
           .get("customParams")
           .get("settings")
-          .get("help");
-      return (
-        <div
-          onKeyUp={this.closeEscape}
-          //tabIndex="1"
-        >
-          <Header
-            logo={customParamsStates.get("customParams").get("logo")}
-            titulo={customParamsStates.get("customParams").get("titulo")}
-            subtitulo={customParamsStates.get("customParams").get("subtitulo")}
-            closeAssistant={this.closeAssistant}
-            ayuda={ayuda}
-            colorHeader={customParamsStates
-              .get("customParams")
-              .get("colorHeader")}
-            ayudaStates={this.props.ayudaStates}
-            openHelp={this.props.openHelp}
-            closeHelp={this.props.closeHelp}
-            showWarningHelp={this.props.showWarningHelp}
-            hideWarningHelp={this.props.hideWarningHelp}
-          />
-          {this.fillHelp(ayuda)}
-          <Conversations {...this.props} />
-          <Input {...this.props} />
-        </div>
-      );
+          .get("help"),
+        minimized = assistantStates.get("minimized");
+      if (minimized) {
+        return (
+          <div
+            onKeyUp={this.closeEscape}
+            //tabIndex="1"
+          >
+            <Header
+              logo={customParamsStates.get("customParams").get("logo")}
+              titulo={customParamsStates.get("customParams").get("titulo")}
+              subtitulo={customParamsStates
+                .get("customParams")
+                .get("subtitulo")}
+              closeAssistant={this.closeAssistant}
+              ayuda={ayuda}
+              colorHeader={customParamsStates
+                .get("customParams")
+                .get("colorHeader")}
+              ayudaStates={this.props.ayudaStates}
+              openHelp={this.props.openHelp}
+              closeHelp={this.props.closeHelp}
+              showWarningHelp={this.props.showWarningHelp}
+              hideWarningHelp={this.props.hideWarningHelp}
+              minimizedAssistant={this.minimizedAssistant}
+              minimized={minimized}
+            />
+          </div>
+        );
+      } else {
+        return (
+          <div
+            onKeyUp={this.closeEscape}
+            //tabIndex="1"
+          >
+            <Header
+              logo={customParamsStates.get("customParams").get("logo")}
+              titulo={customParamsStates.get("customParams").get("titulo")}
+              subtitulo={customParamsStates
+                .get("customParams")
+                .get("subtitulo")}
+              closeAssistant={this.closeAssistant}
+              ayuda={ayuda}
+              colorHeader={customParamsStates
+                .get("customParams")
+                .get("colorHeader")}
+              ayudaStates={this.props.ayudaStates}
+              openHelp={this.props.openHelp}
+              closeHelp={this.props.closeHelp}
+              showWarningHelp={this.props.showWarningHelp}
+              hideWarningHelp={this.props.hideWarningHelp}
+              minimizedAssistant={this.minimizedAssistant}
+              minimized={minimized}
+            />
+            {this.fillHelp(ayuda)}
+            <Conversations {...this.props} />
+            <Input {...this.props} />
+          </div>
+        );
+      }
     } else {
       return null;
     }

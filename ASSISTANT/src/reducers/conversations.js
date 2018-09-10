@@ -41,7 +41,6 @@ export function conversationsStates(
     case "SET_MODAL":
       return state.set("modal", action.data);
     case "UPDATE_CONVERSATION_CALENDAR":
-    debugger
       return state.setIn(["conversations", (state.get('conversations').size - 1).toString() , "datepicker"],Immutable.fromJS(action.data.datepicker))
     case "PUSH_CONVERSATION":
       return state.withMutations(map => {
@@ -52,7 +51,6 @@ export function conversationsStates(
         map.update("conversations", list => list.push(conversation));
       });
     case "DELETE_HISTORY":
-    debugger
       return state.withMutations(map => {
         map.set("conversations",Immutable.fromJS([]));
       });

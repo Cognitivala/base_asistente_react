@@ -96,6 +96,7 @@ export default class Conversations extends Component {
         hc.push(map);
       });
       localStorage.setItem("hc", JSON.stringify(hc));
+      localStorage.setItem("hcc",true);
     }
   }
 
