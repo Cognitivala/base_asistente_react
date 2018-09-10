@@ -39,7 +39,7 @@ export class Router extends Component {
       weekdaysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"]
     });
     this.customParams();
-    this.saludar();
+    //this.saludar();
   }
 
   customParams() {
@@ -52,6 +52,7 @@ export class Router extends Component {
   }
 
   saludar(){
+    debugger
     const { customParamsStates } = this.props,
       keep_conversation= customParamsStates.getIn(["customParams","settings","keep_conversation"]),
       hc = localStorage.getItem("hc");
@@ -65,10 +66,10 @@ export class Router extends Component {
 
   getContent(customParamsStates, saludoStates) {
     const avatar = customParamsStates.getIn(["customParams","avatar"]),
-      estado = customParamsStates.getIn(["customParams","estado"]),
-      saludo = saludoStates.getIn(["saludo", "msg"]);
+      estado = customParamsStates.getIn(["customParams","estado"]);
+      //saludo = saludoStates.getIn(["saludo", "msg"]);
       debugger
-    if (avatar && estado!==0 && saludo.size > 0) {
+    if (avatar && estado!==0) {
       return (
         <BrowserRouter>
           <div>

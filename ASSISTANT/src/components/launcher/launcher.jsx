@@ -8,21 +8,25 @@ export default class Launcher extends Component {
   constructor(props) {
     super(props);
     this.closeLauncher = this.closeLauncher.bind(this);
-    //this.callAsyncData();
+    this.callAsyncData();
   }
   callAsyncData() {
     this.saludar();
   }
 
-  saludar(){
+  saludar() {
     const { customParamsStates } = this.props,
-      keep_conversation= customParamsStates.getIn(["customParams","settings","keep_conversation"]),
+      keep_conversation = customParamsStates.getIn([
+        "customParams",
+        "settings",
+        "keep_conversation"
+      ]),
       hc = localStorage.getItem("hc");
-    if(!keep_conversation){
-      if(hc) localStorage.removeItem("hc");
+    if (!keep_conversation) {
+      if (hc) localStorage.removeItem("hc");
       this.props.getSaludo();
-    }else{
-      if(!hc) this.props.getSaludo();
+    } else {
+      if (!hc) this.props.getSaludo();
     }
   }
 
@@ -59,23 +63,21 @@ export default class Launcher extends Component {
   }
 
   notification(saludoStates, launcherStates) {
-    if (
-      launcherStates.get("notification") &&
-      !localStorage.getItem("hc")
-    ){
+    if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
       return <Notification saludo={saludoStates.get("saludo").get("msg")} />;
-    }
-    else if (launcherStates.get('circle')) {
+    } else if (launcherStates.get("circle")) {
       return <NotificationCircle />;
-    }else{
+    } else {
       return null;
     }
   }
 
-  content(customParamsStates, saludoStates, launcherStates) {
+  content(customParamsStates, saludoStates, launcherStates, conversationsStates) {
     if (
       launcherStates.get("active") &&
-      customParamsStates.get(["customParams", "status"]) !== 0
+      customParamsStates.get(["customParams", "status"]) !== 0 &&
+      (saludoStates.getIn(["saludo", "msg"]).size > 0 ||
+      conversationsStates.get("conversations").size > 1)
     ) {
       const divStyle = {
         position: "fixed",
@@ -105,14 +107,14 @@ export default class Launcher extends Component {
   }
 
   render() {
-    const { customParamsStates, saludoStates, launcherStates } = this.props;
+    const { customParamsStates, saludoStates, launcherStates, conversationsStates } = this.props;
 
     return (
       <IsFetching
         isFetching={customParamsStates.get("isFetching")}
         showChildren={true}
       >
-        {this.content(customParamsStates, saludoStates, launcherStates)}
+        {this.content(customParamsStates, saludoStates, launcherStates, conversationsStates)}
       </IsFetching>
     );
   }

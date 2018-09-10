@@ -58,6 +58,7 @@ export default class Conversations extends Component {
 
   // Guarda historial
   setHistory() {
+    debugger
     const { conversationsStates, customParamsStates } = this.props,
       conversations = conversationsStates.get("conversations");
     if (

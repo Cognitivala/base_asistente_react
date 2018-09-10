@@ -302,7 +302,7 @@ export function updateConversation(data) {
       //4 = MSG + Select
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
-      switch (5) {
+      switch (2) {
         case 1:
           data = {
             general: {
@@ -577,40 +577,6 @@ export function updateConversationButton(data) {
               url: "",
               fields: [
                 {
-                  legend: "Nombre*",
-                  type: "text",
-                  name: "nombre",
-                  placeholder: "Ej. Juan",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["required", "text"],
-                    rules: { min: 3, max: 10 },
-                    error: "Debes completar el nombre (mínimo 3, máximo 10)"
-                  }
-                },
-                {
-                  legend: "Rut*",
-                  type: "text",
-                  name: "rut",
-                  placeholder: "Ej. 11111111-1",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["required", "rut"],
-                    error: "Debes ingresar un rut válido"
-                  }
-                },
-                {
-                  legend: "Teléfono",
-                  type: "tel",
-                  name: "telefono",
-                  placeholder: "Ej. 912345678",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["tel"],
-                    error: "Debes ingresar un teléfono válido"
-                  }
-                },
-                {
                   legend: "Correo electrónico*",
                   type: "email",
                   name: "email",
@@ -622,44 +588,117 @@ export function updateConversationButton(data) {
                   }
                 },
                 {
-                  legend: "Switch*",
-                  type: "checkbox",
-                  name: "switch",
-                  validate: {
-                    types: ["checkbox"],
-                    error: "Debes seleccionar el checkbox"
-                  }
-                },
-                {
-                  legend: "Select prueba",
-                  type: "select",
-                  name: "opciones",
-                  options: [
-                    { text: "Seleccione", value: -1 },
-                    { text: "Opocion #1", value: 1 },
-                    { text: "Opocion #2", value: 2 },
-                    { text: "Opocion #3", value: 3 }
-                  ],
-                  validate: {
-                    types: ["select"],
-                    error: "Debes seleccionar una opción"
-                  }
-                },
-                {
-                  legend: "Comentario",
-                  type: "textarea",
-                  name: "comentario",
-                  placeholder: "Escriba aquí su comentario",
+                  legend: "Password*",
+                  type: "password",
+                  name: "password",
+                  placeholder: "Ej. nombre@micorreo.cl",
                   autocomplete: "off",
-                  rows: 5,
                   validate: {
-                    types: ["text"],
-                    rules: { min: 3, max: 150 },
-                    error: "Debes completar el nombre (mínimo 3, máximo 150)"
+                    types: ["required", "text"],
+                    rules: { min: 4, max: 10 },
+                    error: "Debes ingresar una password válida"
                   }
-                }
+                },
               ]
             }
+
+
+            // form: {
+            //   header: {
+            //     icon: "fas fa-user-tie",
+            //     textA: "Por favor ingrese sus datos y",
+            //     textStrong:
+            //       "uno de nuestros ejecutivos le responderá a la brevedad posible",
+            //     textB: "o en horario hábil siguiente",
+            //     closeMsg: "No"
+            //   },
+            //   bajada: "Campos obligatorios (*)",
+            //   url: "",
+            //   fields: [
+            //     {
+            //       legend: "Nombre*",
+            //       type: "text",
+            //       name: "nombre",
+            //       placeholder: "Ej. Juan",
+            //       autocomplete: "off",
+            //       validate: {
+            //         types: ["required", "text"],
+            //         rules: { min: 3, max: 10 },
+            //         error: "Debes completar el nombre (mínimo 3, máximo 10)"
+            //       }
+            //     },
+            //     {
+            //       legend: "Rut*",
+            //       type: "text",
+            //       name: "rut",
+            //       placeholder: "Ej. 11111111-1",
+            //       autocomplete: "off",
+            //       validate: {
+            //         types: ["required", "rut"],
+            //         error: "Debes ingresar un rut válido"
+            //       }
+            //     },
+            //     {
+            //       legend: "Teléfono",
+            //       type: "tel",
+            //       name: "telefono",
+            //       placeholder: "Ej. 912345678",
+            //       autocomplete: "off",
+            //       validate: {
+            //         types: ["tel"],
+            //         error: "Debes ingresar un teléfono válido"
+            //       }
+            //     },
+            //     {
+            //       legend: "Correo electrónico*",
+            //       type: "email",
+            //       name: "email",
+            //       placeholder: "Ej. nombre@micorreo.cl",
+            //       autocomplete: "off",
+            //       validate: {
+            //         types: ["required", "email"],
+            //         error: "Debes ingresar un correo electrónico válido"
+            //       }
+            //     },
+            //     {
+            //       legend: "Switch*",
+            //       type: "checkbox",
+            //       name: "switch",
+            //       validate: {
+            //         types: ["checkbox"],
+            //         error: "Debes seleccionar el checkbox"
+            //       }
+            //     },
+            //     {
+            //       legend: "Select prueba",
+            //       type: "select",
+            //       name: "opciones",
+            //       options: [
+            //         { text: "Seleccione", value: -1 },
+            //         { text: "Opocion #1", value: 1 },
+            //         { text: "Opocion #2", value: 2 },
+            //         { text: "Opocion #3", value: 3 }
+            //       ],
+            //       validate: {
+            //         types: ["select"],
+            //         error: "Debes seleccionar una opción"
+            //       }
+            //     },
+            //     {
+            //       legend: "Comentario",
+            //       type: "textarea",
+            //       name: "comentario",
+            //       placeholder: "Escriba aquí su comentario",
+            //       autocomplete: "off",
+            //       rows: 5,
+            //       validate: {
+            //         types: ["text"],
+            //         rules: { min: 3, max: 150 },
+            //         error: "Debes completar el nombre (mínimo 3, máximo 150)"
+            //       }
+            //     }
+            //   ]
+            // }
           };
           messageResponse(dispatch, data);
         }, 500);

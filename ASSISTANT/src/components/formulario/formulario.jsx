@@ -212,8 +212,7 @@ export default class Formulario extends Component {
               <p className="red">{bajada}</p>
               {this.fillContent(fields)}
               <button type="button" onClick={this.sendDataForm}>
-                {" "}
-                Enviar{" "}
+                Enviar
               </button>
             </form>
           </div>
