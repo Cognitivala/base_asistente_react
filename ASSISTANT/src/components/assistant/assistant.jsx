@@ -56,7 +56,7 @@ export default class Assistant extends Component {
       closeLauncher();
       if (hcm) {
         toggleMinimizedAssistant(hcm);
-        this.minimizedCDN;
+        this.minimizedCDN();
       }
     } else {
       localStorage.removeItem("hcm");
