@@ -3011,6 +3011,12 @@ table {
 #main-cognitive-assistant-container * {
   box-sizing: border-box; }
 
+#main-cognitive-assistant-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 99999999; }
+
 .iframe-cognitive-assistant-is-open {
   overflow: hidden !important;
   height: 100% !important;

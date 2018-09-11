@@ -23,21 +23,13 @@ export default class Launcher extends Component {
       ]),
       hc = localStorage.getItem("hc");
     if (!keep_conversation) {
-      if (hc) localStorage.removeItem("hc");
       this.props.getSaludo();
     } else {
       if (!hc) this.props.getSaludo();
     }
   }
 
-  closeLauncher() {
-    const { saludoStates, generalStates, ayudaStates, customParamsStates } = this.props,
-    keep_conversation = customParamsStates.getIn([
-      "customParams",
-      "settings",
-      "keep_conversation"
-    ])
-    this.props.closeLauncher();
+  openAssitantCDN() {
     window.top.postMessage(
       {
         test: [
@@ -48,26 +40,20 @@ export default class Launcher extends Component {
       },
       "*"
     );
-    this.props.openAssistant();
-    debugger
-    if(localStorage.getItem("hc") && keep_conversation) localStorage.setItem("hcc",true);
+  }
 
-    if (!localStorage.getItem("hc") && !saludoStates.get("send")) {
-      //Si no se ha enviado el saludo
-      setTimeout(() => {
-        const msg = saludoStates.getIn(["saludo", "msg"]),
-          send = saludoStates.getIn(["saludo", "send"]),
-          general = generalStates.toJS();
-        let conversation = {
-          general,
-          msg: [msg],
-          send,
-          enabled: true
-        };
-        this.props.sendSaludo(conversation);
-      }, 500);
-    }
-    if (ayudaStates.get("open")) this.props.closeHelp();
+  closeLauncher() {
+    const { closeLauncher, closeHelp,openAssistant, ayudaStates, customParamsStates } = this.props,
+    keep_conversation = customParamsStates.getIn([
+      "customParams",
+      "settings",
+      "keep_conversation"
+    ])
+    closeLauncher();
+    this.openAssitantCDN();
+    openAssistant();
+    if(localStorage.getItem("hc") && keep_conversation) localStorage.setItem("hcc",true);
+    if (ayudaStates.get("open")) closeHelp();
   }
 
   notification(saludoStates, launcherStates) {
@@ -84,17 +70,10 @@ export default class Launcher extends Component {
     if (
       launcherStates.get("active") &&
       customParamsStates.get(["customParams", "status"]) !== 0 &&
-      (saludoStates.getIn(["saludo", "msg"]).size > 0 ||
-      conversationsStates.get("conversations").size > 1)
+      conversationsStates.get("conversations").size > 0
     ) {
-      const divStyle = {
-        position: "fixed",
-        bottom: "10px",
-        right: "10px",
-        zIndex: 99999999
-      };
       return (
-        <div style={divStyle} id="main-cognitive-assistant-container">
+        <div id="main-cognitive-assistant-container">
           <button
             className="launcher-button"
             onClick={this.closeLauncher}

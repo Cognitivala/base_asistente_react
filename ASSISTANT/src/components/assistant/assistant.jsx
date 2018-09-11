@@ -30,6 +30,38 @@ export default class Assistant extends Component {
     if (geolocalization) this.getLocation();
   }
 
+  getBehaviors() {
+    const {
+        customParamsStates,
+        toggleMinimizedAssistant,
+        openAssistant,
+        setHistory,
+        closeLauncher
+      } = this.props,
+      keep_conversation = customParamsStates.getIn([
+        "customParams",
+        "settings",
+        "keep_conversation"
+      ]),
+      hc = JSON.parse(localStorage.getItem("hc")),
+      hcm = JSON.parse(localStorage.getItem("hcm")),
+      hcc = JSON.parse(localStorage.getItem("hcc"));
+
+    //Si mantiene conversacion y tiene historial guardado
+    //Lo abrirá y luego si tiene minimizado lo minimizará
+    if (keep_conversation && hc) {
+      setHistory(hc);
+      openAssistant();
+      this.openAssitantCDN();
+      closeLauncher();
+      if (hcm) toggleMinimizedAssistant(hcm);
+    } else {
+      localStorage.removeItem("hcm");
+      localStorage.removeItem("hcc");
+      localStorage.removeItem("hc");
+    }
+  }
+
   //ORIGEN
   getOrigen() {
     const token = false;
@@ -64,57 +96,21 @@ export default class Assistant extends Component {
 
   //END LOCATION
 
-  getBehaviors() {
-    const {
-        customParamsStates,
-        toggleMinimizedAssistant,
-        openAssistant,
-        setHistory,
-        closeLauncher
-      } = this.props,
-      keep_conversation = customParamsStates.getIn([
-        "customParams",
-        "settings",
-        "keep_conversation"
-      ]),
-      hc = JSON.parse(localStorage.getItem("hc")),
-      hcm = JSON.parse(localStorage.getItem("hcm")),
-      hcc = JSON.parse(localStorage.getItem("hcc"));
-
-    //Si está abierto o cerrado
-    if (keep_conversation) {
-      if (hc) setHistory(hc);
-      if (hcm) toggleMinimizedAssistant(hcm);
-      if (hcc) {
-        openAssistant();
-        this.openAssitantCDN();
-      }
-      if (hc && hcc) closeLauncher(); //Deshabilitar launcher
-    } else {
-      localStorage.removeItem("hcm");
-      localStorage.removeItem("hcc");
-      localStorage.removeItem("hc");
-    }
-  }
-
   closeAssistant() {
     this.notificationCDN();
-    const { closeAssistant, conversationsStates, sendSaludo } = this.props,
-      saludo = conversationsStates
-        .get("conversations")
-        .get(0)
-        .toJS();
-
-    closeAssistant();
-    saludo.enabled = true;
-    sendSaludo(saludo);
+    const {
+      closeAssistant,
+    } = this.props;
 
     localStorage.removeItem("hcm");
     localStorage.removeItem("hcc");
     localStorage.removeItem("hc");
+
+    closeAssistant();
   }
 
   minimizedCDN() {
+    console.log("minimizedCDN");
     window.top.postMessage(
       {
         test: [
@@ -128,6 +124,7 @@ export default class Assistant extends Component {
   }
 
   openAssitantCDN() {
+    console.log("openAssitantCDN");
     window.top.postMessage(
       {
         test: [
@@ -141,6 +138,7 @@ export default class Assistant extends Component {
   }
 
   notificationCDN() {
+    console.log("notificationCDN");
     window.top.postMessage(
       {
         test: [
@@ -171,7 +169,7 @@ export default class Assistant extends Component {
     }
     if (!minimized) {
       this.minimizedCDN();
-    }else{
+    } else {
       this.openAssitantCDN();
     }
     toggleMinimizedAssistant(!minimized);
@@ -190,14 +188,15 @@ export default class Assistant extends Component {
     }
   }
 
-  content(assistantStates) {
-    if (assistantStates.get("active")) {
+  content(assistantStates, conversationsStates) {
+    if (assistantStates.get("active") && conversationsStates.get('conversations').size > 0) {
       const { customParamsStates } = this.props,
         ayuda = customParamsStates
           .get("customParams")
           .get("settings")
           .get("help"),
         minimized = assistantStates.get("minimized");
+
       if (minimized) {
         return (
           <div
@@ -262,14 +261,14 @@ export default class Assistant extends Component {
   }
 
   render() {
-    const { assistantStates } = this.props;
+    const { assistantStates, conversationsStates } = this.props;
 
     return (
       <IsFetching
         isFetching={assistantStates.get("isFetching")}
         showChildren={true}
       >
-        {this.content(assistantStates)}
+        {this.content(assistantStates, conversationsStates)}
       </IsFetching>
     );
   }

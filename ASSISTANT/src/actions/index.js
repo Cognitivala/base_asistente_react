@@ -113,6 +113,7 @@ export function setCustomParams(data) {
 }
 //SALUDO
 export function getSaludo() {
+  debugger
   return function action(dispatch) {
     dispatch(getSaludoStart());
     setTimeout(() => {
@@ -121,14 +122,15 @@ export function getSaludo() {
         msg: ["Hola soy el saludo"]
       };
       item.send = "from";
+      item.enabled = true;
+      dispatch(pushConversation(item));
       dispatch(getSaludoEnd(item));
-    }, 500);
+    }, 2500);
   };
 }
 export function sendSaludo(data) {
   return function action(dispatch) {
     dispatch(pushConversation(data));
-    dispatch({ type: "SEND_SALUDO" }); //No lo envía de nuevo
   };
 }
 function getSaludoStart() {
@@ -156,13 +158,14 @@ export function openAssistant() {
 }
 export function closeAssistant() {
   return function action(dispatch) {
+    debugger
     dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
     dispatch({ type: "SET_NOTIFICATION", data: false });
     dispatch({type:"ENABLED_INPUT"});
     dispatch({type:"ENABLED_HELP"});
-    dispatch({ type: "OPEN_LAUNCHER" });
     dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+    dispatch({ type: "OPEN_LAUNCHER" });
     dispatch(deleteHistory());
   };
 }
@@ -171,7 +174,11 @@ export function toggleMinimizedAssistant(data) {
     dispatch({ type: "TOGGLE_MINIMIZED", data });
   };
 }
-
+export function defaultAssistant() {
+  return function action(dispatch) {
+    dispatch({ type: "TOGGLE_MINIMIZED", data:false });
+  };
+}
 //AYUDA
 export function getAyuda() {
   return function action(dispatch) {
@@ -520,7 +527,6 @@ export function setHistory(data) {
   };
 }
 function deleteHistory() {
-  localStorage.removeItem("hc");
   return { type: "DELETE_HISTORY" };
 }
 export function setModal(data) {

@@ -51,8 +51,9 @@ export function conversationsStates(
         map.update("conversations", list => list.push(conversation));
       });
     case "DELETE_HISTORY":
+      const first = state.get('conversations').get(0);
       return state.withMutations(map => {
-        map.set("conversations",Immutable.fromJS([]));
+        map.set("conversations",Immutable.fromJS([first]));
       });
     default:
       return state;
