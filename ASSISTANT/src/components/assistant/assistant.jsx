@@ -204,6 +204,7 @@ export default class Assistant extends Component {
       if (minimized) {
         return (
           <div
+            className="cognitive-assistant-container-all"
             onKeyUp={this.closeEscape}
             //tabIndex="1"
           >
@@ -231,6 +232,7 @@ export default class Assistant extends Component {
       } else {
         return (
           <div
+            className="cognitive-assistant-container-all"
             onKeyUp={this.closeEscape}
             //tabIndex="1"
           >

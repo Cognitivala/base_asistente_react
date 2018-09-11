@@ -3017,6 +3017,10 @@ table {
   right: 10px;
   z-index: 99999999; }
 
+.cognitive-assistant-container-all {
+  overflow: hidden;
+  border-radius: 24px 24px 0 24px; }
+
 .iframe-cognitive-assistant-is-open {
   overflow: hidden !important;
   height: 100% !important;
