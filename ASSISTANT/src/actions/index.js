@@ -113,7 +113,7 @@ export function setCustomParams(data) {
 }
 //SALUDO
 export function getSaludo() {
-  debugger
+  debugger;
   return function action(dispatch) {
     dispatch(getSaludoStart());
     setTimeout(() => {
@@ -158,12 +158,12 @@ export function openAssistant() {
 }
 export function closeAssistant() {
   return function action(dispatch) {
-    debugger
+    debugger;
     dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
     dispatch({ type: "SET_NOTIFICATION", data: false });
-    dispatch({type:"ENABLED_INPUT"});
-    dispatch({type:"ENABLED_HELP"});
+    dispatch({ type: "ENABLED_INPUT" });
+    dispatch({ type: "ENABLED_HELP" });
     dispatch({ type: "TOGGLE_MINIMIZED", data: false });
     dispatch({ type: "OPEN_LAUNCHER" });
     dispatch(deleteHistory());
@@ -176,7 +176,7 @@ export function toggleMinimizedAssistant(data) {
 }
 export function defaultAssistant() {
   return function action(dispatch) {
-    dispatch({ type: "TOGGLE_MINIMIZED", data:false });
+    dispatch({ type: "TOGGLE_MINIMIZED", data: false });
   };
 }
 //AYUDA
@@ -299,10 +299,10 @@ function pushConversation(data) {
     data
   };
 }
-export function updateConversationCalendar(data){
-  return function action(dispatch){
-    dispatch({type:"UPDATE_CONVERSATION_CALENDAR",data})
-  }
+export function updateConversationCalendar(data) {
+  return function action(dispatch) {
+    dispatch({ type: "UPDATE_CONVERSATION_CALENDAR", data });
+  };
 }
 export function updateConversation(data) {
   return function action(dispatch) {
@@ -458,7 +458,10 @@ export function updateConversation(data) {
               location: null
             },
             msg: ["Hola, seleccione una fecha:"],
-            datepicker: [{name:"inicial",value:"22/05/1991"},{name:"final",value:"22/05/1991"}]
+            datepicker: [
+              { name: "inicial", value: "22/05/1991" },
+              { name: "final", value: "22/05/1991" }
+            ]
           };
           break;
         case 7:
@@ -473,7 +476,7 @@ export function updateConversation(data) {
               location: null
             },
             msg: ["Hola, seleccione una fecha:"],
-            datepicker: [{name:"",value:""},{name:"",value:""}]
+            datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
           };
           break;
       }
@@ -579,45 +582,6 @@ export function updateConversationButton(data) {
             send: "from",
             enabled: true,
             liftUp: "form",
-            form: {
-              header: {
-                icon: "fas fa-user-tie",
-                textA: "Por favor ingrese sus datos y",
-                textStrong:
-                  "uno de nuestros ejecutivos le responderá a la brevedad posible",
-                textB: "o en horario hábil siguiente",
-                closeMsg: "No"
-              },
-              bajada: "Campos obligatorios (*)",
-              url: "https://www.google.cl",
-              fields: [
-                {
-                  legend: "Correo electrónico*",
-                  type: "email",
-                  name: "email",
-                  placeholder: "Ej. nombre@micorreo.cl",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["required", "email"],
-                    error: "Debes ingresar un correo electrónico válido"
-                  }
-                },
-                {
-                  legend: "Password*",
-                  type: "password",
-                  name: "password",
-                  placeholder: "Ej. nombre@micorreo.cl",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["required", "text"],
-                    rules: { min: 4, max: 10 },
-                    error: "Debes ingresar una password válida"
-                  }
-                },
-              ]
-            }
-
-
             // form: {
             //   header: {
             //     icon: "fas fa-user-tie",
@@ -628,42 +592,8 @@ export function updateConversationButton(data) {
             //     closeMsg: "No"
             //   },
             //   bajada: "Campos obligatorios (*)",
-            //   url: "",
+            //   url: "https://www.google.cl",
             //   fields: [
-            //     {
-            //       legend: "Nombre*",
-            //       type: "text",
-            //       name: "nombre",
-            //       placeholder: "Ej. Juan",
-            //       autocomplete: "off",
-            //       validate: {
-            //         types: ["required", "text"],
-            //         rules: { min: 3, max: 10 },
-            //         error: "Debes completar el nombre (mínimo 3, máximo 10)"
-            //       }
-            //     },
-            //     {
-            //       legend: "Rut*",
-            //       type: "text",
-            //       name: "rut",
-            //       placeholder: "Ej. 11111111-1",
-            //       autocomplete: "off",
-            //       validate: {
-            //         types: ["required", "rut"],
-            //         error: "Debes ingresar un rut válido"
-            //       }
-            //     },
-            //     {
-            //       legend: "Teléfono",
-            //       type: "tel",
-            //       name: "telefono",
-            //       placeholder: "Ej. 912345678",
-            //       autocomplete: "off",
-            //       validate: {
-            //         types: ["tel"],
-            //         error: "Debes ingresar un teléfono válido"
-            //       }
-            //     },
             //     {
             //       legend: "Correo electrónico*",
             //       type: "email",
@@ -676,44 +606,116 @@ export function updateConversationButton(data) {
             //       }
             //     },
             //     {
-            //       legend: "Switch*",
-            //       type: "checkbox",
-            //       name: "switch",
-            //       validate: {
-            //         types: ["checkbox"],
-            //         error: "Debes seleccionar el checkbox"
-            //       }
-            //     },
-            //     {
-            //       legend: "Select prueba",
-            //       type: "select",
-            //       name: "opciones",
-            //       options: [
-            //         { text: "Seleccione", value: -1 },
-            //         { text: "Opocion #1", value: 1 },
-            //         { text: "Opocion #2", value: 2 },
-            //         { text: "Opocion #3", value: 3 }
-            //       ],
-            //       validate: {
-            //         types: ["select"],
-            //         error: "Debes seleccionar una opción"
-            //       }
-            //     },
-            //     {
-            //       legend: "Comentario",
-            //       type: "textarea",
-            //       name: "comentario",
-            //       placeholder: "Escriba aquí su comentario",
+            //       legend: "Password*",
+            //       type: "password",
+            //       name: "password",
+            //       placeholder: "Ej. nombre@micorreo.cl",
             //       autocomplete: "off",
-            //       rows: 5,
             //       validate: {
-            //         types: ["text"],
-            //         rules: { min: 3, max: 150 },
-            //         error: "Debes completar el nombre (mínimo 3, máximo 150)"
+            //         types: ["required", "text"],
+            //         rules: { min: 4, max: 10 },
+            //         error: "Debes ingresar una password válida"
             //       }
-            //     }
+            //     },
             //   ]
             // }
+
+            form: {
+              header: {
+                icon: "fas fa-user-tie",
+                textA: "Por favor ingrese sus datos y",
+                textStrong:
+                  "uno de nuestros ejecutivos le responderá a la brevedad posible",
+                textB: "o en horario hábil siguiente",
+                closeMsg: "No"
+              },
+              bajada: "Campos obligatorios (*)",
+              url: "",
+              fields: [
+                {
+                  legend: "Nombre*",
+                  type: "text",
+                  name: "nombre",
+                  placeholder: "Ej. Juan",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "text"],
+                    rules: { min: 3, max: 10 },
+                    error: "Debes completar el nombre (mínimo 3, máximo 10)"
+                  }
+                },
+                {
+                  legend: "Rut*",
+                  type: "text",
+                  name: "rut",
+                  placeholder: "Ej. 11111111-1",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "rut"],
+                    error: "Debes ingresar un rut válido"
+                  }
+                },
+                {
+                  legend: "Teléfono",
+                  type: "tel",
+                  name: "telefono",
+                  placeholder: "Ej. 912345678",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["tel"],
+                    error: "Debes ingresar un teléfono válido"
+                  }
+                },
+                {
+                  legend: "Correo electrónico*",
+                  type: "email",
+                  name: "email",
+                  placeholder: "Ej. nombre@micorreo.cl",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "email"],
+                    error: "Debes ingresar un correo electrónico válido"
+                  }
+                },
+                {
+                  legend: "Switch*",
+                  type: "checkbox",
+                  name: "switch",
+                  validate: {
+                    types: ["checkbox"],
+                    error: "Debes seleccionar el checkbox"
+                  }
+                },
+                {
+                  legend: "Select prueba",
+                  type: "select",
+                  name: "opciones",
+                  options: [
+                    { text: "Seleccione", value: -1 },
+                    { text: "Opocion #1", value: 1 },
+                    { text: "Opocion #2", value: 2 },
+                    { text: "Opocion #3", value: 3 }
+                  ],
+                  validate: {
+                    types: ["select"],
+                    error: "Debes seleccionar una opción"
+                  }
+                },
+                {
+                  legend: "Comentario",
+                  type: "textarea",
+                  name: "comentario",
+                  placeholder: "Escriba aquí su comentario",
+                  autocomplete: "off",
+                  rows: 5,
+                  validate: {
+                    types: ["text"],
+                    rules: { min: 3, max: 150 },
+                    error: "Debes completar el nombre (mínimo 3, máximo 150)"
+                  }
+                }
+              ]
+            }
           };
           messageResponse(dispatch, data);
         }, 500);
@@ -867,7 +869,6 @@ export function closeForm(data) {
 
 export function sendForm(data, url) {
   return function action(dispatch) {
-
     dispatch({ type: "SEND_FORM_START" });
 
     // dispatch(setGeneral(data.general));
@@ -875,7 +876,7 @@ export function sendForm(data, url) {
 
     //Respuesta
     setTimeout(() => {
-      console.log('url ==> ',url)
+      console.log("url ==> ", url);
       let data = {
         general: {
           cid: "SOYELCID",

@@ -201,6 +201,8 @@ export default class Assistant extends Component {
           .get("help"),
         minimized = assistantStates.get("minimized");
 
+      let retorno = [];
+      
       if (minimized) {
         return (
           <div
