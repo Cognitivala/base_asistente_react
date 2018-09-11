@@ -54,7 +54,10 @@ export default class Assistant extends Component {
       openAssistant();
       this.openAssitantCDN();
       closeLauncher();
-      if (hcm) toggleMinimizedAssistant(hcm);
+      if (hcm) {
+        toggleMinimizedAssistant(hcm);
+        this.minimizedCDN;
+      }
     } else {
       localStorage.removeItem("hcm");
       localStorage.removeItem("hcc");
@@ -98,9 +101,7 @@ export default class Assistant extends Component {
 
   closeAssistant() {
     this.notificationCDN();
-    const {
-      closeAssistant,
-    } = this.props;
+    const { closeAssistant } = this.props;
 
     localStorage.removeItem("hcm");
     localStorage.removeItem("hcc");
@@ -189,7 +190,10 @@ export default class Assistant extends Component {
   }
 
   content(assistantStates, conversationsStates) {
-    if (assistantStates.get("active") && conversationsStates.get('conversations').size > 0) {
+    if (
+      assistantStates.get("active") &&
+      conversationsStates.get("conversations").size > 0
+    ) {
       const { customParamsStates } = this.props,
         ayuda = customParamsStates
           .get("customParams")
