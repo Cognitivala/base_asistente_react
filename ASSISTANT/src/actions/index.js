@@ -125,7 +125,7 @@ export function getSaludo() {
       item.enabled = true;
       dispatch(pushConversation(item));
       dispatch(getSaludoEnd(item));
-    }, 2500);
+    }, 1000);
   };
 }
 export function sendSaludo(data) {
