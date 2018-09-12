@@ -1820,6 +1820,8 @@ select {
   border-top: 1px solid #e7e7e7; }
 
 .form-wrapp {
+  display: flex;
+  align-items: center;
   transition: all 300ms ease;
   background: #f7f7f7;
   background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.1) 0%, #f7f7f7 15%);
@@ -1833,16 +1835,23 @@ select {
 
 .input-user {
   width: calc(100% - 39px);
-  display: inline-block;
-  vertical-align: middle;
   margin-bottom: 0;
   height: 50px;
   background: transparent; }
 
 .input-user-btn {
-  display: inline-block;
-  vertical-align: middle;
-  background: transparent; }
+  background: transparent;
+  color: #333333;
+  position: relative; }
+  .input-user-btn.emoji.active::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 7px;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 12px solid #d64b36; }
 
 .conversation-holder {
   height: calc(100vh - 130px);
@@ -1855,16 +1864,11 @@ select {
   .conversation-holder.holder {
     height: calc(100vh - 80px); }
   .conversation-holder::-webkit-scrollbar {
-    width: 3px;
-    max-width: 3px; }
-  .conversation-holder::-webkit-scrollbar-track {
-    background: none;
-    -webkit-border-radius: 0;
-    border-radius: 0; }
+    width: 6px; }
   .conversation-holder::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.6);
-    -webkit-border-radius: 0;
-    border-radius: 0; }
+    background: #adadad; }
+  .conversation-holder::-webkit-scrollbar-track {
+    background: transparent; }
   .conversation-holder.active {
     height: calc(50vh - 65px);
     margin-top: calc(50vh - 65px); }
@@ -1906,6 +1910,26 @@ select {
       font-weight: normal; }
   .conversation-bubble.from .bubble {
     border-radius: 15px 15px 15px 0; }
+  .conversation-bubble .bubble-file {
+    width: 100%;
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    margin-bottom: 5px;
+    align-items: center; }
+    .conversation-bubble .bubble-file.img {
+      padding: 0; }
+      .conversation-bubble .bubble-file.img img {
+        width: 100%; }
+    .conversation-bubble .bubble-file i {
+      margin-left: 5px;
+      color: #fff; }
+    .conversation-bubble .bubble-file a {
+      color: #fff; }
+      .conversation-bubble .bubble-file a:hover {
+        color: #ddd; }
   .conversation-bubble .select {
     width: 100%; }
     .conversation-bubble .select:before {
@@ -2624,16 +2648,11 @@ select {
     bottom: 0;
     padding: 0 16px; }
     .mymodal .overflow::-webkit-scrollbar {
-      width: 3px;
-      max-width: 3px; }
-    .mymodal .overflow::-webkit-scrollbar-track {
-      background: none;
-      -webkit-border-radius: 0;
-      border-radius: 0; }
+      width: 6px; }
     .mymodal .overflow::-webkit-scrollbar-thumb {
-      background: rgba(0, 0, 0, 0.6);
-      -webkit-border-radius: 0;
-      border-radius: 0; }
+      background: #adadad; }
+    .mymodal .overflow::-webkit-scrollbar-track {
+      background: transparent; }
 
 .bloqued .btn {
   color: #aeaeae;
@@ -2905,7 +2924,7 @@ table {
   .assitant-helper::-webkit-scrollbar {
     width: 6px; }
   .assitant-helper::-webkit-scrollbar-thumb {
-    background: #333; }
+    background: #adadad; }
   .assitant-helper::-webkit-scrollbar-track {
     background: transparent; }
   .assitant-helper.inactive:before {

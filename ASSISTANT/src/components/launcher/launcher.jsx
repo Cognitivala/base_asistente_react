@@ -43,16 +43,10 @@ export default class Launcher extends Component {
   }
 
   closeLauncher() {
-    const { closeLauncher, closeHelp,openAssistant, ayudaStates, customParamsStates } = this.props,
-    keep_conversation = customParamsStates.getIn([
-      "customParams",
-      "settings",
-      "keep_conversation"
-    ])
+    const { closeLauncher, closeHelp,openAssistant, ayudaStates } = this.props;
     closeLauncher();
     this.openAssitantCDN();
     openAssistant();
-    if(localStorage.getItem("hc") && keep_conversation) localStorage.setItem("hcc",true);
     if (ayudaStates.get("open")) closeHelp();
   }
 

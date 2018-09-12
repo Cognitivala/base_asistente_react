@@ -86,8 +86,8 @@ export function getCustomParams() {
           keep_conversation: true,
           geolocalization: true,
           help: true,
-          attach: false,
-          emoji: false,
+          attach: true,
+          emoji: true,
           voice: false
         }
       };
@@ -697,7 +697,7 @@ export function updateConversationButton(data) {
                     { text: "Opocion #3", value: 3 }
                   ],
                   validate: {
-                    types: ["select"],
+                    types: ["required","select"],
                     error: "Debes seleccionar una opción"
                   }
                 },
@@ -754,6 +754,43 @@ export function enabledInput() {
 export function disabledInput() {
   return function action(dispatch) {
     dispatch({ type: "DISABLED_INPUT" });
+  };
+}
+export function attachFile(data) {
+  debugger;
+  return function action(dispatch) {
+    dispatch(attachFileStart());
+    setTimeout(() => {
+      let item;
+      item = {
+        files: [
+          "http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg",
+          "http://www.google.com"
+        ]
+      };
+      item.send = "from";
+      item.enabled = true;
+      item.general = data.general;
+      dispatch(pushConversation(item));
+      dispatch(attachFileEnd(item));
+    }, 3000);
+  };
+}
+function attachFileStart() {
+  return {
+    type: "ATTACH_FILE_START"
+  };
+}
+function attachFileEnd(data) {
+  return {
+    type: "ATTACH_FILE_END",
+    data
+  };
+}
+function attachFileError(error) {
+  return {
+    type: "ATTACH_FILE_ERROR",
+    error
   };
 }
 //VALORACIÓN

@@ -44,8 +44,7 @@ export default class Assistant extends Component {
         "keep_conversation"
       ]),
       hc = JSON.parse(localStorage.getItem("hc")),
-      hcm = JSON.parse(localStorage.getItem("hcm")),
-      hcc = JSON.parse(localStorage.getItem("hcc"));
+      hcm = JSON.parse(localStorage.getItem("hcm"));
 
     //Si mantiene conversacion y tiene historial guardado
     //Lo abrirá y luego si tiene minimizado lo minimizará
@@ -60,7 +59,6 @@ export default class Assistant extends Component {
       }
     } else {
       localStorage.removeItem("hcm");
-      localStorage.removeItem("hcc");
       localStorage.removeItem("hc");
     }
   }
@@ -104,7 +102,6 @@ export default class Assistant extends Component {
     const { closeAssistant } = this.props;
 
     localStorage.removeItem("hcm");
-    localStorage.removeItem("hcc");
     localStorage.removeItem("hc");
 
     closeAssistant();

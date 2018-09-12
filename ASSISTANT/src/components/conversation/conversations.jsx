@@ -6,6 +6,7 @@ import Valoracion from "../valoracion/valoracion";
 import Formulario from "../formulario/formulario";
 import ConversationMultiButtons from "./conversation-multi-buttons";
 import ConversationCalendar from "./conversation-calendar";
+import ConversationFiles from "./conversation-files";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -80,6 +81,7 @@ export default class Conversations extends Component {
           enabled = conversation.get("enabled"),
           form = conversation.get("form"),
           datepicker = conversation.get("datepicker"),
+          files = conversation.get("files"),
           map = {
             buttons: buttons !== undefined ? buttons.toJS() : buttons,
             selects: selects !== undefined ? selects.toJS() : selects,
@@ -90,13 +92,13 @@ export default class Conversations extends Component {
             liftUp: liftUp !== undefined ? liftUp : liftUp,
             enabled: enabled !== undefined ? enabled : enabled,
             form: form !== undefined ? form : form,
-            datepicker: datepicker !== undefined ? datepicker : datepicker
+            datepicker: datepicker !== undefined ? datepicker : datepicker,
+            files: files !== undefined ? files : files,
           };
         if (largo === i) map.general = conversation.get("general").toJS();
         hc.push(map);
       });
       localStorage.setItem("hc", JSON.stringify(hc));
-      localStorage.setItem("hcc",true);
     }
   }
 
@@ -133,7 +135,13 @@ export default class Conversations extends Component {
   //Fin Scroll Bottom
 
   fillConversation() {
-    const { updateConversation, updateConversationButton ,conversationsStates, customParamsStates, generalStates } = this.props,
+    const {
+        updateConversation,
+        updateConversationButton,
+        conversationsStates,
+        customParamsStates,
+        generalStates
+      } = this.props,
       sizeConversation = conversationsStates.get("conversations").size,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
@@ -144,7 +152,7 @@ export default class Conversations extends Component {
         enabled = conversation.get("enabled");
       let retorno = [];
 
-      //SI ESTÁ ENABLED 
+      //SI ESTÁ ENABLED
       if (enabled !== undefined && enabled) {
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
@@ -153,6 +161,7 @@ export default class Conversations extends Component {
           multibuttons = conversation.get("multibuttons"),
           datepicker = conversation.get("datepicker"),
           liftUp = conversation.get("liftUp"),
+          files = conversation.get("files"),
           last = j + 1 === sizeConversation ? true : false,
           animation = last ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
@@ -200,7 +209,6 @@ export default class Conversations extends Component {
         }
 
         if (multibuttons !== undefined) {
-          debugger
           retorno.push(
             <ConversationMultiButtons
               key={j * 30}
@@ -227,6 +235,19 @@ export default class Conversations extends Component {
               datepicker={datepicker}
               generalStates={generalStates}
               last={last}
+            />
+          );
+        }
+
+        if (files !== undefined) {
+          retorno.push(
+            <ConversationFiles
+              key={j * 24}
+              files={files}
+              animation={animation}
+              send={send}
+              colorHeader={colorHeader}
+              generalStates={generalStates}
             />
           );
         }
@@ -266,7 +287,12 @@ export default class Conversations extends Component {
               }
               break;
             case "form":
-              const { formularioStates, closeForm, generalStates, sendForm } = this.props,
+              const {
+                  formularioStates,
+                  closeForm,
+                  generalStates,
+                  sendForm
+                } = this.props,
                 enabledFormulario = formularioStates.get("enabled"),
                 form = conversation.get("form");
 

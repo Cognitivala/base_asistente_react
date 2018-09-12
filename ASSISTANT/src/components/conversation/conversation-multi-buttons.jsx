@@ -42,7 +42,6 @@ export default class ConversationMultiButtons extends Component {
   }
 
   render() {
-    debugger
     const { buttons, animation, send, colorHeader } = this.props,
       style = { backgroundColor: colorHeader },
       cssClass = this.state.selectButtons.length>0?"":" disabled",
