@@ -8,6 +8,7 @@ import FormSelect from "./form-select";
 import FormCheckbox from "./form-checkbox";
 import FormSwitch from "./form-switch";
 import IsFetching from "../modules/is-fetching";
+import FormFile from "./form-file";
 
 export default class Formulario extends Component {
   constructor(props) {
@@ -179,6 +180,26 @@ export default class Formulario extends Component {
                   validateFunc={this.validate}
                   validate={map.get("validate")}
                   withError={withError}
+                />
+                {this.fillError(withError, map.getIn(["validate", "error"]))}
+              </fieldset>
+            );
+            break;
+          case "file":
+            const { attachFile, general, colorHeader } = this.props;
+            retorno.push(
+              <fieldset key={i + map.get("name")}>
+                <legend>{map.get("legend")}</legend>
+                <FormFile
+                  validateFunc={this.validate}
+                  validate={map.get("validate")}
+                  withError={withError}
+                  general={general}
+                  attachFile={attachFile}
+                  colorHeader={colorHeader}
+                  type={map.get("type")}
+                  name={map.get("name")}
+                  attach={map.getIn(['validate','rules'])}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>

@@ -66,6 +66,7 @@ export default class Input extends Component {
   }
 
   fillAttach() {
+    // Se comenta por que no se usará en el input
     const { customParamsStates, attachFile, generalStates } = this.props,
       attach = customParamsStates.getIn(["customParams", "settings", "attach"]);
     if (attach) {
@@ -74,7 +75,7 @@ export default class Input extends Component {
       );
     } else {
       return null;
-    }
+     }
   }
 
   fillEmoji() {

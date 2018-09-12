@@ -1843,7 +1843,7 @@ select {
   background: transparent;
   color: #333333;
   position: relative; }
-  .input-user-btn.emoji.active::before {
+  .input-user-btn.emoji.active.before {
     content: "";
     position: absolute;
     top: -8px;
@@ -1887,8 +1887,7 @@ select {
     .conversation-bubble.to .bubble {
       background-color: #0078c7;
       color: #FFFFFF;
-      border-radius: 15px 15px 0 15px;
-      margin-right: 10px; }
+      border-radius: 15px 15px 0 15px; }
   .conversation-bubble img {
     width: 40px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
@@ -1930,6 +1929,20 @@ select {
       color: #fff; }
       .conversation-bubble .bubble-file a:hover {
         color: #ddd; }
+  .conversation-bubble.attach {
+    justify-content: center; }
+    .conversation-bubble.attach .btn-attach {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 200px; }
+      .conversation-bubble.attach .btn-attach i {
+        margin-left: 10px; }
+    .conversation-bubble.attach p.error {
+      color: #d9534f;
+      font-size: 14px;
+      margin-top: 5px; }
   .conversation-bubble .select {
     width: 100%; }
     .conversation-bubble .select:before {
@@ -2920,7 +2933,7 @@ table {
   z-index: 6;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.3); }
   .assitant-helper p {
-    font-size: 16px; }
+    font-size: 14px; }
   .assitant-helper::-webkit-scrollbar {
     width: 6px; }
   .assitant-helper::-webkit-scrollbar-thumb {

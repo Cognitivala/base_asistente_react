@@ -86,7 +86,7 @@ export function getCustomParams() {
           keep_conversation: true,
           geolocalization: true,
           help: true,
-          attach: true,
+          attach: false,
           emoji: true,
           voice: false
         }
@@ -113,7 +113,6 @@ export function setCustomParams(data) {
 }
 //SALUDO
 export function getSaludo() {
-  debugger;
   return function action(dispatch) {
     dispatch(getSaludoStart());
     setTimeout(() => {
@@ -314,11 +313,11 @@ export function updateConversation(data) {
       let data;
       //1 = MSG + Buttons (Valoración)
       //2 = MSG + Buttons (Contactar)
-      //3 = MSG
+      //3 = MSG + Attach
       //4 = MSG + Select
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
-      switch (rand) {
+      switch (2) {
         case 1:
           data = {
             general: {
@@ -378,7 +377,17 @@ export function updateConversation(data) {
               token: null,
               location: null
             },
-            msg: ["No se que responder..."]
+            msg: ["Debes adjuntar tu imagen"],
+            attach: {
+              types: [
+                "image/jpeg",
+                "image/gif",
+                "image/png",
+                "application/pdf",
+                "application/word"
+              ],
+              maxSize: 300000
+            }
           };
           break;
         case 4:
@@ -697,8 +706,26 @@ export function updateConversationButton(data) {
                     { text: "Opocion #3", value: 3 }
                   ],
                   validate: {
-                    types: ["required","select"],
+                    types: ["required", "select"],
                     error: "Debes seleccionar una opción"
+                  }
+                },
+                {
+                  legend: "Adjuntar",
+                  type: "file",
+                  name: "attach",
+                  validate: {
+                    types: ["file"],
+                    rules: {
+                      types: [
+                        "image/jpeg",
+                        "image/gif",
+                        "image/png",
+                        "application/pdf",
+                        "application/word"
+                      ],
+                      maxSize: 300000
+                    }
                   }
                 },
                 {
@@ -757,7 +784,6 @@ export function disabledInput() {
   };
 }
 export function attachFile(data) {
-  debugger;
   return function action(dispatch) {
     dispatch(attachFileStart());
     setTimeout(() => {
@@ -778,18 +804,17 @@ export function attachFile(data) {
 }
 function attachFileStart() {
   return {
-    type: "ATTACH_FILE_START"
+    type: "GET_CONVERSATIONS_START"
   };
 }
 function attachFileEnd(data) {
   return {
-    type: "ATTACH_FILE_END",
-    data
+    type: "GET_CONVERSATIONS_END"
   };
 }
 function attachFileError(error) {
   return {
-    type: "ATTACH_FILE_ERROR",
+    type: "GET_CONVERSATIONS_ERROR",
     error
   };
 }

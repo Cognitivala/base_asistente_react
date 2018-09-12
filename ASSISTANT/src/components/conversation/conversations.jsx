@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import IsFetching from "../modules/is-fetching";
 import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
 import ConversationSelects from "./conversation-selects";
@@ -7,6 +8,7 @@ import Formulario from "../formulario/formulario";
 import ConversationMultiButtons from "./conversation-multi-buttons";
 import ConversationCalendar from "./conversation-calendar";
 import ConversationFiles from "./conversation-files";
+import ConversationAttach from "./conversation-attach";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -39,13 +41,15 @@ export default class Conversations extends Component {
         multibuttons = lastConversation.get("multibuttons"),
         help = customParamsStates.getIn(["customParams", "settings", "help"]),
         datepicker = lastConversation.get("datepicker"),
+        attach = lastConversation.get("attach"),
         liftUp = lastConversation.get("liftUp");
       if (
         buttons !== undefined ||
         selects !== undefined ||
         liftUp !== undefined ||
         multibuttons !== undefined ||
-        datepicker !== undefined
+        datepicker !== undefined ||
+        attach !== undefined
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
         if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
@@ -82,6 +86,7 @@ export default class Conversations extends Component {
           form = conversation.get("form"),
           datepicker = conversation.get("datepicker"),
           files = conversation.get("files"),
+          attach = conversation.get("attach"),
           map = {
             buttons: buttons !== undefined ? buttons.toJS() : buttons,
             selects: selects !== undefined ? selects.toJS() : selects,
@@ -94,6 +99,7 @@ export default class Conversations extends Component {
             form: form !== undefined ? form : form,
             datepicker: datepicker !== undefined ? datepicker : datepicker,
             files: files !== undefined ? files : files,
+            attach: attach !== undefined ? attach.toJS() : attach
           };
         if (largo === i) map.general = conversation.get("general").toJS();
         hc.push(map);
@@ -162,6 +168,7 @@ export default class Conversations extends Component {
           datepicker = conversation.get("datepicker"),
           liftUp = conversation.get("liftUp"),
           files = conversation.get("files"),
+          attach = conversation.get("attach"),
           last = j + 1 === sizeConversation ? true : false,
           animation = last ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
@@ -239,6 +246,21 @@ export default class Conversations extends Component {
           );
         }
 
+        if (attach !== undefined) {
+          const { attachFile } = this.props;
+          retorno.push(
+            <ConversationAttach
+              attach={attach}
+              attachFile={attachFile}
+              key={j * 40}
+              animation={animation}
+              send={send}
+              colorHeader={colorHeader}
+              generalStates={generalStates}
+            />
+          );
+        }
+
         if (files !== undefined) {
           retorno.push(
             <ConversationFiles
@@ -291,6 +313,7 @@ export default class Conversations extends Component {
                   formularioStates,
                   closeForm,
                   generalStates,
+                  attachFile,
                   sendForm
                 } = this.props,
                 enabledFormulario = formularioStates.get("enabled"),
@@ -306,6 +329,7 @@ export default class Conversations extends Component {
                     closeForm={closeForm}
                     colorHeader={colorHeader}
                     sendForm={sendForm}
+                    attachFile={attachFile}
                   />
                 );
               }
@@ -320,17 +344,22 @@ export default class Conversations extends Component {
   }
 
   render() {
-    const { ayudaStates, inputStates } = this.props;
+    const { ayudaStates, inputStates, conversationsStates } = this.props;
     let css = ayudaStates.get("open") ? " active" : "",
       cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
-      <section
-        className={"conversation-holder box-wrapp" + css + cssHolder}
-        data-conversation=""
-        ref={this.test}
+      <IsFetching
+        isFetching={conversationsStates.get("isFetching")}
+        showChildren={true}
       >
-        <div>{this.fillConversation()}</div>
-      </section>
+        <section
+          className={"conversation-holder box-wrapp" + css + cssHolder}
+          data-conversation=""
+          ref={this.test}
+        >
+          <div>{this.fillConversation()}</div>
+        </section>
+      </IsFetching>
     );
   }
 }

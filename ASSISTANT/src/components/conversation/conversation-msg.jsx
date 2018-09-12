@@ -20,11 +20,11 @@ export default class ConversationMsg extends Component {
             }
           >
             <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
-            <img
+            {/* <img
               className="rounded-img"
               src={send==="to"?userImg:avatar}
               alt="Respuesta"
-            />
+            /> */}
           </div>
         );
       }else{

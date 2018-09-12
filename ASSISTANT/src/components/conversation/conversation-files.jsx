@@ -33,7 +33,6 @@ export default class ConversationFiles extends Component {
   render() {
     const { files, animation, send, colorHeader } = this.props,
       style = { backgroundColor: colorHeader };
-      debugger
       let bloqued = animation==="bloqued "?"":animation;
     return (
       <div className={"conversation-bubble " + bloqued + send}>

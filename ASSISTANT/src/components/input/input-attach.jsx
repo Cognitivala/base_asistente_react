@@ -18,6 +18,7 @@ export default class InputAttach extends Component {
       { attachFile, generalStates } = this.props;
     if (size > 0) {
       const file = this.attach.current.files[0];
+      console.log(file.type)
       let item = {};
       item.file = file;
       item.general = generalStates.toJS();
