@@ -67,7 +67,7 @@ export default class FormFile extends Component {
     let retorno = files.map((map, i) => {
       return (
         <li key={i}>
-          <a href={map.get("url")} style={style}>{map.get("name")}</a>
+          <a target="_blank" href={map.get("url")} style={style}>{map.get("name")}</a>
           <i  style={style} onClickCapture={this.deleteFile.bind(this,i)} className="fas fa-times" />
         </li>
       );
