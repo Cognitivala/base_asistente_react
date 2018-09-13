@@ -186,7 +186,7 @@ export default class Formulario extends Component {
             );
             break;
           case "file":
-            const { attachFile, general, colorHeader } = this.props;
+            const { attachFileForm,formularioStates, general, colorHeader, deleteFileForm } = this.props;
             retorno.push(
               <fieldset key={i + map.get("name")}>
                 <legend>{map.get("legend")}</legend>
@@ -195,10 +195,12 @@ export default class Formulario extends Component {
                   validate={map.get("validate")}
                   withError={withError}
                   general={general}
-                  attachFile={attachFile}
+                  attachFileForm={attachFileForm}
                   colorHeader={colorHeader}
                   type={map.get("type")}
                   name={map.get("name")}
+                  formularioStates={formularioStates}
+                  deleteFileForm={deleteFileForm}
                   attach={map.getIn(['validate','rules'])}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}

@@ -313,8 +313,9 @@ export default class Conversations extends Component {
                   formularioStates,
                   closeForm,
                   generalStates,
-                  attachFile,
-                  sendForm
+                  attachFileForm,
+                  sendForm,
+                  deleteFileForm
                 } = this.props,
                 enabledFormulario = formularioStates.get("enabled"),
                 form = conversation.get("form");
@@ -329,7 +330,8 @@ export default class Conversations extends Component {
                     closeForm={closeForm}
                     colorHeader={colorHeader}
                     sendForm={sendForm}
-                    attachFile={attachFile}
+                    attachFileForm={attachFileForm}
+                    deleteFileForm={deleteFileForm}
                   />
                 );
               }

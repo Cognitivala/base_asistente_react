@@ -1257,6 +1257,24 @@ select {
                 //   -o-transition: all 300ms ease;
                 //   transition: all 300ms ease;
                 // }
+                ul {
+                    margin-top: 10px;
+                    width: 100%;
+                    padding: 10px;
+                    background-color: #f8f8f8;
+                    border: 1px solid #eee;
+                    li {
+                        list-style: none;
+                        width: 100%;
+                        justify-content: space-between;
+                        display: flex;
+                        align-items: center;
+                        i{
+                            cursor: pointer;
+                        }
+                    }
+                    
+                }
                 &.error {
                     // &:after {
                     //   left: 0;

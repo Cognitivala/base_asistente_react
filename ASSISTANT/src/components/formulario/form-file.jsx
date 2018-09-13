@@ -7,24 +7,29 @@ export default class FormFile extends Component {
     this.attach = React.createRef();
     this.attachFile = this.attachFile.bind(this);
     this.attachIconClick = this.attachIconClick.bind(this);
+    this.deleteFile = this.deleteFile.bind(this);
     this.state = {
-        error: null
-    }
+      error: null,
+      enabled: true
+    };
+  }
+
+  deleteFile(i, event) {
+    const { deleteFileForm } = this.props;
+    deleteFileForm(i);
   }
 
   attachIconClick() {
-      debugger
     this.attach.current.click();
   }
 
   attachFile() {
-    debugger
     const size = this.attach.current.files[0].size,
-      { attachFile, general, attach } = this.props;
-    if (size > 0 && size <= attach.get('maxSize')) {
+      { attachFileForm, general, attach } = this.props;
+    if (size > 0 && size <= attach.get("maxSize")) {
       const file = this.attach.current.files[0],
         type = file.type,
-        types = attach.get('types');
+        types = attach.get("types");
       let valid = false;
       types.forEach(el => {
         if (el === type) valid = true;
@@ -33,51 +38,93 @@ export default class FormFile extends Component {
         let item = {};
         item.file = file;
         item.general = general.toJS();
-        attachFile(item);
+        attachFileForm(item);
         this.setState({
-            error: null
+          error: null,
+          enabled: false
         });
-      }else{
-          this.setState({
-              error: "No hay mano"
-          });
+      } else {
+        this.setState({
+          error: "No hay mano"
+        });
       }
-    }else{
-        this.setState({
-            error: "Excede el máximo permitido"
-        });
+    } else {
+      this.setState({
+        error: "Excede el máximo permitido"
+      });
     }
   }
 
   fillError() {
-    if(this.state.error!==null){
-      return <p className="error">{this.state.error}</p>
+    if (this.state.error !== null) {
+      return <p className="error">{this.state.error}</p>;
     }
-}
+  }
+
+  fillFiles(files) {
+    const { colorHeader } = this.props,
+      style = { color: colorHeader };
+    let retorno = files.map((map, i) => {
+      return (
+        <li key={i}>
+          <a href={map.get("url")} style={style}>{map.get("name")}</a>
+          <i  style={style} onClickCapture={this.deleteFile.bind(this,i)} className="fas fa-times" />
+        </li>
+      );
+    });
+    return <ul>{retorno}</ul>;
+  }
 
   content() {
-    const { type, name, colorHeader } = this.props,
-    style = { backgroundColor: colorHeader };
-    let cssClass = this.state.error?" error":"";
-    return (
+    const { type, name, colorHeader, formularioStates } = this.props,
+      files = formularioStates.get("files"),
+      style = { backgroundColor: colorHeader };
+    let cssClass = this.state.error ? " error" : "";
+    if (files && files.size > 0) {
+      return (
+        <div>
+          <button
+            disabled={this.state.enabled}
+            className="btn btn-attach"
+            type="button"
+            onClick={this.attachIconClick}
+            style={style}
+            className={cssClass}
+          >
+            Adjuntar
+            <i className="fas fa-paperclip" />
+            <input
+              type={type}
+              ref={this.attach}
+              className="hide"
+              name={name}
+              onChange={this.attachFile}
+            />
+          </button>
+          {this.fillFiles(files)}
+        </div>
+      );
+    } else {
+      return (
         <button
-        className="btn btn-attach"
-        type="button"
-        onClick={this.attachIconClick}
-        style={style}
-        className={cssClass}
-      >
-      Adjuntar
-        <i className="fas fa-paperclip" />
-        <input
-          type={type}
-          ref={this.attach}
-          className="hide"
-          name={name}
-          onChange={this.attachFile}
-        />
-      </button>
-    );
+          className="btn btn-attach"
+          type="button"
+          onClick={this.attachIconClick}
+          style={style}
+          className={cssClass}
+        >
+          Adjuntar
+          <i className="fas fa-paperclip" />
+          <input
+            type={type}
+            ref={this.attach}
+            className="hide"
+            name={name}
+            onChange={this.attachFile}
+          />
+        </button>
+      );
+    }
   }
 
   render() {

@@ -724,7 +724,8 @@ export function updateConversationButton(data) {
                         "application/pdf",
                         "application/word"
                       ],
-                      maxSize: 300000
+                      maxSize: 300000,
+                      maxQuantity: 3
                     }
                   }
                 },
@@ -799,6 +800,24 @@ export function attachFile(data) {
       item.general = data.general;
       dispatch(pushConversation(item));
       dispatch(attachFileEnd(item));
+    }, 1500);
+  };
+}
+export function deleteFileForm(data) {
+  return function action(dispatch) {
+    dispatch({ type: "DELETE_FILE", data });
+  };
+}
+export function attachFileForm(data) {
+  return function action(dispatch) {
+    dispatch(attachFileStart());
+    setTimeout(() => {
+      let files = {
+        name: "imagen",
+        url: "http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg"
+      };
+      dispatch({ type: "SET_FILES", data: files });
+      dispatch(attachFileEnd());
     }, 3000);
   };
 }

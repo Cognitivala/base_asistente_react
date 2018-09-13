@@ -2329,6 +2329,20 @@ select {
           -ms-transition: all 300ms ease;
           -o-transition: all 300ms ease;
           transition: all 300ms ease; }
+        .mymodal .container-form form fieldset ul {
+          margin-top: 10px;
+          width: 100%;
+          padding: 10px;
+          background-color: #f8f8f8;
+          border: 1px solid #eee; }
+          .mymodal .container-form form fieldset ul li {
+            list-style: none;
+            width: 100%;
+            justify-content: space-between;
+            display: flex;
+            align-items: center; }
+            .mymodal .container-form form fieldset ul li i {
+              cursor: pointer; }
         .mymodal .container-form form fieldset.error input {
           border: 1px solid #d9534f; }
         .mymodal .container-form form fieldset.error legend {
