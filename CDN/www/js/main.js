@@ -73,7 +73,7 @@
       css += '.iframe-cognitive-assistant-container.active {opacity: 1;transform: translate3d(0,0,0);pointer-events: auto;}';
       css += '.iframe-cognitive-assistant-container.notification{ height: 30vh;width: 100%;max-width: 330px;box-shadow: none;right: 0;bottom: 0; }';
       css += '.iframe-cognitive-assistant-container.assistant{ height: 90vh;width: 100%;max-width: 360px;box-shadow: -3px 3px 24px rgba(0,0,0,0.2);right: 10px;bottom: 10px; }';
-      css += '.iframe-cognitive-assistant-container.minimized{ height: 80px;width: 100%;max-width: 360px;box-shadow: -3px 3px 24px rgba(0,0,0,0.2);right: 10px;bottom: 10px; }';
+      css += '.iframe-cognitive-assistant-container.minimized{ height: 62px;width: 100%;max-width: 360px;box-shadow: -3px 3px 24px rgba(0,0,0,0.2);right: 10px;bottom: 10px;}';
       css += '.cognitive-iframe {height: 100%;width: 100%;border: 0 none;}';
       css += '@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.assistant{ height: 100% ; top: 0; left: 0; right: 0; bottom: 0; max-width:100%; } ';
       //css += '.iframe-cognitive-assistant-container.notification{ width: 280px; } .cognitive-iframe{height: 100%; } }';
