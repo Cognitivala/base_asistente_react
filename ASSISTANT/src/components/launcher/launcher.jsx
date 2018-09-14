@@ -88,12 +88,14 @@ export default class Launcher extends Component {
   }
 
   render() {
-    const { customParamsStates, saludoStates, launcherStates, conversationsStates } = this.props;
+    const { customParamsStates, saludoStates, launcherStates, conversationsStates } = this.props,
+    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
 
     return (
       <IsFetching
         isFetching={customParamsStates.get("isFetching")}
         showChildren={true}
+        colorHeader={colorHeader}
       >
         {this.content(customParamsStates, saludoStates, launcherStates, conversationsStates)}
       </IsFetching>

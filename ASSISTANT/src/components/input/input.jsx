@@ -109,10 +109,13 @@ export default class Input extends Component {
         </form>
       );
     } else {
+      const {customParamsStates} = this.props,
+      colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
       return (
         <IsFetching
           isFetching={this.props.inputStates.get("isFetching")}
           showChildren={true}
+          colorHeader={colorHeader}
         >
           <form className="input-user-holder" noValidate="">
             <div className="form-wrapp">

@@ -311,7 +311,8 @@ export default class Conversations extends Component {
                   generalStates,
                   attachFileForm,
                   sendForm,
-                  deleteFileForm
+                  deleteFileForm,
+                  customParamsStates
                 } = this.props,
                 enabledFormulario = formularioStates.get("enabled"),
                 form = conversation.get("form");
@@ -328,6 +329,7 @@ export default class Conversations extends Component {
                     sendForm={sendForm}
                     attachFileForm={attachFileForm}
                     deleteFileForm={deleteFileForm}
+                    customParamsStates={customParamsStates}
                   />
                 );
               }
@@ -342,13 +344,15 @@ export default class Conversations extends Component {
   }
 
   render() {
-    const { ayudaStates, inputStates, conversationsStates } = this.props;
+    const { ayudaStates, inputStates, conversationsStates, customParamsStates } = this.props,
+    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "",
       cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
       <IsFetching
         isFetching={conversationsStates.get("isFetching")}
         showChildren={true}
+        colorHeader={colorHeader}
       >
         <section
           className={"conversation-holder box-wrapp" + css + cssHolder}

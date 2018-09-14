@@ -264,10 +264,11 @@ export default class Assistant extends Component {
   }
 
   render() {
-    const { assistantStates, conversationsStates } = this.props;
-
+    const { assistantStates, conversationsStates,customParamsStates } = this.props,
+    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
     return (
       <IsFetching
+        colorHeader={colorHeader}
         isFetching={assistantStates.get("isFetching")}
         showChildren={true}
       >

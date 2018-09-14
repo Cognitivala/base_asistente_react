@@ -42,12 +42,13 @@ export default class Help extends Component {
   }
 
   render() {
-    const { ayudaStates, customParamsStates } = this.props;
-
+    const { ayudaStates, customParamsStates } = this.props,
+    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
     return (
       <IsFetching
         isFetching={ayudaStates.get("isFetching")}
         showChildren={true}
+        colorHeader={colorHeader}
       >
         {this.content(ayudaStates,customParamsStates)}
       </IsFetching>

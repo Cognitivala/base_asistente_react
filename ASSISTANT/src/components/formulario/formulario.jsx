@@ -260,11 +260,13 @@ export default class Formulario extends Component {
   }
 
   render() {
-    const { formularioStates } = this.props;
+    const { formularioStates, customParamsStates } = this.props,
+    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
     return (
       <IsFetching
         isFetching={formularioStates.get("isFetching")}
         showChildren={true}
+        colorHeader={colorHeader}
       >
         {this.content()}
       </IsFetching>

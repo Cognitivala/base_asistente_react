@@ -210,11 +210,13 @@ export default class Valoracion extends Component {
   }
 
   render() {
-    const { valoracionStates } = this.props;
+    const { valoracionStates, customParamsStates } = this.props,
+    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
     return (
       <IsFetching
         isFetching={valoracionStates.get("isFetching")}
         showChildren={true}
+        colorHeader={colorHeader}
       >
         {this.content()}
       </IsFetching>
