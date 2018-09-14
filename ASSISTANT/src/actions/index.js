@@ -67,33 +67,36 @@ export function closeLauncher() {
 export function getCustomParams() {
   return function action(dispatch) {
     dispatch(getCustomParamsStart());
-
-    setTimeout(() => {
-      let item;
-      item = {
-        avatar: "https://image.ibb.co/fpuiZJ/chat.png",
-        colorHeader: "#564a86",
-        colorBtn: "#333333",
-        estado: "1",
-        logo:
-          "data:image/png;base64,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",
-        status: 200,
-        subtitulo: "SUBTITLE",
-        titulo: "ASSISTANT TITLE",
-        url: "https://example.com",
-        userImg:
-          "https://yt3.ggpht.com/a-/ACSszfH3hIxrtLXIrQhu3lLOvy-Hvidrl5p8nGWq2w=s900-mo-c-c0xffffffff-rj-k-no",
-        settings: {
-          keep_conversation: true,
-          geolocalization: true,
-          help: true,
-          attach: false,
-          emoji: true,
-          voice: false
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/customize_param",
+      data: {id_cliente:"1"}
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          dispatch(getCustomParamsEnd(response.data));
+        } else {
+          dispatch(getCustomParamsError(response.statusText));
         }
-      };
-      dispatch(getCustomParamsEnd(item));
-    }, 500);
+      },
+      err => {
+        dispatch(
+          getCustomParamsError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
+  };
+}
+function getCustomParamsError(error) {
+  return {
+    type: "GET_CUSTOM_PARAMS_ERROR",
+    error
   };
 }
 function getCustomParamsStart() {
@@ -176,7 +179,6 @@ export function openAssistant() {
 }
 export function closeAssistant() {
   return function action(dispatch) {
-    debugger;
     dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
     dispatch({ type: "SET_NOTIFICATION", data: false });
