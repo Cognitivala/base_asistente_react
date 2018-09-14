@@ -13,6 +13,12 @@ export default class FormSelect extends Component {
     this.setSelected = this.setSelected.bind(this);
   }
 
+  componentDidUpdate(){
+    if(this.state.active){
+      const scrollHeight = document.getElementsByClassName('conversation-holder')[0].scrollHeight;
+      document.getElementsByClassName('conversation-holder')[0].scrollTop = scrollHeight;
+    }
+  }
 
   sendSelectResponse(event) {
     const $item = event.target,

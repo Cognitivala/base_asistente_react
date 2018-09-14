@@ -839,6 +839,7 @@ select {
                 }
                 &:last-child {
                     border-bottom: 1px solid #999;
+                    margin-bottom: 20px;
                     border-radius: 0px 0px 18px 18px;
                 }
                 &.disabled {
@@ -1473,6 +1474,7 @@ select {
                             &:last-child {
                                 border-bottom: 1px solid #999;
                                 border-radius: 0px 0px 18px 18px;
+                                margin-bottom: 20px;
                             }
                             &.disabled {
                                 background: #d0d0d0;

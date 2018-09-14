@@ -1994,6 +1994,7 @@ select {
           border: 1px solid #999; }
         .conversation-bubble .select .options div:last-child {
           border-bottom: 1px solid #999;
+          margin-bottom: 20px;
           border-radius: 0px 0px 18px 18px; }
         .conversation-bubble .select .options div.disabled {
           background: #d0d0d0;
@@ -2487,7 +2488,8 @@ select {
               border: 1px solid #999; }
             .mymodal .container-form form fieldset .select .options div:last-child {
               border-bottom: 1px solid #999;
-              border-radius: 0px 0px 18px 18px; }
+              border-radius: 0px 0px 18px 18px;
+              margin-bottom: 20px; }
             .mymodal .container-form form fieldset .select .options div.disabled {
               background: #d0d0d0;
               opacity: 1; }
