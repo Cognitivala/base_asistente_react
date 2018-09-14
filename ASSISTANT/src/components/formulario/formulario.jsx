@@ -41,6 +41,7 @@ export default class Formulario extends Component {
   }
 
   validateAll(fields, fieldsDOM) {
+    debugger
     let arr = [];
     for (let i = 0; i < fieldsDOM.length; i++) {
       const map = fieldsDOM[i],

@@ -3,9 +3,11 @@ export function required(input, validates, required) {
   switch (input.tagName) {
     case "INPUT":
       if(input.type==="checkbox"){
-        return !input.value == "off";
+        return !input.value === "off";
+      }else if(input.type==="file"){
+        return !input.files.length===0;
       }else{
-        return !input.value.length == 0;
+        return !input.value.length === 0;
       }
     case "DIV"://Select
       if(input.classList.contains("options")){
@@ -14,15 +16,22 @@ export function required(input, validates, required) {
         break;
       }
     case "TEXTAREA":
-      return !input.value.length == 0;
+      return !input.value.length === 0;
     default:
       break;
   }
 }
 
+export function file(input, validates, required){
+  if (required) {
+    return !input.files.length===0;
+  }
+  return true;
+}
+
 export function checkbox(input, validates, required){
   if (required) {
-    return !input.value == "off";
+    return !input.value === "off";
   }
   return true;
 }

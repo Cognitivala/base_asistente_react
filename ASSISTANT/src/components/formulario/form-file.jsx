@@ -67,8 +67,14 @@ export default class FormFile extends Component {
     let retorno = files.map((map, i) => {
       return (
         <li key={i}>
-          <a target="_blank" href={map.get("url")} style={style}>{map.get("name")}</a>
-          <i  style={style} onClickCapture={this.deleteFile.bind(this,i)} className="fas fa-times" />
+          <a target="_blank" href={map.get("url")} style={style}>
+            {map.get("name")}
+          </a>
+          <i
+            style={style}
+            onClickCapture={this.deleteFile.bind(this, i)}
+            className="fas fa-times"
+          />
         </li>
       );
     });
@@ -83,6 +89,13 @@ export default class FormFile extends Component {
     if (files && files.size > 0) {
       return (
         <div>
+          <input
+            type={type}
+            ref={this.attach}
+            className="hide"
+            name={name}
+            onChange={this.attachFile}
+          />
           <button
             disabled={this.state.enabled}
             className="btn btn-attach"
@@ -93,28 +106,13 @@ export default class FormFile extends Component {
           >
             Adjuntar
             <i className="fas fa-paperclip" />
-            <input
-              type={type}
-              ref={this.attach}
-              className="hide"
-              name={name}
-              onChange={this.attachFile}
-            />
           </button>
           {this.fillFiles(files)}
         </div>
       );
     } else {
       return (
-        <button
-          className="btn btn-attach"
-          type="button"
-          onClick={this.attachIconClick}
-          style={style}
-          className={cssClass}
-        >
-          Adjuntar
-          <i className="fas fa-paperclip" />
+        <div>
           <input
             type={type}
             ref={this.attach}
@@ -122,7 +120,17 @@ export default class FormFile extends Component {
             name={name}
             onChange={this.attachFile}
           />
-        </button>
+          <button
+            className="btn btn-attach"
+            type="button"
+            onClick={this.attachIconClick}
+            style={style}
+            className={cssClass}
+          >
+            Adjuntar
+            <i className="fas fa-paperclip" />
+          </button>
+        </div>
       );
     }
   }
@@ -135,8 +143,6 @@ export default class FormFile extends Component {
 FormFile.propTypes = {
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  autocomplete: PropTypes.string.isRequired,
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
   withError: PropTypes.bool

@@ -317,7 +317,7 @@ export function updateConversation(data) {
       //4 = MSG + Select
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
-      switch (rand) {
+      switch (2) {
         case 1:
           data = {
             general: {
@@ -711,11 +711,12 @@ export function updateConversationButton(data) {
                   }
                 },
                 {
-                  legend: "Adjuntar",
+                  legend: "Adjuntar*",
                   type: "file",
                   name: "attach",
                   validate: {
-                    types: ["file"],
+                    types: ["required","file"],
+                    error: "Debes adjuntar",
                     rules: {
                       types: [
                         "image/jpeg",
