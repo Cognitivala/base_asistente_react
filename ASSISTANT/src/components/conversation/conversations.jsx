@@ -157,8 +157,6 @@ export default class Conversations extends Component {
       const conversation = map,
         enabled = conversation.get("enabled");
       let retorno = [];
-
-      //SI ESTÁ ENABLED
       if (enabled !== undefined && enabled) {
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
@@ -173,7 +171,6 @@ export default class Conversations extends Component {
           animation = last ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
         if (msg !== undefined) {
-          //Si tiene mensaje
           retorno.push(
             <ConversationMsg
               key={j}
@@ -202,7 +199,6 @@ export default class Conversations extends Component {
         }
 
         if (selects !== undefined) {
-          //si tiene selects
           retorno.push(
             <ConversationSelects
               key={j * 20}

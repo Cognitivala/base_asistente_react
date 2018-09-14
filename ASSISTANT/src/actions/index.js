@@ -1,5 +1,6 @@
 import axios, { post } from "axios";
 import Geocode from "react-geocode";
+const APIURL = "http://asistente-react.mycognitiva.io/mad";
 
 //GENERAL
 function defaultGeneral() {
@@ -115,16 +116,34 @@ export function setCustomParams(data) {
 export function getSaludo() {
   return function action(dispatch) {
     dispatch(getSaludoStart());
-    setTimeout(() => {
-      let item;
-      item = {
-        msg: ["Hola soy el saludo"]
-      };
-      item.send = "from";
-      item.enabled = true;
-      dispatch(pushConversation(item));
-      dispatch(getSaludoEnd(item));
-    }, 1000);
+    const data = { general: { cid: null, id_cliente: "1" }, msg: null },
+      request = axios({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        url: APIURL + "/message",
+        data: data
+      });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = {};
+          item.msg = [response.data.msg];
+          item.send = "from";
+          item.enabled = true;
+          dispatch(pushConversation(item));
+          dispatch(getSaludoEnd(item));
+        } else {
+          dispatch(getSaludoError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          getSaludoEnd("Error de conexión con el servidor, intente nuevamente")
+        );
+      }
+    );
   };
 }
 export function sendSaludo(data) {
@@ -303,10 +322,40 @@ export function updateConversationCalendar(data) {
     dispatch({ type: "UPDATE_CONVERSATION_CALENDAR", data });
   };
 }
+function updateConversationError(data) {
+  return { type: "PUSH_CONVERSATIONS_ERROR", data };
+}
 export function updateConversation(data) {
   return function action(dispatch) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
     //Respuesta
     setTimeout(() => {
       const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
@@ -548,12 +597,42 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
+  return function action(dispatch) {
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
+  };
   switch (data.msg[0]) {
     case "siValorar":
       return function action(dispatch) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
-
         setTimeout(() => {
           let data = {
             general: {
@@ -701,9 +780,9 @@ export function updateConversationButton(data) {
                   name: "opciones",
                   options: [
                     { text: "Seleccione", value: -1 },
-                    { text: "Opocion #1", value: 1 },
-                    { text: "Opocion #2", value: 2 },
-                    { text: "Opocion #3", value: 3 }
+                    { text: "Opcion #1", value: 1 },
+                    { text: "Opcion #2", value: 2 },
+                    { text: "Opcion #3", value: 3 }
                   ],
                   validate: {
                     types: ["required", "select"],
@@ -715,7 +794,7 @@ export function updateConversationButton(data) {
                   type: "file",
                   name: "attach",
                   validate: {
-                    types: ["required","file"],
+                    types: ["required", "file"],
                     error: "Debes adjuntar",
                     rules: {
                       types: [
@@ -815,7 +894,8 @@ export function attachFileForm(data) {
     setTimeout(() => {
       let files = {
         name: "imagen",
-        url: "http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg"
+        url:
+          "http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg"
       };
       dispatch({ type: "SET_FILES", data: files });
       dispatch(attachFileEnd());
@@ -870,29 +950,37 @@ export function setErrorValoracion(data) {
 }
 export function sendValoracion(data) {
   return function action(dispatch) {
-    // dispatch({ type: "SEND_VALORACION_START" });
+    dispatch({ type: "SEND_VALORACION_START" });
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-
-    setTimeout(() => {
-      //Respuesta
-      let data = {
-        general: {
-          cid: null,
-          origen: "Sitio Público",
-          nodo_id: null,
-          intent: null,
-          auth: null,
-          token: null,
-          location: null
-        },
-        msg: ["Soy una respuesta de la valoracion", "Pregúntame algo más..."]
-      };
-      data.send = "from";
-      data.enabled = true;
-      messageResponse(dispatch, data);
-      dispatch({ type: "SEND_VALORACION_END" });
-    }, 1000);
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+          dispatch({type:"SEND_VALORACION_END"});
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
   };
 }
 export function closeValoracion(data) {
@@ -900,25 +988,33 @@ export function closeValoracion(data) {
     dispatch({ type: "DISABLED_VALORACION" });
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-
-    //Respuesta
-    setTimeout(() => {
-      let data = {
-        general: {
-          cid: "SOYELCID",
-          origen: "Sitio Público",
-          nodo_id: null,
-          intent: null,
-          auth: null,
-          token: null,
-          location: null
-        },
-        msg: ["Se ha cerrado la valoración"]
-      };
-      data.send = "from";
-      data.enabled = true;
-      messageResponse(dispatch, data);
-    }, 500);
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
   };
 }
 //FORM
@@ -927,25 +1023,33 @@ export function closeForm(data) {
     dispatch({ type: "DISABLED_FORM" });
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-
-    //Respuesta
-    setTimeout(() => {
-      let data = {
-        general: {
-          cid: "SOYELCID",
-          origen: "Sitio Público",
-          nodo_id: null,
-          intent: null,
-          auth: null,
-          token: null,
-          location: null
-        },
-        msg: ["Se ha cerrado el formulario"]
-      };
-      data.send = "from";
-      data.enabled = true;
-      messageResponse(dispatch, data);
-    }, 500);
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
   };
 }
 

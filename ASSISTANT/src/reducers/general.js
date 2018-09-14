@@ -8,7 +8,8 @@ export function generalStates(
     intent: null,
     auth: null,
     token: null,
-    location: null
+    location: null,
+    id_cliente: "1"
   }),
   action
 ) {

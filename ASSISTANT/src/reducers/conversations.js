@@ -50,6 +50,10 @@ export function conversationsStates(
           : map.set("loading", false);
         map.update("conversations", list => list.push(conversation));
       });
+    case "PUSH_CONVERSATIONS_ERROR":
+      return state.withMutations(map => {
+        map.set("isFetching", false).set("error", action.error);
+      });
     case "DELETE_HISTORY":
       const first = state.get('conversations').get(0);
       return state.withMutations(map => {
