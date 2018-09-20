@@ -23,8 +23,12 @@ export default class Input extends Component {
 
   focus() {
     setTimeout(() => {
-      const input = this.input.current;
-      input !== null ? input.focus() : null;
+      debugger;
+      const href = window.location.href,
+        hrefLast = href.substring(href.length - 13, href.length),
+        input = this.input.current;
+      if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
+        input !== null ? input.focus() : null;
     }, 300);
   }
 
@@ -75,17 +79,14 @@ export default class Input extends Component {
       );
     } else {
       return null;
-     }
+    }
   }
 
   fillEmoji() {
     const { customParamsStates } = this.props,
       emoji = customParamsStates.getIn(["customParams", "settings", "emoji"]);
     if (emoji) {
-      return <InputEmoji 
-        start={this.state.start}
-        end={this.state.end}
-      />;
+      return <InputEmoji start={this.state.start} end={this.state.end} />;
     } else {
       return null;
     }
@@ -109,8 +110,8 @@ export default class Input extends Component {
         </form>
       );
     } else {
-      const {customParamsStates} = this.props,
-      colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
+      const { customParamsStates } = this.props,
+        colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
       return (
         <IsFetching
           isFetching={this.props.inputStates.get("isFetching")}
