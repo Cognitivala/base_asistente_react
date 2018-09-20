@@ -23,11 +23,9 @@ export default class Input extends Component {
 
   focus() {
     setTimeout(() => {
-      debugger;
       const href = window.top.location.href,
         hrefLast = href.substring(href.length - 13, href.length),
         input = this.input.current;
-      console.log(hrefLast)
       if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
         input !== null ? input.focus() : null;
     }, 300);

@@ -311,7 +311,6 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
       function init(){
         window.onmessage = e => {
-          console.log("onmessage Mant",e.data)
           if (e.data.customParams !== undefined) {
             loadCustom(e.data.customParams);
           }
