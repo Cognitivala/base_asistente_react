@@ -1251,23 +1251,23 @@ html(lang="es-CL" dir="ltr" heightfull)
 
       function openModalTest() {
 
-        var getLogoAssistant      = localStorage.getItem('logoAssistant'),
-            getColorHeader        = localStorage.getItem('colorHeader'),
-            getColorButtons       = localStorage.getItem('colorButtons'),
-            getTitleAssistant     = localStorage.getItem('titleAssistant'),
-            getSubTitleAssistant  = localStorage.getItem('subTitleAssistant');
+        //- var getLogoAssistant      = localStorage.getItem('logoAssistant'),
+        //-     getColorHeader        = localStorage.getItem('colorHeader'),
+        //-     getColorButtons       = localStorage.getItem('colorButtons'),
+        //-     getTitleAssistant     = localStorage.getItem('titleAssistant'),
+        //-     getSubTitleAssistant  = localStorage.getItem('subTitleAssistant');
 
-        $('#myModalAssistant .header').css('background-color', getColorHeader);
-        $('#myModalAssistant .header .titles div').html(getTitleAssistant);
-        $('#myModalAssistant .header .titles span').html(getSubTitleAssistant);
-        $('#myModalAssistant .header .img img').attr('src', getLogoAssistant);
+        //- $('#myModalAssistant .header').css('background-color', getColorHeader);
+        //- $('#myModalAssistant .header .titles div').html(getTitleAssistant);
+        //- $('#myModalAssistant .header .titles span').html(getSubTitleAssistant);
+        //- $('#myModalAssistant .header .img img').attr('src', getLogoAssistant);
 
         $('#myModalAssistant').modal({
           backdrop: 'static',
           keyboard: false,
           show: true
         });
-        var getSession = "1";
+        //- var getSession = "1";
 
         //- $('#assistant-iframe').attr('src', getPath+'asistente/');
       }
@@ -1299,7 +1299,7 @@ html(lang="es-CL" dir="ltr" heightfull)
           }
         })
       }
-      getCustomParams();
+      //getCustomParams();
 
       function getCustomAssistant(){
 
@@ -1325,7 +1325,7 @@ html(lang="es-CL" dir="ltr" heightfull)
           $('#myModalAssistant .header .img').attr('src', getLogoAssistant);
         }
       }
-      getCustomAssistant();
+      //getCustomAssistant();
 
       function removeDialog(el){
         el.parentElement.parentElement.setAttribute('data-todelete', '1');

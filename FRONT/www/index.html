@@ -257,13 +257,6 @@
             <button class="close" type="button" data-dismiss="modal" aria-label="Close"><i class="fa fa-close"></i></button>
           </div>
           <div class="modal-body heightfull">
-            <div class="header">
-              <div class="img"><img id="header-logotipo" src="../assets/img/brain_cognitiva.png" alt=""/></div>
-              <div class="titles">
-                <div>Asistente Cognitivo</div><span>Cognitiva</span>
-              </div>
-              <div class="close"><i class="fa fa-times"></i></div>
-            </div>
             <iframe class="assistant" id="assistant-iframe" src="http://asistente-react.mycognitiva.ioasistente/" frameborder="0"></iframe>
           </div>
         </div>
@@ -1516,23 +1509,23 @@
       
       function openModalTest() {
       
-        var getLogoAssistant      = localStorage.getItem('logoAssistant'),
-            getColorHeader        = localStorage.getItem('colorHeader'),
-            getColorButtons       = localStorage.getItem('colorButtons'),
-            getTitleAssistant     = localStorage.getItem('titleAssistant'),
-            getSubTitleAssistant  = localStorage.getItem('subTitleAssistant');
+        //- var getLogoAssistant      = localStorage.getItem('logoAssistant'),
+        //-     getColorHeader        = localStorage.getItem('colorHeader'),
+        //-     getColorButtons       = localStorage.getItem('colorButtons'),
+        //-     getTitleAssistant     = localStorage.getItem('titleAssistant'),
+        //-     getSubTitleAssistant  = localStorage.getItem('subTitleAssistant');
       
-        $('#myModalAssistant .header').css('background-color', getColorHeader);
-        $('#myModalAssistant .header .titles div').html(getTitleAssistant);
-        $('#myModalAssistant .header .titles span').html(getSubTitleAssistant);
-        $('#myModalAssistant .header .img img').attr('src', getLogoAssistant);
+        //- $('#myModalAssistant .header').css('background-color', getColorHeader);
+        //- $('#myModalAssistant .header .titles div').html(getTitleAssistant);
+        //- $('#myModalAssistant .header .titles span').html(getSubTitleAssistant);
+        //- $('#myModalAssistant .header .img img').attr('src', getLogoAssistant);
       
         $('#myModalAssistant').modal({
           backdrop: 'static',
           keyboard: false,
           show: true
         });
-        var getSession = "1";
+        //- var getSession = "1";
       
         //- $('#assistant-iframe').attr('src', getPath+'asistente/');
       }
@@ -1564,7 +1557,7 @@
           }
         })
       }
-      getCustomParams();
+      //getCustomParams();
       
       function getCustomAssistant(){
       
@@ -1590,7 +1583,7 @@
           $('#myModalAssistant .header .img').attr('src', getLogoAssistant);
         }
       }
-      getCustomAssistant();
+      //getCustomAssistant();
       
       function removeDialog(el){
         el.parentElement.parentElement.setAttribute('data-todelete', '1');
