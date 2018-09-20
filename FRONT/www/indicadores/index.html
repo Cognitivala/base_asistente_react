@@ -739,7 +739,7 @@
           contentType: 'application/json; charset=utf-8'
         }).promise().done(function(response){
            if(response.status == 400){
-            $('#'+divId).html('<p>No se han encontrado datos</p>')
+            $('#chart_div').html('<p>No se han encontrado datos</p>')
             return false;
           } else {
             var data = [
