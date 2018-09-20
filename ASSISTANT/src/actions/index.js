@@ -354,33 +354,33 @@ export function updateConversation(data) {
     dispatch(pushConversation(data));
 
 
-    // const request = axios({
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   url: APIURL + "/message",
-    //   data: data
-    // });
-    // return request.then(
-    //   response => {
-    //     if (response.status === 200) {
-    //       let item = response.data;
-    //       item.send = "from";
-    //       item.enabled = true;
-    //       messageResponse(dispatch, item);
-    //     } else {
-    //       dispatch(updateConversationError(response.statusText));
-    //     }
-    //   },
-    //   err => {
-    //     dispatch(
-    //       updateConversationError(
-    //         "Error de conexión con el servidor, intente nuevamente"
-    //       )
-    //     );
-    //   }
-    // );
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
 
 
     //Respuesta
