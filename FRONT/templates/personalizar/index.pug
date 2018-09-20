@@ -295,6 +295,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         $('#color-header, .assistant .header').css("background-color", customParams.colorHeader)
         $('#color-buttons').val(customParams.colorBtn);
         $('#color-buttons, .assistant .send').css("background-color", customParams.colorBtn);
+        $('#logotipo img').attr('src', customParams.logo);
+        $('#avatar img').attr('src', customParams.avatar);
         loadAll = loadAll + 1;
         if(loadAll===2){
           spinnerOut('#custom');
