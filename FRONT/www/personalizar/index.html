@@ -404,6 +404,7 @@
       
       function init(){
         window.onmessage = e => {
+          console.log("onmessage Mant",e.data)
           if (e.data.customParams !== undefined) {
             loadCustom(e.data.customParams);
           } else if (e.data.saludo !== undefined) {
