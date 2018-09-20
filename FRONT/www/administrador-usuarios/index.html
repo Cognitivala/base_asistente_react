@@ -371,14 +371,13 @@
                 if(response.status  == '200' && response.estado != undefined){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
+                  $('tr.action td:nth-child(1)').text(getNameVal);
+                  $('tr.action td:nth-child(2)').text(getEmailVal);
+                  $('tr.action td:nth-child(3)').text(addValProfile);
                 }else{
                   openCustomModal('#myModal', 'Genial!', 'No se ha podido ediar el usuario', 'error');
                 }
               })
-      
-              $('tr.action td:nth-child(1)').text(getNameVal);
-              $('tr.action td:nth-child(2)').text(getEmailVal);
-              $('tr.action td:nth-child(3)').text(addValProfile);
               $('#myModalUser').modal('hide');
               removeData();
             } else {
@@ -401,11 +400,11 @@
                 if(response.status  == '200' && response.estado != undefined){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'Usuario añadido con éxito', 'success');
+                  $('.table tbody').append(craeteTrUser);
                 }else{
                   openCustomModal('#myModal', 'Genial!', 'No se ha podido añadir el usuario', 'error');
                 }
               })
-              $('.table tbody').append(craeteTrUser);
               showTooltip();
               $('#myModalUser').modal('hide');
               removeData();
@@ -448,11 +447,11 @@
             if(response.status  == '200' && response.estado != undefined){
               //- console.log(response);
               openCustomModal('#myModal', 'Genial!', 'Usuario eliminado con éxito', 'success');
+              $('.table tbody tr.to-delete').remove();
             }else{
               openCustomModal('#myModal', 'Genial!', 'No se ha podido eliminar el usuario', 'error');
             }
           })
-          $('.table tbody tr.to-delete').remove();
         }
         
         function openCustomModal(modal, title, body, theclass){
