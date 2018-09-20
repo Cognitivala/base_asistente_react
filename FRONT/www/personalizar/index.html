@@ -349,7 +349,7 @@
         }
         var promise = $.ajax({
           type: 'POST',
-          url: getPath+"mant/customize_param",
+          url: getPath+"mad/customize_param",
           data: JSON.stringify(args),
           "headers": {
             "Content-Type": "application/json",
@@ -358,9 +358,6 @@
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
-      
-          console.log('esto responde. getCustomParams()');
-      
           if(response.status == '200'){
             
             getMessageResponse();
@@ -425,7 +422,7 @@
           }
           var promise = $.ajax({
             type: 'POST',
-            url: getPath+"mant/customize",
+            url: getPath+"mad/customize",
             data: JSON.stringify(args),
             "headers": {
               "Content-Type": "application/json",
@@ -436,13 +433,13 @@
           }).done(function(response){
             if(response.status == 200){
               openModal('#myModal', 'Genial!', 'Tu asistente se ha personalizado con éxito', 'success');
-              localStorage.setItem('avatarAssistant', uploadImgLogo);
-              localStorage.setItem('logoAssistant', uploadImgAvatar);
-              localStorage.setItem('colorHeader', colorHeader);
-              localStorage.setItem('colorBubble', colorBuble);
-              localStorage.setItem('colorButtons', colorButtons);
-              localStorage.setItem('subTitleAssistant', getSubTitle);
-              localStorage.setItem('titleAssistant', getTitle);
+              //- localStorage.setItem('avatarAssistant', uploadImgLogo);
+              //- localStorage.setItem('logoAssistant', uploadImgAvatar);
+              //- localStorage.setItem('colorHeader', colorHeader);
+              //- localStorage.setItem('colorBubble', colorBuble);
+              //- localStorage.setItem('colorButtons', colorButtons);
+              //- localStorage.setItem('subTitleAssistant', getSubTitle);
+              //- localStorage.setItem('titleAssistant', getTitle);
               getCustomParams();
               getDemo.src = getDemo.src;
             } else {
