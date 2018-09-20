@@ -9884,7 +9884,7 @@ ul.list-dialogs {
     position: absolute; }
     .custom-assistant .assistant iframe {
       width: 100%;
-      height: calc(100% - 8rem); }
+      height: 100%; }
     .custom-assistant .assistant .header {
       height: 8rem;
       padding: 1rem;
