@@ -67,6 +67,7 @@ addEventListener('click', function (ev) {
 });
 
 if (!sessionStorage.getItem('user_id')) {
+  console.log('object')
   window.location.href = getPath + 'login/';
   // window.location.href = 'http://localhost:3000/login/';
 } else {
