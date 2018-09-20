@@ -541,6 +541,11 @@ select:-webkit-autofill {
   vertical-align: middle;
 }
 
+#myModalAssistant{
+  .modal-header{
+    padding: 0;
+  }
+}
 .modal-content {
   border: none;
   @include border-radius(0);

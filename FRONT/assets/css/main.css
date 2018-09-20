@@ -8129,6 +8129,9 @@ select:-webkit-autofill {
   text-align: left;
   vertical-align: middle; }
 
+#myModalAssistant .modal-header {
+  padding: 0; }
+
 .modal-content {
   border: none;
   -webkit-border-radius: 0;
