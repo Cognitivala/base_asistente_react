@@ -67,7 +67,8 @@ addEventListener('click', function (ev) {
 });
 
 if (!sessionStorage.getItem('user_id')) {
-  const hrefLast = window.location.href.substring(window.location.href.length - 11, window.location.href.length);
+  const href = window.location.href,
+    hrefLast = href.substring(href.length - 11, href.length);
   if(hrefLast !== "contrasena/" && hrefLast !== "_contrasena")
     window.location.href = getPath + 'login/';
   // window.location.href = 'http://localhost:3000/login/';
