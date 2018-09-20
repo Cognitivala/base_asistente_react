@@ -416,6 +416,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               var chart = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
               chart.draw(view, options);
             }
+          }else{
+            $('#chart_div2').html('<p>No se han encontrado datos</p>');
           }
         })
       }
@@ -540,6 +542,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
               chart.draw(data, options);
             }
+          }else{
+            $('#chart_div2').html('<p>No se han encontrado datos</p>');
           }
         })
       }
@@ -762,67 +766,72 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }).done(function(response){
           var getMyArray = [['días', 'interacciones']];
         }).promise().done(function(response){
-          var getMyArray = [['días', 'TMO']];
-          var pushArray = [];
-          for(var i = 0; i < response.respuesta.length; i++) {
-            pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].tmo_segundos];
-            getMyArray.push(pushArray);
-          }
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart);
-          function drawChart() {
-            var data = google.visualization.arrayToDataTable(getMyArray);
-            var options = {
-              height: 180,
-              hAxis: {
-                textStyle: {
-                  fontName: 'Roboto',
-                  bold: true
+          if(response.status == 400){
+            $('#chart_div6').html('<p>No se han encontrado datos</p>')
+            return false;
+          } else {
+            var getMyArray = [['días', 'TMO']];
+            var pushArray = [];
+            for(var i = 0; i < response.respuesta.length; i++) {
+              pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].tmo_segundos];
+              getMyArray.push(pushArray);
+            }
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable(getMyArray);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                  maxValue: (getMyArray.length - 1),
+                  gridlines: {
+                    color: 'none'
+                  }
                 },
-                title: '',
-                titleTextStyle: {
-                  color: '#f00'
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
                 },
-                minValue: 1,
-                maxValue: (getMyArray.length - 1),
-                gridlines: {
-                  color: 'none'
-                }
-              },
-              vAxis: {
-                minValue: 0,
-                textStyle: {
-                  fontName: 'Roboto',
-                  bold: true
-                }
-              },
-              chartArea:{
-                left: '5%',
-                top: '5%',
-                width: '93%',
-                height: '75%'
-              },
-              crosshair: {
-                focused: {
-                  color: '#3bc',
-                  opacity: 0.8
-                }
-              },
-              legend: 'none',
-              pointSize: 9,
-              tooltip: {
-                showColorCode: true,
-                textStyle: {
-                  color: '#1c75bc',
-                  fontName: 'Roboto',
-                }
-              },
-              colors:['#009dc3', '#001e37'],
-              areaOpacity: .85,
-              backgroundColor: { fill:'transparent' }
-            };
-            var chart = new google.visualization.AreaChart(document.getElementById('chart_div6'));
-            chart.draw(data, options);
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: 'none',
+                pointSize: 9,
+                tooltip: {
+                  showColorCode: true,
+                  textStyle: {
+                    color: '#1c75bc',
+                    fontName: 'Roboto',
+                  }
+                },
+                colors:['#009dc3', '#001e37'],
+                areaOpacity: .85,
+                backgroundColor: { fill:'transparent' }
+              };
+              var chart = new google.visualization.AreaChart(document.getElementById('chart_div6'));
+              chart.draw(data, options);
+            }
           }
         });
         var promise = $.ajax({

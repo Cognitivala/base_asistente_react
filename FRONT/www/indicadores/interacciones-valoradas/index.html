@@ -571,6 +571,7 @@
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
+          debugger;
           if(response.status == 400){
             $('#'+divId).html('<p>No se han encontrado datos</p>')
             return false;
