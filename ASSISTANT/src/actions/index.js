@@ -353,6 +353,7 @@ export function updateConversation(data) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
 
+
     const request = axios({
       method: "POST",
       headers: {
@@ -375,7 +376,7 @@ export function updateConversation(data) {
       err => {
         dispatch(
           updateConversationError(
-            "Error de conexión con el servidor, intente nuevamente por favor"
+            "Error de conexión con el servidor, intente nuevamente"
           )
         );
       }
@@ -383,208 +384,208 @@ export function updateConversation(data) {
 
 
     //Respuesta
-    // setTimeout(() => {
-    //   const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
-    //   let data;
-    //   //1 = MSG + Buttons (Valoración)
-    //   //2 = MSG + Buttons (Contactar)
-    //   //3 = MSG + Attach
-    //   //4 = MSG + Select
-    //   //5 = MSG + Multibutton
-    //   //6 = MSG + Datepicker
-    //   //8 = MULTIMSG
-    //   switch (8) {
-    //     case 1:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
-    //         buttons: [
-    //           {
-    //             title: "SI",
-    //             value: "siValorar"
-    //           },
-    //           {
-    //             title: "NO",
-    //             value: "noValorar"
-    //           }
-    //         ]
-    //       };
-    //       break;
-    //     case 2:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Contactar?"],
-    //         buttons: [
-    //           {
-    //             title: "SI",
-    //             value: "siContacto"
-    //           },
-    //           {
-    //             title: "NO",
-    //             value: "noContacto"
-    //           }
-    //         ]
-    //       };
-    //       break;
-    //     case 3:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Debes adjuntar tu imagen"],
-    //         attach: {
-    //           types: [
-    //             "image/jpeg",
-    //             "image/gif",
-    //             "image/png",
-    //             "application/pdf",
-    //             "application/word"
-    //           ],
-    //           maxSize: 300000
-    //         }
-    //       };
-    //       break;
-    //     case 4:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Por favor, selecciona una opción: "],
-    //         selects: [
-    //           {
-    //             text: "Seleccione",
-    //             value: "-1"
-    //           },
-    //           {
-    //             text: "Option 1",
-    //             value: "1"
-    //           },
-    //           {
-    //             text: "Option 2",
-    //             value: "2"
-    //           },
-    //           {
-    //             text: "Option 3",
-    //             value: "3"
-    //           },
-    //           {
-    //             text: "Option 4",
-    //             value: "4"
-    //           },
-    //           {
-    //             text: "Option 5",
-    //             value: "5"
-    //           },
-    //           {
-    //             text: "Option 6",
-    //             value: "6"
-    //           }
-    //         ]
-    //       };
-    //       break;
-    //     case 5:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, selecciona uno o varios botones:"],
-    //         multibuttons: [
-    //           { title: "hola", value: "1" },
-    //           { title: "holanda", value: "2" },
-    //           { title: "holiwis", value: "3" },
-    //           { title: "holo", value: "4" },
-    //           { title: "holawa", value: "5" }
-    //         ]
-    //       };
-    //       break;
-    //     case 6:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, seleccione una fecha:"],
-    //         datepicker: [
-    //           { name: "inicial", value: "22/05/1991" },
-    //           { name: "final", value: "22/05/1991" }
-    //         ]
-    //       };
-    //       break;
-    //     case 7:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, seleccione una fecha:"],
-    //         datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
-    //       };
-    //       break;
-    //     case 8:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["lorem ipsum","lorem ipsum","lorem ipsum","lorem ipsum"]
-    //       };
-    //       break;
-    //   }
+    setTimeout(() => {
+      const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
+      let data;
+      //1 = MSG + Buttons (Valoración)
+      //2 = MSG + Buttons (Contactar)
+      //3 = MSG + Attach
+      //4 = MSG + Select
+      //5 = MSG + Multibutton
+      //6 = MSG + Datepicker
+      //8 = MULTIMSG
+      switch (8) {
+        case 1:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
+            buttons: [
+              {
+                title: "SI",
+                value: "siValorar"
+              },
+              {
+                title: "NO",
+                value: "noValorar"
+              }
+            ]
+          };
+          break;
+        case 2:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Contactar?"],
+            buttons: [
+              {
+                title: "SI",
+                value: "siContacto"
+              },
+              {
+                title: "NO",
+                value: "noContacto"
+              }
+            ]
+          };
+          break;
+        case 3:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Debes adjuntar tu imagen"],
+            attach: {
+              types: [
+                "image/jpeg",
+                "image/gif",
+                "image/png",
+                "application/pdf",
+                "application/word"
+              ],
+              maxSize: 300000
+            }
+          };
+          break;
+        case 4:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Por favor, selecciona una opción: "],
+            selects: [
+              {
+                text: "Seleccione",
+                value: "-1"
+              },
+              {
+                text: "Option 1",
+                value: "1"
+              },
+              {
+                text: "Option 2",
+                value: "2"
+              },
+              {
+                text: "Option 3",
+                value: "3"
+              },
+              {
+                text: "Option 4",
+                value: "4"
+              },
+              {
+                text: "Option 5",
+                value: "5"
+              },
+              {
+                text: "Option 6",
+                value: "6"
+              }
+            ]
+          };
+          break;
+        case 5:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, selecciona uno o varios botones:"],
+            multibuttons: [
+              { title: "hola", value: "1" },
+              { title: "holanda", value: "2" },
+              { title: "holiwis", value: "3" },
+              { title: "holo", value: "4" },
+              { title: "holawa", value: "5" }
+            ]
+          };
+          break;
+        case 6:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, seleccione una fecha:"],
+            datepicker: [
+              { name: "inicial", value: "22/05/1991" },
+              { name: "final", value: "22/05/1991" }
+            ]
+          };
+          break;
+        case 7:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, seleccione una fecha:"],
+            datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
+          };
+          break;
+        case 8:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["lorem ipsum","lorem ipsum","lorem ipsum","lorem ipsum"]
+          };
+          break;
+      }
 
-    //   data.send = "from";
-    //   data.enabled = true;
+      data.send = "from";
+      data.enabled = true;
 
-    //   messageResponse(dispatch, data);
-    // }, 500);
+      messageResponse(dispatch, data);
+    }, 500);
   };
 }
 function messageResponse(dispatch, data) {
