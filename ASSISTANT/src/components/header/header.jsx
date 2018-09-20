@@ -7,8 +7,8 @@ export default class Header extends Component {
     super(props);
   }
 
-  fillHelp(ayuda) {
-    if (ayuda) {
+  fillHelp(ayuda, minimized) {
+    if (ayuda && !minimized) {
       return (
         <BtnHelp
           ayudaStates={this.props.ayudaStates}
@@ -16,6 +16,7 @@ export default class Header extends Component {
           closeHelp={this.props.closeHelp}
           showWarningHelp={this.props.showWarningHelp}
           hideWarningHelp={this.props.hideWarningHelp}
+          colorHeader={this.props.colorHeader}
         />
       );
     }
@@ -25,9 +26,10 @@ export default class Header extends Component {
     const style = {
       backgroundColor: this.props.colorHeader
     };
+    let cssClass = this.props.minimized?" iframe-cognitive-assistant-container-minimized":"";
     return (
       <div
-        className="iframe-cognitive-assistant-container-header"
+        className={"iframe-cognitive-assistant-container-header" + cssClass}
         style={style}
       >
         <img
@@ -38,10 +40,11 @@ export default class Header extends Component {
           <h3>{this.props.titulo}</h3>
           <p>{this.props.subtitulo}</p>
         </div>
+        <i className="iframe-cognitive-minimize" onClick={this.props.minimizedAssistant}></i>
         <button onClick={this.props.closeAssistant} className="close-button">
           <i className="fas fa-times" />
         </button>
-        {this.fillHelp(this.props.ayuda)}
+        {this.fillHelp(this.props.ayuda, this.props.minimized)}
       </div>
     );
   }
@@ -58,5 +61,7 @@ Header.propTypes = {
   openHelp: PropTypes.func.isRequired,
   closeHelp: PropTypes.func.isRequired,
   showWarningHelp: PropTypes.func.isRequired,
-  hideWarningHelp: PropTypes.func.isRequired
+  hideWarningHelp: PropTypes.func.isRequired,
+  minimizedAssistant: PropTypes.func.isRequired,
+  minimized: PropTypes.bool.isRequired
 };

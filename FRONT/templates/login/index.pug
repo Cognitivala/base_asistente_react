@@ -1,0 +1,160 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#" heightfull)
+  head
+    title Ingresar. MAD Cognitiva
+    include ../includes/meta.pug
+
+  body.no-scroll(heightfull)
+  
+    #wrapper.login(heightfull)
+      .f-row.align-center(heightfull)
+        .f-col.content(padding)
+          .row
+            .col-sm-4.col-sm-offset-4
+              .logo(text-center)
+                img(src="../assets/img/cognitiva-logo.png")
+              
+              .form#login(autocomplete="off")
+                #error
+
+                  div(padding)
+                    h5 Error de validación
+                    p Favor verifique su email y/o contraseña
+
+                fieldset
+                  label Email
+                  input#user(type="email", name="user", required, placeholder="Ingresa tu email", autocomplete="off")
+                fieldset
+                  label Contraseña
+                  input#pass(type="password", name="pass", required, placeholder="Ingresa tu contraseña", autocomplete="off")
+                button#submit(button type="submit") Ingresar
+                .text-center
+                  a(href=myPath +'/login/recuperar-contrasena/') ¿Olvidaste tu contraseña?
+
+    #bkg-login
+
+    include ../includes/modal.pug
+
+    script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
+    script.
+
+      var getPath = "http://asistente-react.mycognitiva.io/";
+      //- var getPath = "http://localhost:3000/";
+      
+      var uri = window.location.toString();
+
+      if (uri.indexOf("?") > 0) {
+        var clean_uri = uri.substring(0, uri.indexOf("?"));
+        window.history.replaceState({}, document.title, clean_uri);
+      }
+
+      function getCustomParams(theTkn) {
+        var getSession           = "1";
+
+        var args = {
+          id_cliente: getSession
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath + 'mant/customize_param',
+          data: JSON.stringify(args),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+theTkn
+          },
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200'){
+            localStorage.setItem('avatarAssistant', response.avatar);
+            localStorage.setItem('logoAssistant', response.logo);
+            localStorage.setItem('colorHeader', response.colorHeader);
+            localStorage.setItem('colorBubble', response.colorBubble);
+            localStorage.setItem('colorButtons', response.colotBtn);
+            localStorage.setItem('subTitleAssistant', response.subtitulo);
+            localStorage.setItem('titleAssistant', response.titulo);
+
+          }
+        });
+      }
+
+      function login(us, pw, theTkn, rftkn){
+        if(us == '' || pw == ''){
+          $('#error').addClass("active");
+        } else {
+          $('#error').removeClass("active");
+          var args = {
+            user: us,
+            pass: pw
+          }
+          var promise = $.ajax({
+            async: true,
+            type: 'POST',
+            crossDomain: true,
+            url: getPath + 'mant/login',
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer "+theTkn
+            },
+            data: JSON.stringify(args),
+            dataType: 'json',
+            processData: false,
+            contentType: 'application/json; charset=utf-8'
+          }).done(function(response){
+
+            if(response.status == '200'){
+ 
+              var d = new Date();
+              var n = d.getTime();
+
+              sessionStorage.setItem('tmtkn', n);
+              sessionStorage.setItem('rftmtkn', n);
+              
+              sessionStorage.setItem('tkn', theTkn);
+              sessionStorage.setItem('rftkn', rftkn);
+            
+              sessionStorage.setItem("user", response.nombre);
+              sessionStorage.setItem("user_id", response.id_cliente);
+              sessionStorage.setItem("empresa", response.empresa);
+              sessionStorage.setItem("prf", response.perfil);
+              
+              setTimeout(function(){  
+                window.location.href=getPath
+              }, 500);
+
+              getCustomParams(theTkn);
+
+            } else {
+              $('#error').addClass("active");
+            }
+          })
+        }
+      }
+
+      function getTkn(){
+        var promise = $.ajax({
+          type: 'POST',
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader ("Authorization", "Basic " + btoa("coopeuch:coop1234.."));
+          },
+          url: getPath + 'mant/token'
+        }).done(function(response){
+          if(response.status == 200){
+            login($('#user').val(), $('#pass').val(), response.token, response.refresh_token);
+            $(function () {
+              $(document).ajaxSend(function(e, xhr, options) {
+                xhr.setRequestHeader("X-XSRF-TOKEN", response.token);
+              });
+            });
+          }
+        });
+      }
+
+      function $id(e){
+        return document.getElementById(e)
+      }
+      
+      $("#login").click(function(e){
+        e.preventDefault();
+        getTkn();
+      });

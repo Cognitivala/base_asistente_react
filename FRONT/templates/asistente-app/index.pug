@@ -1,0 +1,75 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#")
+  
+  head
+    
+    //- include ../includes/meta.pug
+
+    title Demo. MAD Cognitiva
+    meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    meta(name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no")
+    meta(name="description" content="Asistente digital")
+    //- link(rel="stylesheet" href= myPath +'/asistente/css/main.css')
+    //- link(rel="stylesheet" href= myPath +'/asistente/css/fontawesome.css')
+
+    style.
+      #test {
+        width: 100%;
+        height: 100%;
+      }
+
+  body
+
+    #test
+
+    script(src="https://code.jquery.com/jquery-3.3.1.min.js")
+    script.
+      $("#test").load("http://asistente-react.mycognitiva.io/asistente/");
+
+    //- main.main-content
+    //-   section.conversation-holder.box-wrapp(data-conversation)
+    //-   form.input-user-holder(data-func="submitMessage" data-event="submit" novalidate)
+    //-     .form-wrapp
+    //-       input.input-user(type="text" value="" placeholder="Ingresa tu consulta..." name="message")
+    //-       button#button-send-msg.btn.btn-rounded.input-user-btn(aria-label="Enviar mensaje")
+    //-         i.fa.fa-paper-plane
+    //- aside(data-load-question)
+    //- .spinner-holder
+    //-   .spinner Loading...
+    //- #assessment
+    //-   .padding.mytable.zindex
+    //-     .myrow
+    //-       .mytd
+    //-         .message
+    //-           p Evalúa mi atención y calidad de respuestas.
+    //-           p.title ¿Te ayudé a resolver tu duda o problema?
+    //-           p.thin (Donde 1 es muy mala y 5 es muy buena)
+    //-           .ratingStars
+    //-             a(href="#;" rel="mx")
+    //-               span 1
+    //-               i.fa.fa-star
+    //-             a(href="#;" rel="mx")
+    //-               span 2
+    //-               i.fa.fa-star
+    //-             a(href="#;" rel="mx")
+    //-               span 3
+    //-               i.fa.fa-star
+    //-             a(href="#;" rel="mx")
+    //-               span 4
+    //-               i.fa.fa-star
+    //-             a(href="#;" rel="mx")
+    //-               span 5
+    //-               i.fa.fa-star
+    //-           button.btn.addValue(type="button" data-func="addValue" disabled) Valorar
+    //-           .comment
+    //-             p Le agradeceríamos que nos indicase cómo podemos hacer que esta respuesta sea más útil
+    //-             textarea(minlength="3" name="comment" required)
+    //-             button.btn.addComment(type="button" data-func="addValueComment" data-toggle="modal") Enviar comentario
+    //-   #thanks
+    //-     .padding.mytable
+    //-       .myrow
+    //-         .mytd
+    //-           p.title Gracias por su valoración
+    //-   button.close(data-func="closeAssessment")
+    //-     i.fa.fa-times(aria-hidden="true")
+    //- script(type="text/javascript" src= myPath +'/asistente/js/build/main.js')
+    //- script(src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADG7P3Zw2isanqpUlGOHftJuB84FE8Efc")

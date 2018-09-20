@@ -5,8 +5,8 @@ export function saludoStates(
     isFetching: false,
     error: "",
     saludo: {
-      cid: "",
-      msg: [""],
+      cid: null,
+      msg: [],
       send: ""
     },
     send: false

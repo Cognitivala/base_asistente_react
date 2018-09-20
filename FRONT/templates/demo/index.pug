@@ -1,0 +1,19 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#" heightfull)
+  head
+    title Demo. MAD Cognitiva
+    
+    include ../includes/meta.pug
+
+    script(type="text/javascript" src="http://asistente-react.mycognitiva.io/cdn/js/build/main.js")
+    script.
+      window.addEventListener('load', function () {
+        window.CognitiveAssistantMain.init('http://asistente-react.mycognitiva.io/asistente/');
+      });
+
+  body.no-scroll.aui(heightfull)
+    iframe#demo(src="", frameborder="0")
+
+    script.
+      var getUrlDemo = localStorage.getItem('urlAssistant');
+      var getDemo = document.getElementById('demo');
+      getDemo.attributes[1].value = getUrlDemo;

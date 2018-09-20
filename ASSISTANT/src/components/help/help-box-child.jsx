@@ -10,26 +10,35 @@ export default class HelpBoxChild extends Component {
   sendHelp(e) {
     e.preventDefault();
     let $item = e.target.tagName !== "DIV" ? e.target.parentNode : e.target;
-    const answer = $item.getElementsByTagName("a")[0].innerText;
-    const conversation = {msg:[answer],send:"to"};
+    const answer = $item.getElementsByTagName("a")[0].innerText,
+      { generalStates } = this.props,
+      general = generalStates.toJS(),
+      conversation = {
+        general,
+        msg: [answer],
+        send: "to",
+        enabled: true
+      };
     this.props.closeHelp();
     this.props.updateConversation(conversation);
   }
 
-  content(ayuda) {
+  content(ayuda, colorHeader) {
     return (
-        <div className="li-child" onClick={this.sendHelp}>
-          <a className="cur-pointer">{ayuda.get("title")}</a>
-        </div>
+      <div className="li-child" onClick={this.sendHelp}>
+        <a style={{color:colorHeader}} className="cur-pointer">{ayuda.get("title")}</a>
+      </div>
     );
   }
 
   render() {
-    const { ayuda } = this.props;
-    return this.content(ayuda);
+    const { ayuda, colorHeader } = this.props;
+    return this.content(ayuda, colorHeader);
   }
 }
 
 HelpBoxChild.propTypes = {
-  ayuda: PropTypes.object.isRequired
+  ayuda: PropTypes.object.isRequired,
+  generalStates: PropTypes.any.isRequired,
+  colorHeader: PropTypes.string.isRequired
 };

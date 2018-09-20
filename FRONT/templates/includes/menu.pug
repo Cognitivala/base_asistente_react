@@ -1,0 +1,56 @@
+.f-col.menu(heightfull padding)
+  .header
+    .f-row.align-center
+      .f-col.cognitiva-logo
+        img(src= myPath +'/assets/img/cognitiva-logo.png', alt="")
+
+  ul.menu#mainmenu
+    li
+      a(href=myPath +'/')
+        i.fa.fa-cog(aria-hidden="true")
+        | Configurar Asistente
+    li
+      a(href=myPath +'/personalizar/')
+        i.fa.fa-paint-brush(aria-hidden="true")
+        | Personalizar Asistente
+    li
+      a(href=myPath +'/indicadores/')
+        i.fa.fa-bar-chart(aria-hidden="true")
+        | Indicadores
+      ul.sub-menu
+        li
+          a(href=myPath +'/indicadores/interacciones/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Interacciones
+        //- li
+        //-   a(href=myPath +'/indicadores/interacciones-valoradas/')
+        //-     i.fa.fa-caret-right(aria-hidden="true")
+        //-     | Interacciones Valoradas
+        li
+          a(href=myPath +'/indicadores/valoraciones/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Valoraciones
+        li
+          a(href=myPath +'/indicadores/tmo/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | TMO
+        li
+          a(href=myPath +'/indicadores/origen/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Origen
+        li
+          a(href=myPath +'/indicadores/nps/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | NPS
+        //- li
+        //-   a(href=myPath +'/indicadores/me-gusta/')
+        //-     i.fa.fa-caret-right(aria-hidden="true")
+        //-     | Me Gusta
+    li#admin-users-btn
+      a(href=myPath +'/administrador-usuarios/')
+        i.fa.fa-users(aria-hidden="true")
+        | Administrador Usuarios
+    li
+      a.get-code(href='#;' onclick="openScript()")
+        i.fa.fa-code(aria-hidden="true")
+        | Obtener código

@@ -1,0 +1,107 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#" heightfull)
+  head
+    title Recuperar Contraseña. MAD Cognitiva
+    include ../../includes/meta.pug
+
+  body.no-scroll(heightfull)
+  
+    #wrapper.login(heightfull)
+      .f-row.align-center(heightfull)
+        .f-col.content(padding)
+          .row
+            .col-sm-4.col-sm-offset-4
+              .logo(text-center)
+                img(src="../../assets/img/cognitiva-logo.png")
+              .form#ingresaCorreo(autocomplete="off")
+                fieldset
+                  label Ingresa tu correo electrónico
+                  input#email(type="email", name="", placeholder="Ingresa tu correo", autocomplete="off", required)
+                button(button type="submit" onclick="getTkn()") Recuperar
+
+    #bkg-login
+    
+    include ../../includes/modal.pug
+
+    script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
+    script(type="text/javascript" src= myPath + '/assets/js/main.js')
+
+    script.
+      var getPath = "http://asistente-react.mycognitiva.io/";
+      
+      var uri = window.location.toString();
+      
+      if (uri.indexOf("?") > 0) {
+        var clean_uri = uri.substring(0, uri.indexOf("?"));
+        window.history.replaceState({}, document.title, clean_uri);
+      }
+
+      var theEmail = $id('email');
+
+      function $id(id) {
+        return document.getElementById(id);
+      }
+
+      $id('ingresaCorreo').onsubmit = function() {
+        return false;
+      };
+
+      function OpenModal(title, body){
+        $id('myModal').getElementsByTagName('h6')[0].innerHTML = title;
+        $id('myModal').getElementsByClassName('modal-body')[0].innerHTML = body;
+        $('#myModal').modal({
+          backdrop: 'static',
+          keyboard: false,
+          show: true
+        });
+      }
+
+      function getTkn(){
+        var promise = $.ajax({
+          type: 'POST',
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader ("Authorization", "Basic " + btoa("coopeuch:coop1234.."));
+          },
+          url: getPath + 'mant/token'
+        }).done(function(response){
+          if(response.status == 200){
+            sendPass(response.token);            
+            $(function () {
+              $(document).ajaxSend(function(e, xhr, options) {
+                xhr.setRequestHeader("X-XSRF-TOKEN", response.token);
+              });
+            });
+          }
+        });
+      }
+
+      function sendPass(getTkn) {
+        var theEmailVal = theEmail.value;
+        if(theEmail.validity.valid == true){
+          var settings = {
+            async: true,
+            crossDomain : true,
+            url : getPath+'mant/recoveryPass',
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer "+getTkn
+            },
+            method : "POST",
+            data : {
+              email : theEmailVal
+            }
+          }
+          $.ajax(settings).done(function (response) {
+            if(response.status == 400){
+              OpenModal('Error', 'El correo <b>'+theEmailVal+'</b> no existe en nuestra base de datos');
+              $('#myModal').addClass('error');
+            } else {
+              OpenModal('Contraseña enviada', 'La nueva contraseña fue enviada al correo <b>'+theEmailVal+'</b>');
+              $('#myModal').addClass('success');
+              document.getElementsByClassName('modal-footer')[0].children[0].onclick = function () {
+                window.location = "../nueva-contrasena/";
+              }
+            }
+          });
+        }
+      }

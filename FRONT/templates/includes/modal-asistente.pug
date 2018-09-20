@@ -1,0 +1,16 @@
+.modal.fade#myModalAssistant(tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        button.close(type="button" data-dismiss="modal" aria-label="Close")
+          i.fa.fa-close
+      .modal-body.heightfull
+        .header
+          .img
+            img#header-logotipo(src="../assets/img/brain_cognitiva.png", alt="")
+          .titles
+            div Asistente Cognitivo
+            span Cognitiva
+          .close
+            i.fa.fa-times
+        iframe#assistant-iframe.assistant(src= myPath + 'asistente/', frameborder="0")

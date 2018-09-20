@@ -1,0 +1,1462 @@
+html(lang="es-CL" dir="ltr" heightfull)
+  head
+    title Configurar Asistente. MAD Cognitiva
+
+    include includes/meta.pug
+
+  body.no-scroll.home(heightfull)
+
+    #wrapper(heightfull)
+      .f-row(heightfull)
+        
+        include includes/menu.pug
+
+        .f-col.content.relative-position(padding heightfull)
+          include includes/spinner.pug
+          include includes/user.pug
+          
+          .row
+            .col-md-12
+              .container-tabs
+                .test
+                  a(href="#;", onclick="openModalTest()")
+                    | Probar asistente
+                    i.fa.fa-commenting(aria-hidden="true")
+                  a(href="#;", onclick="openDemo(event)")
+                    | Demo
+                    i.fa.fa-rocket(aria-hidden="true")
+
+                ul#tabs.nav.nav-tabs(role="tablist")
+                  li.active(role="presentation")
+                    a(href="#" data-func="toggleTabs" data-index="0")
+                      span Intenciones
+                  //- li(role="presentation")
+                    a(href="#" data-func="toggleTabs" data-index="1")
+                      span Entidades
+                  li(role="presentation")
+                    a(href="#" data-func="toggleTabs" data-index="2")
+                      span Diálogo
+                  li(role="presentation")
+                    a(href="#" data-func="toggleTabs" data-index="3")
+                      span URL
+                  li(role="killswitch")
+                    a(href="#" data-func="toggleTabs" data-index="4")
+                      span Switch
+
+                .tab-content
+
+                  #intents.tab-pane.fade.in.active(role="tabpanel" data-tab-target="0")
+
+                    //- button#new-intent(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-intent', false, 'create_intent')")
+                      | Añadir intención 
+                      i.fa.fa-plus-circle( aria-hidden="true")
+
+                    ul#list-intents.list-intents
+
+                    include includes/modal-intents.pug
+                    include includes/modal-intents-edit.pug
+
+                  //- #entities.tab-pane.fade(role="tabpanel" data-tab-target="1")
+
+                    //- button#new-entitie(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-entities', false, 'create_entity')" )
+                      | Añadir entidad 
+                      i.fa.fa-plus-circle( aria-hidden="true")
+
+                    ul#list-entities.list-intents
+
+                    include includes/modal-entities.pug
+                    include includes/modal-entities-edit.pug
+
+                  #dialog.tab-pane.fade(role="tabpanel" data-tab-target="2")
+
+                    //- button#new-dialog(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-dialog', false, 'create_dialog')")
+                      | Añadir diálogo 
+                      i.fa.fa-plus-circle( aria-hidden="true")
+
+                    ul.list-dialogs.scroll#list-dialogs        
+                    
+                    include includes/modal-dialog.pug
+                    include includes/modal-dialog-edit.pug
+                    include includes/modal-choice-dialog.pug
+
+                  #url.tab-pane.fade(role="tabpanel", data-tab-target="3")
+                    .form#form-url(autocomplete="off")
+                      fieldset
+                        label Ingresa la url del sitio en donde estará el asistente
+                        input#get-url(type="url", pattern="https?://.+", placeholder="Ej. https://www.google.cl", required, autocomplete="off")
+                      button#save-url(button onclick="saveUrl()") Guardar
+
+                  #killswitch.tab-pane.fade(role="tabpanel", data-tab-target="4")
+                    .form#form-switch(autocomplete="off")
+                      fieldset
+                        label.title Activa o desactiva el asistente virtual que se encuentra en tu sitio web.
+                        label
+                          input(type="checkbox")
+                          .my-switch
+
+                      button#save-switch(button data-func="saveSwitch") Guardar
+
+    include includes/modal.pug
+    include includes/modal-choice.pug
+    include includes/modal-choice-entity.pug
+    include includes/modal-examples.pug
+    include includes/modal-asistente.pug
+    include includes/modal-script.pug
+    include includes/modal-wysiwyg.pug
+    include includes/modal-wysiwyg-new.pug
+    include includes/modal-delete-dialog.pug
+
+    script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(type="text/javascript" src="../assets/js/wysihtml5-0.3.0.min.js")
+    script(type="text/javascript" src="../assets/js/bootstrap.min.js")
+    script(type="text/javascript" src="../assets/js/bootstrap-wysihtml5.js")
+    script(type="text/javascript" src="../assets/js/main.js")
+    script(type="text/javascript" src="../assets/js/main.mad.js")
+
+    script.
+      var wysihtml5ParserRules = {
+          "classes": {
+              "wysiwyg-clear-both": 1,
+              "wysiwyg-clear-left": 1,
+              "wysiwyg-clear-right": 1,
+              "wysiwyg-color-aqua": 1,
+              "wysiwyg-color-black": 1,
+              "wysiwyg-color-blue": 1,
+              "wysiwyg-color-fuchsia": 1,
+              "wysiwyg-color-gray": 1,
+              "wysiwyg-color-green": 1,
+              "wysiwyg-color-lime": 1,
+              "wysiwyg-color-maroon": 1,
+              "wysiwyg-color-navy": 1,
+              "wysiwyg-color-olive": 1,
+              "wysiwyg-color-purple": 1,
+              "wysiwyg-color-red": 1,
+              "wysiwyg-color-silver": 1,
+              "wysiwyg-color-teal": 1,
+              "wysiwyg-color-white": 1,
+              "wysiwyg-color-yellow": 1,
+              "wysiwyg-float-left": 1,
+              "wysiwyg-float-right": 1,
+              "wysiwyg-font-size-large": 1,
+              "wysiwyg-font-size-larger": 1,
+              "wysiwyg-font-size-medium": 1,
+              "wysiwyg-font-size-small": 1,
+              "wysiwyg-font-size-smaller": 1,
+              "wysiwyg-font-size-x-large": 1,
+              "wysiwyg-font-size-x-small": 1,
+              "wysiwyg-font-size-xx-large": 1,
+              "wysiwyg-font-size-xx-small": 1,
+              "wysiwyg-text-align-center": 1,
+              "wysiwyg-text-align-justify": 1,
+              "wysiwyg-text-align-left": 1,
+              "wysiwyg-text-align-right": 1
+          },
+          "tags": {
+              "tr": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "strike": {
+                  "remove": 1
+              },
+              "form": {
+                  "rename_tag": "div"
+              },
+              "rt": {
+                  "rename_tag": "span"
+              },
+              "code": {},
+              "acronym": {
+                  "rename_tag": "span"
+              },
+              "br": {
+                  "add_class": {
+                      "clear": "clear_br"
+                  }
+              },
+              "details": {
+                  "rename_tag": "div"
+              },
+              "h4": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "em": {},
+              "title": {
+                  "remove": 1
+              },
+              "multicol": {
+                  "rename_tag": "div"
+              },
+              "figure": {
+                  "rename_tag": "div"
+              },
+              "xmp": {
+                  "rename_tag": "span"
+              },
+              "small": {
+                  "rename_tag": "span",
+                  "set_class": "wysiwyg-font-size-smaller"
+              },
+              "area": {
+                  "remove": 1
+              },
+              "time": {
+                  "rename_tag": "span"
+              },
+              "dir": {
+                  "rename_tag": "ul"
+              },
+              "bdi": {
+                  "rename_tag": "span"
+              },
+              "command": {
+                  "remove": 1
+              },
+              "ul": {},
+              "progress": {
+                  "rename_tag": "span"
+              },
+              "dfn": {
+                  "rename_tag": "span"
+              },
+              "iframe": {
+                  "remove": 1
+              },
+              "figcaption": {
+                  "rename_tag": "div"
+              },
+              "a": {
+                  "check_attributes": {
+                      "href": "url"
+                  },
+                  "set_attributes": {
+                      "rel": "nofollow",
+                      "target": "_blank"
+                  }
+              },
+              "img": {
+                  "check_attributes": {
+                      "width": "numbers",
+                      "alt": "alt",
+                      "src": "url",
+                      "height": "numbers"
+                  },
+                  "add_class": {
+                      "align": "align_img"
+                  }
+              },
+              "rb": {
+                  "rename_tag": "span"
+              },
+              "footer": {
+                  "rename_tag": "div"
+              },
+              "noframes": {
+                  "remove": 1
+              },
+              "abbr": {
+                  "rename_tag": "span"
+              },
+              "u": {},
+              "bgsound": {
+                  "remove": 1
+              },
+              "sup": {
+                  "rename_tag": "span"
+              },
+              "address": {
+                  "rename_tag": "div"
+              },
+              "basefont": {
+                  "remove": 1
+              },
+              "nav": {
+                  "rename_tag": "div"
+              },
+              "h1": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "head": {
+                  "remove": 1
+              },
+              "tbody": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "dd": {
+                  "rename_tag": "div"
+              },
+              "s": {
+                  "rename_tag": "span"
+              },
+              "li": {},
+              "td": {
+                  "check_attributes": {
+                      "rowspan": "numbers",
+                      "colspan": "numbers"
+                  },
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "object": {
+                  "remove": 1
+              },
+              "div": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "option": {
+                  "rename_tag": "span"
+              },
+              "select": {
+                  "rename_tag": "span"
+              },
+              "i": {},
+              "track": {
+                  "remove": 1
+              },
+              "wbr": {
+                  "remove": 1
+              },
+              "fieldset": {
+                  "rename_tag": "div"
+              },
+              "big": {
+                  "rename_tag": "span",
+                  "set_class": "wysiwyg-font-size-larger"
+              },
+              "button": {
+                  "rename_tag": "span"
+              },
+              "noscript": {
+                  "remove": 1
+              },
+              "svg": {
+                  "remove": 1
+              },
+              "input": {
+                  "remove": 1
+              },
+              "table": {},
+              "keygen": {
+                  "remove": 1
+              },
+              "h5": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "meta": {
+                  "remove": 1
+              },
+              "map": {
+                  "rename_tag": "div"
+              },
+              "isindex": {
+                  "remove": 1
+              },
+              "mark": {
+                  "rename_tag": "span"
+              },
+              "caption": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "tfoot": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "base": {
+                  "remove": 1
+              },
+              "video": {
+                  "remove": 1
+              },
+              "strong": {},
+              "canvas": {
+                  "remove": 1
+              },
+              "output": {
+                  "rename_tag": "span"
+              },
+              "marquee": {
+                  "rename_tag": "span"
+              },
+              "b": {},
+              "q": {
+                  "check_attributes": {
+                      "cite": "url"
+                  }
+              },
+              "applet": {
+                  "remove": 1
+              },
+              "span": {},
+              "rp": {
+                  "rename_tag": "span"
+              },
+              "spacer": {
+                  "remove": 1
+              },
+              "source": {
+                  "remove": 1
+              },
+              "aside": {
+                  "rename_tag": "div"
+              },
+              "frame": {
+                  "remove": 1
+              },
+              "section": {
+                  "rename_tag": "div"
+              },
+              "body": {
+                  "rename_tag": "div"
+              },
+              "ol": {},
+              "nobr": {
+                  "rename_tag": "span"
+              },
+              "html": {
+                  "rename_tag": "div"
+              },
+              "summary": {
+                  "rename_tag": "span"
+              },
+              "var": {
+                  "rename_tag": "span"
+              },
+              "del": {
+                  "remove": 1
+              },
+              "blockquote": {
+                  "check_attributes": {
+                      "cite": "url"
+                  }
+              },
+              "style": {
+                  "remove": 1
+              },
+              "device": {
+                  "remove": 1
+              },
+              "meter": {
+                  "rename_tag": "span"
+              },
+              "h3": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "textarea": {
+                  "rename_tag": "span"
+              },
+              "embed": {
+                  "remove": 1
+              },
+              "hgroup": {
+                  "rename_tag": "div"
+              },
+              "font": {
+                  "rename_tag": "span",
+                  "add_class": {
+                      "size": "size_font"
+                  }
+              },
+              "tt": {
+                  "rename_tag": "span"
+              },
+              "noembed": {
+                  "remove": 1
+              },
+              "thead": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "blink": {
+                  "rename_tag": "span"
+              },
+              "plaintext": {
+                  "rename_tag": "span"
+              },
+              "xml": {
+                  "remove": 1
+              },
+              "h6": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "param": {
+                  "remove": 1
+              },
+              "th": {
+                  "check_attributes": {
+                      "rowspan": "numbers",
+                      "colspan": "numbers"
+                  },
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "legend": {
+                  "rename_tag": "span"
+              },
+              "hr": {},
+              "label": {
+                  "rename_tag": "span"
+              },
+              "dl": {
+                  "rename_tag": "div"
+              },
+              "kbd": {
+                  "rename_tag": "span"
+              },
+              "listing": {
+                  "rename_tag": "div"
+              },
+              "dt": {
+                  "rename_tag": "span"
+              },
+              "nextid": {
+                  "remove": 1
+              },
+              "pre": {},
+              "center": {
+                  "rename_tag": "div",
+                  "set_class": "wysiwyg-text-align-center"
+              },
+              "audio": {
+                  "remove": 1
+              },
+              "datalist": {
+                  "rename_tag": "span"
+              },
+              "samp": {
+                  "rename_tag": "span"
+              },
+              "col": {
+                  "remove": 1
+              },
+              "article": {
+                  "rename_tag": "div"
+              },
+              "cite": {},
+              "link": {
+                  "remove": 1
+              },
+              "script": {
+                  "remove": 1
+              },
+              "bdo": {
+                  "rename_tag": "span"
+              },
+              "menu": {
+                  "rename_tag": "ul"
+              },
+              "colgroup": {
+                  "remove": 1
+              },
+              "ruby": {
+                  "rename_tag": "span"
+              },
+              "h2": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "ins": {
+                  "rename_tag": "span"
+              },
+              "p": {
+                  "add_class": {
+                      "align": "align_text"
+                  }
+              },
+              "sub": {
+                  "rename_tag": "span"
+              },
+              "comment": {
+                  "remove": 1
+              },
+              "frameset": {
+                  "remove": 1
+              },
+              "optgroup": {
+                  "rename_tag": "span"
+              },
+              "header": {
+                  "rename_tag": "div"
+              }
+          }
+      };
+      
+    script.
+
+      var getModalBool = false,
+          getService = '',
+          getNameIntent = '',
+          makeListIntent = '',
+          getMakeListIntent = '',
+          funcGetIntent = '',
+          funcOpenModal = '',
+          stringObj = '',
+          tree = '',
+          treeBranch = '',
+          nameObj = '',
+          getAllNames = [],
+          getSession = "1",
+          getPath = "http://asistente-react.mycognitiva.io/",
+          getTheToken = '',
+          getTkn = sessionStorage.getItem('tkn');
+
+      //- if (sessionStorage.getItem('tkn')) {
+      //-   getTheToken = '?token='+sessionStorage.getItem('tkn');
+      //- } else {
+      //-   getTheToken = '';
+      //- }
+
+      function openDemo(e){
+        var screenW   = this.outerWidth;
+        var screenH   = this.outerHeight;
+        var getSize   = '"width='+outerWidth+',height='+outerHeight+'"'; 
+        window.open("/demo/", "_blank", getSize);
+        e.preventDefault();
+      }
+
+      function spinnerOut(parent, bool){
+        if(bool == true) {
+          $(parent+' .spinner').fadeIn(300);
+        } else {
+          $(parent+' .spinner').fadeOut(300);
+        }
+      }
+
+      function getAllIntents(){
+        var args = {
+          id_cliente: getSession
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath + 'mant/list_intents',
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200'){
+            var makeListIntent = '';
+            var funcRemoveItem = "'delete_intent'";
+            for(var i = 0; i < response.intents.length; i++) {
+              var theIntent = "'"+response.intents[i].intent+"'";
+              makeListIntent = '<li>';
+              makeListIntent += '<div>';
+              makeListIntent += '<a href="#;" onclick="getIntentExamples(this,'+theIntent+')">';
+              makeListIntent += '<i class="fa fa-angle-right" aria-hidden="true"></i>';
+              makeListIntent += '<h5>#'+response.intents[i].intent+'</h5>';
+              makeListIntent += '</a>';
+              //- makeListIntent += '<a href="#;" onclick="removeItem(this,'+funcRemoveItem+')"><i class="fa fa-trash"></i></a>';
+              makeListIntent += '<a href="#;" onclick="deleteIntent(event)"><i class="fa fa-trash"></i></a>';
+              makeListIntent += '</div>';
+              makeListIntent += '</li>';
+              $('#list-intents').append(makeListIntent);
+            }
+            spinnerOut('#intents', false);
+          } else {
+            spinnerOut('#intents', false);
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+        })
+      }
+
+      function deleteIntent(event){
+        event.preventDefault();
+        var $item = $(event.currentTarget);
+        $('[data-todelete]').removeAttr('data-todelete');
+        $item.parent().parent().attr('data-todelete', '1');
+        openModal('#myModalChoice', 'Advertencia', '¿Estás seguro que deseas remover este item?', '');
+      }
+
+      function getIntentExamples(el, intent){
+        if(!el.classList.contains('examples')){
+          var makeListIntent, getMakeListIntent = '';
+          var funcGetIntent = "getIntent(this, '#modal-intent', '#name-intent', 'fieldset-intent')";
+          var funcOpenModal = "openCustomModal(this,'#modal-intent', true, 'edit_intent')";
+          var getService = 'edit_intent';
+          var args = {
+            id_cliente: getSession,
+            intent: intent
+          }
+          var promise = $.ajax({
+            type: 'POST',
+            url: getPath + 'mant/list_examples',
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer "+getTkn
+            },
+            data: JSON.stringify(args),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function(response){
+            if(response.status == '200'){
+              if(response.examples.length > 0){
+                for(var i = 0; i < response.examples.length; i++){
+                  getMakeListIntent += '<li>';
+                  getMakeListIntent += '<label>';
+                  getMakeListIntent += '<div class="checkbox"><input type="checkbox"/><span></span></div>';
+                  getMakeListIntent += '<span>'+response.examples[i].text+'</span>';
+                  getMakeListIntent += '</label>';
+                  getMakeListIntent += '</li>';
+                }
+                makeListIntent = '<ul>';
+                makeListIntent += '<li class="options">';
+                makeListIntent += '<button button="button" button-mini="button-mini" secondary="secondary" onclick="'+funcGetIntent+'; '+funcOpenModal+'">Editar / Añadir ejemplo<i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
+                makeListIntent += '<a href="#;" onclick="deleteExamples(this,';
+                makeListIntent += "'"+getService+"'";
+                makeListIntent += ')"><i class="fa fa-trash"></i></a>';
+                makeListIntent += '</li>';
+                makeListIntent += getMakeListIntent;
+                makeListIntent += '</ul>';
+                el.parentElement.parentElement.insertAdjacentHTML( 'beforeend', makeListIntent );
+                el.classList.add('examples');
+              }
+
+            } else {
+              spinnerOut('#intents', false);
+              openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+            }
+          })
+        }
+        myClick(el);
+        getExamplesNum();
+      }
+
+      function getAllEntities(){
+        getService = 'edit_entity';
+        var args = {
+          ws_id: sessionStorage.getItem('uws'),
+          cv_user: sessionStorage.getItem('usr'),
+          cv_pass: sessionStorage.getItem('usp')
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath + 'mant/list_entities',
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200' && response.data.length > 0){
+            if(response.examples.length > 0){
+              for(var i = 0; i < response.data.length; i++){
+                getAllNames.push('@'+response.data[i].intents.entity.entity);
+                getMakeListIntent = '';
+                funcGetIntent = "getIntent(this, '#modal-entities', '#name-entity', 'fieldset-entity')";
+                funcOpenModal = "openCustomModal(this,'#modal-entities', true, 'edit_entity')";
+                funcRemoveItem = "'delete_entity'";
+                for(var j = 0; j < response.data[i].intents.values.length; j++){
+                  getMakeListIntent += '<li>';
+                  getMakeListIntent += '<label>';
+                  getMakeListIntent += '<div class="checkbox"><input type="checkbox"/><span></span></div>';
+                  getMakeListIntent += '<span>'+response.data[i].intents.values[j].value+'</span>';
+                  getMakeListIntent += '</label>';
+                  getMakeListIntent += '</li>';
+                }
+                makeListIntent = '<li>';
+                makeListIntent += '<div>';
+                makeListIntent += '<a href="#;" onclick="myClick(this)">';
+                makeListIntent += '<i class="fa fa-angle-right" aria-hidden="true"></i>';
+                makeListIntent += '<h5>@'+response.data[i].intents.entity.entity+'</h5>';
+                makeListIntent += '</a>';
+                makeListIntent += '<a href="#;" onclick="removeItem(this, '+funcRemoveItem+')"><i class="fa fa-trash"></i></a>';
+                makeListIntent += '</div>';
+                makeListIntent += '<ul>';
+                makeListIntent += '<li class="options">';
+                makeListIntent += '<button button="button" button-mini="button-mini" secondary="secondary" onclick="'+funcGetIntent+'; '+funcOpenModal+'">Editar / Añadir ejemplo<i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
+                makeListIntent += '<a href="#;" onclick="deleteExamples(this,';
+                makeListIntent += "'"+getService+"'";
+                makeListIntent += ')"><i class="fa fa-trash"></i></a>';
+                makeListIntent += '</li>';
+                makeListIntent += getMakeListIntent;
+                makeListIntent += '</ul>';
+                makeListIntent += '</li>';
+                $('#list-entities').append(makeListIntent);
+              }
+              getExamplesNum();
+              spinnerOut('#entities');
+            }
+
+          } else {
+            spinnerOut('#entities');
+          }
+        })
+      }
+
+      function openCustomModal(el, modal, bool, service) {
+        if(modal == '#modal-dialog' || modal == '#modal-dialog-edit'){
+          var options = '';
+          var select = modal == '#modal-dialog' ? $(modal).find('#condition') : $(modal).find('#condition-edit');
+          options = '<option selected value="">Seleccione</option>'
+          for(var i = 0; i < window.dataConditions.length; i++){
+            options += '<option value="'+ window.dataConditions[i] +'">'+ window.dataConditions[i] +'</option>';
+          }
+          select.html(options);
+        }
+        getService = service;
+        $(modal).fadeIn(200);
+        $(modal).delay(200).find('.container-form').addClass('active');
+        $(modal).find('.buttons, form').fadeIn(200);
+        getModalBool = bool;
+        if(bool == true){
+          el.parentElement.parentElement.parentElement.className = 'to-replace';
+        }
+      }
+
+      function closeCustomModal(modal){
+        $(modal).find('.container-form').removeClass('active');
+        $(modal).delay(200).fadeOut(200);
+        $(modal).find('.buttons, form').fadeOut(50);
+        $(modal).removeClass('error');
+        $(modal).removeClass('success');
+      }
+
+      $('button.close').click(function(){
+        $(this).parent().parent().parent().parent().delay(500).removeClass('error, success');
+      });
+
+      function getIntent(el, modal, input, fieldset) {
+        var arrList = [];
+        var getH5 = el.parentElement.parentElement.parentElement.children[0].children[0].children[1].textContent.substring(1);
+        //- el.parentElement.parentElement.parentElement.children["0"].children["0"].children[1]
+        var getLengthExamples = el.parentElement.parentElement.children.length;
+        for(var i = 0; i < getLengthExamples; i++){
+          if(i != 0){
+            var getVal = el.parentElement.parentElement.children[i].children[0].innerText;
+            arrList.push(getVal);
+          }
+        }
+        
+        $(modal).find(input).val(getH5);
+        $(modal).find('form').attr('data-type', 'edit');
+
+        var getTest = document.getElementById(fieldset);
+        var getLabelText = document.getElementById(fieldset).children[3].children[0].innerHTML;
+        var getPlaceholder = document.getElementById(fieldset).children[2].attributes[2].textContent;
+        for(var i = 0; i < arrList.length; i++){
+          var where = document.getElementById(fieldset);        
+          var subfieldset = '<fieldset class="wrapper-intent">';
+              subfieldset += '<label>'+getLabelText+'</label>';
+              subfieldset += '<input class="example-intent" type="text" value="'+arrList[i]+'" placeholder="'+getPlaceholder+'" required="required"/>';
+              subfieldset += '<a class="add-intent delete" href="#;" onclick="removeFieldset(this)">';
+              subfieldset += '<i class="fa fa-times-circle" aria-hidden="true"></i>';
+              subfieldset += '</a>';
+              subfieldset += '</fieldset>';
+          where.insertAdjacentHTML('beforeend', subfieldset);
+        }
+      }
+
+      function getExamplesNum(){
+        $('ul.list-intents > li').each(function(){
+          var num = '';
+          if($(this).parent().is("#list-dialogs")){
+            var num = $(this).find('ul li').length;
+          } else {
+            var num = $(this).find('ul li').length - 1 ;
+          }
+        });
+      }
+      getExamplesNum();
+
+      function myClick(el){
+        var myUl = el.parentElement.parentElement.children[1];
+        var myIcon = el.children[0];
+        myIcon.classList.toggle("fa-rotate-90");
+        if(myUl.style.height == 0 || myUl.style.height == '0px'){
+          myUl.style.height = "auto";
+        } else {
+          myUl.style.height = 0;
+        }
+      }
+
+      function clearIntent(name, modal){
+        var getContRespond  = document.getElementById('responds');
+        getContRespond.style.display = "none";
+        $('#list-dialogs-respond').empty();
+        $(name).val('');
+        var getEl = document.querySelectorAll(modal+' .example-intent').length;
+        getEl = getEl - 1;
+        for(var i = getEl; i >= 0; i--){
+          $(modal+' .example-intent')[i].parentElement.remove();
+        }
+        return false;
+      }
+
+      function addFieldset(el, label, placeholder){
+        var where = el.parentElement;
+        var subfieldset = '<fieldset class="wrapper-intent">';
+            subfieldset += '<label>'+label+'</label>';
+            subfieldset += '<input class="example-intent" type="text" placeholder="'+placeholder+'" required="required"/>';
+            subfieldset += '<a class="add-intent delete" href="#;" onclick="removeFieldset(this)">';
+            subfieldset += '<i class="fa fa-times-circle" aria-hidden="true"></i>';
+            subfieldset += '</a>';
+            subfieldset += '</fieldset>';
+        where.insertAdjacentHTML('beforeend', subfieldset);
+      }
+
+      function removeFieldset(el){
+        el.parentElement.remove();
+      }
+
+      function removeItem(el, service){
+        getService = service;
+        el.parentElement.parentElement.setAttribute('data-todelete', '1');
+        openModal('#myModalChoice', 'Advertencia', '¿Estás seguro que deseas remover este item?', '');
+      }
+
+      function confirmDelete(){
+        getNameIntent = $('[data-todelete] h5').text().substring(1);
+        var getDataAttr = document.querySelectorAll('[data-todelete]');
+        switch (getService) {
+          case 'delete_intent':
+            tree = 'intent';
+            treeBranch = 'examples';
+            nameObj = "'text'";
+            break;
+          case 'delete_entity':
+            tree = 'entity';
+            treeBranch = 'new_values';
+            nameObj = "'value'";
+        }
+        var args = {
+          ws_id: sessionStorage.getItem('uws'),
+          cv_user: sessionStorage.getItem('usr'),
+          cv_pass: sessionStorage.getItem('usp')
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+"mant/"+getService,
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200'){
+            var msg = '';
+            if(getService == 'delete_intent'){
+              $('#list-intents').empty();
+              msg = 'La intención se ha eliminado con éxito'
+            } else {
+              $('#list-entities').empty();
+              msg = 'La entidad se ha eliminado con éxito'
+            }
+            openModal('#myModal', 'Genial!', msg, 'success');
+          } else {
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+        })
+        $('[data-todelete]').remove();
+      }
+
+      function removeData(){
+        $('[data-todelete]').removeAttr('data-todelete');
+      }
+
+      function deleteExamples(el, service){
+        var getChildren = el.parentElement.parentElement.children;
+        var getParent = el.parentElement.parentElement.parentElement.parentElement.id;
+        if(getParent == 'list-intents'){
+          getService = 'edit_intent';
+        } else if(getParent == 'list-entities'){
+          getService = 'edit_entity';
+        } else {
+          getService = 'edit_dialog';
+        }
+        var count = 0;
+        for(var i=0; i<getChildren.length; i++){
+          if(i != 0) {
+            getCheckBox = getChildren[i].children[0].children[0].children[0];
+            if(getCheckBox.checked) {
+              count = count + 1;
+            }
+          }
+        }
+        if(count > 0){
+          el.parentElement.parentElement.className = 'delete-examples-tmp';
+          openModal('#myModalExamples', 'Advertencia', '¿Estás seguro de lo que deseas remover?', '');
+        } else {
+          openModal('#myModal', 'Advertencia', 'Debes seleccionar al menos <b>un</b> ejemplo', 'error');
+        }
+      }
+
+      function confirmDeleteExamples(tree, treeBranch){
+        stringObj = '';
+        var nameVal = '';
+        switch (getService) {
+          case 'create_intent':
+            tree = 'intent';
+            treeBranch = 'examples';
+            nameObj = "'text'";
+            break;
+          case 'edit_intent':
+            tree = 'intent';
+            treeBranch = 'new_examples';
+            nameObj = "'text'";
+            break;
+          case 'create_entity':
+            tree = 'entity';
+            treeBranch = 'values';
+            nameObj = "'value'";
+            break;
+          case 'edit_entity':
+            tree = 'entity';
+            treeBranch = 'new_values';
+            nameObj = "'value'";
+        }
+        var getClass = document.getElementsByClassName('delete-examples-tmp');
+        getNameIntent = getClass[0].parentElement.children[0].children[0].children[1].textContent.substring(1);
+        for(var i = getClass[0].children.length-1; i > 0; i--){
+          if(getClass[0].children[i].children[0].children[0].children[0].checked == true){
+            getClass[0].children[i].remove();
+          } else {
+            stringObj += "{"+nameObj+": '"+getClass[0].children[i].children[0].children[1].textContent+"'},";
+          }
+        }
+        stringObj = stringObj.substring(0, stringObj.length-1);
+        if(stringObj == ""){
+          stringObj = "{}";
+        }
+        var args = {
+          [tree]: getNameIntent,
+          [treeBranch]: stringObj,
+          ws_id: sessionStorage.getItem('uws'),
+          cv_user: sessionStorage.getItem('usr'),
+          cv_pass: sessionStorage.getItem('usp')
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+"mant/"+getService,
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200'){
+            openModal('#myModal', 'Genial!', 'La intención se ha actualizado con éxito', 'success');
+            getExamplesNum();
+          } else {
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+        })
+
+        getNameIntent = '';
+        stringObj = '';
+        document.getElementsByClassName('delete-examples-tmp')[0].classList.remove('delete-examples-tmp');
+      }
+
+      function clickButton(){
+        confirmDeleteExamples(tree, treeBranch);
+        getExamplesNum();
+      }
+
+      function addDialogOption(el){
+        var $element = $(el);
+        var isEdition = $element.hasClass('edit-button');
+        var getModal        = isEdition ? document.getElementById('modal-dialog-edit') : document.getElementById('modal-dialog');
+        var getUlDialog     = isEdition ? document.getElementById('list-dialogs-respond-edit') : document.getElementById('list-dialogs-respond');
+        var getContRespond  = isEdition ? document.getElementById('responds-edit') : document.getElementById('responds');
+        var getCondition    = isEdition ? document.getElementById('condition-edit') : document.getElementById('condition');
+        var getTextRespond  = isEdition ? document.getElementById('text-respond-edit') : document.getElementById('text-respond');
+        var addListDialog   = '<li>';
+            addListDialog  += '<div class="respond">Entonces responde con <textarea>'+getTextRespond.value+'</textarea></div>';
+            addListDialog  += '<a class="delete-dialog" href="#;" onclick="deleteDialogList(this)"><i class="fa fa-times-circle" aria-hidden="true"></i></a>';
+            addListDialog  += '</li>';
+            
+        if(getTextRespond.value != '' && getCondition.value != ''){
+          if(isEdition){
+            $('#list-dialogs-respond-edit').prepend(addListDialog);
+          }else{
+            $('#list-dialogs-respond').prepend(addListDialog);
+          }
+          getContRespond.style.display = "block";
+          el.parentElement.classList.remove('error');
+        } else {
+          el.parentElement.classList.add('error');
+        }
+        getTextRespond.value  = '';
+      }
+
+      function deleteDialogList(el){
+        el.parentElement.remove();
+      }
+
+      function saveDialog(){
+        var getDialogService  = getService;
+        var getNameDialogQuotes = '';
+        var getModal          = document.getElementById('modal-dialog');
+        var getUlDialog       = document.getElementById('list-dialogs-respond');
+        var getNameDialog     = document.getElementById('name-dialog');
+        var getContRespond    = document.getElementById('responds');
+        var getTextRespond    = document.getElementById('text-respond');
+        var getListDialog     = '';
+        var addDialog         = '';
+        var getCondition      = document.getElementById('condition');
+        var addFunction       = "openCustomModal(this, '#modal-dialog', false, 'edit_dialog'); editDialog(this)";
+        var finAndDelete      = document.getElementsByClassName('delete-item-dialog');
+        var arrayResponse     = '';
+        var addValues         = '';
+        if(getNameDialog.value != '' ){
+          for(var i = 0; i < getUlDialog.children.length; i++){
+            getListDialog += '<li>';
+            getListDialog += '<div class="dialogs">'+getUlDialog.children[i].children[0].children[0].textContent+'</div>';
+            getListDialog += '</li>';
+            if(getUlDialog.children.length > 1) {
+              arrayResponse += '"'+getUlDialog.children[i].children[0].children[0].textContent+'",';
+            } else {
+              arrayResponse = '"'+getUlDialog.children[i].children[0].children[0].textContent+'"';
+            }
+          }
+          if(getUlDialog.children.length > 1) {
+            addValues     = '{"values": ['+arrayResponse.substring(0, (arrayResponse.length - 1))+'],"selection_policy": "random"}';
+            arrayResponse = addValues;
+          }
+          addDialog       = '<li data-dialognode="'+getDataNode+'">';
+          addDialog      += '<div class="title" data-condition="'+getCondition.value+'">';
+          addDialog      += '<span onclick="'+addFunction+'">';
+          addDialog      += '<ul class="list-dialogs-hide">';
+          addDialog      += getListDialog;
+          addDialog      += '</ul>';
+          addDialog      += '</span>';
+          addDialog      += '<a href="#;" onclick="removeDialog(this)"><i class="fa fa-trash"></i></a>';
+          addDialog      += '</div>';
+          addDialog      += '</li>';
+          if(finAndDelete.length > 0) {
+            finAndDelete[0].remove();
+          }
+          $('#list-dialogs').prepend(addDialog);
+          $('.delete-item-dialog').remove();
+          if(getDialogService == 'edit_dialog'){
+            getNameDialogQuotes = getDataNode;
+          } else {
+            getNameDialogQuotes = getNameDialog.value;
+          }
+          var getConditionVal = getCondition.value;
+          var args = {
+            title: getNameDialogQuotes,
+            conditions: getConditionVal,
+            texto: arrayResponse,
+            ws_id: sessionStorage.getItem('uws'),
+            cv_user: sessionStorage.getItem('usr'),
+            cv_pass: sessionStorage.getItem('usp')
+          }
+          var promise = $.ajax({
+            type: 'POST',
+            url: getPath+"mant/"+getDialogService,
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer "+getTkn
+            },
+            data: JSON.stringify(args),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function(response){
+            if(response.status == '200'){
+              getNameDialog.value           = '';
+              getTextRespond.value          = '';
+              getUlDialog.innerHTML         = '';
+              getContRespond.style.display  = 'none';
+              var getOptionLength = getCondition.length;
+              openModal('#myModal', 'Genial!', 'La respuesta se ha agregado con éxito', 'success');
+              clearIntent('#name-dialog', '#modal-dialog');
+              getDataNode = '';
+            } else {
+              openModal('#myModal', 'Lo sentimos', 'Tenemos un problema. Favor intenta nuevamente.', 'error');
+            }
+          })
+
+        } else {
+          closeCustomModal('#modal-dialog');
+          clearIntent('#name-dialog', '#modal-dialog');
+          openModal('#myModal', 'Lo sentimos', 'Debes añadir un <b>nombre al diálogo</b>', 'error');
+        }
+      }
+      var getDataNode = '';
+
+      function editDialog(el){
+        var $element = $(el),
+            $getParentLi = $element.parent().parent(),
+            getDataNode = $getParentLi.data('dialognode'),
+            $getNameDialog = $('#name-dialog-edit'),
+            getDataAttr = $element.parent().data('condition'),
+            $getCondition = $('#condition-edit'),
+            responses = $getParentLi.data('response');
+
+        $getNameDialog.val(getDataNode);
+        $getCondition.val(getDataAttr);
+
+        var html = '';
+        for(var i = 0; i < responses.length; i++){
+          html  += '<li>';
+          html  += '<div class="respond">Entonces responde con <textarea data-autoresize>'+responses[i]+'</textarea></div>';
+          html  += '<a class="delete-dialog" href="#;" onclick="deleteDialogList(this)"><i class="fa fa-times-circle" aria-hidden="true"></i></a>';
+          html  += '</li>';
+        }
+
+        $('#list-dialogs-respond-edit').html(html);
+        $('#responds-edit').show();
+
+        //-     getDataNode         = el.parentElement.parentElement.dataset.dialognode;
+        //- var getParentLi         = el.parentElement.parentElement;
+        //- var getNameDialog       = document.getElementById('name-dialog-edit');
+        //-     getNameDialog.value = el.children[0].textContent;
+        //- var getLiLength         = el.children[2].children.length;
+        //- var getContRespond      = document.getElementById('responds-edit');
+        //- var addListDialog       = '';
+        //- var getDataAttr         = el.parentElement.dataset.condition;
+        //- var getCondition        = document.getElementById('condition-edit');
+        //-     getCondition.value  = getDataAttr;
+        //- getParentLi.classList.add('delete-item-dialog');
+        //- for(var i = 0; i < getLiLength; i++) {
+        //-   var getDialogs   = el.children[2].children[i].children[0].textContent;
+        //-   addListDialog   = '<li>';
+        //-   addListDialog  += '<div class="respond">Entonces responde con <textarea data-autoresize>'+getDialogs+'</textarea></div>';
+        //-   addListDialog  += '<a class="delete-dialog" href="#;" onclick="deleteDialogList(this)"><i class="fa fa-times-circle" aria-hidden="true"></i></a>';
+        //-   addListDialog  += '</li>';
+        //-   $('#list-dialogs-respond').prepend(addListDialog);
+        //- }
+        //- getContRespond.style.display = "block";
+      }
+
+      function openModalTest() {
+
+        var getLogoAssistant      = localStorage.getItem('logoAssistant'),
+            getColorHeader        = localStorage.getItem('colorHeader'),
+            getColorButtons       = localStorage.getItem('colorButtons'),
+            getTitleAssistant     = localStorage.getItem('titleAssistant'),
+            getSubTitleAssistant  = localStorage.getItem('subTitleAssistant');
+
+        $('#myModalAssistant .header').css('background-color', getColorHeader);
+        $('#myModalAssistant .header .titles div').html(getTitleAssistant);
+        $('#myModalAssistant .header .titles span').html(getSubTitleAssistant);
+        $('#myModalAssistant .header .img img').attr('src', getLogoAssistant);
+
+        $('#myModalAssistant').modal({
+          backdrop: 'static',
+          keyboard: false,
+          show: true
+        });
+        var getSession = "1";
+
+        //- $('#assistant-iframe').attr('src', getPath+'asistente/');
+      }
+
+      function getCustomParams() {
+        var args = {
+          id_cliente: getSession
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+"mant/customize_param",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200'){
+            localStorage.setItem('avatarAssistant', response.avatar);
+            localStorage.setItem('logoAssistant', response.logo);
+            localStorage.setItem('colorHeader', response.colorHeader);
+            localStorage.setItem('colorBubble', response.colorBubble);
+            localStorage.setItem('colorButtons', response.colotBtn);
+            localStorage.setItem('subTitleAssistant', response.subtitulo);
+            localStorage.setItem('titleAssistant', response.titulo);
+          }
+        })
+      }
+      getCustomParams();
+
+      function getCustomAssistant(){
+
+        var getSession = "1";
+        var getLogoAssistant = '';
+        var getAvatarAssistant = '';
+        var getColorHeader = '';
+        var getColorBubble = '';
+        var getColorButtons = '';
+        var getTitleAssistant = '';
+
+        if (getSession) {
+          getLogoAssistant      = localStorage.getItem('logoAssistant');
+          getAvatarAssistant    = localStorage.getItem('avatarAssistant');
+          getColorHeader        = localStorage.getItem('colorHeader');
+          getColorButtons       = localStorage.getItem('colorButtons');
+          getTitleAssistant     = localStorage.getItem('titleAssistant');
+          getSubTitleAssistant  = localStorage.getItem('subTitleAssistant');
+
+          $('#myModalAssistant .header').css('background-color', getColorHeader);
+          $('#myModalAssistant .header .titles div').html(getTitleAssistant);
+          $('#myModalAssistant .header .titles span').html(getSubTitleAssistant);
+          $('#myModalAssistant .header .img').attr('src', getLogoAssistant);
+        }
+      }
+      getCustomAssistant();
+
+      function removeDialog(el){
+        el.parentElement.parentElement.setAttribute('data-todelete', '1');
+        openModal('#myModalChoiceDialog', 'Advertencia', '¿Estás seguro que deseas remover este diálogo?', '');
+      }
+
+      function confirmDeleteDialog(){
+        getNameDialog = $('[data-todelete] h5').text();
+        var args = {
+          id_dialog: getNameDialog,
+          ws_id: sessionStorage.getItem('uws'),
+          cv_user: sessionStorage.getItem('usr'),
+          cv_pass: sessionStorage.getItem('usp')
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+"mant/delete_dialogs",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200'){
+            openModal('#myModal', 'Genial!', 'El diálogo se ha eliminado con éxito', 'success');
+            $('[data-todelete]').remove();
+          } else {
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+        })
+      }
+
+      function saveUrl() {
+        var getSession = "1";
+        var getUrlVal = $('#get-url').val();
+        var getUrlForm = document.getElementById('form-url');
+        if(getUrlForm.checkValidity() == true){
+          var args = {
+            id_cliente: getSession,
+            url: getUrlVal
+          }
+          var promise = $.ajax({
+            type: 'POST',
+            url: getPath+"mant/addurl",
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer "+getTkn,
+              "Cache-Control": "no-cache",
+            },
+            data: JSON.stringify(args),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function(response){
+            if(response.status == '200'){
+              openModal('#myModal', 'Genial!', 'La URL se ha agregado con éxito', 'success');
+              localStorage.setItem('urlAssistant', getUrlVal);
+              $('#get-url').val(getUrlVal);
+            }
+          })
+        }
+        event.preventDefault();
+      }
+
+      function getAllDialogs(){
+        getService = 'edit_dialogs';
+        var args = {
+          ws_id: sessionStorage.getItem('uws'),
+          cv_user: sessionStorage.getItem('usr'),
+          cv_pass: sessionStorage.getItem('usp')
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+"mant/list_dialogs",
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+
+          if(response.status == '200'){
+            for(var i = 0; i < response.data.dialog_nodes.length; i++){
+              var listDialog        = '';
+              var paramsFunction    = "this, '#modal-dialog', false, 'edit_dialog'";
+              var listDialogRespond = '';
+              if(response.data.dialog_nodes[i].conditions == 'false' || response.data.dialog_nodes[i].conditions == 'true' || response.data.dialog_nodes[i].conditions == '' || response.data.dialog_nodes[i].conditions == null){
+              } else {
+                var getNodeText = response.data.dialog_nodes[i].title;
+                if (getNodeText == null){
+                  getNodeText = 'Sin nombre';
+                }
+                if(response.data.dialog_nodes[i].output.hasOwnProperty('text')) {
+                  if(response.data.dialog_nodes[i].output.text.hasOwnProperty('values')){
+                    for (var j = 0; j < response.data.dialog_nodes[i].output.text.values.length; j++){ 
+                      listDialogRespond += '<li><div class="dialogs"><pre><code>'+response.data.dialog_nodes[i].output.text.values[j]+'</code></pre></div></li>';
+                    }
+                  } else {
+                    listDialogRespond += '<li><div class="dialogs"><pre><code>'+response.data.dialog_nodes[i].output.text+'</code></pre></div></li>';
+                  }
+                  listDialog  = '<li data-dialognode="'+response.data.dialog_nodes[i].dialog_node+'">';
+                  listDialog += '  <div class="title" data-condition="'+response.data.dialog_nodes[i].conditions+'">';
+                  listDialog += '    <span onclick="openCustomModal('+paramsFunction+'); editDialog(this)">';
+                  listDialog += '      <h5>'+getNodeText+'</h5>';
+                  listDialog += '      <ul class="list-dialogs-hide">'+listDialogRespond+'</ul>';
+                  listDialog += '    </span>';
+                  listDialog += '    <a onclick="removeDialog(this)"><i class="fa fa-trash"></i></a>';
+                  listDialog += '  </div>';
+                  listDialog += '</li>';
+                }
+              }
+              $('#list-dialogs').append(listDialog);
+            }
+            spinnerOut('#dialog');
+            getExamplesNum();
+          } else {
+            openModal('#myModal', 'Lo sentimos', 'Tenemos un problema en el servidor<br><b>Error 500</b>', 'error');
+          }
+        })
+      }
+      
+      $(function(){
+        $('#tabs a').click(function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        });
+        var getSession = "1";
+        $('#get-url').val(localStorage.getItem('urlAssistant'));
+      });

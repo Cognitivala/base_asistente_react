@@ -1,0 +1,11 @@
+.modal.fade#myModalDeleteDialog(tabindex="-1" role="dialog" aria-labelledby="myModalDeleteDialogLabel")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        h6.modal-title Eliminar Respuesta
+      .modal-body
+        p ¿Estás seguro/a que deseas elminar esta respuesta?
+      .modal-footer
+        button.pull-left(type="button" data-dismiss="modal" button data-func="removeConfirmDW") Cerrar
+        button(type="button" data-dismiss="modal" button delete data-func="confirmRemoveDialogW") Eliminar 
+          i.fa.fa-trash-o(aria-hidden="true")

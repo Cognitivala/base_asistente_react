@@ -1,140 +1,225 @@
 import axios, { post } from "axios";
+import Geocode from "react-geocode";
+const APIURL = "http://asistente-react.mycognitiva.io/mad";
 
-//GENERALES
-export function testClick() {
+//GENERAL
+function defaultGeneral() {
   return {
-    type: "TEST"
+    type: "DEFAULT_GENERAL"
   };
 }
-
-//CID
-export function getCid() {
+function setGeneral(data) {
+  return {
+    type: "SET_GENERAL",
+    data
+  };
+}
+export function getLocation() {
   return function action(dispatch) {
-    dispatch({ type: "GET_CID" });
+    const geolocation = navigator.geolocation;
+    const location = new Promise((resolve, reject) => {
+      if (!geolocation) {
+        reject(new Error("Not Supported"));
+      }
+
+      geolocation.getCurrentPosition(
+        position => {
+          resolve(position);
+        },
+        () => {
+          console.log("Permiso denegado");
+          //reject(new Error("Permission denied"));
+        }
+      );
+    });
+
+    location.then(res => {
+      const keyGoogleMaps = "AIzaSyADG7P3Zw2isanqpUlGOHftJuB84FE8Efc",
+        latitud = res.coords.latitude,
+        longitud = res.coords.longitude;
+      Geocode.setApiKey(keyGoogleMaps);
+      Geocode.enableDebug();
+      Geocode.fromLatLng(latitud, longitud).then(
+        response => {
+          const address = response.results[0].address_components[2].long_name;
+          dispatch({ type: "SET_LOCATION", data: address });
+        },
+        error => {
+          console.error(error);
+        }
+      );
+    });
   };
 }
-
-export function setCid(data) {
+export function setOrigen(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_CID", data });
+    dispatch({ type: "SET_ORIGEN", data });
   };
 }
-
 //LAUNCHER
 export function closeLauncher() {
   return function action(dispatch) {
     dispatch({ type: "CLOSE_LAUNCHER" });
+    dispatch({ type: "SET_NOTIFICATION", data: false });
   };
 }
-
 //CUSTOM PARAMS
 export function getCustomParams() {
   return function action(dispatch) {
     dispatch(getCustomParamsStart());
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/customize_param",
+      data: {id_cliente:"1"}
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          var item = {
+            avatar: 'http://localhost:3000/images/avatar-default.jpg',
+            colorHeader: '#012138',
+            colorBtn: '#f8b31c',
+            logo: 'http://logoschilevector.cl/img/url_foto_logo/1207-Duoc-UC.jpg',
+            subtitulo: 'Asistencia digital',
+            titulo: 'Duoc UC',
+            url: 'http://asistente-react.mycognitiva.io/',
+            userImg: null,
+            estado: 1,
+            settings: {
+              keep_conversation: false,
+              geolocalization: false,
+              help: true,
+              attach: false,
+              emoji: false,
+              voice: false
+            }
 
-    setTimeout(() => {
-      let item;
-      item = {
-        avatar: "https://image.ibb.co/fpuiZJ/chat.png",
-        colorBubble: "#e7e7e7",
-        colorHeader: "#d64b36",
-        colorBtn: "#333333",
-        estado: "1",
-        logo:
-          "data:image/png;base64,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",
-        status: 200,
-        subtitulo: "SUBTITLE",
-        titulo: "ASSISTANT TITLE",
-        url: "https://example.com",
-        settings: {
-          keep_conversation: false,
-          geolocalization: false,
-          help: true,
-          attach: false,
-          emoji: false,
-          voice: false
+          }
+          // dispatch(getCustomParamsEnd(item));
+          dispatch(getCustomParamsEnd(response.data));
+        } else {
+          dispatch(getCustomParamsError(response.statusText));
         }
-      };
-      dispatch(getCustomParamsEnd(item));
-    }, 500);
+      },
+      err => {
+        dispatch(
+          getCustomParamsError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
   };
 }
-
+function getCustomParamsError(error) {
+  return {
+    type: "GET_CUSTOM_PARAMS_ERROR",
+    error
+  };
+}
 function getCustomParamsStart() {
   return {
     type: "GET_CUSTOM_PARAMS_START"
   };
 }
-
 function getCustomParamsEnd(data) {
   return {
     type: "GET_CUSTOM_PARAMS_END",
     data
   };
 }
-
 export function setCustomParams(data) {
   return function action(dispatch) {
     dispatch({ type: "SET_CUSTOM_PARAMS", data });
   };
 }
-
 //SALUDO
 export function getSaludo() {
   return function action(dispatch) {
     dispatch(getSaludoStart());
-    setTimeout(() => {
-      let item;
-      item = {
-        msg: ["Hola soy el saludo"]
-      };
-      item.send = "from";
-      dispatch(getSaludoEnd(item));
-    }, 500);
+    const data = { general: { cid: null, id_cliente: "1" }, msg: null },
+      request = axios({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        url: APIURL + "/message",
+        data: data
+      });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = {};
+          item.msg = [response.data.msg];
+          item.send = "from";
+          item.enabled = true;
+          dispatch(pushConversation(item));
+          dispatch(getSaludoEnd(item));
+        } else {
+          dispatch(getSaludoError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          getSaludoEnd("Error de conexión con el servidor, intente nuevamente")
+        );
+      }
+    );
   };
 }
-
 export function sendSaludo(data) {
   return function action(dispatch) {
-    dispatch({ type: "PUSH_CONVERSATION", data });
-    dispatch({ type: "SEND_SALUDO" }); //No lo envía de nuevo
+    dispatch(pushConversation(data));
   };
 }
-
 function getSaludoStart() {
   return {
     type: "GET_SALUDO_START"
   };
 }
-
 function getSaludoEnd(data) {
   return {
     type: "GET_SALUDO_END",
     data
   };
 }
-
 function getSaludoError(error) {
   return {
     type: "GET_SALUDO_ERROR",
     error
   };
 }
-
 //ASSISTANT
-export function openAssistant(data) {
+export function openAssistant() {
   return function action(dispatch) {
     dispatch({ type: "OPEN_ASSISTANT" });
   };
 }
-
 export function closeAssistant() {
   return function action(dispatch) {
+    dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
+    dispatch({ type: "SET_NOTIFICATION", data: false });
+    dispatch({ type: "ENABLED_INPUT" });
+    dispatch({ type: "ENABLED_HELP" });
+    dispatch({ type: "TOGGLE_MINIMIZED", data: false });
     dispatch({ type: "OPEN_LAUNCHER" });
+    dispatch(deleteHistory());
   };
 }
-
+export function toggleMinimizedAssistant(data) {
+  return function action(dispatch) {
+    dispatch({ type: "TOGGLE_MINIMIZED", data });
+  };
+}
+export function defaultAssistant() {
+  return function action(dispatch) {
+    dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+  };
+}
 //AYUDA
 export function getAyuda() {
   return function action(dispatch) {
@@ -201,27 +286,23 @@ export function getAyuda() {
     }, 500);
   };
 }
-
 function getAyudaStart() {
   return {
     type: "GET_AYUDA_START"
   };
 }
-
 function getAyudaEnd(data) {
   return {
     type: "GET_AYUDA_END",
     data
   };
 }
-
 function getAyudaError(error) {
   return {
     type: "GET_AYUDA_ERROR",
     error
   };
 }
-
 export function openHelp() {
   return function action(dispatch) {
     dispatch({ type: "OPEN_HELP" });
@@ -249,454 +330,798 @@ export function showWarningHelp() {
 }
 export function hideWarningHelp() {
   return function action(dispatch) {
-      dispatch({ type: "SHOW_WARNING_HELP_END" });
+    dispatch({ type: "SHOW_WARNING_HELP_END" });
   };
 }
-
 //CONVERSATION
+function pushConversation(data) {
+  return {
+    type: "PUSH_CONVERSATION",
+    data
+  };
+}
+export function updateConversationCalendar(data) {
+  return function action(dispatch) {
+    dispatch({ type: "UPDATE_CONVERSATION_CALENDAR", data });
+  };
+}
+function updateConversationError(data) {
+  return { type: "PUSH_CONVERSATIONS_ERROR", data };
+}
 export function updateConversation(data) {
   return function action(dispatch) {
-    dispatch({ type: "PUSH_CONVERSATION", data });
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+
+
+    // const request = axios({
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   url: APIURL + "/message",
+    //   data: data
+    // });
+    // return request.then(
+    //   response => {
+    //     if (response.status === 200) {
+    //       let item = response.data;
+    //       item.send = "from";
+    //       item.enabled = true;
+    //       messageResponse(dispatch, item);
+    //     } else {
+    //       dispatch(updateConversationError(response.statusText));
+    //     }
+    //   },
+    //   err => {
+    //     dispatch(
+    //       updateConversationError(
+    //         "Error de conexión con el servidor, intente nuevamente"
+    //       )
+    //     );
+    //   }
+    // );
+
+
+    //Respuesta
     setTimeout(() => {
-      let data = {
-        cid: "",
-        msg: ["Soy una respuesta"],
-        buttons: [
-          {
-            title: "boton #1",
-            value: 0
-          },
-          {
-            title: "boton #2",
-            value: 1
-          }
+      const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
+      let data;
+      //1 = MSG + Buttons (Valoración)
+      //2 = MSG + Buttons (Contactar)
+      //3 = MSG + Attach
+      //4 = MSG + Select
+      //5 = MSG + Multibutton
+      //6 = MSG + Datepicker
+      //8 = MULTIMSG
+      switch (8) {
+        case 1:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
+            buttons: [
+              {
+                title: "SI",
+                value: "siValorar"
+              },
+              {
+                title: "NO",
+                value: "noValorar"
+              }
+            ]
+          };
+          break;
+        case 2:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Contactar?"],
+            buttons: [
+              {
+                title: "SI",
+                value: "siContacto"
+              },
+              {
+                title: "NO",
+                value: "noContacto"
+              }
+            ]
+          };
+          break;
+        case 3:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Debes adjuntar tu imagen"],
+            attach: {
+              types: [
+                "image/jpeg",
+                "image/gif",
+                "image/png",
+                "application/pdf",
+                "application/word"
+              ],
+              maxSize: 300000
+            }
+          };
+          break;
+        case 4:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Por favor, selecciona una opción: "],
+            selects: [
+              {
+                text: "Seleccione",
+                value: "-1"
+              },
+              {
+                text: "Option 1",
+                value: "1"
+              },
+              {
+                text: "Option 2",
+                value: "2"
+              },
+              {
+                text: "Option 3",
+                value: "3"
+              },
+              {
+                text: "Option 4",
+                value: "4"
+              },
+              {
+                text: "Option 5",
+                value: "5"
+              },
+              {
+                text: "Option 6",
+                value: "6"
+              }
+            ]
+          };
+          break;
+        case 5:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, selecciona uno o varios botones:"],
+            multibuttons: [
+              { title: "hola", value: "1" },
+              { title: "holanda", value: "2" },
+              { title: "holiwis", value: "3" },
+              { title: "holo", value: "4" },
+              { title: "holawa", value: "5" }
+            ]
+          };
+          break;
+        case 6:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, seleccione una fecha:"],
+            datepicker: [
+              { name: "inicial", value: "22/05/1991" },
+              { name: "final", value: "22/05/1991" }
+            ]
+          };
+          break;
+        case 7:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, seleccione una fecha:"],
+            datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
+          };
+          break;
+        case 8:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["lorem ipsum","lorem ipsum","lorem ipsum","lorem ipsum"]
+          };
+          break;
+      }
+
+      data.send = "from";
+      data.enabled = true;
+
+      messageResponse(dispatch, data);
+    }, 500);
+  };
+}
+function messageResponse(dispatch, data) {
+  if (data.liftUp !== undefined) {
+    //Si trae para levantar modales
+    switch (data.liftUp) {
+      case "valoracion":
+        dispatch(setGeneral(data.general));
+        dispatch({ type: "ENABLED_VALORACION" });
+        dispatch(pushConversation(data));
+        break;
+      case "form":
+        dispatch(setGeneral(data.general));
+        dispatch({ type: "ENABLED_FORM" });
+        dispatch(pushConversation(data));
+      default:
+        break;
+    }
+  } else {
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+  }
+}
+export function setHistory(data) {
+  return function action(dispatch) {
+    const lastConversation = data[data.length - 1],
+      liftUp = lastConversation.liftUp;
+    if (liftUp !== undefined) {
+      switch (liftUp) {
+        case "valoracion":
+          dispatch({ type: "ENABLED_VALORACION" });
+          break;
+        case "form":
+          dispatch({ type: "ENABLED_FORM" });
+          break;
+        default:
+          break;
+      }
+    }
+    dispatch(setGeneral(lastConversation.general));
+    dispatch({ type: "SET_HISTORY", data });
+  };
+}
+function deleteHistory() {
+  return { type: "DELETE_HISTORY" };
+}
+export function setModal(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_MODAL", data });
+  };
+}
+//BOTONES
+export function updateConversationButton(data) {
+  return function action(dispatch) {
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
+  };
+  switch (data.msg[0]) {
+    case "siValorar":
+      return function action(dispatch) {
+        dispatch(setGeneral(data.general));
+        dispatch(pushConversation(data));
+        setTimeout(() => {
+          let data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: "node_3_1520961671401",
+              intent: "remanente",
+              auth: null,
+              token: null,
+              location: null
+            },
+            send: "from",
+            enabled: true,
+            liftUp: "valoracion"
+          };
+          messageResponse(dispatch, data);
+        }, 500);
+      };
+    case "siContacto":
+      return function action(dispatch) {
+        dispatch(setGeneral(data.general));
+        dispatch(pushConversation(data));
+
+        setTimeout(() => {
+          let data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            send: "from",
+            enabled: true,
+            liftUp: "form",
+            // form: {
+            //   header: {
+            //     icon: "fas fa-user-tie",
+            //     textA: "Por favor ingrese sus datos y",
+            //     textStrong:
+            //       "uno de nuestros ejecutivos le responderá a la brevedad posible",
+            //     textB: "o en horario hábil siguiente",
+            //     closeMsg: "No"
+            //   },
+            //   bajada: "Campos obligatorios (*)",
+            //   url: "https://www.google.cl",
+            //   fields: [
+            //     {
+            //       legend: "Correo electrónico*",
+            //       type: "email",
+            //       name: "email",
+            //       placeholder: "Ej. nombre@micorreo.cl",
+            //       autocomplete: "off",
+            //       validate: {
+            //         types: ["required", "email"],
+            //         error: "Debes ingresar un correo electrónico válido"
+            //       }
+            //     },
+            //     {
+            //       legend: "Password*",
+            //       type: "password",
+            //       name: "password",
+            //       placeholder: "Ej. nombre@micorreo.cl",
+            //       autocomplete: "off",
+            //       validate: {
+            //         types: ["required", "text"],
+            //         rules: { min: 4, max: 10 },
+            //         error: "Debes ingresar una password válida"
+            //       }
+            //     },
+            //   ]
+            // }
+
+            form: {
+              header: {
+                icon: "fas fa-user-tie",
+                textA: "Por favor ingrese sus datos y",
+                textStrong:
+                  "uno de nuestros ejecutivos le responderá a la brevedad posible",
+                textB: "o en horario hábil siguiente",
+                closeMsg: "No"
+              },
+              bajada: "Campos obligatorios (*)",
+              url: "",
+              fields: [
+                {
+                  legend: "Nombre*",
+                  type: "text",
+                  name: "nombre",
+                  placeholder: "Ej. Juan",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "text"],
+                    rules: { min: 3, max: 10 },
+                    error: "Debes completar el nombre (mínimo 3, máximo 10)"
+                  }
+                },
+                {
+                  legend: "Rut*",
+                  type: "text",
+                  name: "rut",
+                  placeholder: "Ej. 11111111-1",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "rut"],
+                    error: "Debes ingresar un rut válido"
+                  }
+                },
+                {
+                  legend: "Teléfono",
+                  type: "tel",
+                  name: "telefono",
+                  placeholder: "Ej. 912345678",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["tel"],
+                    error: "Debes ingresar un teléfono válido"
+                  }
+                },
+                {
+                  legend: "Correo electrónico*",
+                  type: "email",
+                  name: "email",
+                  placeholder: "Ej. nombre@micorreo.cl",
+                  autocomplete: "off",
+                  validate: {
+                    types: ["required", "email"],
+                    error: "Debes ingresar un correo electrónico válido"
+                  }
+                },
+                {
+                  legend: "Switch*",
+                  type: "checkbox",
+                  name: "switch",
+                  validate: {
+                    types: ["checkbox"],
+                    error: "Debes seleccionar el checkbox"
+                  }
+                },
+                {
+                  legend: "Select prueba",
+                  type: "select",
+                  name: "opciones",
+                  options: [
+                    { text: "Seleccione", value: -1 },
+                    { text: "Opcion #1", value: 1 },
+                    { text: "Opcion #2", value: 2 },
+                    { text: "Opcion #3", value: 3 }
+                  ],
+                  validate: {
+                    types: ["required", "select"],
+                    error: "Debes seleccionar una opción"
+                  }
+                },
+                {
+                  legend: "Adjuntar*",
+                  type: "file",
+                  name: "attach",
+                  validate: {
+                    types: ["required", "file"],
+                    error: "Debes adjuntar",
+                    rules: {
+                      types: [
+                        "image/jpeg",
+                        "image/gif",
+                        "image/png",
+                        "application/pdf",
+                        "application/word"
+                      ],
+                      maxSize: 300000,
+                      maxQuantity: 3
+                    }
+                  }
+                },
+                {
+                  legend: "Comentario",
+                  type: "textarea",
+                  name: "comentario",
+                  placeholder: "Escriba aquí su comentario",
+                  autocomplete: "off",
+                  rows: 5,
+                  validate: {
+                    types: ["text"],
+                    rules: { min: 3, max: 150 },
+                    error: "Debes completar el nombre (mínimo 3, máximo 150)"
+                  }
+                }
+              ]
+            }
+          };
+          messageResponse(dispatch, data);
+        }, 500);
+      };
+    default:
+      return function action(dispatch) {
+        dispatch(setGeneral(data.general));
+        dispatch(pushConversation(data));
+
+        setTimeout(() => {
+          let data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Puedes preguntarme otra cosa..."],
+            send: "from",
+            enabled: true
+          };
+          messageResponse(dispatch, data);
+        }, 500);
+      };
+  }
+}
+//INPUT
+export function enabledInput() {
+  return function action(dispatch) {
+    dispatch({ type: "ENABLED_INPUT" });
+  };
+}
+export function disabledInput() {
+  return function action(dispatch) {
+    dispatch({ type: "DISABLED_INPUT" });
+  };
+}
+export function attachFile(data) {
+  return function action(dispatch) {
+    dispatch(attachFileStart());
+    setTimeout(() => {
+      let item;
+      item = {
+        files: [
+          "http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg",
+          "http://www.google.com"
         ]
       };
-      data.send = "from";
-      dispatch({ type: "PUSH_CONVERSATION", data });
-    }, 500);
+      item.send = "from";
+      item.enabled = true;
+      item.general = data.general;
+      dispatch(pushConversation(item));
+      dispatch(attachFileEnd(item));
+    }, 1500);
   };
 }
-
-//PROYECTOS
-export function getProyectos() {
+export function deleteFileForm(data) {
   return function action(dispatch) {
-    dispatch(getProyectosStart());
-
-    setTimeout(() => {
-      let items = [];
-      items.push({
-        id: 1,
-        title: "Cruz Blanca (Bupa)",
-        pms: ["Alejandra García"],
-        productos: [
-          "Asistente Digital Cognitivo de Derivación",
-          "Asistente Digital Cognitivo FAQ"
-        ],
-        fechas: {
-          fechaPrev: "25/06/2018",
-          fechaPlan: "25/06/2018",
-          fechaReal: "25/06/2018"
-        },
-        riesgo: [
-          "1: El Gestor de Campañas aún no lo ha revisado el cliente. Cambios o necesidad de derivaciones no consideradas, puede generar atrasos.",
-          "*Acciones de mitigación son: El equipo está haciendo un QA de la data. Pedimos el 100% de la información de prestadores, especialidades, planes, para lograr tener más casos de derivación. Generaremos reunión de revisión con cliente, previo a la fecha de entrega, para trabajar estos casos durante la semana del 22. ",
-          "2: La integración del motor de derivación con los sistemas internos de Cruz Blanca, Genesys y CBCLIC no está hecha. Es atraso del cliente, pero éste puede considerar no pagar el 100% de la factura. ",
-          "*Acciones de Mitigación: Entrega de todos los Web services con la documentación al detalle para que su integración sea efectiva en cualquiero momento. riesgos: terminar gestor de campañas (cognitiva), por el lado del cliente por integrar nuestra solución a sus sistemas."
-        ],
-
-        comments: [
-          "*14 de junio: Reunión de entrega NO formal, del Gestor de Cobranza con el Cliente.",
-          "*18 de Junio: Entrega del Sprint Review completo del hito 2, donde estará Andrés Coglan. Esta reunión es para asegurar que cualquier, detalle, duda o falla que se presente, sea remediada durante la semana, para llegar a la reunión del 22 de junio: -Entrega Oficial- Sin fallas Reunión exitosa",
-          "*22 reunión de entrega a directorio martes 12 PM 4 personas QA ",
-          "Comenzó hito 3 el 19 de junio"
-        ],
-        estado: "curso"
-      });
-      items.push({
-        id: 2,
-        title: "Scotiabank",
-        pms: ["Claudio Oyarzún"],
-        productos: ["Asistente Digital"],
-        fechas: {
-          fechaPrev: "25/06/2018",
-          fechaPlan: "25/06/2018",
-          fechaReal: "25/06/2018"
-        },
-        riesgo: [
-          "No pueden desplegar en sus ambientes, debemos hacer un levantamiento y asesoría para ver cómo resolverlo. "
-        ],
-        comments: [
-          "*14 de junio: Reunión de entrega NO formal, del Gestor de Cobranza con el Cliente."
-        ],
-        estado: "riesgo"
-      });
-      items.push({
-        id: 3,
-        title: "Provida",
-        pms: ["Alejandra García", "Alfonso Quijano"],
-        productos: [
-          "Asistente Digital Cognitivo de Derivación",
-          "Asistente Digital Cognitivo FAQ"
-        ],
-        fechas: {
-          fechaPrev: "25/06/2018",
-          fechaPlan: "25/06/2018",
-          fechaReal: "25/06/2018"
-        },
-        riesgo: [
-          "No pueden desplegar en sus ambientes, debemos hacer un levantamiento y asesoría para ver cómo resolverlo. "
-        ],
-        comments: [
-          "*14 de junio: Reunión de entrega NO formal, del Gestor de Cobranza con el Cliente."
-        ],
-        estado: "atrasado"
-      });
-
-      dispatch(getProyectosEnd(items));
-    }, 500);
+    dispatch({ type: "DELETE_FILE", data });
   };
 }
-
-function getProyectosStart() {
-  return {
-    type: "GET_PROYECTOS_START"
-  };
-}
-
-function getProyectosEnd(data) {
-  return {
-    type: "GET_PROYECTOS_END",
-    data
-  };
-}
-
-function getProyectosError(error) {
-  return {
-    type: "GET_PROYECTOS_ERROR",
-    error
-  };
-}
-
-//PROYECTO
-export function getProyecto(id) {
+export function attachFileForm(data) {
   return function action(dispatch) {
-    dispatch(getProyectoStart());
-
+    dispatch(attachFileStart());
     setTimeout(() => {
-      let item = null;
-      item = {
-        id: 1,
-        title: "Cruz Blanca (Bupa)",
-        pms: ["Alejandra García"],
-        productos: [
-          "Asistente Digital Cognitivo de Derivación",
-          "Asistente Digital Cognitivo FAQ"
-        ],
-        fechas: {
-          fechaPrev: "25/06/2018",
-          fechaPlan: "25/06/2018",
-          fechaReal: "25/06/2018"
-        },
-        riesgo: [
-          "1: El Gestor de Campañas aún no lo ha revisado el cliente. Cambios o necesidad de derivaciones no consideradas, puede generar atrasos.",
-          "*Acciones de mitigación son: El equipo está haciendo un QA de la data. Pedimos el 100% de la información de prestadores, especialidades, planes, para lograr tener más casos de derivación. Generaremos reunión de revisión con cliente, previo a la fecha de entrega, para trabajar estos casos durante la semana del 22. ",
-          "2: La integración del motor de derivación con los sistemas internos de Cruz Blanca, Genesys y CBCLIC no está hecha. Es atraso del cliente, pero éste puede considerar no pagar el 100% de la factura. ",
-          "*Acciones de Mitigación: Entrega de todos los Web services con la documentación al detalle para que su integración sea efectiva en cualquiero momento. riesgos: terminar gestor de campañas (cognitiva), por el lado del cliente por integrar nuestra solución a sus sistemas."
-        ],
-
-        comments: [
-          "*14 de junio: Reunión de entrega NO formal, del Gestor de Cobranza con el Cliente.",
-          "*18 de Junio: Entrega del Sprint Review completo del hito 2, donde estará Andrés Coglan. Esta reunión es para asegurar que cualquier, detalle, duda o falla que se presente, sea remediada durante la semana, para llegar a la reunión del 22 de junio: -Entrega Oficial- Sin fallas Reunión exitosa",
-          "*22 reunión de entrega a directorio martes 12 PM 4 personas QA ",
-          "Comenzó hito 3 el 19 de junio"
-        ],
-        estado: "riesgo"
+      let files = {
+        name: "imagen",
+        url:
+          "http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg"
       };
-
-      dispatch(getProyectoEnd(item));
-    }, 600);
+      dispatch({ type: "SET_FILES", data: files });
+      dispatch(attachFileEnd());
+    }, 3000);
   };
 }
-
-function getProyectoStart() {
+function attachFileStart() {
   return {
-    type: "GET_PROYECTO_START"
+    type: "GET_CONVERSATIONS_START"
   };
 }
-
-function getProyectoEnd(data) {
+function attachFileEnd(data) {
   return {
-    type: "GET_PROYECTO_END",
-    data
+    type: "GET_CONVERSATIONS_END"
   };
 }
-
-function getProyectoError(error) {
+function attachFileError(error) {
   return {
-    type: "GET_PROYECTO_ERROR",
+    type: "GET_CONVERSATIONS_ERROR",
     error
   };
 }
-
-//HITOS
-export function getHitos(id) {
+//VALORACIÓN
+export function setStar(data) {
   return function action(dispatch) {
-    dispatch(getHitosStart());
-
+    dispatch({ type: "SET_STARS_VALORACION", data });
+    dispatch({ type: "SET_BUTTON_VALORACION", data: true });
+  };
+}
+export function setOverStar(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_OVER_STAR_VALORACION", data });
+  };
+}
+export function setCommentValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_COMMENT_VALORACION", data });
+  };
+}
+export function setPudoResolverValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_PUDO_RESOLVER_VALORACION", data });
+  };
+}
+export function setErrorValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_ERROR_VALORACION", data });
     setTimeout(() => {
-      let hitos = null;
-
-      hitos = [
-        {
-          id: 1,
-          numero: "1",
-          valor: "6K",
-          estado: "cerrado",
-          riesgo: {
-            descripcion: "Esta es una descripción de un riesgo",
-            mitigacion: "Esta es una descripción de una mitigación",
-            probabilidad: "Baja",
-            impacto: "Alta",
-            problema: {
-              descripcion: "Esta es una descripción de un riesgo",
-              mitigacion: "Esta es una descripción de una mitigación",
-              impacto: "Alta"
-            }
-          },
-          entregables: [
-            {
-              title: "Lorem ipsum, dolor sit amet consectetur.",
-              estado: "cerrado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "2232651K"
-            },
-            {
-              title: "Adipisicing elit. Voluptate.",
-              estado: "cerrado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "2K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "cerrado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "2K"
-            }
-          ]
-        },
-        {
-          id: 2,
-          numero: "2",
-          valor: "10K",
-          estado: "curso",
-          riesgo: {
-            descripcion: "Esta es una descripción de un riesgo",
-            mitigacion: "Esta es una descripción de una mitigación",
-            probabilidad: "Baja",
-            impacto: "Alta",
-            problema: {
-              descripcion: "Esta es una descripción de un riesgo",
-              mitigacion: "Esta es una descripción de una mitigación",
-              impacto: "Alta"
-            }
-          },
-          entregables: [
-            {
-              title: "Lorem ipsum, dolor sit amet consectetur.",
-              estado: "cerrado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "3.5K"
-            },
-            {
-              title: "Adipisicing elit. Voluptate.",
-              estado: "curso",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "3K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "curso",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "3.5K"
-            }
-          ]
-        },
-        {
-          id: 3,
-          numero: "3",
-          valor: "9K",
-          estado: "riesgo",
-          riesgo: {
-            descripcion: "",
-            mitigacion: "Esta es una descripción de una mitigación",
-            probabilidad: "Baja",
-            impacto: "Alta",
-            problema: {
-              descripcion: "Esta es una descripción de un riesgo",
-              mitigacion: "Esta es una descripción de una mitigación",
-              impacto: "Alta"
-            }
-          },
-          entregables: [
-            {
-              title: "Lorem ipsum, dolor sit amet consectetur.",
-              estado: "curso",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "1K"
-            },
-            {
-              title: "Adipisicing elit. Voluptate.",
-              estado: "riesgo",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "2K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "riesgo",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "6K"
-            }
-          ]
-        },
-        {
-          id: 4,
-          numero: "4",
-          valor: "12K",
-          estado: "atrasado",
-          riesgo: {
-            descripcion: "Esta es una descripción de un riesgo",
-            mitigacion: "Esta es una descripción de una mitigación",
-            probabilidad: "Baja",
-            impacto: "Alta",
-            problema: {
-              descripcion: "Esta es una descripción de un riesgo",
-              mitigacion: "Esta es una descripción de una mitigación",
-              impacto: "Alta"
-            }
-          },
-          entregables: [
-            {
-              title: "Lorem ipsum, dolor sit amet consectetur.",
-              estado: "atrasado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "4K"
-            },
-            {
-              title: "Adipisicing elit. Voluptate.",
-              estado: "atrasado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "4K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "atrasado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "4K"
-            },
-            {
-              title: "Perferendis natus maxime necessitatibus esse modi.",
-              estado: "atrasado",
-              entrega: "22/05/2018",
-              facturacion: "22/05/2018",
-              valor: "4K"
-            }
-          ]
+      dispatch({ type: "SET_ERROR_VALORACION", data: false });
+    }, 4000);
+  };
+}
+export function sendValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SEND_VALORACION_START" });
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+          dispatch({type:"SEND_VALORACION_END"});
+        } else {
+          dispatch(updateConversationError(response.statusText));
         }
-      ];
-
-      dispatch(getHitosEnd(hitos));
-    }, 600);
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
+  };
+}
+export function closeValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "DISABLED_VALORACION" });
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
+  };
+}
+//FORM
+export function closeForm(data) {
+  return function action(dispatch) {
+    dispatch({ type: "DISABLED_FORM" });
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/message",
+      data: data
+    });
+    return request.then(
+      response => {
+        if (response.status === 200) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(
+          updateConversationError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
   };
 }
 
-function getHitosStart() {
-  return {
-    type: "GET_HITOS_START"
+export function sendForm(data, url) {
+  return function action(dispatch) {
+    dispatch({ type: "SEND_FORM_START" });
+
+    // dispatch(setGeneral(data.general));
+    // dispatch(pushConversation(data));
+
+    //Respuesta
+    setTimeout(() => {
+      console.log("url ==> ", url);
+      let data = {
+        general: {
+          cid: "SOYELCID",
+          origen: "Sitio Público",
+          nodo_id: null,
+          intent: null,
+          auth: null,
+          token: null,
+          location: null
+        },
+        msg: ["Se ha enviado el formulario"]
+      };
+      data.send = "from";
+      data.enabled = true;
+      messageResponse(dispatch, data);
+      dispatch({ type: "SEND_FORM_END" });
+      dispatch({ type: "DISABLED_FORM" });
+    }, 500);
   };
 }
-
-function getHitosEnd(data) {
-  return {
-    type: "GET_HITOS_END",
-    data
-  };
-}
-
-function getHitosError(error) {
-  return {
-    type: "GET_HITOS_ERROR",
-    error
-  };
-}
-
-// //LOGIN
-// export function recoverPassChange(username, password){
-//   return function action(dispatch){
-//     dispatch(fetchLoginStart());
-
-//     const request = axios({
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json;charset=UTF-8' },
-//       url: apiUrl + 'auth/ACTUALIZAR_CONTRASENA_USUARIO',
-//       data: {
-//         username,
-//         password
-//       }
-//     });
-
-//     return request.then(
-//       (response) => {
-//         if(response.data.estado.codigo === 200){
-//           dispatch(loginUser({
-//             dispositivo: 'Desktop',
-//             geolocalizacion: '',
-//             ip: '',
-//             navegador: '',
-//             password,
-//             username
-//           }));
-//         }else{
-//           dispatch(fetchLoginError(response.data.estado.glosa));
-//         }
-//       },
-//       (err) => {
-//         dispatch(fetchLoginError('Error de conexión con el servidor, intente nuevamente'))
-//       }
-//     );
-//   }
-// }
-
-// function fetchLoginStart(){
-//   return {
-//     type: 'FETCH_LOGIN_START'
-//   }
-// }
-
-// function fetchLoginEnd(userData, code){
-//   return {
-//     type: 'FETCH_LOGIN_END',
-//     userData,
-//     code
-//   }
-// }
-
-// function fetchLoginError(error){
-//   return {
-//     type: 'FETCH_LOGIN_ERROR',
-//     error,
-//     messageStatus: 'error'
-//   }
-// }

@@ -9,7 +9,7 @@ export default class IsFetching extends Component {
         <div>
           {children}
           <div className="spinner-holder">
-            <div className="spinner" />
+            <div className="spinner" style={{borderLeft:"2px solid "+this.props.colorHeader}}/>
           </div>
         </div>
       );

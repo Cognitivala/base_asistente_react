@@ -1,0 +1,40 @@
+@mixin gradient-horizontal($color-start, $color-end) {
+  background: -moz-linear-gradient(left,  $color-start 0%, $color-end 100%);
+  background: -webkit-linear-gradient(left,  $color-start 0%, $color-end 100%);
+  background: linear-gradient(to right,  $color-start 0%, $color-end 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$color-start', endColorstr='$color-end',GradientType=1 );
+}
+
+@mixin box-shadow($vert, $blur, $alpha){
+  -webkit-box-shadow: 0 $vert $blur 0 rgba(0,0,0,$alpha);
+  box-shadow: 0 $vert $blur 0 rgba(0,0,0,$alpha);
+}
+
+@mixin transition($ms) {
+  -webkit-transition: all $ms linear;
+  -moz-transition: all $ms linear;
+  -ms-transition: all $ms linear;
+  -o-transition: all $ms linear;
+  transition: all $ms linear;
+}
+
+@mixin border-radius($radius){
+  -webkit-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin scale($size){
+  -moz-transform: scale($size);
+  -webkit-transform: scale($size);
+  -o-transform: scale($size);
+  -ms-transform: scale($size);
+  transform: scale($size);
+}
+
+@mixin rotate($deg){
+  -moz-transform: rotate($deg);
+  -webkit-transform: rotate($deg);
+  -o-transform: rotate($deg);
+  -ms-transform: rotate($deg);
+  transform: rotate($deg);
+}

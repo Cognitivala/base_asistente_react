@@ -16,36 +16,41 @@ export default class Help extends Component {
     }
   }
 
-  content(ayudaStates) {
+  content(ayudaStates,customParamsStates) {
     if (ayudaStates.getIn(["ayuda", 0]).get("title") !== "") {
       let css = ayudaStates.get('open')?" active":"";
+      const colorHeader = customParamsStates.getIn(["customParams","colorHeader"]),
+        style = {
+          backgroundColor: colorHeader
+        };
+      
       return (
-        <div className={"assitant-helper"+css}>
+        <div className={"assitant-helper"+css} style={style}>
           <HelpWarning ayudaStates={ayudaStates}/>
-          <div className="bloqueo" />
           <p className="subtittle">
             Haz <strong>clic</strong> en los siguientes tópicos para{" "}
             <strong>obtener ayuda</strong> de cómo utilizar la asistencia online
           </p>
           {ayudaStates.get("ayuda").map((map, i) => {
-            return <HelpBox ayuda={map} key={i} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp}/>;
+            return <HelpBox  colorHeader={colorHeader} ayuda={map} key={i} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp} generalStates={this.props.generalStates}/>;
           })}
         </div>
       );
     } else {
-      return <div />;
+      return null;
     }
   }
 
   render() {
-    const { ayudaStates } = this.props;
-
+    const { ayudaStates, customParamsStates } = this.props,
+    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
     return (
       <IsFetching
         isFetching={ayudaStates.get("isFetching")}
         showChildren={true}
+        colorHeader={colorHeader}
       >
-        {this.content(ayudaStates)}
+        {this.content(ayudaStates,customParamsStates)}
       </IsFetching>
     );
   }

@@ -4,7 +4,8 @@ export function assistantStates(
   state = Immutable.fromJS({
     isFetching: false,
     error: "",
-    active: false
+    active: false,
+    minimized: false
   }),
   action
 ) {
@@ -15,6 +16,8 @@ export function assistantStates(
         return state.set('active',false);
     case "GET_ASSISTANT_START":
       return state.set("isFetching", true);
+    case "TOGGLE_MINIMIZED":
+      return state.set("minimized", action.data);
     case "GET_ASSISTANT_END":
       return state.withMutations(map => {
         map
