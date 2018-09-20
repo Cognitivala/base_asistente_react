@@ -256,70 +256,74 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
-
-          var getMyArray = [['días', 'interacciones']];
-          var pushArray = [];
-          for(var i = 0; i < response.respuesta.length; i++) {
-            pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].total];
-            getMyArray.push(pushArray);
-          }
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart);
-          
-          function drawChart() {
-            var data = google.visualization.arrayToDataTable(getMyArray);
-            var options = {
-              height: 180,
-              hAxis: {
-                textStyle: {
-                  fontName: 'Roboto',
-                  bold: true
+           if(response.status == 400){
+            $('#chart_div').html('<p>No se han encontrado datos</p>')
+            return false;
+          } else {
+            var getMyArray = [['días', 'interacciones']];
+            var pushArray = [];
+            for(var i = 0; i < response.respuesta.length; i++) {
+              pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].total];
+              getMyArray.push(pushArray);
+            }
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable(getMyArray);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                  maxValue: (getMyArray.length - 1),
+                  gridlines: {
+                    color: 'none'
+                  }
                 },
-                title: '',
-                titleTextStyle: {
-                  color: '#f00'
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
                 },
-                minValue: 1,
-                maxValue: (getMyArray.length - 1),
-                gridlines: {
-                  color: 'none'
-                }
-              },
-              vAxis: {
-                minValue: 0,
-                textStyle: {
-                  fontName: 'Roboto',
-                  bold: true
-                }
-              },
-              chartArea:{
-                left: '5%',
-                top: '5%',
-                width: '93%',
-                height: '75%'
-              },
-              crosshair: {
-                focused: {
-                  color: '#3bc',
-                  opacity: 0.8
-                }
-              },
-              legend: 'none',
-              pointSize: 9,
-              tooltip: {
-                showColorCode: true,
-                textStyle: {
-                  color: '#1c75bc',
-                  fontName: 'Roboto',
-                }
-              },
-              colors:['#001e37','#141921'],
-              areaOpacity: .85,
-              is3D: true,
-              backgroundColor: { fill:'transparent' }
-            };
-            var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: 'none',
+                pointSize: 9,
+                tooltip: {
+                  showColorCode: true,
+                  textStyle: {
+                    color: '#1c75bc',
+                    fontName: 'Roboto',
+                  }
+                },
+                colors:['#001e37','#141921'],
+                areaOpacity: .85,
+                is3D: true,
+                backgroundColor: { fill:'transparent' }
+              };
+              var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+            }
           }
         });
       }
@@ -566,65 +570,70 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
-          google.charts.load('current', {'packages':['corechart']});
-          google.charts.setOnLoadCallback(drawChart);
-          function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-              ['', ''],
-              ['Positivos', response.data[0].positivo],
-              ['Negativos', response.data[0].negativo]
-            ]);
-            var options = {
-              height: 180,
-              hAxis: {
-                textStyle: {
-                  fontName: 'Roboto',
-                  bold: true
+          if(response.status == 400){
+            $('#chart_div4').html('<p>No se han encontrado datos</p>')
+            return false;
+          } else {
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+                ['', ''],
+                ['Positivos', response.data[0].positivo],
+                ['Negativos', response.data[0].negativo]
+              ]);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
                 },
-                title: '',
-                titleTextStyle: {
-                  color: '#f00'
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
                 },
-                minValue: 1,
-              },
-              vAxis: {
-                minValue: 0,
-                textStyle: {
-                  fontName: 'Roboto',
-                  bold: true
+                pieHole: 0.4,
+                is3D: true,
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                colors:['#e7b81d','#001e37','#b4b8ba','#009dc3','#1c75bc'],
+                areaOpacity: .85,
+                backgroundColor: {
+                  fill:'transparent'
+                },
+                chartArea: {
+                  height: 160
                 }
-              },
-              pieHole: 0.4,
-              is3D: true,
-              chartArea:{
-                left: '5%',
-                top: '5%',
-                width: '93%',
-                height: '75%'
-              },
-              crosshair: {
-                focused: {
-                  color: '#3bc',
-                  opacity: 0.8
-                }
-              },
-              legend: {
-                textStyle: {
-                  fontName: 'Roboto',
-                  bold: true
-                }
-              },
-              colors:['#e7b81d','#001e37','#b4b8ba','#009dc3','#1c75bc'],
-              areaOpacity: .85,
-              backgroundColor: {
-                fill:'transparent'
-              },
-              chartArea: {
-                height: 160
-              }
-            };
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
-            chart.draw(data, options);
+              };
+              var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+              chart.draw(data, options);
+            }
           }
         });
       }
@@ -651,7 +660,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           contentType: 'application/json; charset=utf-8'
         }).promise().done(function(response){
            if(response.status == 400){
-            $('#chart_div').html('<p>No se han encontrado datos</p>')
+            $('#chart_div5').html('<p>No se han encontrado datos</p>')
             return false;
           } else {
             var data = [
