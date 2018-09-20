@@ -39,6 +39,7 @@ export class Router extends Component {
       weekdaysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"]
     });
     this.customParams();
+    this.onMessageFunc();
   }
 
   customParams() {
