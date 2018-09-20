@@ -1,0 +1,160 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#")
+  head
+    meta(charset="utf-8")
+    title Test. MAD Cognitiva
+    meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    meta(name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no")
+    meta(name="description" content="Asistente digital")
+    link(rel="stylesheet" href="css/main.css")
+    link(rel="stylesheet" href="css/fontawesome.css")
+  
+  body
+    main.main-content
+      section.conversation-holder.box-wrapp(data-conversation)
+      form.input-user-holder(data-func="submitMessage" data-event="submit" novalidate)
+        .form-wrapp
+          input.input-user(type="text" value="" placeholder="Ingresa tu consulta..." name="message")
+          button#button-send-msg.btn.btn-rounded.input-user-btn(aria-label="Enviar mensaje")
+            i.fa.fa-paper-plane
+    aside(data-load-question)
+    .spinner-holder
+      .spinner Loading...
+
+    #modal-login.mymodal
+      .overflow
+        #login.container-form
+          form#form-login(name="form1")
+            .header
+              .close-form
+                button(data-msg="No" data-func="sendButtonresponse")
+                  img(src="img/icon-close.svg", alt="")
+              .icon
+                img(src="img/icon-user.svg", alt="")
+              p Por su seguridad y confidencialidad de la información, por favor ingrese su <strong>Rut</strong> y <strong>clave alfanumérica</strong>
+            
+            fieldset
+              legend RUT
+              input(type="text" name="rut" placeholder="Ej. 11111111-1" onkeyup="javascript:return Rut(document.form1.rut.value)")
+
+            fieldset
+              legend Clave
+              input(type="password" name="pass" placeholder="········")
+
+            button(data-func="validateFields") Ingresar
+
+            .cambia-clave
+              a(href="https://www.coopeuch.cl/tef/" target="_blank") Cambia tu clave aquí
+      .error-msg
+        p
+          strong Ups! Tenemos un problema
+        p Favor verifique sus datos e intente nuevamente.      
+      .overlay
+
+    #modal-valoracion.mymodal
+      .overflow
+        .myflex
+          #valoracion.container-form
+            form#form-valoracion(name="form2")
+              .header
+                .close-form
+                  button(data-msg="No" data-func="sendButtonresponse")
+                    img(src="img/icon-close.svg" alt="")
+                .icon
+                  img(src="img/icon-check.svg" alt="")
+                p.title ¿Cómo evalúas en general esta conversación?
+                p Califica en una de 1 a 5, donde 5 es muy buena y 1 es muy mala
+
+              fieldset
+                .ratingStars
+                  a(href="#;" rel="mx")
+                    span 1
+                    i.fa.fa-star
+                  a(href="#;" rel="mx")
+                    span 2
+                    i.fa.fa-star
+                  a(href="#;" rel="mx")
+                    span 3
+                    i.fa.fa-star
+                  a(href="#;" rel="mx")
+                    span 4
+                    i.fa.fa-star
+                  a(href="#;" rel="mx")
+                    span 5
+                    i.fa.fa-star
+
+              #more-than-3.bkg-gray
+                fieldset
+                  legend Cuéntanos ¿por qué evalúas con esta nota?
+                  textarea#por-nota(name="por-que" rows="3")
+
+              #less-than-3.bkg-gray
+                fieldset.radios
+                  legend ¿Pudiste resolver tu inquietud en esta conversación?
+                  label
+                    .round Sí
+                      input(type="radio" name="decision" value="si")
+                      .circle
+                  label
+                    .round No
+                      input(type="radio" name="decision" value="no")
+                      .circle
+                fieldset
+                  legend Cuéntanos ¿qué mejorarías?
+                  textarea#por-que(name="por-que" rows="3")
+
+              button(data-msg="Sí" data-func="sendValue" disabled) Valorar
+
+      .error-msg
+        p
+          strong Ups! Tenemos un problema
+        p Favor verifique sus datos e intente nuevamente.
+      
+      .overlay
+        
+    #modal-contacto.mymodal
+      .overflow
+        #login.container-form
+          form#form-contacto(name="form3" autocomplete="off")
+            .header
+              .close-form
+                button(data-msg="No" data-func="sendButtonresponse")
+                  img(src="img/icon-close.svg" alt="")
+              .icon
+                img(src="img/icon-user.svg" alt="")
+              p Por favor ingrese sus datos y <strong>uno de nuestros ejecutivos le responderá a la brevedad posible</strong> o en horario hábil siguiente
+
+            p.red Todos los campos son obligatorios
+
+            fieldset
+              legend Nombre
+              input(type="text" name="nombre" placeholder="Ej. Juan Pérez" autocomplete="off" required)
+            
+            fieldset
+              legend RUT
+              input(type="text" name="rut2" placeholder="Ej. 11111111-1" autocomplete="off" onkeyup="javascript:return Rut_2(document.form3.rut2.value)")
+
+            fieldset
+              legend Teléfono
+              input(type="tel" name="telefono" placeholder="Ej. 912345678" autocomplete="off" required)
+
+            fieldset
+              legend Correo electrónico
+              input(type="email" name="email" placeholder="Ej. nombre@micorreo.cl" autocomplete="off" required)
+            
+            button(data-func="validateFieldsContact") Enviar
+      .error-msg
+        p
+          strong Ups! Tenemos un problema
+        p Favor verifique sus datos e intente nuevamente.
+      .overlay
+
+    script(type="text/javascript" src="js/build/main.js")
+    script(type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADG7P3Zw2isanqpUlGOHftJuB84FE8Efc")
+    script.
+      window.addEventListener('message', function(event) {
+        if (~event.origin.indexOf('http://asistente-react.mycognitiva.io/')) {
+          console.log(event.data);
+        } else {
+          return;
+        }
+      });
