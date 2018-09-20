@@ -257,7 +257,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }).done(function(response){
           if(response.status == '200'){
             
-            getMessageResponse();
+            //getMessageResponse();
 
             $('#color-bubble').val(response.colorBubble);
             $('#color-bubble, .assistant .bubble').css("background-color", response.colorBubble);
@@ -319,7 +319,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           }
           var promise = $.ajax({
             type: 'POST',
-            url: getPath+"mad/customize",
+            url: getPath+"mant/customize",
             data: JSON.stringify(args),
             "headers": {
               "Content-Type": "application/json",
