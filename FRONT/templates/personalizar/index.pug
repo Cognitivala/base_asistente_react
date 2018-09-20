@@ -146,9 +146,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       function changeText(el){
         var getText = $(el).val();
         if(el.id == 'title-assistant'){
-          $('.assistant .titles div').text(getText);
+          postMsg({title:getText});
+          //- $('.assistant .titles div').text(getText);
         } else {
-          $('.assistant .titles span').text(getText);
+          postMsg({subtitle:getText});
+          //- $('.assistant .titles span').text(getText);
         }        
       }
 
@@ -212,9 +214,9 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         $(modal).find('.buttons, form').fadeOut(50);
       }
 
-      //- function postMessage(msg){
-      //-   getDemo.contentWindow.postMessage(msg, "*");
-      //- }
+      function postMsg(msg){
+        getDemo.contentWindow.postMessage(msg, "*");
+      }
 
       function getMessageResponse() {
         const promise = $.ajax({

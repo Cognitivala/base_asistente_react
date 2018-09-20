@@ -50,6 +50,23 @@ export class Router extends Component {
     // }
   }
 
+  onMessageFunc(){
+    window.onmessage = e => {
+      if (e.data.colorBtn !== undefined) {
+        this.props.updateCustomColorBtn(e.data.colorBtn);
+      } else if (e.data.title !== undefined) {
+        this.props.updateCustomTitle(e.data.title);
+      } else if (e.data.subtitle !== undefined) {
+        this.props.updateCustomSubtitle(e.data.subtitle);
+      } else if (e.data.colorHeader !== undefined) {
+        this.props.updateCustomColorHeader(e.data.colorHeader);
+      } else if (e.data.avatar !== undefined) {
+        this.props.updateCustomAvatar(e.data.avatar);
+      } else if (e.data.logo !== undefined) {
+        this.props.updateCustomLogo(e.data.logo);
+      }
+    };
+  }
 
   getContent(customParamsStates) {
     const avatar = customParamsStates.getIn(["customParams","avatar"]),

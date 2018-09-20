@@ -117,6 +117,36 @@ export function setCustomParams(data) {
     dispatch({ type: "SET_CUSTOM_PARAMS", data });
   };
 }
+export function updateCustomTitle(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_TITULO", data });
+  };
+}
+export function updateCustomSubtitle(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_SUBTITULO", data });
+  };
+}
+export function updateCustomColorHeader(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_COLOR_HEADER", data });
+  };
+}
+export function updateCustomColorBtn(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_COLOR_BTN", data });
+  };
+}
+export function updateCustomLogo(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_LOGO", data });
+  };
+}
+export function updateCustomAvatar(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_AVATAR", data });
+  };
+}
 //SALUDO
 export function getSaludo() {
   return function action(dispatch) {
