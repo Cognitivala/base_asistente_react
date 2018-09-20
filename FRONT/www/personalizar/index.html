@@ -243,14 +243,18 @@
       var getId = "1";
       
       function changeText(el){
-        var getText = $(el).val();
-        if(el.id == 'title-assistant'){
+        var getText = $(el).val(),
+          elem = el;
+        if(elem.id == 'title-assistant'){
           postMsg({title:getText});
           //- $('.assistant .titles div').text(getText);
         } else {
           postMsg({subtitle:getText});
           //- $('.assistant .titles span').text(getText);
-        }        
+        }
+        setTimeout(() => {
+          elem.focus();
+        }, 300);
       }
       
       var uploadImgLogo   = '';
