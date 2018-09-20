@@ -224,6 +224,30 @@ export function defaultAssistant() {
 export function getAyuda() {
   return function action(dispatch) {
     dispatch(getAyudaStart());
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/preguntas_ejemplo"
+    });
+    return request.then(
+      response => {
+        if (response.estado.codigoEstado === 200) {
+          dispatch(getAyudaEnd(response.respuesta));
+        } else {
+          dispatch(getAyudaError(response.respuesta));
+        }
+      },
+      err => {
+        dispatch(
+          getAyudaError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
+
     setTimeout(() => {
       let item;
       item = [
