@@ -10,6 +10,10 @@ import Launcher from "./components/launcher/launcher";
 import Assistant from "./components/assistant/assistant";
 
 export class Router extends Component {
+  constructor(props) {
+    super(props);
+    this.onMessageFunc = this.onMessageFunc.bind(this);
+  }
   componentWillMount() {
     moment.updateLocale("en", {
       months: [
@@ -52,20 +56,20 @@ export class Router extends Component {
   }
 
   onMessageFunc(){
-    window.onmessage = e => {
-      console.log('onmessageReact => ',e.data)
+    const _this = this;
+    window.onmessage = (e) => {
       if (e.data.colorBtn !== undefined) {
-        this.props.updateCustomColorBtn(e.data.colorBtn);
+        _this.props.updateCustomColorBtn(e.data.colorBtn);
       } else if (e.data.title !== undefined) {
-        this.props.updateCustomTitle(e.data.title);
+        _this.props.updateCustomTitle(e.data.title);
       } else if (e.data.subtitle !== undefined) {
-        this.props.updateCustomSubtitle(e.data.subtitle);
+        _this.props.updateCustomSubtitle(e.data.subtitle);
       } else if (e.data.colorHeader !== undefined) {
-        this.props.updateCustomColorHeader(e.data.colorHeader);
+        _this.props.updateCustomColorHeader(e.data.colorHeader);
       } else if (e.data.avatar !== undefined) {
-        this.props.updateCustomAvatar(e.data.avatar);
+        _this.props.updateCustomAvatar(e.data.avatar);
       } else if (e.data.logo !== undefined) {
-        this.props.updateCustomLogo(e.data.logo);
+        _this.props.updateCustomLogo(e.data.logo);
       }
     };
   }
