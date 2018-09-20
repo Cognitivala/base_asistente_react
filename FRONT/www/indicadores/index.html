@@ -344,7 +344,7 @@
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
-           if(response.status == 400){
+           if(rresponse.estado.codigoEstado == 400){
             $('#chart_div').html('<p>No se han encontrado datos</p>')
             return false;
           } else {
@@ -658,7 +658,7 @@
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
-          if(response.status == 400){
+          if(response.estado.codigoEstado == 400){
             $('#chart_div4').html('<p>No se han encontrado datos</p>')
             return false;
           } else {
