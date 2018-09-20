@@ -353,7 +353,6 @@ export function updateConversation(data) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
 
-
     const request = axios({
       method: "POST",
       headers: {
@@ -376,7 +375,7 @@ export function updateConversation(data) {
       err => {
         dispatch(
           updateConversationError(
-            "Error de conexión con el servidor, intente nuevamente"
+            "Error de conexión con el servidor, intente nuevamente por favor"
           )
         );
       }
