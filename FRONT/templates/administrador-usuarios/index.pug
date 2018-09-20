@@ -246,9 +246,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
-                if(response.status == '200'){
+                if(estado.codigoEstado  != '200'){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
+                }else{
+                  openCustomModal('#myModal', 'Genial!', 'No se ha podido ediar el usuario', 'error');
                 }
               })
 
@@ -274,9 +276,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
-                if(response.status == '200'){
+                if(estado.codigoEstado  != '200'){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'Usuario añadido con éxito', 'success');
+                }else{
+                  openCustomModal('#myModal', 'Genial!', 'No se ha podido añadir el usuario', 'error');
                 }
               })
               $('.table tbody').append(craeteTrUser);
@@ -319,9 +323,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
           }).done(function(response){
-            if(response.status == '200'){
+            if(estado.codigoEstado  != '200'){
               //- console.log(response);
-              openCustomModal('#myModal', 'Usuario Eliminado', 'El usuario se ha eliminado con éxito', 'success');
+              openCustomModal('#myModal', 'Genial!', 'Usuario eliminado con éxito', 'success');
+            }else{
+              openCustomModal('#myModal', 'Genial!', 'No se ha podido eliminar el usuario', 'error');
             }
           })
           $('.table tbody tr.to-delete').remove();
