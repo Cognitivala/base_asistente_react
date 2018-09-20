@@ -8129,9 +8129,6 @@ select:-webkit-autofill {
   text-align: left;
   vertical-align: middle; }
 
-#myModalAssistant .modal-header {
-  padding: 0; }
-
 .modal-content {
   border: none;
   -webkit-border-radius: 0;
@@ -8679,12 +8676,19 @@ form,
   .tab-pane .form button[button]:focus {
     color: #fff; }
 
+#myModalAssistant .modal-header {
+  padding: 0; }
+
+#myModalAssistant .modal-body {
+  padding: 2rem; }
+
 #myModalAssistant .modal-dialog {
-  width: 42rem; }
+  width: 42rem;
+  height: 100vh; }
 
 #myModalAssistant .assistant {
-  width: 36rem;
-  height: calc(100% - 20rem); }
+  width: 38rem;
+  height: calc(100vh - 13rem); }
 
 #myModalAssistant .header {
   margin-top: -3rem;

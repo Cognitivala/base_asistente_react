@@ -541,11 +541,6 @@ select:-webkit-autofill {
   vertical-align: middle;
 }
 
-#myModalAssistant{
-  .modal-header{
-    padding: 0;
-  }
-}
 .modal-content {
   border: none;
   @include border-radius(0);
@@ -1126,12 +1121,19 @@ form,
 
 
 #myModalAssistant {
+  .modal-header{
+    padding: 0;
+  }
+  .modal-body{
+    padding: 2rem;
+  }
   .modal-dialog{
     width: 42rem;
+    height: 100vh;
   }
   .assistant {
-    width: 36rem;
-    height: calc(100% - 20rem);
+    width: 38rem;
+    height: calc(100vh - 13rem);
   }
   .header {
     margin-top: -($padding*2);
