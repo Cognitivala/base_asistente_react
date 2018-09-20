@@ -6,10 +6,10 @@ export default class IsFetching extends Component {
     if (this.props.isFetching) {
       if (this.props.showChildren) children = this.props.children;
       content = (
-        <div style={{borderLeft:"2px solid"+this.props.colorHeader}}>
+        <div>
           {children}
           <div className="spinner-holder">
-            <div className="spinner" />
+            <div className="spinner" style={{borderLeft:"2px solid "+this.props.colorHeader}}/>
           </div>
         </div>
       );

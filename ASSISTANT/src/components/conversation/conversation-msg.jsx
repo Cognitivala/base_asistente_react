@@ -38,7 +38,7 @@ export default class ConversationMsg extends Component {
             <img
               className="rounded-img"
               src={send==="to"?userImg:avatar}
-              alt="Respuesta"
+              alt=""
             />
             <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
           </div>

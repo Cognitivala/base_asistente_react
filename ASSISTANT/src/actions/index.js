@@ -78,6 +78,27 @@ export function getCustomParams() {
     return request.then(
       response => {
         if (response.status === 200) {
+          var item = {
+            avatar: 'http://localhost:3000/images/avatar-default.jpg',
+            colorHeader: '#012138',
+            colorBtn: '#f8b31c',
+            logo: 'http://logoschilevector.cl/img/url_foto_logo/1207-Duoc-UC.jpg',
+            subtitulo: 'Asistencia digital',
+            titulo: 'Duoc UC',
+            url: 'http://asistente-react.mycognitiva.io/',
+            userImg: null,
+            estado: 1,
+            settings: {
+              keep_conversation: false,
+              geolocalization: false,
+              help: true,
+              attach: false,
+              emoji: false,
+              voice: false
+            }
+
+          }
+          // dispatch(getCustomParamsEnd(item));
           dispatch(getCustomParamsEnd(response.data));
         } else {
           dispatch(getCustomParamsError(response.statusText));
@@ -331,33 +352,37 @@ export function updateConversation(data) {
   return function action(dispatch) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-    const request = axios({
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      url: APIURL + "/message",
-      data: data
-    });
-    return request.then(
-      response => {
-        if (response.status === 200) {
-          let item = response.data;
-          item.send = "from";
-          item.enabled = true;
-          messageResponse(dispatch, item);
-        } else {
-          dispatch(updateConversationError(response.statusText));
-        }
-      },
-      err => {
-        dispatch(
-          updateConversationError(
-            "Error de conexión con el servidor, intente nuevamente"
-          )
-        );
-      }
-    );
+
+
+    // const request = axios({
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   url: APIURL + "/message",
+    //   data: data
+    // });
+    // return request.then(
+    //   response => {
+    //     if (response.status === 200) {
+    //       let item = response.data;
+    //       item.send = "from";
+    //       item.enabled = true;
+    //       messageResponse(dispatch, item);
+    //     } else {
+    //       dispatch(updateConversationError(response.statusText));
+    //     }
+    //   },
+    //   err => {
+    //     dispatch(
+    //       updateConversationError(
+    //         "Error de conexión con el servidor, intente nuevamente"
+    //       )
+    //     );
+    //   }
+    // );
+
+
     //Respuesta
     setTimeout(() => {
       const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
@@ -368,7 +393,8 @@ export function updateConversation(data) {
       //4 = MSG + Select
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
-      switch (2) {
+      //8 = MULTIMSG
+      switch (8) {
         case 1:
           data = {
             general: {
@@ -537,6 +563,20 @@ export function updateConversation(data) {
             },
             msg: ["Hola, seleccione una fecha:"],
             datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
+          };
+          break;
+        case 8:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["lorem ipsum","lorem ipsum","lorem ipsum","lorem ipsum"]
           };
           break;
       }
