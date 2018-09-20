@@ -56,8 +56,11 @@ export class Router extends Component {
   }
 
   onMessageFunc(){
+    debugger
     const _this = this;
     window.onmessage = (e) => {
+      console.log('onmessageReact => ',e.data)
+      debugger
       if (e.data.colorBtn !== undefined) {
         _this.props.updateCustomColorBtn(e.data.colorBtn);
       } else if (e.data.title !== undefined) {

@@ -41,11 +41,11 @@ export function customParamsStates(
       return state.withMutations(map => {
         map.set("isFetching", false).set("error", action.error);
       });
-    case "SET_CUSTOM_TITLE":
+    case "SET_CUSTOM_TITULO":
       return state.withMutations(map => {
         map.setIn(["customParams","titulo"],action.data);
       });
-    case "SET_CUSTOM_SUBTITLE":
+    case "SET_CUSTOM_SUBTITULO":
       return state.withMutations(map => {
         map.setIn(["customParams","subtitulo"],action.data);
       });
