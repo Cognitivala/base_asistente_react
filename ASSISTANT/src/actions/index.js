@@ -154,7 +154,6 @@ export function getSaludo() {
 export function sendSaludo(data) {
   return function action(dispatch) {
     dispatch(pushConversation(data));
-    window.top.postMessage({saludo:data.msg}, "*");
   };
 }
 function getSaludoStart() {

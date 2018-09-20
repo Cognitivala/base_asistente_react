@@ -227,7 +227,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           dataType: 'json'
         });
         promise.done((response) => {
-          $('#saludo-assistant').val(response.msg);          
+          $('#saludo-assistant').val(response.msg);
+          loadAll = loadAll + 1;
+          if(loadAll===2){
+            spinnerOut('#custom');
+          }      
         }).fail(() => {
 
         });
@@ -297,23 +301,14 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }
       }
 
-      function loadSaludo(saludo){
-        $('#saludo-assistant').val(saludo);    
-        loadAll = loadAll + 1;
-        if(loadAll===2){
-          spinnerOut('#custom');
-        }
-      }
-
       function init(){
         window.onmessage = e => {
           console.log("onmessage Mant",e.data)
           if (e.data.customParams !== undefined) {
             loadCustom(e.data.customParams);
-          } else if (e.data.saludo !== undefined) {
-            loadSaludo(e.data.saludo);
           }
         };
+        getMessageResponse();
       }
 
       window.onload = function() {
