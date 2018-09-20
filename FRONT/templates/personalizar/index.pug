@@ -212,7 +212,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       }
 
       function postMessage(msg){
-        window.contentDocument.postMessage(msg, '*');
+        getDemo.contentWindow.postMessage(msg, "*");
       }
 
       function getMessageResponse() {

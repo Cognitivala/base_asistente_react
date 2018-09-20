@@ -318,7 +318,7 @@
       }
       
       function postMessage(msg){
-        window.contentDocument.postMessage(msg, '*');
+        getDemo.contentWindow.postMessage(msg, "*");
       }
       
       function getMessageResponse() {
