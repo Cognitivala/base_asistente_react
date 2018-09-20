@@ -13,7 +13,7 @@ if (sessionStorage.getItem('prf') > 0) {
   }
 }
 
-var getPath = "https://dev-coopeuch.mycognitiva.io/";
+var getPath = "http://asistente-react.mycognitiva.io/";
 // var getPath = "http://localhost:3000/";
 
 var getTimeTkn = parseInt(sessionStorage.getItem('tmtkn')),
