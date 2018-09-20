@@ -85,6 +85,7 @@ if (sessionStorage.getItem('user')) {
 }
 
 function closeSession() {
+  console.log('close')
   sessionStorage.removeItem('empresa');
   sessionStorage.removeItem('user');
   sessionStorage.removeItem('user_id');
