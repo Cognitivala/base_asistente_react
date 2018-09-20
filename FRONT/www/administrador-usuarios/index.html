@@ -375,7 +375,7 @@
                   $('tr.action td:nth-child(2)').text(getEmailVal);
                   $('tr.action td:nth-child(3)').text(addValProfile);
                 }else{
-                  openCustomModal('#myModal', 'Genial!', 'No se ha podido ediar el usuario', 'error');
+                  openCustomModal('#myModal', 'Ups!', 'No se ha podido ediar el usuario', 'error');
                 }
               })
               $('#myModalUser').modal('hide');
@@ -402,7 +402,7 @@
                   openCustomModal('#myModal', 'Genial!', 'Usuario añadido con éxito', 'success');
                   $('.table tbody').append(craeteTrUser);
                 }else{
-                  openCustomModal('#myModal', 'Genial!', 'No se ha podido añadir el usuario', 'error');
+                  openCustomModal('#myModal', 'Ups!', 'No se ha podido añadir el usuario', 'error');
                 }
               })
               showTooltip();
@@ -449,7 +449,7 @@
               openCustomModal('#myModal', 'Genial!', 'Usuario eliminado con éxito', 'success');
               $('.table tbody tr.to-delete').remove();
             }else{
-              openCustomModal('#myModal', 'Genial!', 'No se ha podido eliminar el usuario', 'error');
+              openCustomModal('#myModal', 'Ups!', 'No se ha podido eliminar el usuario', 'error');
             }
           })
         }
