@@ -234,7 +234,7 @@ export function getAyuda() {
     return request.then(
       response => {
         console.log(response)
-        if (response.estado.codigoEstado === 200) {
+        if (response.data.estado.codigoEstado === 200) {
           dispatch(getAyudaEnd(response.respuesta));
         } else {
           dispatch(getAyudaError(response.respuesta));
