@@ -108,16 +108,19 @@ function closeSession() {
   // window.location.href = 'http://localhost:3000/login/';
 }
 
-var current = window.location,
-    e       = document.getElementById("mainmenu"),
-    anchor  = e.getElementsByTagName("a");
 
-for (var o = 0; o < anchor.length; o++) {
-  anchor[o].href == current && (anchor[o].parentElement.className = "active");
+  var current = window.location;
+  
   if (current.href.indexOf('indicadores') > -1) {
-    $('ul.sub-menu').slideDown(300);
+    const anchor  = e.getElementsByTagName("a"),
+      e           = document.getElementById("mainmenu");
+    for (var o = 0; o < anchor.length; o++) {
+      anchor[o].href == current && (anchor[o].parentElement.className = "active");
+      if (current.href.indexOf('indicadores') > -1) {
+        $('ul.sub-menu').slideDown(300);
+      }
+    }
   }
-}
 
 function openScript() {
   var getUrl = localStorage.getItem('urlAssistant'),
