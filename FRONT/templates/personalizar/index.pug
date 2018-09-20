@@ -172,6 +172,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               reader.onload = function(e) {
                 uploadImgLogo = reader.result;
                 $('#logotipo img').attr('src', e.target.result);
+                postMsg({logo:e.target.result});
                 //- $('#header-logotipo').attr('src', e.target.result);
               }          
               reader.readAsDataURL(el.files[0]);
@@ -189,6 +190,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               reader.onload = function(e) {
                 uploadImgAvatar = reader.result;
                 $('#avatar img').attr('src', e.target.result);
+                postMsg({avatar:e.target.result});
               }          
               reader.readAsDataURL(el.files[0]);
             }
@@ -332,7 +334,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         var colorButtons   = document.getElementById('color-buttons').value;
         var imgLogo        = $('#logotipo img').attr('src');
         var imgAvatar      = $('#avatar img').attr('src');
-        if(getTitle == '' || getSubTitle == '' || colorHeader == '' || colorBuble == '' || colorButtons == '') {
+        var saludo         = document.getElementById('saludo-assistant').value;
+        if(getTitle == '' || getSubTitle == '' || colorHeader == '' || colorBuble == '' || colorButtons == '' || saludo == '') {
           openModal('#myModal', 'Lo sentimos', 'Debes completar todos los campos', 'error');
         } else {
           var args = {
@@ -343,7 +346,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             color_btn: colorButtons,
             id_empresa: getId,
             logo: imgLogo,
-            avatar: imgAvatar
+            avatar: imgAvatar,
+            saludo: saludo
           }
           var promise = $.ajax({
             type: 'POST',
