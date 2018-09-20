@@ -109,7 +109,15 @@ function closeSession() {
 
 
 
-  window.location.href = getPath+"login/";
+  const href = window.location.href,
+    hrefLast = href.substring(href.length - 11, href.length);
+    console.log(hrefLast)
+  if(hrefLast !== "contrasena/"){
+    console.log("NO contrasena")
+    window.location.href = getPath + 'login/';
+  }else{
+    console.log("Contrasena")
+  }
   // window.location.href = 'http://localhost:3000/login/';
 }
 
