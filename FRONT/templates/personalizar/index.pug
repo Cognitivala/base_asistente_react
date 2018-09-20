@@ -211,6 +211,10 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         $(modal).find('.buttons, form').fadeOut(50);
       }
 
+      function postMessage(msg){
+        window.contentDocument.postMessage(msg, '*');
+      }
+
       function getMessageResponse() {
         const promise = $.ajax({
           async: true,
@@ -222,11 +226,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           dataType: 'json'
         });
         promise.done((response) => {
-          $('#saludo-assistant').val(response.msg);
-          //- window.top.postMessage({ notifications: [{
-          //-   msg: response.msg
-          //- }]}, '*');
-          
+          $('#saludo-assistant').val(response.msg);          
         }).fail(() => {
 
         });
@@ -277,24 +277,38 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             document.getElementById('header-logotipo').setAttribute('src', response.logo);
             $('#logotipo img').attr('src', response.logo);
             $('#avatar img').attr('src', response.avatar);
-            //- localStorage.setItem('avatarAssistant', response.avatar);
-            //- localStorage.setItem('logoAssistant', response.logo);
-            //- localStorage.setItem('colorHeader', response.colorHeader);
-            //- localStorage.setItem('colorBubble', response.colorBubble);
-            //- localStorage.setItem('colorButtons', response.colorBtn);
-            //- localStorage.setItem('subTitleAssistant', response.subtitulo);
-            //- localStorage.setItem('titleAssistant', response.titulo);
+
             spinnerOut('#custom');
-
-            //- var getIframe = window.document.getElementById('demo-custom');
-            //-     getIframe.contentWindow.document.getElementsByClassName('spinner-holder')[0].remove();
-
           }
         })
       }
 
+      function loadCustom(customParams){
+        $('#color-bubble').val(customParams.colorBubble);
+        $('#color-bubble, .assistant .bubble').css("background-color", customParams.colorBubble);
+        $('#color-header').val(customParams.colorHeader);
+        $('#color-header, .assistant .header').css("background-color", customParams.colorHeader)
+        $('#color-buttons').val(customParams.colorBtn);
+        $('#color-buttons, .assistant .send').css("background-color", customParams.colorBtn);
+      }
+
+      function loadSaludo(saludo){
+        $('#saludo-assistant').val(saludo);    
+      }
+
+      function init(){
+        window.onmessage = e => {
+          if (e.data.customParams !== undefined) {
+            loadCustom(e.data.customParams);
+          } else if (e.data.saludo !== undefined) {
+            loadSaludo(e.data.saludo);
+          }
+        };
+      }
+
       window.onload = function() {
-        getCustomParams();
+        init();
+        //getCustomParams();
         var getSession = "1";
         $('#assistant-iframe').attr('src', getPath+'asistente/');
       }

@@ -78,30 +78,11 @@ export function getCustomParams() {
     return request.then(
       response => {
         if (response.status === 200) {
-          var item = {
-            avatar: 'http://localhost:3000/images/avatar-default.jpg',
-            colorHeader: '#012138',
-            colorBtn: '#f8b31c',
-            logo: 'http://logoschilevector.cl/img/url_foto_logo/1207-Duoc-UC.jpg',
-            subtitulo: 'Asistencia digital',
-            titulo: 'Duoc UC',
-            url: 'http://asistente-react.mycognitiva.io/',
-            userImg: null,
-            estado: 1,
-            settings: {
-              keep_conversation: false,
-              geolocalization: false,
-              help: true,
-              attach: false,
-              emoji: false,
-              voice: false
-            }
-
-          }
-          // dispatch(getCustomParamsEnd(item));
           dispatch(getCustomParamsEnd(response.data));
+          window.top.postMessage({customParams:response.data}, "*");
         } else {
           dispatch(getCustomParamsError(response.statusText));
+
         }
       },
       err => {
@@ -173,6 +154,7 @@ export function getSaludo() {
 export function sendSaludo(data) {
   return function action(dispatch) {
     dispatch(pushConversation(data));
+    window.top.postMessage({saludo:data.msg}, "*");
   };
 }
 function getSaludoStart() {
