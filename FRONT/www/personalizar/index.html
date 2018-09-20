@@ -220,6 +220,7 @@
       var getUrlDemo = getPath+'asistente/';
       var getDemo = document.getElementById('demo-custom'),
           getTkn = sessionStorage.getItem('tkn');
+          loadAll = 0;
           //- getTheToken = '';
       
       //- if (sessionStorage.getItem('tkn')) {
@@ -396,10 +397,18 @@
         $('#color-header, .assistant .header').css("background-color", customParams.colorHeader)
         $('#color-buttons').val(customParams.colorBtn);
         $('#color-buttons, .assistant .send').css("background-color", customParams.colorBtn);
+        loadAll = loadAll + 1;
+        if(loadAll===2){
+          spinnerOut('#custom');
+        }
       }
       
       function loadSaludo(saludo){
         $('#saludo-assistant').val(saludo);    
+        loadAll = loadAll + 1;
+        if(loadAll===2){
+          spinnerOut('#custom');
+        }
       }
       
       function init(){
