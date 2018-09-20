@@ -368,7 +368,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
-                if(estado.codigoEstado  != '200'){
+                if(response.status  == '200' && response.estado != undefined){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
                 }else{
@@ -398,7 +398,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
-                if(estado.codigoEstado  != '200'){
+                if(response.status  == '200' && response.estado != undefined){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'Usuario añadido con éxito', 'success');
                 }else{
@@ -445,7 +445,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
           }).done(function(response){
-            if(estado.codigoEstado  != '200'){
+            if(response.status  == '200' && response.estado != undefined){
               //- console.log(response);
               openCustomModal('#myModal', 'Genial!', 'Usuario eliminado con éxito', 'success');
             }else{
