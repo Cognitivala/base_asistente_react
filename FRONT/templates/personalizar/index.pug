@@ -28,6 +28,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                             label Sub Título
                             input#subtitle-assistant(type="text", value="Cognitiva", onkeyup="changeText(this)")
                       .row
+                        .col-sm-12
+                          fieldset
+                            label Saludo inicial
+                            input#saludo-assistant(type="text", value="Saludo inicial", onkeyup="changeText(this)")
+                      .row
                         .col-sm-6
                           fieldset
                             label Logotipo asistente
@@ -217,10 +222,10 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           dataType: 'json'
         });
         promise.done((response) => {
-
-          window.top.postMessage({ notifications: [{
-            msg: response.msg
-          }]}, '*');
+          $('#saludo-assistant').val(response.msg);
+          //- window.top.postMessage({ notifications: [{
+          //-   msg: response.msg
+          //- }]}, '*');
           
         }).fail(() => {
 
@@ -257,7 +262,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }).done(function(response){
           if(response.status == '200'){
             
-            //getMessageResponse();
+            getMessageResponse();
 
             $('#color-bubble').val(response.colorBubble);
             $('#color-bubble, .assistant .bubble').css("background-color", response.colorBubble);
