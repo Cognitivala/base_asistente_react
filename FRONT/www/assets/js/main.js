@@ -70,7 +70,7 @@ if (!sessionStorage.getItem('user_id')) {
   const href = window.location.href,
     hrefLast = href.substring(href.length - 11, href.length);
     console.log(hrefLast)
-  if(hrefLast !== "contrasena/" && hrefLast !== "_contrasena")
+  if(hrefLast !== "contrasena/")
     window.location.href = getPath + 'login/';
   // window.location.href = 'http://localhost:3000/login/';
 }
