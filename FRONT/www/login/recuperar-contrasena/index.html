@@ -61,7 +61,6 @@
     </div>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/main.js"></script>
     <script>
       var getPath = "http://asistente-react.mycognitiva.io/";
       
@@ -123,9 +122,13 @@
               "Authorization": "Bearer "+getTkn
             },
             method : "POST",
-            data : {
-              email : theEmailVal
-            }
+            data:  JSON.stringify(
+              { 
+                email : theEmailVal
+              }
+            ),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
           }
           $.ajax(settings).done(function (response) {
             if(response.status == 400){
