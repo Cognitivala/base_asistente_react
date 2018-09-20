@@ -53,6 +53,7 @@ export class Router extends Component {
 
   onMessageFunc(){
     window.onmessage = e => {
+      console.log('onmessageReact => ',e.data)
       if (e.data.colorBtn !== undefined) {
         this.props.updateCustomColorBtn(e.data.colorBtn);
       } else if (e.data.title !== undefined) {
