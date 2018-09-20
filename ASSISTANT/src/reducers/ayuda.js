@@ -31,7 +31,7 @@ export function ayudaStates(
         map
           .set("isFetching", false)
           .set("error", false)
-          .set("ayuda", Immutable.fromJS(JSON.parse(action.data)));
+          .set("ayuda", Immutable.fromJS(action.data));
       });
     case "GET_AYUDA_ERROR":
       return state.withMutations(map => {
