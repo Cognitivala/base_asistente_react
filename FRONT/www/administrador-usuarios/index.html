@@ -368,7 +368,8 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
-                if(response.status  == '200' && response.estado != undefined){
+                console.log(response)
+                if(response.status  == '200' && response.estado == undefined){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
                   $('tr.action td:nth-child(1)').text(getNameVal);
@@ -397,7 +398,7 @@
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
-                if(response.status  == '200' && response.estado != undefined){
+                if(response.status  == '200' && response.estado == undefined){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'Usuario añadido con éxito', 'success');
                   $('.table tbody').append(craeteTrUser);
@@ -444,7 +445,7 @@
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
           }).done(function(response){
-            if(response.status  == '200' && response.estado != undefined){
+            if(response.status  == '200' && response.estado == undefined){
               //- console.log(response);
               openCustomModal('#myModal', 'Genial!', 'Usuario eliminado con éxito', 'success');
               $('.table tbody tr.to-delete').remove();
