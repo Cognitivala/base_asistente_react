@@ -458,6 +458,8 @@
         function openCustomModal(modal, title, body, theclass){
           $(modal).find('h6').text(title);
           $(modal).find('.modal-body').empty().append(body);
+          $(modal).removeClass('error');
+          $(modal).removeClass('succes')
           $(modal).addClass(theclass);
           $(modal).modal({
             backdrop: 'static',
