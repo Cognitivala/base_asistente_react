@@ -209,7 +209,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             var emailfield  = document.getElementById('user-mail');
             emailfield.setCustomValidity("Complete el campo correspondiente");
           }
-          if(getEmailVal != '' && getNameVal != '' && getSelect == true && validateEmail(getEmailVal) == true){
+          if(getEmailVal.trim() != '' && getEmailVal.lenght > 45 && getNameVal.trim() != ''  && getNameVal.lenght > 45&& getSelect == true && validateEmail(getEmailVal) == true){
             if(getProfileVal == 1){
               addValProfile = 'Editor';
             } else {
