@@ -150,7 +150,8 @@ export default class home extends Component {
 	}
 	changeXAxesLineChart(range) {
 		this.setState({
-			detalles_range: range
+			detalles_range: range,
+			interaction_range: range
 		}, () => {
 			if (range === "hour") {
 
