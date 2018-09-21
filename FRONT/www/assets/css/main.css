@@ -9900,6 +9900,9 @@ input:hover, input:focus {
     margin: 0 auto 3rem auto;
     display: block; }
 
+.d-flex {
+  display: flex; }
+
 a {
   position: relative;
   -webkit-transition: all 300ms linear;

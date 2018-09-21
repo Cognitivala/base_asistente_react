@@ -114,6 +114,10 @@ input{
   }
 }
 
+.d-flex{
+  display: flex;
+}
+
 a {
   position: relative;
   @include transition(300ms);
