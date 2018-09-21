@@ -125,7 +125,7 @@
                         </div>
                         <div class="col-sm-6">
                           <fieldset>
-                            <label>Fondo botones asistente</label>
+                            <label>Fondo botón asistente</label>
                             <input class="colors" id="color-buttons" type="text" value="#009dc3" onchange="getChangeColor(this)" style="background-color: #009dc3;"/>
                           </fieldset>
                         </div>
@@ -187,7 +187,7 @@
           $(this).find('.fa').toggleClass('fa-rotate-90');
           return false;
         });
-        $('#color-buttons, #color-bubble, #color-header').colorpicker({
+        $('#color-buttons, #color-header').colorpicker({
           useAlpha: false,
           enableHex8: false
         });
@@ -216,14 +216,11 @@
         var getColor = $(el).val();
         $(el).css({backgroundColor: getColor});
         if(el.id == 'color-header') {
-          postMsg({colorHeader:getText});
-          $('.assistant .header').css({backgroundColor: getColor});
+          postMsg({colorHeader:getColor});
         } else if(el.id == 'color-bubble'){
-          postMsg({colorBubble:getText});
-          $('.assistant .bubble').css({backgroundColor: getColor});
+          postMsg({colorBubble:getColor});
         } else {
-          postMsg({colorBtn:getText});
-          $('.assistant .send').css({backgroundColor: getColor});
+          postMsg({colorBtn:getColor});
         }
       }
       
