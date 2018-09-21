@@ -65,13 +65,17 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                             input.colors#color-header(type="text", value="#1c75bc", onchange="getChangeColor(this)", style="background-color: #1c75bc;")
                         .col-sm-6
                           fieldset
-                            label Fondo burbuja asistente
-                            input.colors#color-bubble(type="text", value="#e7e7e7", onchange="getChangeColor(this)", style="background-color: #e7e7e7;")
-                      .row
-                        .col-sm-6
-                          fieldset
                             label Fondo botones asistente
                             input.colors#color-buttons(type="text", value="#009dc3", onchange="getChangeColor(this)", style="background-color: #009dc3;")
+                        //- .col-sm-6
+                        //-   fieldset
+                        //-     label Fondo burbuja asistente
+                        //-     input.colors#color-bubble(type="text", value="#e7e7e7", onchange="getChangeColor(this)", style="background-color: #e7e7e7;")
+                      //- .row
+                      //-   .col-sm-6
+                      //-     fieldset
+                      //-       label Fondo botones asistente
+                      //-       input.colors#color-buttons(type="text", value="#009dc3", onchange="getChangeColor(this)", style="background-color: #009dc3;")
                     button#save-custom(button onclick="saveCustomParams()") Guardar
                   .custom-assistant
                     .assistant
@@ -133,10 +137,13 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         var getColor = $(el).val();
         $(el).css({backgroundColor: getColor});
         if(el.id == 'color-header') {
+          postMsg({colorHeader:getText});
           $('.assistant .header').css({backgroundColor: getColor});
         } else if(el.id == 'color-bubble'){
+          postMsg({colorBubble:getText});
           $('.assistant .bubble').css({backgroundColor: getColor});
         } else {
+          postMsg({colorBtn:getText});
           $('.assistant .send').css({backgroundColor: getColor});
         }
       }

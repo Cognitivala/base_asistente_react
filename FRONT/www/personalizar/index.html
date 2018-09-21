@@ -125,14 +125,6 @@
                         </div>
                         <div class="col-sm-6">
                           <fieldset>
-                            <label>Fondo burbuja asistente</label>
-                            <input class="colors" id="color-bubble" type="text" value="#e7e7e7" onchange="getChangeColor(this)" style="background-color: #e7e7e7;"/>
-                          </fieldset>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-sm-6">
-                          <fieldset>
                             <label>Fondo botones asistente</label>
                             <input class="colors" id="color-buttons" type="text" value="#009dc3" onchange="getChangeColor(this)" style="background-color: #009dc3;"/>
                           </fieldset>
@@ -224,10 +216,13 @@
         var getColor = $(el).val();
         $(el).css({backgroundColor: getColor});
         if(el.id == 'color-header') {
+          postMsg({colorHeader:getText});
           $('.assistant .header').css({backgroundColor: getColor});
         } else if(el.id == 'color-bubble'){
+          postMsg({colorBubble:getText});
           $('.assistant .bubble').css({backgroundColor: getColor});
         } else {
+          postMsg({colorBtn:getText});
           $('.assistant .send').css({backgroundColor: getColor});
         }
       }
