@@ -5,7 +5,12 @@
       editorNew = '',
       $document = $(document),
       estado = '',
+<<<<<<< HEAD
       getTkn = sessionStorage.getItem('tkn');
+=======
+      user = JSON.parse(sessionStorage.getItem('user')),
+      getTkn = user!==null?user.tkn:null;
+>>>>>>> master
   
   window.handler = function(){};
 
@@ -445,6 +450,7 @@
       
       promise.done(function (response) {
         if (response.status == '200') {
+<<<<<<< HEAD
           // console.log('getDialogs response', response);
           Main.listDialogs(response.data, null, $('#list-dialogs'));
           // var html = '',
@@ -575,6 +581,9 @@
           // $container.html(html);
           // self.eventsHandler($container.find('[data-func]'));
           // $container.next('.spinner').remove();
+=======
+          Main.listDialogs(response.data, null, $('#list-dialogs'));
+>>>>>>> master
         } else {
           console.log('error getting dialogs');
         }
@@ -874,7 +883,11 @@
       var self = this,
         responds = $('.dialogs.add-response .response').find('.data-response'),
         getParentND = $('.dialogs.add-response').parents('.parent').data('dialognode'),
+<<<<<<< HEAD
         userName = sessionStorage.getItem('user'),
+=======
+        userName = user.user,
+>>>>>>> master
         values = [];
       for (var i = 0; i < responds.length; i++) {
         var getHtml = responds[i].innerHTML;
@@ -1194,6 +1207,7 @@
         promise.done(function (response) {
           if (response.status == 200) {
             Main.listDialogs(response.data, $dialogNode, $item);
+<<<<<<< HEAD
 
             // var dialogs = response.data;
 
@@ -1249,6 +1263,8 @@
             //   self.eventsHandler($('[data-func]'));
             // }
 
+=======
+>>>>>>> master
           }
         });
         $getLi.addClass('no-request');
@@ -1365,8 +1381,18 @@
   
   var Main = new window.handler(); 
   $document.ready(function () {
+<<<<<<< HEAD
     Main.onReadySetup();
     Main.clearParams();
+=======
+    console.log('getTkn => ',getTkn)
+    if(getTkn!==null){
+      Main.onReadySetup();
+      Main.clearParams();
+    }else{
+      window.location.href = getPath + 'login';
+    }
+>>>>>>> master
   });
 
   $window.load(function () {

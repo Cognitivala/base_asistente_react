@@ -23,15 +23,27 @@ export default class Input extends Component {
 
   focus() {
     setTimeout(() => {
+<<<<<<< HEAD
       const input = this.input.current;
       input !== null ? input.focus() : null;
+=======
+      const href = window.top.location.href,
+        hrefLast = href.substring(href.length - 13, href.length),
+        input = this.input.current;
+      if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
+        if(input !== null) input.focus();
+>>>>>>> master
     }, 300);
   }
 
   updateMsg(event) {
     const start = event.target.selectionStart,
+<<<<<<< HEAD
       end = event.target.selectionEnd,
       msg = event.target.value;
+=======
+      end = event.target.selectionEnd;
+>>>>>>> master
     this.setState({
       start,
       end
@@ -75,17 +87,25 @@ export default class Input extends Component {
       );
     } else {
       return null;
+<<<<<<< HEAD
      }
+=======
+    }
+>>>>>>> master
   }
 
   fillEmoji() {
     const { customParamsStates } = this.props,
       emoji = customParamsStates.getIn(["customParams", "settings", "emoji"]);
     if (emoji) {
+<<<<<<< HEAD
       return <InputEmoji 
         start={this.state.start}
         end={this.state.end}
       />;
+=======
+      return <InputEmoji start={this.state.start} end={this.state.end} />;
+>>>>>>> master
     } else {
       return null;
     }
@@ -109,8 +129,13 @@ export default class Input extends Component {
         </form>
       );
     } else {
+<<<<<<< HEAD
       const {customParamsStates} = this.props,
       colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
+=======
+      const { customParamsStates } = this.props,
+        colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
+>>>>>>> master
       return (
         <IsFetching
           isFetching={this.props.inputStates.get("isFetching")}

@@ -9,6 +9,10 @@ import ConversationMultiButtons from "./conversation-multi-buttons";
 import ConversationCalendar from "./conversation-calendar";
 import ConversationFiles from "./conversation-files";
 import ConversationAttach from "./conversation-attach";
+<<<<<<< HEAD
+=======
+import ConversationLikes from "./conversation-likes";
+>>>>>>> master
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -87,6 +91,10 @@ export default class Conversations extends Component {
           datepicker = conversation.get("datepicker"),
           files = conversation.get("files"),
           attach = conversation.get("attach"),
+<<<<<<< HEAD
+=======
+          like = conversation.get("like"),
+>>>>>>> master
           map = {
             buttons: buttons !== undefined ? buttons.toJS() : buttons,
             selects: selects !== undefined ? selects.toJS() : selects,
@@ -99,7 +107,12 @@ export default class Conversations extends Component {
             form: form !== undefined ? form : form,
             datepicker: datepicker !== undefined ? datepicker : datepicker,
             files: files !== undefined ? files : files,
+<<<<<<< HEAD
             attach: attach !== undefined ? attach.toJS() : attach
+=======
+            attach: attach !== undefined ? attach.toJS() : attach,
+            like: like !== undefined ? like : like,
+>>>>>>> master
           };
         if (largo === i) map.general = conversation.get("general").toJS();
         hc.push(map);
@@ -167,10 +180,18 @@ export default class Conversations extends Component {
           liftUp = conversation.get("liftUp"),
           files = conversation.get("files"),
           attach = conversation.get("attach"),
+<<<<<<< HEAD
+=======
+          like = conversation.get("like"),
+>>>>>>> master
           last = j + 1 === sizeConversation ? true : false,
           animation = last ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
         if (msg !== undefined) {
+<<<<<<< HEAD
+=======
+          const {sendLike} = this.props;
+>>>>>>> master
           retorno.push(
             <ConversationMsg
               key={j}
@@ -180,6 +201,7 @@ export default class Conversations extends Component {
               send={send}
               userImg={userImg}
               colorHeader={colorHeader}
+<<<<<<< HEAD
             />
           );
         }
@@ -238,10 +260,76 @@ export default class Conversations extends Component {
               datepicker={datepicker}
               generalStates={generalStates}
               last={last}
+=======
+              like={like}
+              last={last}
+              sendLike={sendLike}
+>>>>>>> master
             />
           );
         }
 
+<<<<<<< HEAD
+=======
+        if (buttons !== undefined) {
+          retorno.push(
+            <ConversationButtons
+              key={j * 10}
+              buttons={buttons}
+              animation={animation}
+              send={send}
+              colorHeader={colorHeader}
+              updateConversationButton={updateConversationButton}
+              generalStates={generalStates}
+            />
+          );
+        }
+
+        if (selects !== undefined) {
+          retorno.push(
+            <ConversationSelects
+              key={j * 20}
+              options={selects}
+              animation={animation}
+              send={send}
+              generalStates={generalStates}
+              updateConversation={updateConversation}
+            />
+          );
+        }
+
+        if (multibuttons !== undefined) {
+          retorno.push(
+            <ConversationMultiButtons
+              key={j * 30}
+              buttons={multibuttons}
+              animation={animation}
+              send={send}
+              colorHeader={colorHeader}
+              updateConversationButton={updateConversationButton}
+              generalStates={generalStates}
+            />
+          );
+        }
+
+        if (datepicker !== undefined) {
+          const { updateConversationCalendar } = this.props;
+          retorno.push(
+            <ConversationCalendar
+              key={j * 40}
+              animation={animation}
+              send={send}
+              colorHeader={colorHeader}
+              updateConversation={updateConversation}
+              updateConversationCalendar={updateConversationCalendar}
+              datepicker={datepicker}
+              generalStates={generalStates}
+              last={last}
+            />
+          );
+        }
+
+>>>>>>> master
         if (attach !== undefined) {
           const { attachFile } = this.props;
           retorno.push(
@@ -271,6 +359,7 @@ export default class Conversations extends Component {
         }
 
         //Sólo si es la última conversación y tiene para levantar modal
+<<<<<<< HEAD
         if (last && liftUp !== undefined) {
           switch (liftUp) {
             case "valoracion":
@@ -336,6 +425,82 @@ export default class Conversations extends Component {
               break;
             default:
               break;
+=======
+        if (last){
+          if (liftUp !== undefined) {
+            switch (liftUp) {
+              case "valoracion":
+                const { valoracionStates } = this.props,
+                  enabledValoracion = valoracionStates.get("enabled");
+                if (enabledValoracion) {
+                  const {
+                    setStar,
+                    setOverStar,
+                    setPudoResolverValoracion,
+                    sendValoracion,
+                    setCommentValoracion,
+                    setErrorValoracion,
+                    closeValoracion,
+                    generalStates,
+                    customParamsStates
+                  } = this.props;
+                  retorno.push(
+                    <Valoracion
+                      key={j}
+                      generalStates={generalStates}
+                      setErrorValoracion={setErrorValoracion}
+                      sendValoracion={sendValoracion}
+                      valoracionStates={valoracionStates}
+                      setStar={setStar}
+                      setOverStar={setOverStar}
+                      setCommentValoracion={setCommentValoracion}
+                      setPudoResolverValoracion={setPudoResolverValoracion}
+                      closeValoracion={closeValoracion}
+                      customParamsStates={customParamsStates}
+                    />
+                  );
+                }
+                break;
+              case "form":
+                const {
+                    formularioStates,
+                    closeForm,
+                    generalStates,
+                    attachFileForm,
+                    sendForm,
+                    deleteFileForm,
+                    customParamsStates
+                  } = this.props,
+                  enabledFormulario = formularioStates.get("enabled"),
+                  form = conversation.get("form");
+  
+                if (enabledFormulario) {
+                  retorno.push(
+                    <Formulario
+                      key={j}
+                      formularioStates={formularioStates}
+                      form={form}
+                      general={generalStates}
+                      closeForm={closeForm}
+                      colorHeader={colorHeader}
+                      sendForm={sendForm}
+                      attachFileForm={attachFileForm}
+                      deleteFileForm={deleteFileForm}
+                      customParamsStates={customParamsStates}
+                    />
+                  );
+                }
+                break;
+              default:
+                break;
+            }
+          }
+          else if(like !== undefined) {
+            const { sendLike } = this.props;
+            retorno.push(
+              <ConversationLikes key={ j * 33 } sendLike={sendLike} colorHeader={colorHeader}/>
+            )
+>>>>>>> master
           }
         }
       }

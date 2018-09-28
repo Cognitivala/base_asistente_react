@@ -5,7 +5,10 @@ import FormInput from "./form-input";
 import FormTextarea from "./form-textarea";
 import * as Validator from "./validator";
 import FormSelect from "./form-select";
+<<<<<<< HEAD
 import FormCheckbox from "./form-checkbox";
+=======
+>>>>>>> master
 import FormSwitch from "./form-switch";
 import IsFetching from "../modules/is-fetching";
 import FormFile from "./form-file";

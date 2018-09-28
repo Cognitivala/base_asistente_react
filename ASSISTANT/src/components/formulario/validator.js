@@ -138,16 +138,26 @@ export function rut(rut, validates, required) {
 
     if (rut.length > 9 || rut.length < 8) return false;
 
+<<<<<<< HEAD
     var t = parseInt(rut.slice(0, -1), 10);
     var m = 0;
     var s = 1;
+=======
+    t = parseInt(rut.slice(0, -1), 10);
+    m = 0;
+    s = 1;
+>>>>>>> master
 
     while (t > 0) {
       s = (s + (t % 10) * (9 - (m++ % 6))) % 11;
       t = Math.floor(t / 10);
     }
 
+<<<<<<< HEAD
     var v = s > 0 ? "" + (s - 1) : "K";
+=======
+    v = s > 0 ? "" + (s - 1) : "K";
+>>>>>>> master
     return v === rut.slice(-1);
   }
   return true;
@@ -168,9 +178,15 @@ export function formatRut(rut) {
 export function select(value, validates, required) {
   let optionSelected = value.dataset.valor===undefined?-1:value.dataset.valor;
   if (required) {
+<<<<<<< HEAD
     return optionSelected != -1;
   } else if (optionSelected != -1) {
     return optionSelected != -1;
+=======
+    return optionSelected !== -1;
+  } else if (optionSelected !== -1) {
+    return optionSelected !== -1;
+>>>>>>> master
   }
   return true;
 }

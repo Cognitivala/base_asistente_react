@@ -197,8 +197,11 @@ export default class Assistant extends Component {
           .get("settings")
           .get("help"),
         minimized = assistantStates.get("minimized");
+<<<<<<< HEAD
 
       let retorno = [];
+=======
+>>>>>>> master
       
       if (minimized) {
         return (

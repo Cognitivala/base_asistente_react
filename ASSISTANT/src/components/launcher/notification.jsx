@@ -14,7 +14,7 @@ export default class Notification extends Component {
         <div key={i}>
           <NotificationCircle />
           <div className="cognitive-assistant-notification-container">
-            <div>{map}</div>
+            <div><span dangerouslySetInnerHTML={{__html: map}}></span></div>
             <button className="cognitive-assistant-notification-button-close">
               <i className="close-icon" />
             </button>

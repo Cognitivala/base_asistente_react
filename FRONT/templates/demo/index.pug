@@ -4,16 +4,30 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     
     include ../includes/meta.pug
 
+<<<<<<< HEAD
     script(type="text/javascript" src="http://asistente-react.mycognitiva.io/cdn/js/build/main.js")
     script.
       window.addEventListener('load', function () {
         window.CognitiveAssistantMain.init('http://asistente-react.mycognitiva.io/asistente/');
+=======
+    script(type="text/javascript" src="http://asistente_duoc.mycognitiva.io/cdn/js/build/main.js")
+    script.
+      window.addEventListener('load', function () {
+        window.CognitiveAssistantMain.init('http://asistente_duoc.mycognitiva.io/asistente/');
+>>>>>>> master
       });
 
   body.no-scroll.aui(heightfull)
     iframe#demo(src="", frameborder="0")
 
     script.
+<<<<<<< HEAD
       var getUrlDemo = localStorage.getItem('urlAssistant');
       var getDemo = document.getElementById('demo');
       getDemo.attributes[1].value = getUrlDemo;
+=======
+      const customParams = JSON.parse(localStorage.getItem('customParams')),
+        url = customParams.url,
+        getDemo = document.getElementById('demo');
+      getDemo.src = url;
+>>>>>>> master

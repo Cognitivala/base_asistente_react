@@ -43,12 +43,17 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                     .scroll
                       .row
                         .col-md-12
+<<<<<<< HEAD
                           .form(onsubmit="event.preventDefault()")
+=======
+                          form(onsubmit="event.preventDefault()")
+>>>>>>> master
                             .row
                               .col-md-3
                                 fieldset
                                   .form-group
                                     .input-group.date
+<<<<<<< HEAD
                                       input.date-picker-days#last30(type="text", data-date-end-date="0d", name="last30", placeholder="Seleccione")
                                       span.input-group-addon
                                         i.fa.fa-calendar(aria-hidden="true")
@@ -63,14 +68,41 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                         option(value="SitioPrivado") Sitio Privado
                                       span.input-group-addon
                                         i.fa.fa-sort-down(aria-hidden="true")
+=======
+                                      input.date-picker-days#last30(type="text", data-date-end-date="0d", name="last30", placeholder="Seleccione",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              //- .col-md-3
+                              //-   fieldset
+                              //-     .form-group
+                              //-       .input-group.select
+                              //-         select.box-field(id="last30-channel")
+                              //-           option(value="" selected disabled) Selecciona canal
+                              //-           option(value="App") App
+                              //-           option(value="Desktop") Desktop
+                              //-           option(value="Mobile") Mobile
+                              //-         span.input-group-addon
+                              //-           i.fa.fa-sort-down(aria-hidden="true")
+>>>>>>> master
 
                               .col-md-3
                                 button.btn(button, onclick="getDateInput('last30', 'interacciones', 'last-days', 'chart_div', 'last30-channel')") Filtrar
                         .col-md-12
                           .inner
                             h5 Interacciones <b>últimos 30 días</b> <span></span>
+<<<<<<< HEAD
                             #chart_div
 
+=======
+                            .row
+                              .col-md-12
+                                #chart_div
+                              .col-md-6
+                      a.download-interactions-cvs(href="#;", onclick="downInteractions('last-days')", pull-left)
+                        | Descargar Total Interacciones
+                        i.fa.fa-envelope(aria-hidden="true")
+                      a.hide
+>>>>>>> master
                       a.download-cvs(pull-right)
                         | Descargar CSV
                         i.fa.fa-file-excel-o(aria-hidden="true")
@@ -85,13 +117,18 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                 fieldset
                                   .form-group
                                     .input-group.date
+<<<<<<< HEAD
                                       input.date-picker-days#desde(type="text", data-date-end-date="0d", name="", placeholder="Seleccione desde")
+=======
+                                      input.date-picker-days#desde(type="text", data-date-end-date="0d", name="", placeholder="Seleccione desde",autocomplete="off")
+>>>>>>> master
                                       span.input-group-addon
                                         i.fa.fa-calendar(aria-hidden="true")
                               .col-md-3
                                 fieldset
                                   .form-group
                                     .input-group.date
+<<<<<<< HEAD
                                       input.date-picker-days#hasta(type="text", data-date-end-date="0d", name="", placeholder="Seleccione hasta")
                                       span.input-group-addon
                                         i.fa.fa-calendar(aria-hidden="true")
@@ -106,12 +143,35 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                         option(value="SitioPrivado") Sitio Privado
                                       span.input-group-addon
                                         i.fa.fa-sort-down(aria-hidden="true")
+=======
+                                      input.date-picker-days#hasta(type="text", data-date-end-date="0d", name="", placeholder="Seleccione hasta",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              //- .col-md-3
+                              //-   fieldset
+                              //-     .form-group
+                              //-       .input-group.select
+                              //-         select.box-field(id="desde-channel")
+                              //-           option(value="") Selecciona canal
+                              //-           option(value="App") App
+                              //-           option(value="Desktop") Desktop
+                              //-           option(value="Mobile") Mobile
+                              //-         span.input-group-addon
+                              //-           i.fa.fa-sort-down(aria-hidden="true")
+>>>>>>> master
                               .col-md-3
                                 button.btn(button, onclick="getDateInput('desde', 'interacciones', 'by-range', 'chart_by_range', 'desde-channel')") Filtrar
                         .col-md-12
                           .inner
                             h5 Interacciones <b>entre fechas</b>
                             #chart_by_range
+<<<<<<< HEAD
+=======
+                      a.download-interactions-cvs(href="#;", onclick="downInteractions('by-range')" ,pull-left)
+                        | Descargar Total Interacciones
+                        i.fa.fa-envelope(aria-hidden="true")
+                      a.hide
+>>>>>>> master
                       a.download-cvs(pull-right)
                         | Descargar CSV
                         i.fa.fa-file-excel-o(aria-hidden="true")
@@ -126,6 +186,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                 fieldset
                                   .form-group
                                     .input-group.date
+<<<<<<< HEAD
                                       input.date-picker-days#week(type="text", data-date-end-date="0d", name="", placeholder="Seleccione un día")
                                       span.input-group-addon
                                         i.fa.fa-calendar(aria-hidden="true")
@@ -140,6 +201,22 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                         option(value="SitioPrivado") Sitio Privado
                                       span.input-group-addon
                                         i.fa.fa-sort-down(aria-hidden="true")
+=======
+                                      input.date-picker-days#week(type="text", data-date-end-date="0d", name="", placeholder="Seleccione un día",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              //- .col-md-3
+                              //-   fieldset
+                              //-     .form-group
+                              //-       .input-group.select
+                              //-         select.box-field(id="week-channel")
+                              //-           option(value="") Selecciona canal
+                              //-           option(value="App") App
+                              //-           option(value="Desktop") Desktop
+                              //-           option(value="Mobile") Mobile
+                              //-         span.input-group-addon
+                              //-           i.fa.fa-sort-down(aria-hidden="true")
+>>>>>>> master
                               .col-md-3
                                 button.btn(button, onclick="getDateInput('week', 'interacciones', 'by-week', 'chart_by_week', 'week-channel')") Filtrar
                         .col-md-12
@@ -160,6 +237,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                 fieldset
                                   .form-group
                                     .input-group.date
+<<<<<<< HEAD
                                       input.date-picker-days#hour(type="text", data-date-end-date="0d", name="", placeholder="Seleccione día")
                                       span.input-group-addon
                                         i.fa.fa-calendar(aria-hidden="true")
@@ -174,6 +252,22 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                         option(value="SitioPrivado") Sitio Privado
                                       span.input-group-addon
                                         i.fa.fa-sort-down(aria-hidden="true")
+=======
+                                      input.date-picker-days#hour(type="text", data-date-end-date="0d", name="", placeholder="Seleccione día",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              //- .col-md-3
+                              //-   fieldset
+                              //-     .form-group
+                              //-       .input-group.select
+                              //-         select.box-field(id="hour-channel")
+                              //-           option(value="") Selecciona canal
+                              //-           option(value="App") App
+                              //-           option(value="Desktop") Desktop
+                              //-           option(value="Mobile") Mobile
+                              //-         span.input-group-addon
+                              //-           i.fa.fa-sort-down(aria-hidden="true")
+>>>>>>> master
                               .col-md-3
                                 button.btn(button, onclick="getDateInput('hour', 'interacciones', 'by-hour', 'chart_by_hour', 'hour-channel')") Filtrar
                         .col-md-12
@@ -184,6 +278,14 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                         | Descargar CSV
                         i.fa.fa-file-excel-o(aria-hidden="true")
 
+<<<<<<< HEAD
+=======
+    .toast
+      p
+        strong Excelente!
+      p El documento con las interacciones se ha enviado a <span></span>
+
+>>>>>>> master
     include ../../includes/modal.pug
     include ../../includes/modal-script.pug
 
@@ -218,8 +320,13 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
       var n = month[d.getMonth()],
           getSession = "1",
+<<<<<<< HEAD
           getTkn = sessionStorage.getItem('tkn');
           //- getTheToken = '';
+=======
+          getTheToken = '',
+          getTkn = user.tkn;
+>>>>>>> master
 
       //- if (sessionStorage.getItem('tkn')) {
       //-   getTheToken = '?token='+sessionStorage.getItem('tkn');
@@ -280,16 +387,28 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       });
 
       function getInteractions(tipo, fechaIni, fechaFin, id, divId, selector){
+<<<<<<< HEAD
         var getCanal = document.getElementById(selector).value;
         if(getCanal == ''){
           getCanal = "all";
         }
+=======
+        //- var getCanal = document.getElementById(selector).value;
+        //- if(getCanal == ''){
+        getCanal = "all";
+        //- }
+>>>>>>> master
         var promise = $.ajax({
           type: 'POST',
           url: getPath+'mant/filtros',
           headers: {
             "Content-Type": "application/json",
+<<<<<<< HEAD
             "Authorization": "Bearer "+getTkn
+=======
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+>>>>>>> master
           },
           data:  JSON.stringify(
             {
@@ -304,7 +423,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
 
+<<<<<<< HEAD
           if(response.estado.codigoEstado == 400){
+=======
+          if(response.estado !== undefined && response.estado.codigoEstado == 400){
+>>>>>>> master
             $('#'+divId).html('<p>No se han encontrado datos</p>')
             return false;
           }
@@ -328,7 +451,10 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].total];
               getMyArray.push(pushArray);
             }
+<<<<<<< HEAD
             //- console.log('false');
+=======
+>>>>>>> master
           }
           google.charts.load('current', {'packages':['corechart']});
           google.charts.setOnLoadCallback(drawChart);
@@ -389,8 +515,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         });
       }
 
+<<<<<<< HEAD
       getInteractions('interacciones', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_div', 'last30-channel');
 
+=======
+>>>>>>> master
       $('a[href="#by-range"]').on('shown.bs.tab', function (e){
         getInteractions('interacciones', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_by_range', 'desde-channel');
       });
@@ -401,4 +530,102 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
       $('a[href="#by-hour"]').on('shown.bs.tab', function (event){
         getInteractions('interacciones', moment().format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'), getSession, 'chart_by_hour', 'hour-channel')
+<<<<<<< HEAD
       });
+=======
+      });
+
+      function downInteractions(tab){
+        
+        var button = event.target.className;
+        var boton = event.target;
+        var fechaIni, fechaFin, desdeDate, hastaDate;
+        var mybool = true;
+        fechaIni = document.getElementById('desde').value;
+        fechaFin = document.getElementById('hasta').value;
+        if(tab == 'last-days'){
+          if(document.getElementById('last30').value == ''){
+            fechaIni = g.toISOString().substring(0,10);
+            fechaFin = d.toISOString().substring(0,10);
+          } else {
+            fechaFin = document.getElementById('last30').value;
+            fechaFin = new Date(fechaFin);
+            fechaIni = fechaFin;
+            fechaIni = fechaIni.setDate(fechaIni.getDate() - 30);
+            fechaIni = new Date(fechaIni);
+            fechaFin = fechaFin.setDate(fechaFin.getDate() + 30);
+            fechaFin = new Date(fechaFin);
+            fechaIni = fechaIni.toISOString().substring(0,10);
+            fechaFin = fechaFin.toISOString().substring(0,10);
+          }
+        } else {
+          if(fechaIni != '' || fechaFin != ''){
+            
+            fechaIni = new Date(fechaIni);
+            fechaIni = fechaIni.toISOString().substring(0,10);
+
+            fechaFin = new Date(fechaFin);
+            fechaFin = fechaFin.toISOString().substring(0,10);
+
+            $('#desde, #hasta').removeClass('error');
+            $('#desde, #hasta').parent().find('.input-group-addon').removeClass('error');
+
+            mybool = true;
+            
+            if(fechaIni >= fechaFin) {
+              $('#desde, #hasta').addClass('error');
+              $('#desde, #hasta').parent().find('.input-group-addon').addClass('error'); 
+              mybool = false;
+            } else {
+              $('#desde, #hasta').removeClass('error');
+              $('#desde, #hasta').parent().find('.input-group-addon').removeClass('error');
+              mybool = true;
+            }
+          } else {
+            $('#desde, #hasta').addClass('error');
+            $('#desde, #hasta').parent().find('.input-group-addon').addClass('error'); 
+            mybool = false;
+          }
+        }
+
+        var userMail = sessionStorage.getItem('userMail');
+
+        if(mybool == true){
+          $('.toast p span').text(sessionStorage.getItem('userMail'));
+          $('.'+button+'').append('<div class="spinner-holder"><div class="spinner"></div></div>');
+
+          var promise = $.ajax({
+            type: 'POST',
+            url: getPath+"mant/generar_csv",
+            data:  JSON.stringify(
+              {
+                tipo: 'interacciones',
+                inicio: fechaIni,
+                fin: fechaFin,
+                correo: userMail
+              }
+            ),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function(response){
+            createInteractionsCSV(response.csv, 'total_interacciones', boton);
+            setTimeout(()=>{
+              $('.'+button).find('.spinner-holder').remove();
+            },200);
+          });
+        }
+
+      }
+
+      function initial(){
+        if(hasToken){
+          getInteractions('interacciones', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_div', 'last30-channel');
+        }else{
+          setTimeout(()=>{
+            initial();
+          },300);
+        }
+      }
+
+      initial();
+>>>>>>> master

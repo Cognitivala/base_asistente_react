@@ -29,11 +29,20 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
     script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
     script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
+<<<<<<< HEAD
     script(type="text/javascript" src= myPath +'/assets/js/main.js')
 
     script.
    
       var getPath = "http://asistente-react.mycognitiva.io/";
+=======
+    script(type="text/javascript" src= myPath +'/assets/js/md5.min.js')
+    //- script(type="text/javascript" src= myPath +'/assets/js/main.js')
+
+    script.
+   
+      var getPath = "http://asistente_duoc.mycognitiva.io/";
+>>>>>>> master
 
       var uri = window.location.toString();
       if (uri.indexOf("?") > 0) {
@@ -84,10 +93,17 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       }
 
       function changePass(getTkn) {
+<<<<<<< HEAD
         
         var emailPassVal  = emailPass.value,
             passVal       = pass.value,
             repeatPassVal = repeatPass.value;
+=======
+
+        var emailPassVal  = md5(emailPass.value),
+            passVal       = md5(pass.value),
+            repeatPassVal = md5(repeatPass.value);
+>>>>>>> master
 
         if(passVal != repeatPassVal || passVal == '' || repeatPassVal == ''){
           OpenModal('Contraseñas no coindicen', 'Revisa tus nuevas contraseñas');

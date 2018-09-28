@@ -58,12 +58,20 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                             a.view-more(href= myPath +'/indicadores/valoraciones/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
+<<<<<<< HEAD
                         .col-md-12(margin-bottom)
+=======
+                        .col-md-6(margin-bottom)
+>>>>>>> master
                           .inner
                             h5 <b>NPS</b> <span></span>
                             .row
                               .col-md-5
+<<<<<<< HEAD
                                 #promedio-isn.promedio-isn 0.0
+=======
+                                #promedio-isn 0.0
+>>>>>>> master
                               .col-md-7
                                 .row
                                   .col-md-6
@@ -79,13 +87,18 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                             a.view-more(href= myPath +'/indicadores/nps/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
+<<<<<<< HEAD
                         //- .col-md-6(margin-bottom)
+=======
+                        .col-md-6(margin-bottom)
+>>>>>>> master
                           .inner
                             h5 Me Gusta <b>Totales</b> <span></span>
                             #chart_div4
                             a.view-more(href= myPath +'/indicadores/me-gusta/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
+<<<<<<< HEAD
                         
                         .col-md-12(margin-bottom)
                           .inner
@@ -101,6 +114,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                             a.view-more(href= myPath +'/indicadores/interacciones-valoradas/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
+=======
+>>>>>>> master
                   #details.tab-pane.fade(role="tabpanel")
                     .scroll
                       table.table.table-striped.table-bordered
@@ -216,6 +231,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           g = new Date(f);
 
       var month = new Array();
+<<<<<<< HEAD
           month[0] = "Enero";
           month[1] = "Febrero";
           month[2] = "Marzo";
@@ -233,12 +249,28 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       
       var getSession = "1",
           getTkn = sessionStorage.getItem('tkn');
+=======
+        month[0] = "Enero";
+        month[1] = "Febrero";
+        month[2] = "Marzo";
+        month[3] = "Abril";
+        month[4] = "Mayo";
+        month[5] = "Junio";
+        month[6] = "Julio";
+        month[7] = "Agosto";
+        month[8] = "Septiembre";
+        month[9] = "Octubre";
+        month[10] = "Noviembre";
+        month[11] = "Diciembre";
+      var n = month[d.getMonth()];
+>>>>>>> master
 
       $('.inner h5 span').text(n);
 
       function getInteractions(){
         var promise = $.ajax({
           type: 'POST',
+<<<<<<< HEAD
           url: getPath+'mant/filtros',
           headers: {
             "Content-Type": "application/json",
@@ -251,12 +283,26 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               fin: d.toISOString().substring(0,10),
               id_cliente: getSession,
               canal: 'all'
+=======
+          url: getPath+'mant/indicadores_interaccion',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              mes: d.getMonth() + 1,
+              ano: d.getFullYear(),
+              id_cliente: getSession
+>>>>>>> master
             }
           ),
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
 
+<<<<<<< HEAD
           var getMyArray = [['días', 'interacciones']];
           var pushArray = [];
           for(var i = 0; i < response.respuesta.length; i++) {
@@ -324,6 +370,80 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         });
       }
       getInteractions();
+=======
+          if(response.estado !== undefined && response.estado.codigoEstado===200){
+            var getMyArray = [['días', 'interacciones']];
+            var pushArray = [];
+            for(var i = 0; i < response.respuesta.length; i++) {
+              pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].total];
+              getMyArray.push(pushArray);
+            }
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable(getMyArray);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                  maxValue: (getMyArray.length - 1),
+                  gridlines: {
+                    color: 'none'
+                  }
+                },
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: 'none',
+                pointSize: 9,
+                tooltip: {
+                  showColorCode: true,
+                  textStyle: {
+                    color: '#1c75bc',
+                    fontName: 'Roboto',
+                  }
+                },
+                colors:['#001e37','#141921'],
+                areaOpacity: .85,
+                is3D: true,
+                backgroundColor: { fill:'transparent' }
+              };
+              var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+            }
+          }else{
+            $('#chart_div').html('<p>No se han encontrado datos</p>')
+            return false;
+          }
+
+        });
+      }
+>>>>>>> master
 
       function getOriginData(){
         var args = {
@@ -334,6 +454,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           type: 'POST',
           url: getPath+"mant/datosOrigen",
           data: JSON.stringify(args),
+<<<<<<< HEAD
           headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer "+getTkn
@@ -351,6 +472,28 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 ['SITIO PÚBLICO', response.data[1].cantidad, 'color: #043d5d'],
                 ['SITIO PRIVADO', response.data[2].cantidad, 'color: #1c75bc']
               ]);
+=======
+          dataType: 'json',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado == '200'){
+            google.charts.load("current", {packages:['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              if(response.data[0]!==undefined){
+                var data = google.visualization.arrayToDataTable([
+                  ['', 'Valoraciones', { role: "style" }],
+                  ['APP', response.data[0].cantidad , 'color: #1c75bc'],
+                  ['DESKTOP', response.data[1].cantidad , 'color: #043d5d'],
+                  ['MOBILE', response.data[2].cantidad, 'color: #1c75bc']
+                ]);
+              }
+>>>>>>> master
               var view = new google.visualization.DataView(data);
               view.setColumns(
                 [0, 1, {
@@ -412,10 +555,19 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               var chart = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
               chart.draw(view, options);
             }
+<<<<<<< HEAD
           }
         })
       }
       getOriginData();
+=======
+          }else{
+            $('#chart_div2').html('<p>No se han encontrado datos</p>')
+            return false;
+          }
+        })
+      }
+>>>>>>> master
 
       function getAssessment(){
         var args = {
@@ -425,6 +577,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }
         var promise = $.ajax({
           type: 'POST',
+<<<<<<< HEAD
           url: getPath+"mant/indicadores_valoracion",
           data: JSON.stringify(args),
           headers: {
@@ -435,6 +588,19 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
           if(response.status == '200'){
+=======
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          url: getPath+"mant/indicadores_valoracion",
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado == '200'){
+>>>>>>> master
             var val1 = response[d.getMonth() + 1][0].cantidad,
                 val2 = response[d.getMonth() + 1][1].cantidad,
                 val3 = response[d.getMonth() + 1][2].cantidad,
@@ -536,6 +702,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
               chart.draw(data, options);
             }
+<<<<<<< HEAD
           }
         })
       }
@@ -561,10 +728,33 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               fin: d.toISOString().substring(0,10),
               id_cliente: getSession,
               canal: "all"
+=======
+          }else{
+            $('#chart_div3').html('<p>No se han encontrado datos</p>')
+            return false;
+          }
+        })
+      }
+
+      function getLikes(){
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+'mant/indicadores_likes',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              mes: d.getMonth() + 1,
+              ano: d.getFullYear()
+>>>>>>> master
             }
           ),
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
+<<<<<<< HEAD
         }).done(function(response){
           google.charts.load('current', {'packages':['corechart']});
           google.charts.setOnLoadCallback(drawChart);
@@ -630,13 +820,89 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       }
       getLikes();
 
+=======
+        }).promise().done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#chart_div5').html('<p>No se han encontrado datos</p>')
+            return false;
+          }else{
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+                ['', ''],
+                ['Positivos', response.descripcion[0].positivo],
+                ['Negativos', response.descripcion[0].negativo]
+              ]);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                },
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                pieHole: 0.4,
+                is3D: true,
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                colors:['#e7b81d','#001e37','#b4b8ba','#009dc3','#1c75bc'],
+                areaOpacity: .85,
+                backgroundColor: {
+                  fill:'transparent'
+                },
+                chartArea: {
+                  height: 160
+                }
+              };
+              var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+              chart.draw(data, options);
+            }
+          }
+        });
+      }
+      
+>>>>>>> master
       function getInteraccionesValoradas(){
         var promise = $.ajax({
           type: 'POST',
           url: getPath+'mant/filtros',
           headers: {
             "Content-Type": "application/json",
+<<<<<<< HEAD
             "Authorization": "Bearer "+getTkn
+=======
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+>>>>>>> master
           },
           data:  JSON.stringify(
             {
@@ -650,10 +916,17 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).promise().done(function(response){
+<<<<<<< HEAD
            if(response.status == 400){
             $('#'+divId).html('<p>No se han encontrado datos</p>')
             return false;
           } else {
+=======
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#chart_div5').html('<p>No se han encontrado datos</p>')
+            return false;
+          }else{
+>>>>>>> master
             var data = [
               ['Día', 'Totales', 'Valoradas']
             ];
@@ -728,7 +1001,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           }
         });
       }
+<<<<<<< HEAD
       getInteraccionesValoradas();
+=======
+      //getInteraccionesValoradas();
+>>>>>>> master
 
       function getTMO(){
         var promise = $.ajax({
@@ -736,7 +1013,12 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           url: getPath+'mant/tmo',
           headers: {
             "Content-Type": "application/json",
+<<<<<<< HEAD
             "Authorization": "Bearer "+getTkn
+=======
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+>>>>>>> master
           },
           data:  JSON.stringify(
             {
@@ -753,6 +1035,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }).done(function(response){
           var getMyArray = [['días', 'interacciones']];
         }).promise().done(function(response){
+<<<<<<< HEAD
           var getMyArray = [['días', 'TMO']];
           var pushArray = [];
           for(var i = 0; i < response.respuesta.length; i++) {
@@ -815,25 +1098,126 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             var chart = new google.visualization.AreaChart(document.getElementById('chart_div6'));
             chart.draw(data, options);
           }
+=======
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#chart_div6').html('<p>No se han encontrado datos</p>')
+            return false;
+          }else{
+            var getMyArray = [['días', 'TMO']];
+            var pushArray = [];
+            for(var i = 0; i < response.respuesta.length; i++) {
+              pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].tmo_segundos];
+              getMyArray.push(pushArray);
+            }
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable(getMyArray);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                  maxValue: (getMyArray.length - 1),
+                  gridlines: {
+                    color: 'none'
+                  }
+                },
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: 'none',
+                pointSize: 9,
+                tooltip: {
+                  showColorCode: true,
+                  textStyle: {
+                    color: '#1c75bc',
+                    fontName: 'Roboto',
+                  }
+                },
+                colors:['#009dc3', '#001e37'],
+                areaOpacity: .85,
+                backgroundColor: { fill:'transparent' }
+              };
+              var chart = new google.visualization.AreaChart(document.getElementById('chart_div6'));
+              chart.draw(data, options);
+            }
+          }
+
+>>>>>>> master
         });
         var promise = $.ajax({
           type: 'POST',
           url: getPath+"mant/indicadores_interaccion",
           headers: {
             "Content-Type": "application/json",
+<<<<<<< HEAD
             "Authorization": "Bearer "+getTkn
           },
           data:  JSON.stringify(
             {
               mes: (d.getMonth() + 1),
               ano: d.getFullYear(),
+=======
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              mes: (d.getMonth() + 1).toString(),
+              ano: d.getFullYear().toString(),
+>>>>>>> master
               id_cliente: getSession
             }
           ),
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
+<<<<<<< HEAD
           //- console.log(response);
         });
       }
       getTMO();
+=======
+        });
+      }
+      //getTMO();
+
+      function initial(){
+        if(hasToken){
+          getInteractions();
+          getOriginData();
+          getAssessment();
+          getLikes();
+        }else{
+          setTimeout(()=>{
+            initial();
+          },300);
+        }
+      }
+
+      initial();
+>>>>>>> master

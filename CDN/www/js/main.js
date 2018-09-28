@@ -26,8 +26,15 @@
       document.body.appendChild(div);
       this.basicStylesSetUp();
       window.onmessage = e => {
+<<<<<<< HEAD
         const mensaje = e.data.test[0].msg;
         this.styleIframe(mensaje);
+=======
+        if(e.data.test !== undefined){
+          const mensaje = e.data.test[0].msg;
+          this.styleIframe(mensaje);
+        }
+>>>>>>> master
       };
     }
 

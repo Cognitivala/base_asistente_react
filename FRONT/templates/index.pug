@@ -19,9 +19,12 @@ html(lang="es-CL" dir="ltr" heightfull)
             .col-md-12
               .container-tabs
                 .test
+<<<<<<< HEAD
                   a(href="#;", onclick="openModalTest()")
                     | Probar asistente
                     i.fa.fa-commenting(aria-hidden="true")
+=======
+>>>>>>> master
                   a(href="#;", onclick="openDemo(event)")
                     | Demo
                     i.fa.fa-rocket(aria-hidden="true")
@@ -615,6 +618,7 @@ html(lang="es-CL" dir="ltr" heightfull)
           tree = '',
           treeBranch = '',
           nameObj = '',
+<<<<<<< HEAD
           getAllNames = [],
           getSession = "1",
           getPath = "http://asistente-react.mycognitiva.io/",
@@ -626,6 +630,9 @@ html(lang="es-CL" dir="ltr" heightfull)
       //- } else {
       //-   getTheToken = '';
       //- }
+=======
+          getAllNames = [];
+>>>>>>> master
 
       function openDemo(e){
         var screenW   = this.outerWidth;
@@ -748,9 +755,14 @@ html(lang="es-CL" dir="ltr" heightfull)
       function getAllEntities(){
         getService = 'edit_entity';
         var args = {
+<<<<<<< HEAD
           ws_id: sessionStorage.getItem('uws'),
           cv_user: sessionStorage.getItem('usr'),
           cv_pass: sessionStorage.getItem('usp')
+=======
+          id_cliente : "1"
+
+>>>>>>> master
         }
         var promise = $.ajax({
           type: 'POST',
@@ -945,9 +957,13 @@ html(lang="es-CL" dir="ltr" heightfull)
             nameObj = "'value'";
         }
         var args = {
+<<<<<<< HEAD
           ws_id: sessionStorage.getItem('uws'),
           cv_user: sessionStorage.getItem('usr'),
           cv_pass: sessionStorage.getItem('usp')
+=======
+          id_cliente : "1"
+>>>>>>> master
         }
         var promise = $.ajax({
           type: 'POST',
@@ -1048,9 +1064,13 @@ html(lang="es-CL" dir="ltr" heightfull)
         var args = {
           [tree]: getNameIntent,
           [treeBranch]: stringObj,
+<<<<<<< HEAD
           ws_id: sessionStorage.getItem('uws'),
           cv_user: sessionStorage.getItem('usr'),
           cv_pass: sessionStorage.getItem('usp')
+=======
+          id_cliente : "1"
+>>>>>>> master
         }
         var promise = $.ajax({
           type: 'POST',
@@ -1167,9 +1187,13 @@ html(lang="es-CL" dir="ltr" heightfull)
             title: getNameDialogQuotes,
             conditions: getConditionVal,
             texto: arrayResponse,
+<<<<<<< HEAD
             ws_id: sessionStorage.getItem('uws'),
             cv_user: sessionStorage.getItem('usr'),
             cv_pass: sessionStorage.getItem('usp')
+=======
+            id_cliente : "1"
+>>>>>>> master
           }
           var promise = $.ajax({
             type: 'POST',
@@ -1250,6 +1274,7 @@ html(lang="es-CL" dir="ltr" heightfull)
       }
 
       function openModalTest() {
+<<<<<<< HEAD
 
         var getLogoAssistant      = localStorage.getItem('logoAssistant'),
             getColorHeader        = localStorage.getItem('colorHeader'),
@@ -1262,11 +1287,14 @@ html(lang="es-CL" dir="ltr" heightfull)
         $('#myModalAssistant .header .titles span').html(getSubTitleAssistant);
         $('#myModalAssistant .header .img img').attr('src', getLogoAssistant);
 
+=======
+>>>>>>> master
         $('#myModalAssistant').modal({
           backdrop: 'static',
           keyboard: false,
           show: true
         });
+<<<<<<< HEAD
         var getSession = "1";
 
         //- $('#assistant-iframe').attr('src', getPath+'asistente/');
@@ -1326,6 +1354,9 @@ html(lang="es-CL" dir="ltr" heightfull)
         }
       }
       getCustomAssistant();
+=======
+      }
+>>>>>>> master
 
       function removeDialog(el){
         el.parentElement.parentElement.setAttribute('data-todelete', '1');
@@ -1336,9 +1367,13 @@ html(lang="es-CL" dir="ltr" heightfull)
         getNameDialog = $('[data-todelete] h5').text();
         var args = {
           id_dialog: getNameDialog,
+<<<<<<< HEAD
           ws_id: sessionStorage.getItem('uws'),
           cv_user: sessionStorage.getItem('usr'),
           cv_pass: sessionStorage.getItem('usp')
+=======
+          id_cliente : "1"
+>>>>>>> master
         }
         var promise = $.ajax({
           type: 'POST',
@@ -1361,11 +1396,32 @@ html(lang="es-CL" dir="ltr" heightfull)
         })
       }
 
+<<<<<<< HEAD
+=======
+      function is_url(str)
+      {
+        regexp =  /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+        if (regexp.test(str))
+        {
+          return true;
+        }
+        else
+        {
+          return false;
+        }
+      }
+
+>>>>>>> master
       function saveUrl() {
         var getSession = "1";
         var getUrlVal = $('#get-url').val();
         var getUrlForm = document.getElementById('form-url');
+<<<<<<< HEAD
         if(getUrlForm.checkValidity() == true){
+=======
+        if(is_url(getUrlVal) == true){
+          document.getElementById('get-url').classList.remove('error');
+>>>>>>> master
           var args = {
             id_cliente: getSession,
             url: getUrlVal
@@ -1382,12 +1438,27 @@ html(lang="es-CL" dir="ltr" heightfull)
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
           }).done(function(response){
+<<<<<<< HEAD
             if(response.status == '200'){
               openModal('#myModal', 'Genial!', 'La URL se ha agregado con éxito', 'success');
               localStorage.setItem('urlAssistant', getUrlVal);
               $('#get-url').val(getUrlVal);
             }
           })
+=======
+            if(response.estado.codigoEstado == '200'){
+              openModal('#myModal', 'Genial!', 'La URL se ha agregado con éxito', 'success');
+              const customParams = JSON.parse(localStorage.getItem('customParams'));
+              customParams.url = getUrlVal;
+              localStorage.setItem('customParams', customParams);
+              $('#get-url').val(getUrlVal);
+            }else{
+              openModal('#myModal', 'Lo sentimos', 'Tenemos un problema en el servidor<br><b>Error 500</b>', 'error');
+            }
+          })
+        }else{
+          document.getElementById('get-url').classList.add('error');
+>>>>>>> master
         }
         event.preventDefault();
       }
@@ -1395,9 +1466,13 @@ html(lang="es-CL" dir="ltr" heightfull)
       function getAllDialogs(){
         getService = 'edit_dialogs';
         var args = {
+<<<<<<< HEAD
           ws_id: sessionStorage.getItem('uws'),
           cv_user: sessionStorage.getItem('usr'),
           cv_pass: sessionStorage.getItem('usp')
+=======
+          id_cliente : "1"
+>>>>>>> master
         }
         var promise = $.ajax({
           type: 'POST',
@@ -1457,6 +1532,23 @@ html(lang="es-CL" dir="ltr" heightfull)
           e.preventDefault()
           $(this).tab('show')
         });
+<<<<<<< HEAD
         var getSession = "1";
         $('#get-url').val(localStorage.getItem('urlAssistant'));
       });
+=======
+      });
+
+      function init(){
+        if(localStorage.getItem('customParams')!==undefined && localStorage.getItem('customParams')!==null){
+          const customParams = JSON.parse(localStorage.getItem('customParams')),
+            url = customParams.url;
+          document.getElementById('get-url').value = url;
+        }else{
+        setTimeout(() => {
+          init();
+        }, 300);
+        }
+      }
+      init();
+>>>>>>> master

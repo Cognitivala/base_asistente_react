@@ -46,15 +46,21 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     script(type="text/javascript" src= myPath + '/assets/js/main.js')
     script.
       
+<<<<<<< HEAD
       var getPrf = sessionStorage.getItem('prf'),
           getSession = "1",
           getTkn = sessionStorage.getItem('tkn');
       
+=======
+>>>>>>> master
       if(getPrf < 2) {
         function showTooltip(){
           $('[data-toggle="tooltip"]').tooltip({trigger: "hover"});
         }
+<<<<<<< HEAD
         showTooltip();
+=======
+>>>>>>> master
         
         function listUsers() {
 
@@ -163,7 +169,10 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           //- };
 
         }
+<<<<<<< HEAD
         listUsers();
+=======
+>>>>>>> master
 
         function validateEmail(email) {
           var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -209,7 +218,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             var emailfield  = document.getElementById('user-mail');
             emailfield.setCustomValidity("Complete el campo correspondiente");
           }
+<<<<<<< HEAD
           if(getEmailVal != '' && getNameVal != '' && getSelect == true && validateEmail(getEmailVal) == true){
+=======
+          if(getEmailVal.trim() != '' && getEmailVal.length <= 45 && getNameVal.trim() != ''  && getNameVal.length <= 45 && getSelect == true && validateEmail(getEmailVal) == true){
+>>>>>>> master
             if(getProfileVal == 1){
               addValProfile = 'Editor';
             } else {
@@ -246,6 +259,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
+<<<<<<< HEAD
                 if(response.status == '200'){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
@@ -255,6 +269,22 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               $('tr.action td:nth-child(1)').text(getNameVal);
               $('tr.action td:nth-child(2)').text(getEmailVal);
               $('tr.action td:nth-child(3)').text(addValProfile);
+=======
+                if(response.status  == '200' && response.estado == undefined){
+                  //- console.log(response);
+                  openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
+                  var table = document.getElementById('users-list').getElementsByTagName('TABLE')[0],
+                    rows = table.getElementsByTagName('TBODY')[0].getElementsByTagName('TR'),
+                    lastRow = rows[rows.length - 1],
+                    columnas = lastRow.getElementsByTagName('TD');
+                  columnas[0].innerText = getNameVal;
+                  columnas[1].innerText = getEmailVal;
+                  columnas[2].innerText = addValProfile;
+                }else{
+                  openCustomModal('#myModal', 'Ups!', 'No se ha podido editar el usuario', 'error');
+                }
+              })
+>>>>>>> master
               $('#myModalUser').modal('hide');
               removeData();
             } else {
@@ -274,12 +304,23 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
+<<<<<<< HEAD
                 if(response.status == '200'){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'Usuario añadido con éxito', 'success');
                 }
               })
               $('.table tbody').append(craeteTrUser);
+=======
+                if(response.status  == '200' && response.estado == undefined){
+                  //- console.log(response);
+                  openCustomModal('#myModal', 'Genial!', 'Usuario añadido con éxito', 'success');
+                  $('.table tbody').append(craeteTrUser);
+                }else{
+                  openCustomModal('#myModal', 'Ups!', 'No se ha podido añadir el usuario', 'error');
+                }
+              })
+>>>>>>> master
               showTooltip();
               $('#myModalUser').modal('hide');
               removeData();
@@ -319,17 +360,33 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
           }).done(function(response){
+<<<<<<< HEAD
             if(response.status == '200'){
               //- console.log(response);
               openCustomModal('#myModal', 'Usuario Eliminado', 'El usuario se ha eliminado con éxito', 'success');
             }
           })
           $('.table tbody tr.to-delete').remove();
+=======
+            if(response.status  == '200' && response.estado == undefined){
+              //- console.log(response);
+              openCustomModal('#myModal', 'Genial!', 'Usuario eliminado con éxito', 'success');
+              $('.table tbody tr.to-delete').remove();
+            }else{
+              openCustomModal('#myModal', 'Ups!', 'No se ha podido eliminar el usuario', 'error');
+            }
+          })
+>>>>>>> master
         }
         
         function openCustomModal(modal, title, body, theclass){
           $(modal).find('h6').text(title);
           $(modal).find('.modal-body').empty().append(body);
+<<<<<<< HEAD
+=======
+          $(modal).removeClass('error');
+          $(modal).removeClass('succes')
+>>>>>>> master
           $(modal).addClass(theclass);
           $(modal).modal({
             backdrop: 'static',
@@ -344,6 +401,22 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           }
         });
 
+<<<<<<< HEAD
+=======
+        function initial(){
+          if(hasToken){
+            showTooltip();
+            listUsers();
+          }else{
+            setTimeout(()=>{
+              initial();
+            },300);
+          }
+        }
+
+        initial();
+
+>>>>>>> master
       } else {
         window.location.href = getPath;
       }

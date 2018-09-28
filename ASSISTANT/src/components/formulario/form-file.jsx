@@ -98,11 +98,18 @@ export default class FormFile extends Component {
           />
           <button
             disabled={this.state.enabled}
+<<<<<<< HEAD
             className="btn btn-attach"
             type="button"
             onClick={this.attachIconClick}
             style={style}
             className={cssClass}
+=======
+            type="button"
+            onClick={this.attachIconClick}
+            style={style}
+            className={"btn btn-attach"+cssClass}
+>>>>>>> master
           >
             Adjuntar
             <i className="fas fa-paperclip" />
@@ -121,11 +128,18 @@ export default class FormFile extends Component {
             onChange={this.attachFile}
           />
           <button
+<<<<<<< HEAD
             className="btn btn-attach"
             type="button"
             onClick={this.attachIconClick}
             style={style}
             className={cssClass}
+=======
+            type="button"
+            onClick={this.attachIconClick}
+            style={style}
+            className={"btn btn-attach"+cssClass}
+>>>>>>> master
           >
             Adjuntar
             <i className="fas fa-paperclip" />

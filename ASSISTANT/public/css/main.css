@@ -1816,7 +1816,8 @@ select {
   position: fixed;
   bottom: 0;
   width: 100%;
-  border-top: 1px solid #e7e7e7; }
+  border-top: 1px solid #e7e7e7;
+  background: #f7f7f7; }
 
 .form-wrapp {
   display: flex;
@@ -1888,7 +1889,11 @@ select {
     max-width: calc(100% - 56px);
     color: #666666;
     margin-left: 10px;
+<<<<<<< HEAD
     word-break: break-all;
+=======
+    word-break: break-word;
+>>>>>>> master
     min-width: 140px;
     -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16);
@@ -2068,6 +2073,19 @@ select {
     .conversation-bubble .datepicker-cognitive.error {
       border-color: #d9534f;
       color: #d9534f; }
+<<<<<<< HEAD
+=======
+
+.likes {
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+  justify-content: center; }
+  .likes button {
+    border: 0 none;
+    margin-left: 10px;
+    padding: 10px 20px; }
+>>>>>>> master
 
 .response-img {
   display: inline-block;
@@ -2181,9 +2199,17 @@ select {
 .loader {
   text-align: center;
   position: absolute;
+<<<<<<< HEAD
   bottom: 10px;
   left: 16px;
   right: 16px; }
+=======
+  width: 100%;
+  height: 50px;
+  background: #fff;
+  left: 0;
+  padding-top: 15px; }
+>>>>>>> master
   .loader .dot {
     display: inline-block;
     width: 8px;
@@ -3214,7 +3240,11 @@ table {
       .main-cognitive-assistant-container .assitant-helper .assitant-helper-child .nodo-abuelo .li-child a {
         padding-left: 20px; }
       .main-cognitive-assistant-container .assitant-helper .assitant-helper-child .nodo-abuelo p {
+<<<<<<< HEAD
         font-size: 14px;
+=======
+        font-size: 13px;
+>>>>>>> master
         padding: 5px 15px 10px 15px;
         margin-bottom: 0; }
 

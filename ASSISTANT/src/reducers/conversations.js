@@ -59,6 +59,13 @@ export function conversationsStates(
       return state.withMutations(map => {
         map.set("conversations",Immutable.fromJS([first]));
       });
+<<<<<<< HEAD
+=======
+    case "UPDATE_SALUDO_CONVERSATION":
+      return state.withMutations(map => {
+        map.setIn(["conversations","0","msg"],Immutable.fromJS(action.data));
+      });
+>>>>>>> master
     default:
       return state;
   }

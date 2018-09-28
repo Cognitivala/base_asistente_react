@@ -1,15 +1,27 @@
+<<<<<<< HEAD
 .f-col.menu(heightfull padding)
+=======
+.f-col.menu.active(heightfull padding)
+>>>>>>> master
   .header
     .f-row.align-center
       .f-col.cognitiva-logo
         img(src= myPath +'/assets/img/cognitiva-logo.png', alt="")
 
   ul.menu#mainmenu
+<<<<<<< HEAD
     li
       a(href=myPath +'/')
         i.fa.fa-cog(aria-hidden="true")
         | Configurar Asistente
     li
+=======
+    li#config-asis-btn
+      a(href=myPath +'/')
+        i.fa.fa-cog(aria-hidden="true")
+        | Configurar Asistente
+    li#personalizar-asis-btn
+>>>>>>> master
       a(href=myPath +'/personalizar/')
         i.fa.fa-paint-brush(aria-hidden="true")
         | Personalizar Asistente
@@ -22,6 +34,7 @@
           a(href=myPath +'/indicadores/interacciones/')
             i.fa.fa-caret-right(aria-hidden="true")
             | Interacciones
+<<<<<<< HEAD
         //- li
         //-   a(href=myPath +'/indicadores/interacciones-valoradas/')
         //-     i.fa.fa-caret-right(aria-hidden="true")
@@ -34,11 +47,14 @@
           a(href=myPath +'/indicadores/tmo/')
             i.fa.fa-caret-right(aria-hidden="true")
             | TMO
+=======
+>>>>>>> master
         li
           a(href=myPath +'/indicadores/origen/')
             i.fa.fa-caret-right(aria-hidden="true")
             | Origen
         li
+<<<<<<< HEAD
           a(href=myPath +'/indicadores/nps/')
             i.fa.fa-caret-right(aria-hidden="true")
             | NPS
@@ -46,11 +62,28 @@
         //-   a(href=myPath +'/indicadores/me-gusta/')
         //-     i.fa.fa-caret-right(aria-hidden="true")
         //-     | Me Gusta
+=======
+          a(href=myPath +'/indicadores/valoraciones/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Valoraciones
+        li
+          a(href=myPath +'/indicadores/nps/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | NPS
+        li
+          a(href=myPath +'/indicadores/me-gusta/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Me gusta
+>>>>>>> master
     li#admin-users-btn
       a(href=myPath +'/administrador-usuarios/')
         i.fa.fa-users(aria-hidden="true")
         | Administrador Usuarios
+<<<<<<< HEAD
     li
+=======
+    li#get-code-btn
+>>>>>>> master
       a.get-code(href='#;' onclick="openScript()")
         i.fa.fa-code(aria-hidden="true")
         | Obtener código

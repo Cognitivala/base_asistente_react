@@ -14,15 +14,12 @@
         "react-dom": "^16.2.0",
         "react-geocode": "^0.1.2",
         "react-redux": "^5.0.6",
-        "react-router": "^4.2.0",
-        "react-router-dom": "^4.2.2",
-        "react-router-redux": "^4.0.8",
         "react-scripts": "1.1.4",
         "react-transition-group": "^2.4.0",
         "redux": "^4.0.0"
     },
     "scripts": {
-        "build-css": "node-sass-chokidar src/assets/styles/main.scss -o public/css/",
+        "build-css": "node-sass-chokidar src/assets/styles/main.scss -o public/css/ --output-style compressed",
         "watch-css": "npm run build-css && node-sass-chokidar src/assets/styles/main.scss -o public/css/ --watch --recursive",
         "start-js": "react-scripts start",
         "start": "npm-run-all -p watch-css start-js",

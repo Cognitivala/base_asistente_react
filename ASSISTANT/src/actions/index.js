@@ -1,6 +1,10 @@
 import axios, { post } from "axios";
 import Geocode from "react-geocode";
+<<<<<<< HEAD
 const APIURL = "http://asistente-react.mycognitiva.io/mad";
+=======
+import {APIURL} from "./constans";
+>>>>>>> master
 
 //GENERAL
 function defaultGeneral() {
@@ -78,6 +82,7 @@ export function getCustomParams() {
     return request.then(
       response => {
         if (response.status === 200) {
+<<<<<<< HEAD
           var item = {
             avatar: 'http://localhost:3000/images/avatar-default.jpg',
             colorHeader: '#012138',
@@ -102,6 +107,13 @@ export function getCustomParams() {
           dispatch(getCustomParamsEnd(response.data));
         } else {
           dispatch(getCustomParamsError(response.statusText));
+=======
+          dispatch(getCustomParamsEnd(response.data));
+          window.top.postMessage({customParams:response.data}, "*");
+        } else {
+          dispatch(getCustomParamsError(response.statusText));
+
+>>>>>>> master
         }
       },
       err => {
@@ -136,6 +148,39 @@ export function setCustomParams(data) {
     dispatch({ type: "SET_CUSTOM_PARAMS", data });
   };
 }
+<<<<<<< HEAD
+=======
+export function updateCustomTitle(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_TITULO", data });
+  };
+}
+export function updateCustomSubtitle(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_SUBTITULO", data });
+  };
+}
+export function updateCustomColorHeader(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_COLOR_HEADER", data });
+  };
+}
+export function updateCustomColorBtn(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_COLOR_BTN", data });
+  };
+}
+export function updateCustomLogo(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_LOGO", data });
+  };
+}
+export function updateCustomAvatar(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_CUSTOM_AVATAR", data });
+  };
+}
+>>>>>>> master
 //SALUDO
 export function getSaludo() {
   return function action(dispatch) {
@@ -164,7 +209,11 @@ export function getSaludo() {
       },
       err => {
         dispatch(
+<<<<<<< HEAD
           getSaludoEnd("Error de conexión con el servidor, intente nuevamente")
+=======
+          getSaludoError("Error de conexión con el servidor, intente nuevamente")
+>>>>>>> master
         );
       }
     );
@@ -192,6 +241,15 @@ function getSaludoError(error) {
     error
   };
 }
+<<<<<<< HEAD
+=======
+export function updateSaludo(data) {
+  return function action(dispatch) {
+    dispatch({ type: "UPDATE_SALUDO", data:[data] });
+    dispatch({ type: "UPDATE_SALUDO_CONVERSATION", data:[data] });
+  };
+}
+>>>>>>> master
 //ASSISTANT
 export function openAssistant() {
   return function action(dispatch) {
@@ -224,6 +282,31 @@ export function defaultAssistant() {
 export function getAyuda() {
   return function action(dispatch) {
     dispatch(getAyudaStart());
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: APIURL + "/preguntas_ejemplo"
+    });
+    return request.then(
+      response => {
+        console.log(response)
+        if (response.data.estado.codigoEstado === 200) {
+          dispatch(getAyudaEnd(response.data.respuesta));
+        } else {
+          dispatch(getAyudaError(response.data.respuesta));
+        }
+      },
+      err => {
+        dispatch(
+          getAyudaError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
+        );
+      }
+    );
+
     setTimeout(() => {
       let item;
       item = [
@@ -394,7 +477,12 @@ export function updateConversation(data) {
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
       //8 = MULTIMSG
+<<<<<<< HEAD
       switch (8) {
+=======
+      //9 = 
+      switch (9) {
+>>>>>>> master
         case 1:
           data = {
             general: {
@@ -577,6 +665,23 @@ export function updateConversation(data) {
               location: null
             },
             msg: ["lorem ipsum","lorem ipsum","lorem ipsum","lorem ipsum"]
+<<<<<<< HEAD
+=======
+          };  
+        case 9:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola soy una respuesta con me gusta"],
+            like: true
+>>>>>>> master
           };
           break;
       }
@@ -1059,6 +1164,20 @@ export function closeValoracion(data) {
     );
   };
 }
+<<<<<<< HEAD
+=======
+//LIKE
+export function sendLike(data) {
+  debugger
+  console.log('sendLike')
+  setTimeout(() => {
+    
+  }, 400);
+  // return function action(dispatch) {
+
+  // };
+}
+>>>>>>> master
 //FORM
 export function closeForm(data) {
   return function action(dispatch) {
@@ -1094,11 +1213,17 @@ export function closeForm(data) {
     );
   };
 }
-
 export function sendForm(data, url) {
   return function action(dispatch) {
     dispatch({ type: "SEND_FORM_START" });
 
+<<<<<<< HEAD
+export function sendForm(data, url) {
+  return function action(dispatch) {
+    dispatch({ type: "SEND_FORM_START" });
+
+=======
+>>>>>>> master
     // dispatch(setGeneral(data.general));
     // dispatch(pushConversation(data));
 

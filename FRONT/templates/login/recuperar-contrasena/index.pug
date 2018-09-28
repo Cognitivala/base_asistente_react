@@ -24,10 +24,17 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
     script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
     script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
+<<<<<<< HEAD
     script(type="text/javascript" src= myPath + '/assets/js/main.js')
 
     script.
       var getPath = "http://asistente-react.mycognitiva.io/";
+=======
+    //- script(type="text/javascript" src= myPath + '/assets/js/main.js')
+
+    script.
+      var getPath = "http://asistente_duoc.mycognitiva.io/";
+>>>>>>> master
       
       var uri = window.location.toString();
       
@@ -87,9 +94,19 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               "Authorization": "Bearer "+getTkn
             },
             method : "POST",
+<<<<<<< HEAD
             data : {
               email : theEmailVal
             }
+=======
+            data:  JSON.stringify(
+              { 
+                email : theEmailVal
+              }
+            ),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+>>>>>>> master
           }
           $.ajax(settings).done(function (response) {
             if(response.status == 400){

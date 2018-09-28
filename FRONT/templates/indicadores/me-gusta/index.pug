@@ -31,6 +31,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                   li(role="presentation")
                     a(href="#by-range" aria-controls="by-range" role="tab" data-toggle="tab")
                       span Por rango
+<<<<<<< HEAD
                   li(role="presentation")
                     a(href="#by-week" aria-controls="by-week" role="tab" data-toggle="tab")
                       span Por semana
@@ -40,16 +41,25 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
                 .tab-content.has-title
 
+=======
+
+                .tab-content.has-title
+>>>>>>> master
                   #last-days.tab-pane.fade.in.active(role="tabpanel")
                     .scroll
                       .row
                         .col-md-12
+<<<<<<< HEAD
                           .form(onsubmit="event.preventDefault()")
+=======
+                          form(onsubmit="event.preventDefault()")
+>>>>>>> master
                             .row
                               .col-md-3
                                 fieldset
                                   .form-group
                                     .input-group.date
+<<<<<<< HEAD
                                       input.date-picker-days#last30(type="text", data-date-end-date="0d", name="last30", placeholder="Seleccione")
                                       span.input-group-addon
                                         i.fa.fa-calendar(aria-hidden="true")
@@ -67,6 +77,13 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                               .col-md-3
                                 button.btn(button, onclick="getDateInput('last30', 'likes', 'last-days', 'chart_div', 'last30-channel')") Filtrar
 
+=======
+                                      input.date-picker-days#last30(type="text", data-date-end-date="0d", name="last30", placeholder="Seleccione",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              .col-md-3
+                                button.btn(button, onclick="getDateInput('last30', 'likes', 'last-days', 'chart_div')") Filtrar
+>>>>>>> master
                         .col-md-12
                           .inner
                             h5 Me Gusta <b>últimos 30 días</b> <span></span>
@@ -79,19 +96,28 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                     .scroll
                       .row
                         .col-md-12
+<<<<<<< HEAD
                           .form(onsubmit="event.preventDefault()")
+=======
+                          form(onsubmit="event.preventDefault()")
+>>>>>>> master
                             .row
                               .col-md-3
                                 fieldset
                                   .form-group
                                     .input-group.date
+<<<<<<< HEAD
                                       input.date-picker-days#desde(type="text", data-date-end-date="0d", name="", placeholder="Seleccione desde")
+=======
+                                      input.date-picker-days#desde(type="text", data-date-end-date="0d", name="", placeholder="Seleccione desde",autocomplete="off")
+>>>>>>> master
                                       span.input-group-addon
                                         i.fa.fa-calendar(aria-hidden="true")
                               .col-md-3
                                 fieldset
                                   .form-group
                                     .input-group.date
+<<<<<<< HEAD
                                       input.date-picker-days#hasta(type="text", data-date-end-date="0d", name="", placeholder="Seleccione hasta")
                                       span.input-group-addon
                                         i.fa.fa-calendar(aria-hidden="true")
@@ -108,6 +134,13 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                         i.fa.fa-sort-down(aria-hidden="true")
                               .col-md-3
                                 button.btn(button, onclick="getDateInput('desde', 'likes', 'by-range', 'chart_by_range', 'by-range-channel')") Filtrar
+=======
+                                      input.date-picker-days#hasta(type="text", data-date-end-date="0d", name="", placeholder="Seleccione hasta",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              .col-md-3
+                                button.btn(button, onclick="getDateInput('desde', 'likes', 'by-range', 'chart_by_range')") Filtrar
+>>>>>>> master
                         .col-md-12
                           .inner
                             h5 Me Gusta <b>entre fechas</b>
@@ -115,6 +148,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                       a.download-cvs(pull-right)
                         | Descargar CSV
                         i.fa.fa-file-excel-o(aria-hidden="true")
+<<<<<<< HEAD
 
                   #by-week.tab-pane.fade(role="tabpanel")
                     .scroll
@@ -186,24 +220,34 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                         | Descargar CSV
                         i.fa.fa-file-excel-o(aria-hidden="true")
 
+=======
+                        
+>>>>>>> master
     include ../../includes/modal.pug
     include ../../includes/modal-script.pug
 
     script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+<<<<<<< HEAD
     script(type="text/javascript" src= myPath +'/assets/js/moment.min.js')
+=======
+>>>>>>> master
     script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
     script(type="text/javascript" src= myPath +'/assets/js/bootstrap-datepicker.js')
     script(type="text/javascript" src= myPath +'/assets/js/date.js')
     script(type="text/javascript" src= myPath +'/assets/js/main.js')
 
     script.
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
       var d = new Date();
       var e = new Date();
           f = e.setDate(e.getDate() - 30);
           g = new Date(f);
 
       var month = new Array();
+<<<<<<< HEAD
           month[0] = "Enero";
           month[1] = "Febrero";
           month[2] = "Marzo";
@@ -231,6 +275,27 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       function getDateInput(input, type, tab, chartName, selector){
 
         var getInputVal   = document.getElementById(input).value || new Date().toISOString().slice(0,10),
+=======
+      month[0] = "Enero";
+      month[1] = "Febrero";
+      month[2] = "Marzo";
+      month[3] = "Abril";
+      month[4] = "Mayo";
+      month[5] = "Junio";
+      month[6] = "Julio";
+      month[7] = "Agosto";
+      month[8] = "Septiembre";
+      month[9] = "Octubre";
+      month[10] = "Noviembre";
+      month[11] = "Diciembre";
+      var n = month[d.getMonth()];
+      var getSession = user.user_id,
+      getTkn = user.tkn;
+      
+      function getDateInput(input, type, tab, chartName){
+
+        var getInputVal   = document.getElementById(input).value,
+>>>>>>> master
             getDesde      = document.getElementById('desde').value,
             getHasta      = document.getElementById('hasta').value,
             desdeDate     = new Date(getDesde),
@@ -238,7 +303,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             getDate       = new Date(getInputVal),
             dateStart     = '',
             dateEnd       = '',
+<<<<<<< HEAD
             getInputEnd   = getHasta;
+=======
+            getInputEnd   = document.getElementById('hasta').value;
+>>>>>>> master
 
         var getMonth      = getDate.getMonth(),
             getYear       = getDate.getFullYear();
@@ -252,6 +321,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
         if(tab == 'last-days'){
           dateEnd = getInputVal;
+<<<<<<< HEAD
           dateStart = moment(getInputVal, "YYYY-MM-DD").subtract(30, 'days').format('YYYY-MM-DD');
           getInteractions(type, dateStart, dateEnd, getSession, chartName, selector);
         }else if(tab == 'by-week'){
@@ -261,15 +331,26 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }else if(tab == 'by-hour'){
           getInteractions(type, getInputVal, getInputVal, getSession, chartName, selector);
         }else {
+=======
+          dateStart = getDateFormat;
+          getInteractions(type, dateStart, dateEnd, getSession, chartName);
+        } else {
+>>>>>>> master
           if(desdeDate >= hastaDate) {
             $('#desde, #hasta').addClass('error');
             $('#desde, #hasta').parent().find('.input-group-addon').addClass('error');  
           } else {
             $('#desde, #hasta').removeClass('error');
             $('#desde, #hasta').parent().find('.input-group-addon').removeClass('error');
+<<<<<<< HEAD
             dateEnd = getHasta ? getHasta : moment().format('YYYY-MM-DD');
             dateStart = getDesde ? getDesde : moment().subtract(30, 'days').format('YYYY-MM-DD');
             getInteractions(type, dateStart, dateEnd, getSession, chartName, selector);
+=======
+            dateEnd = getHasta;
+            dateStart = getDesde;
+            getInteractions(type, dateStart, dateEnd, getSession, chartName);
+>>>>>>> master
           }
         }
         return false;
@@ -280,33 +361,51 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         minViewMode: 'days'
       });
 
+<<<<<<< HEAD
       function getInteractions(tipo, fechaIni, fechaFin, id, divId, selector){
         var getCanal = document.getElementById(selector).value;
         if(getCanal == ''){
           getCanal = "all";
         }
+=======
+      function getInteractions(tipo, fechaIni, fechaFin, id, divId){
+>>>>>>> master
         var promise = $.ajax({
           type: 'POST',
           url: getPath+'mant/filtros',
           headers: {
             "Content-Type": "application/json",
+<<<<<<< HEAD
             "Authorization": "Bearer "+getTkn
+=======
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+>>>>>>> master
           },
           data:  JSON.stringify(
             {
               tipo: tipo,
               inicio: fechaIni,
               fin: fechaFin,
+<<<<<<< HEAD
               id_cliente: id,
               canal: getCanal
+=======
+              id_cliente: id
+>>>>>>> master
             }
           ),
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
+<<<<<<< HEAD
 
           if(response.data[0].negativo == 0 && response.data[0].positivo == 0 && (response.data[0].total == 0 || response.data[0].total == null)){
             $('#'+divId).html('<p>No se han encontrado datos</p>')
+=======
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#'+divId).html('<p>No se han encontrado datos</p>');
+>>>>>>> master
             return false;
           }
           createCSV(response.csv, 'me-gusta');
@@ -373,6 +472,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         });
       }
 
+<<<<<<< HEAD
       getInteractions('likes', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_div', 'last30-channel');
 
       $('a[href="#by-range"]').on('shown.bs.tab', function (e) {
@@ -386,3 +486,20 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       //- $('a[href="#by-hour"]').on('shown.bs.tab', function (e) {
       //-   getInteractions('likes', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_by_hour', 'by-hour-channel');
       //- })
+=======
+      $('a[href="#by-range"]').on('shown.bs.tab', function (e) {
+        getInteractions('likes', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_by_range');
+      })
+
+      function initial(){
+        if(hasToken){
+          getInteractions('likes', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_div');
+        }else{
+          setTimeout(()=>{
+            initial();
+          },300);
+        }
+      }
+
+      initial();
+>>>>>>> master

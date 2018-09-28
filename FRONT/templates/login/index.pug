@@ -36,9 +36,16 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
     script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
     script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
+<<<<<<< HEAD
     script.
 
       var getPath = "http://asistente-react.mycognitiva.io/";
+=======
+    script(type="text/javascript" src= myPath +'/assets/js/md5.min.js')
+    script.
+
+      var getPath = "http://asistente_duoc.mycognitiva.io/";
+>>>>>>> master
       //- var getPath = "http://localhost:3000/";
       
       var uri = window.location.toString();
@@ -48,6 +55,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         window.history.replaceState({}, document.title, clean_uri);
       }
 
+<<<<<<< HEAD
       function getCustomParams(theTkn) {
         var getSession           = "1";
 
@@ -78,6 +86,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         });
       }
 
+=======
+>>>>>>> master
       function login(us, pw, theTkn, rftkn){
         if(us == '' || pw == ''){
           $('#error').addClass("active");
@@ -85,7 +95,12 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           $('#error').removeClass("active");
           var args = {
             user: us,
+<<<<<<< HEAD
             pass: pw
+=======
+            pass: pw,
+            //- pass: md5(pw)
+>>>>>>> master
           }
           var promise = $.ajax({
             async: true,
@@ -106,6 +121,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
  
               var d = new Date();
               var n = d.getTime();
+<<<<<<< HEAD
 
               sessionStorage.setItem('tmtkn', n);
               sessionStorage.setItem('rftmtkn', n);
@@ -117,13 +133,38 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               sessionStorage.setItem("user_id", response.id_cliente);
               sessionStorage.setItem("empresa", response.empresa);
               sessionStorage.setItem("prf", response.perfil);
+=======
+              var user = {};
+              user.tmtkn = n;
+              user.rftmtkn = n;
+              user.tkn = theTkn;
+              user.rftkn = rftkn;
+              user.user = response.nombre;
+              user.user_id = response.id_cliente;
+              user.empresa = response.empresa;
+              user.prf = response.perfil;
+              sessionStorage.setItem('user',JSON.stringify(user));
+              //- sessionStorage.setItem('tmtkn', n);
+              //- sessionStorage.setItem('rftmtkn', n);
+              
+              //- sessionStorage.setItem('tkn', theTkn);
+              //- sessionStorage.setItem('rftkn', rftkn);
+            
+              //- sessionStorage.setItem("user", response.nombre);
+              //- sessionStorage.setItem("user_id", response.id_cliente);
+              //- sessionStorage.setItem("empresa", response.empresa);
+              //- sessionStorage.setItem("prf", response.perfil);
+>>>>>>> master
               
               setTimeout(function(){  
                 window.location.href=getPath
               }, 500);
 
+<<<<<<< HEAD
               getCustomParams(theTkn);
 
+=======
+>>>>>>> master
             } else {
               $('#error').addClass("active");
             }
@@ -154,7 +195,19 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         return document.getElementById(e)
       }
       
+<<<<<<< HEAD
       $("#login").click(function(e){
         e.preventDefault();
         getTkn();
+=======
+      $("#submit").click(function(e){
+        e.preventDefault();
+        getTkn();
+      });
+      $("#login").keyup(function(e){
+        e.preventDefault();
+        if(e.keyCode === 13){
+          $("#submit").click();
+        }
+>>>>>>> master
       });
