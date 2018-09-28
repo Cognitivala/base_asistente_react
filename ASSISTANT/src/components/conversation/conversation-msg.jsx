@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ConversationBubble from "./conversation-bubble";
 import PropTypes from "prop-types";
+import ConversationLikes from "./conversation-likes";
 
 export default class ConversationMsg extends Component {
   constructor(props) {
@@ -54,5 +55,8 @@ ConversationMsg.propTypes = {
   msgs: PropTypes.any.isRequired,
   send: PropTypes.any.isRequired,
   colorHeader: PropTypes.string.isRequired,
-  userImg: PropTypes.string
+  userImg: PropTypes.string,
+  like: PropTypes.bool,
+  last: PropTypes.bool,
+  sendLike: PropTypes.func
 };

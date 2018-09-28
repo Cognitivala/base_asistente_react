@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import { BrowserRouter } from "react-router-dom";
-import { Route } from "react-router";
 import * as actions from "./actions/index";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
@@ -9,12 +7,13 @@ import moment from "moment";
 import Launcher from "./components/launcher/launcher";
 import Assistant from "./components/assistant/assistant";
 
-export class Router extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
     this.onMessageFunc = this.onMessageFunc.bind(this);
   }
   componentWillMount() {
+    console.log('will mount')
     moment.updateLocale("en", {
       months: [
         "Enero",
@@ -51,13 +50,13 @@ export class Router extends Component {
     // if (customParams) {
     //   this.props.setCustomParams(customParams);
     // } else {
-      this.props.getCustomParams();
+    this.props.getCustomParams();
     // }
   }
 
-  onMessageFunc(){
+  onMessageFunc() {
     const _this = this;
-    window.onmessage = (e) => {
+    window.onmessage = e => {
       if (e.data.colorBtn !== undefined) {
         _this.props.updateCustomColorBtn(e.data.colorBtn);
       } else if (e.data.title !== undefined) {
@@ -70,21 +69,21 @@ export class Router extends Component {
         _this.props.updateCustomAvatar(e.data.avatar);
       } else if (e.data.logo !== undefined) {
         _this.props.updateCustomLogo(e.data.logo);
+      } else if (e.data.saludo !== undefined) {
+        _this.props.updateSaludo(e.data.saludo);
       }
     };
   }
 
   getContent(customParamsStates) {
-    const avatar = customParamsStates.getIn(["customParams","avatar"]),
-      estado = customParamsStates.getIn(["customParams","estado"]);
-    if (avatar && estado!==0) {
+    const avatar = customParamsStates.getIn(["customParams", "avatar"]),
+      estado = customParamsStates.getIn(["customParams", "estado"]);
+    if (avatar && estado !== 0) {
       return (
-        <BrowserRouter>
-          <div>
-            <Launcher {...this.props} />
-            <Assistant {...this.props} />
-          </div>
-        </BrowserRouter>
+        <div>
+          <Launcher {...this.props} />
+          <Assistant {...this.props} />
+        </div>
       );
     } else {
       return null;
@@ -108,4 +107,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Router);
+)(App);

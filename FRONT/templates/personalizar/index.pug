@@ -31,7 +31,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                         .col-sm-12
                           fieldset
                             label Saludo inicial
-                            input#saludo-assistant(type="text", value="Saludo inicial", onkeyup="changeText(this)")
+                            input#saludo-assistant(name="", onclick="openSaludo(this)", value="Saludo inicial")
                       .row
                         .col-sm-6
                           fieldset.d-flex
@@ -67,36 +67,512 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                           fieldset
                             label Fondo botón asistente
                             input.colors#color-buttons(type="text", value="#009dc3", onchange="getChangeColor(this)", style="background-color: #009dc3;")
-                        //- .col-sm-6
-                        //-   fieldset
-                        //-     label Fondo burbuja asistente
-                        //-     input.colors#color-bubble(type="text", value="#e7e7e7", onchange="getChangeColor(this)", style="background-color: #e7e7e7;")
-                      //- .row
-                      //-   .col-sm-6
-                      //-     fieldset
-                      //-       label Fondo botones asistente
-                      //-       input.colors#color-buttons(type="text", value="#009dc3", onchange="getChangeColor(this)", style="background-color: #009dc3;")
                     button#save-custom(button onclick="saveCustomParams()") Guardar
                   .custom-assistant
                     .assistant
-                      //- .header
-                      //-   .img
-                      //-     img#header-logotipo(src="../assets/img/brain_cognitiva.png", alt="")
-                      //-   .titles
-                      //-     div Asistente Cognitivo
-                      //-     span Cognitiva
-                      //-   .close
-                          i.fa.fa-times
                       iframe#demo-custom(src="", frameborder="0")
                   include ../includes/spinner.pug
     
     include ../includes/modal.pug
     include ../includes/modal-script.pug
+    include ../includes/modal-wysiwyg-saludo.pug
 
     script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(type="text/javascript" src="../assets/js/wysihtml5-0.3.0.min.js")
     script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
     script(type="text/javascript" src= myPath +'/assets/js/bootstrap-colorpicker.min.js')
+    script(type="text/javascript" src="../assets/js/bootstrap-wysihtml5.js")
     script(type="text/javascript" src= myPath +'/assets/js/main.js')
+
+    script.
+      var wysihtml5ParserRules = {
+        classes: {
+          "wysiwyg-clear-both": 1,
+          "wysiwyg-clear-left": 1,
+          "wysiwyg-clear-right": 1,
+          "wysiwyg-color-aqua": 1,
+          "wysiwyg-color-black": 1,
+          "wysiwyg-color-blue": 1,
+          "wysiwyg-color-fuchsia": 1,
+          "wysiwyg-color-gray": 1,
+          "wysiwyg-color-green": 1,
+          "wysiwyg-color-lime": 1,
+          "wysiwyg-color-maroon": 1,
+          "wysiwyg-color-navy": 1,
+          "wysiwyg-color-olive": 1,
+          "wysiwyg-color-purple": 1,
+          "wysiwyg-color-red": 1,
+          "wysiwyg-color-silver": 1,
+          "wysiwyg-color-teal": 1,
+          "wysiwyg-color-white": 1,
+          "wysiwyg-color-yellow": 1,
+          "wysiwyg-float-left": 1,
+          "wysiwyg-float-right": 1,
+          "wysiwyg-font-size-large": 1,
+          "wysiwyg-font-size-larger": 1,
+          "wysiwyg-font-size-medium": 1,
+          "wysiwyg-font-size-small": 1,
+          "wysiwyg-font-size-smaller": 1,
+          "wysiwyg-font-size-x-large": 1,
+          "wysiwyg-font-size-x-small": 1,
+          "wysiwyg-font-size-xx-large": 1,
+          "wysiwyg-font-size-xx-small": 1,
+          "wysiwyg-text-align-center": 1,
+          "wysiwyg-text-align-justify": 1,
+          "wysiwyg-text-align-left": 1,
+          "wysiwyg-text-align-right": 1
+        },
+        tags: {
+          tr: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          strike: {
+            remove: 1
+          },
+          form: {
+            rename_tag: "div"
+          },
+          rt: {
+            rename_tag: "span"
+          },
+          code: {},
+          acronym: {
+            rename_tag: "span"
+          },
+          br: {
+            add_class: {
+              clear: "clear_br"
+            }
+          },
+          details: {
+            rename_tag: "div"
+          },
+          h4: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          em: {},
+          title: {
+            remove: 1
+          },
+          multicol: {
+            rename_tag: "div"
+          },
+          figure: {
+            rename_tag: "div"
+          },
+          xmp: {
+            rename_tag: "span"
+          },
+          small: {
+            rename_tag: "span",
+            set_class: "wysiwyg-font-size-smaller"
+          },
+          area: {
+            remove: 1
+          },
+          time: {
+            rename_tag: "span"
+          },
+          dir: {
+            rename_tag: "ul"
+          },
+          bdi: {
+            rename_tag: "span"
+          },
+          command: {
+            remove: 1
+          },
+          ul: {},
+          progress: {
+            rename_tag: "span"
+          },
+          dfn: {
+            rename_tag: "span"
+          },
+          iframe: {
+            remove: 1
+          },
+          figcaption: {
+            rename_tag: "div"
+          },
+          a: {
+            check_attributes: {
+              href: "url"
+            },
+            set_attributes: {
+              rel: "nofollow",
+              target: "_blank"
+            }
+          },
+          img: {
+            check_attributes: {
+              width: "numbers",
+              alt: "alt",
+              src: "url",
+              height: "numbers"
+            },
+            add_class: {
+              align: "align_img"
+            }
+          },
+          rb: {
+            rename_tag: "span"
+          },
+          footer: {
+            rename_tag: "div"
+          },
+          noframes: {
+            remove: 1
+          },
+          abbr: {
+            rename_tag: "span"
+          },
+          u: {},
+          bgsound: {
+            remove: 1
+          },
+          sup: {
+            rename_tag: "span"
+          },
+          address: {
+            rename_tag: "div"
+          },
+          basefont: {
+            remove: 1
+          },
+          nav: {
+            rename_tag: "div"
+          },
+          h1: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          head: {
+            remove: 1
+          },
+          tbody: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          dd: {
+            rename_tag: "div"
+          },
+          s: {
+            rename_tag: "span"
+          },
+          li: {},
+          td: {
+            check_attributes: {
+              rowspan: "numbers",
+              colspan: "numbers"
+            },
+            add_class: {
+              align: "align_text"
+            }
+          },
+          object: {
+            remove: 1
+          },
+          div: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          option: {
+            rename_tag: "span"
+          },
+          select: {
+            rename_tag: "span"
+          },
+          i: {},
+          track: {
+            remove: 1
+          },
+          wbr: {
+            remove: 1
+          },
+          fieldset: {
+            rename_tag: "div"
+          },
+          big: {
+            rename_tag: "span",
+            set_class: "wysiwyg-font-size-larger"
+          },
+          button: {
+            rename_tag: "span"
+          },
+          noscript: {
+            remove: 1
+          },
+          svg: {
+            remove: 1
+          },
+          input: {
+            remove: 1
+          },
+          table: {},
+          keygen: {
+            remove: 1
+          },
+          h5: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          meta: {
+            remove: 1
+          },
+          map: {
+            rename_tag: "div"
+          },
+          isindex: {
+            remove: 1
+          },
+          mark: {
+            rename_tag: "span"
+          },
+          caption: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          tfoot: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          base: {
+            remove: 1
+          },
+          video: {
+            remove: 1
+          },
+          strong: {},
+          canvas: {
+            remove: 1
+          },
+          output: {
+            rename_tag: "span"
+          },
+          marquee: {
+            rename_tag: "span"
+          },
+          b: {},
+          q: {
+            check_attributes: {
+              cite: "url"
+            }
+          },
+          applet: {
+            remove: 1
+          },
+          span: {},
+          rp: {
+            rename_tag: "span"
+          },
+          spacer: {
+            remove: 1
+          },
+          source: {
+            remove: 1
+          },
+          aside: {
+            rename_tag: "div"
+          },
+          frame: {
+            remove: 1
+          },
+          section: {
+            rename_tag: "div"
+          },
+          body: {
+            rename_tag: "div"
+          },
+          ol: {},
+          nobr: {
+            rename_tag: "span"
+          },
+          html: {
+            rename_tag: "div"
+          },
+          summary: {
+            rename_tag: "span"
+          },
+          var: {
+            rename_tag: "span"
+          },
+          del: {
+            remove: 1
+          },
+          blockquote: {
+            check_attributes: {
+              cite: "url"
+            }
+          },
+          style: {
+            remove: 1
+          },
+          device: {
+            remove: 1
+          },
+          meter: {
+            rename_tag: "span"
+          },
+          h3: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          textarea: {
+            rename_tag: "span"
+          },
+          embed: {
+            remove: 1
+          },
+          hgroup: {
+            rename_tag: "div"
+          },
+          font: {
+            rename_tag: "span",
+            add_class: {
+              size: "size_font"
+            }
+          },
+          tt: {
+            rename_tag: "span"
+          },
+          noembed: {
+            remove: 1
+          },
+          thead: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          blink: {
+            rename_tag: "span"
+          },
+          plaintext: {
+            rename_tag: "span"
+          },
+          xml: {
+            remove: 1
+          },
+          h6: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          param: {
+            remove: 1
+          },
+          th: {
+            check_attributes: {
+              rowspan: "numbers",
+              colspan: "numbers"
+            },
+            add_class: {
+              align: "align_text"
+            }
+          },
+          legend: {
+            rename_tag: "span"
+          },
+          hr: {},
+          label: {
+            rename_tag: "span"
+          },
+          dl: {
+            rename_tag: "div"
+          },
+          kbd: {
+            rename_tag: "span"
+          },
+          listing: {
+            rename_tag: "div"
+          },
+          dt: {
+            rename_tag: "span"
+          },
+          nextid: {
+            remove: 1
+          },
+          pre: {},
+          center: {
+            rename_tag: "div",
+            set_class: "wysiwyg-text-align-center"
+          },
+          audio: {
+            remove: 1
+          },
+          datalist: {
+            rename_tag: "span"
+          },
+          samp: {
+            rename_tag: "span"
+          },
+          col: {
+            remove: 1
+          },
+          article: {
+            rename_tag: "div"
+          },
+          cite: {},
+          link: {
+            remove: 1
+          },
+          script: {
+            remove: 1
+          },
+          bdo: {
+            rename_tag: "span"
+          },
+          menu: {
+            rename_tag: "ul"
+          },
+          colgroup: {
+            remove: 1
+          },
+          ruby: {
+            rename_tag: "span"
+          },
+          h2: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          ins: {
+            rename_tag: "span"
+          },
+          p: {
+            add_class: {
+              align: "align_text"
+            }
+          },
+          sub: {
+            rename_tag: "span"
+          },
+          comment: {
+            remove: 1
+          },
+          frameset: {
+            remove: 1
+          },
+          optgroup: {
+            rename_tag: "span"
+          },
+          header: {
+            rename_tag: "div"
+          }
+        }
+      };
+
     script.
       $(document).ready(function(){
         $('#tabs a').click(function (e) {
@@ -115,17 +591,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       });
       
       //- var getIdUser = sessionStorage.getItem('user_id');
-      var getUrlDemo = getPath+'asistente/';
-      var getDemo = document.getElementById('demo-custom'),
-          getTkn = sessionStorage.getItem('tkn');
-          loadAll = 0;
-          //- getTheToken = '';
-
-      //- if (sessionStorage.getItem('tkn')) {
-      //-   getTheToken = '?token='+sessionStorage.getItem('tkn');
-      //- } else {
-      //-   getTheToken = '';
-      //- }
+      var getUrlDemo = getPath+'asistente/',
+        getDemo = document.getElementById('demo-custom'),
+        loadAll = 0,
+        editor = "",
+        getId = "1";
 
       getDemo.attributes[1].value = getUrlDemo;
 
@@ -145,19 +615,50 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }
       }
 
-      var getId = "1";
+      function saveSaludo(event){
+        var getChanges = editor.composer.iframe.contentDocument.body.innerHTML;
+        document.getElementById('saludo-assistant').value = getChanges;
+        postMsg({saludo:getChanges});
+      }
+
+      function closeDialogW(event){
+        editor.textareaElement.innerHTML = '';
+        editor.composer.iframe.contentDocument.body.innerHTML = '';
+      }
+
+      function openSaludo(event){
+        var getValue = $(event).val();
+        if (!editor) {
+          editor = new wysihtml5.Editor('textarea', {
+            toolbar     : 'toolbar',
+            stylesheets : '../assets/css/main.css',
+            parserRules : wysihtml5ParserRules
+          });
+        }
+        editor.textareaElement.innerHTML = getValue;
+        editor.composer.iframe.contentDocument.body.innerHTML = getValue;
+        $('#myModalWysiwygSaludo').modal({
+          backdrop: 'static',
+          keyboard: false,
+          show: true
+        });
+
+      }
 
       function changeText(el){
         var getText = $(el).val(),
           elem = el;
-        if(elem.id == 'title-assistant'){
-          postMsg({title:getText});
-          //- $('.assistant .titles div').text(getText);
-        } else {
-          postMsg({subtitle:getText});
-          //- $('.assistant .titles span').text(getText);
+        switch(elem.id){
+          case "title-assistant":
+            postMsg({title:getText});
+            break;
+          case "subtitle-assistant":
+            postMsg({subtitle:getText});
+            break;
+          case "saludo-assistant":
+            postMsg({saludo:getText});
+            break;
         }
-
       }
 
       var uploadImgLogo   = '';
@@ -307,6 +808,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         $('#color-buttons, .assistant .send').css("background-color", customParams.colorBtn);
         $('#logotipo img').attr('src', customParams.logo);
         $('#avatar img').attr('src', customParams.avatar);
+        document.getElementById('title-assistant').value = customParams.titulo;
+        document.getElementById('subtitle-assistant').value = customParams.subtitulo;
         loadAll = loadAll + 1;
         if(loadAll===2){
           spinnerOut('#custom');
@@ -324,8 +827,6 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
       window.onload = function() {
         init();
-        //getCustomParams();
-        var getSession = "1";
         $('#assistant-iframe').attr('src', getPath+'asistente/');
       }
 
@@ -335,19 +836,18 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         var getTitle       = document.getElementById('title-assistant').value;
         var getSubTitle    = document.getElementById('subtitle-assistant').value;
         var colorHeader    = document.getElementById('color-header').value;
-        var colorBuble     = document.getElementById('color-bubble').value;
         var colorButtons   = document.getElementById('color-buttons').value;
         var imgLogo        = $('#logotipo img').attr('src');
         var imgAvatar      = $('#avatar img').attr('src');
         var saludo         = document.getElementById('saludo-assistant').value;
-        if(getTitle == '' || getSubTitle == '' || colorHeader == '' || colorBuble == '' || colorButtons == '' || saludo == '') {
+        if(getTitle == '' || getSubTitle == '' || colorHeader == '' || colorButtons == '' || saludo == '') {
           openModal('#myModal', 'Lo sentimos', 'Debes completar todos los campos', 'error');
         } else {
           var args = {
             titulo: getTitle,
             subtitulo: getSubTitle,
             color_fondo: colorHeader,
-            color_fondo_chat: colorBuble,
+            color_fondo_chat: "",
             color_btn: colorButtons,
             id_empresa: getId,
             logo: imgLogo,
@@ -367,15 +867,6 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           }).done(function(response){
             if(response.status == 200){
               openModal('#myModal', 'Genial!', 'Tu asistente se ha personalizado con éxito', 'success');
-              //- localStorage.setItem('avatarAssistant', uploadImgLogo);
-              //- localStorage.setItem('logoAssistant', uploadImgAvatar);
-              //- localStorage.setItem('colorHeader', colorHeader);
-              //- localStorage.setItem('colorBubble', colorBuble);
-              //- localStorage.setItem('colorButtons', colorButtons);
-              //- localStorage.setItem('subTitleAssistant', getSubTitle);
-              //- localStorage.setItem('titleAssistant', getTitle);
-              //getCustomParams();
-              //getDemo.src = getDemo.src;
             } else {
               openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
             }

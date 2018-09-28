@@ -1,4 +1,4 @@
-.f-col.menu(heightfull padding)
+.f-col.menu.active(heightfull padding)
   .header
     .f-row.align-center
       .f-col.cognitiva-logo
@@ -14,30 +14,30 @@
         i.fa.fa-paint-brush(aria-hidden="true")
         | Personalizar Asistente
     li
-      a(href=myPath +'/r-indicadores/')
+      a(href=myPath +'/indicadores/')
         i.fa.fa-bar-chart(aria-hidden="true")
         | Indicadores
-      //- ul.sub-menu
-      //-   li
-      //-     a(href=myPath +'/indicadores/interacciones/')
-      //-       i.fa.fa-caret-right(aria-hidden="true")
-      //-       | Interacciones
-      //-   li
-      //-     a(href=myPath +'/indicadores/valoraciones/')
-      //-       i.fa.fa-caret-right(aria-hidden="true")
-      //-       | Valoraciones
-      //-   li
-      //-     a(href=myPath +'/indicadores/origen/')
-      //-       i.fa.fa-caret-right(aria-hidden="true")
-      //-       | Origen
-      //-   li
-      //-     a(href=myPath +'/indicadores/nps/')
-      //-       i.fa.fa-caret-right(aria-hidden="true")
-      //-       | NPS
-      //-   li
-      //-     a(href=myPath +'/indicadores/me-gusta/')
-      //-       i.fa.fa-caret-right(aria-hidden="true")
-      //-       | Me Gusta
+      ul.sub-menu
+        li
+          a(href=myPath +'/indicadores/interacciones/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Interacciones
+        li
+          a(href=myPath +'/indicadores/origen/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Origen
+        li
+          a(href=myPath +'/indicadores/valoraciones/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Valoraciones
+        li
+          a(href=myPath +'/indicadores/nps/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | NPS
+        li
+          a(href=myPath +'/indicadores/me-gusta/')
+            i.fa.fa-caret-right(aria-hidden="true")
+            | Me gusta
     li#admin-users-btn
       a(href=myPath +'/administrador-usuarios/')
         i.fa.fa-users(aria-hidden="true")

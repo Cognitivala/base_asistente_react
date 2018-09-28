@@ -29,6 +29,8 @@ export function saludoStates(
       });
     case "SEND_SALUDO":
       return state.set('send',true);
+    case "UPDATE_SALUDO":
+      return state.setIn(['saludo','msg'],action.data);
     default:
       return state;
   }

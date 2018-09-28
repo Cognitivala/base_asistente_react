@@ -5,7 +5,8 @@
       editorNew = '',
       $document = $(document),
       estado = '',
-      getTkn = sessionStorage.getItem('tkn');
+      user = JSON.parse(sessionStorage.getItem('user')),
+      getTkn = user!==null?user.tkn:null;
   
   window.handler = function(){};
 
@@ -445,136 +446,7 @@
       
       promise.done(function (response) {
         if (response.status == '200') {
-          // console.log('getDialogs response', response);
           Main.listDialogs(response.data, null, $('#list-dialogs'));
-          // var html = '',
-          //     dialogs = response.data;
-          
-          // for (var i = 0; i < dialogs.length; i++){
-            
-          //   var htmlResponse = '';
-            
-          //   if (dialogs[i].output.hasOwnProperty('text')) {
-
-          //     if (dialogs[i].output.text.hasOwnProperty('values') == true) {
-
-          //       if (dialogs[i].output.text.values.length == 0) {
-          //         if (dialogs[i].title.substring(0, 1) == "+") {
-          //           htmlResponse += '<li class="response">';
-          //           htmlResponse += '<div class="data-response">';
-          //           if (response.data[i].output.text.values[j] == undefined) {
-          //             htmlResponse += '';
-          //           } else {
-          //             htmlResponse += response.data[i].output.text.values[j];
-          //           }
-          //           htmlResponse += '</div>';
-          //           htmlResponse += '</li>';
-          //         } else {
-          //           htmlResponse += '<li class="response">';
-          //           htmlResponse += '<div class="data-response">';
-          //           if (response.data[i].output.text.values[j] == undefined) {
-          //             htmlResponse += '';
-          //           } else {
-          //             htmlResponse += response.data[i].output.text.values[j];
-          //           }
-          //           htmlResponse += '</div>';
-          //           htmlResponse += '<ul class="menu-response">';
-          //           htmlResponse += '<li><a class="dialog-edit" href="#;" data-func="editDialogW"><i class="fa fa-pencil"></i></a></li>';
-          //           htmlResponse += '<li><a class="dialog-delete" href="#;" data-func="removeDialogW"><i class="fa fa-trash"></i></a></li>';
-          //           htmlResponse += '</ul>';
-          //           htmlResponse += '</li>';
-          //         }
-          //       } else {
-          //         for (var j = 0; j < dialogs[i].output.text.values.length; j++){
-          //           if (dialogs[i].title.substring(0, 1) == "+") {
-          //             htmlResponse += '<li class="response">';
-          //             htmlResponse += '<div class="data-response">';
-          //             if (dialogs[i].output.text.values[j] == undefined) {
-          //               htmlResponse += '';
-          //             } else {
-          //               htmlResponse += dialogs[i].output.text.values[j];
-          //             }
-          //             htmlResponse += '</div>';
-          //             htmlResponse += '</li>';
-          //           } else {
-          //             htmlResponse += '<li class="response">';
-          //             htmlResponse += '<div class="data-response">';
-          //             if (dialogs[i].output.text.values[j] == undefined) {
-          //               htmlResponse += '';
-          //             } else {
-          //               htmlResponse += dialogs[i].output.text.values[j];
-          //             }
-          //             htmlResponse += '</div>';
-          //             htmlResponse += '<ul class="menu-response">';
-          //             htmlResponse += '<li><a class="dialog-edit" href="#;" data-func="editDialogW"><i class="fa fa-pencil"></i></a></li>';
-          //             htmlResponse += '<li><a class="dialog-delete" href="#;" data-func="removeDialogW"><i class="fa fa-trash"></i></a></li>';
-          //             htmlResponse += '</ul>';
-          //             htmlResponse += '</li>';
-          //           }
-          //         }
-          //       }
-
-          //     } else {
-          //       htmlResponse += '<li class="response">';
-          //       htmlResponse += '<div class="data-response">';
-          //       if (dialogs[i].output.text == undefined) {
-          //         htmlResponse += '';
-          //       } else {
-          //         htmlResponse += dialogs[i].output.text;
-          //       }
-          //       htmlResponse += '</div>';
-          //       htmlResponse += '<ul class="menu-response">';
-          //       htmlResponse += '<li><a class="dialog-edit" href="#;" data-func="editDialogW"><i class="fa fa-pencil"></i></a></li>';
-          //       htmlResponse += '<li><a class="dialog-delete" href="#;" data-func="removeDialogW"><i class="fa fa-trash"></i></a></li>';
-          //       htmlResponse += '</ul>';
-          //       htmlResponse += '</li>';
-          //     }
-          //     if (dialogs[i].title.substring(0, 1) == "*") {
-          //       html += '';
-          //     } else if (dialogs[i].title.substring(0, 1) == "+") {
-          //       html += '<li class="parent" data-dialognode="'+ dialogs[i].dialog_node +'">';
-          //       html += ' <a class="title" href="#;" data-func="toggleAcc">';
-          //       html += '   '+ dialogs[i].title.substring(1) +' <i class="fa fa-angle-right" aria-hidden="true"></i>';
-          //       html += ' </a>';
-          //       html += ' <div class="dialog-content">';
-          //       html += '   <ul class="dialogs">';
-          //       html +=       htmlResponse;
-          //       html += '   </ul>';
-          //       html += ' </div>';
-          //       html += '</li>';
-          //     } else {
-          //       html += '<li class="parent" data-dialognode="'+ dialogs[i].dialog_node +'">';
-          //       html += ' <a class="title" href="#;" data-func="toggleAcc">';
-          //       html += '   '+ dialogs[i].title +' <i class="fa fa-angle-right" aria-hidden="true"></i>';
-          //       html += ' </a>';
-          //       html += ' <div class="dialog-content">';
-          //       html += '   <ul class="dialogs">';
-          //       html +=       htmlResponse;
-          //       html += '     <li class="response">';
-          //       html += '       <button button="button" button-mini="button-mini" secondary="secondary" data-func="newDialogW">Añadir respuesta <i class="fa fa-plus"></i></button>';
-          //       html += '     </li>';
-          //       html += '   </ul>';
-          //       html += ' </div>';
-          //       html += '</li>'; 
-          //     }
-          //   } else {
-          //     html += '<li class="parent" data-dialognode="'+ dialogs[i].dialog_node +'">';
-          //     html += ' <a class="title" href="#;" data-func="toggleAcc">';
-          //     html += '   '+ dialogs[i].title +' <i class="fa fa-angle-right" aria-hidden="true"></i>';
-          //     html += ' </a>';
-          //     html += ' <div class="dialog-content">';
-          //     html += '   <ul class="dialogs">';
-          //     html += '     <li class="response">';
-          //     html += '       <button button="button" button-mini="button-mini" secondary="secondary" data-func="newDialogW">Añadir respuesta <i class="fa fa-plus"></i></button>';
-          //     html += '     </li>';
-          //     html += '   </ul>';
-          //     html += ' </div>';
-          //     html += '</li>';
-          //   }
-          // }
-          // $container.html(html);
-          // self.eventsHandler($container.find('[data-func]'));
-          // $container.next('.spinner').remove();
         } else {
           console.log('error getting dialogs');
         }
@@ -874,7 +746,7 @@
       var self = this,
         responds = $('.dialogs.add-response .response').find('.data-response'),
         getParentND = $('.dialogs.add-response').parents('.parent').data('dialognode'),
-        userName = sessionStorage.getItem('user'),
+        userName = user.user,
         values = [];
       for (var i = 0; i < responds.length; i++) {
         var getHtml = responds[i].innerHTML;
@@ -1194,61 +1066,6 @@
         promise.done(function (response) {
           if (response.status == 200) {
             Main.listDialogs(response.data, $dialogNode, $item);
-
-            // var dialogs = response.data;
-
-            // if (response.data.length > 0) {
-            //   var html = '<ul class="list-dialogs">';
-            //   for(var i = 0; i < response.data.length; i++){
-            //     var htmlResponse = '';
-            //     if (dialogs[i].output.hasOwnProperty('text')) {
-            //       if (dialogs[i].output.text.hasOwnProperty('values') == true) {
-            //         for (var j = 0; j < response.data[i].output.text.values.length; j++){
-            //           htmlResponse += '<li class="response">';
-            //           htmlResponse += '<div class="data-response">';
-            //           htmlResponse += response.data[i].output.text.values[j];
-            //           htmlResponse += '</div>';
-            //           htmlResponse += '<ul class="menu-response">';
-            //           htmlResponse += '<li><a class="dialog-edit" href="#;" data-func="editDialogW"><i class="fa fa-pencil"></i></a></li>';
-            //           htmlResponse += '<li><a class="dialog-delete" href="#;" data-func="removeDialogW"><i class="fa fa-trash"></i></a></li>';
-            //           htmlResponse += '</ul>';
-            //           htmlResponse += '</li>';
-            //         }
-            //         html += '<li class="parent" data-dialognode="'+ response.data[i].dialog_node +'">';
-            //         html += ' <a class="title" href="#;" data-func="toggleAcc">';
-            //         html += '   '+ response.data[i].title +' <i class="fa fa-angle-right" aria-hidden="true"></i>';
-            //         html += ' </a>';
-            //         html += ' <div class="dialog-content">';
-            //         html += '   <ul class="dialogs">';
-            //         html +=       htmlResponse;
-            //         html += '     <li class="response">';
-            //         html += '       <button button="button" button-mini="button-mini" secondary="secondary" data-func="newDialogW">Añadir respuesta <i class="fa fa-plus"></i></button>';
-            //         html += '     </li>'
-            //         html += '   </ul>';
-            //         html += ' </div>';
-            //         html += '</li>';
-            //       }
-            //     } else {
-            //       html += '<li class="parent" data-dialognode="'+ response.data[i].dialog_node +'">';
-            //       html += ' <a class="title" href="#;" data-func="toggleAcc">';
-            //       html += '   '+ response.data[i].title +' <i class="fa fa-angle-right" aria-hidden="true"></i>';
-            //       html += ' </a>';
-            //       html += ' <div class="dialog-content">';
-            //       html += '   <ul class="dialogs">';
-            //       html += '     <li class="response"><div class="data-response"><p>Algo debería haber aquí :)</p></div></li>';
-            //       html += '     <li class="response">';
-            //       html += '       <button button="button" button-mini="button-mini" secondary="secondary" data-func="newDialogW">Añadir respuesta <i class="fa fa-plus"></i></button>';
-            //       html += '     </li>'
-            //       html += '   </ul>';
-            //       html += ' </div>';
-            //       html += '</li>';
-            //     }
-            //   }
-            //   html += '</ul>';
-            //   $getLi.find('.dialog-content').append(html);
-            //   self.eventsHandler($('[data-func]'));
-            // }
-
           }
         });
         $getLi.addClass('no-request');
@@ -1365,8 +1182,13 @@
   
   var Main = new window.handler(); 
   $document.ready(function () {
-    Main.onReadySetup();
-    Main.clearParams();
+    console.log('getTkn => ',getTkn)
+    if(getTkn!==null){
+      Main.onReadySetup();
+      Main.clearParams();
+    }else{
+      window.location.href = getPath + 'login';
+    }
   });
 
   $window.load(function () {

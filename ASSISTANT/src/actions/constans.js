@@ -1,0 +1,1 @@
+export const APIURL = "http://asistente_duoc.mycognitiva.io/mad";

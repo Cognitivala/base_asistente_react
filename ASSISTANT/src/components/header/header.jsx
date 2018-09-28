@@ -35,6 +35,7 @@ export default class Header extends Component {
         <img
           className="iframe-cognitive-assistant-container-header-image"
           src={this.props.logo}
+          alt={"Logo"}
         />
         <div className="iframe-cognitive-container-header-image-text-holder">
           <h3>{this.props.titulo}</h3>

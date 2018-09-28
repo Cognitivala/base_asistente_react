@@ -1,0 +1,251 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#" heightfull)
+  head
+    title NPS. MAD Cognitiva
+    
+    include ../../includes/meta.pug
+    script(src="https://www.gstatic.com/charts/loader.js")
+    link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
+
+  body.no-scroll(heightfull)
+  
+    #wrapper(heightfull)
+      .f-row(heightfull)
+        
+        include ../../includes/menu.pug
+
+        .f-col.content(padding heightfull)
+          
+          include ../../includes/user.pug
+          
+          .row
+            .col-md-12
+
+              h1.title-page NPS
+
+              .container-tabs
+
+                ul#tabs.nav.nav-tabs(role="tablist")
+                  li.active(role="presentation")
+                    a(href="#last-days" aria-controls="last-days" role="tab" data-toggle="tab")
+                      span Últimos 30 días
+                  li(role="presentation")
+                    a(href="#by-range" aria-controls="by-range" role="tab" data-toggle="tab")
+                      span Por rango
+
+                .tab-content.has-title
+                  #last-days.tab-pane.fade.in.active(role="tabpanel")
+                    .scroll
+                      .row
+                        .col-md-12
+                          form(onsubmit="event.preventDefault()")
+                            .row
+                              .col-md-3
+                                fieldset
+                                  .form-group
+                                    .input-group.date
+                                      input.date-picker-days#last30(type="text", data-date-end-date="0d", name="last30", placeholder="Seleccione",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              .col-md-3
+                                button.btn(button, onclick="getDateInput('last30', 'isn', 'last-days', '')") Filtrar
+                        .col-md-12
+                          .inner
+                            h5 NPS <b>últimos 30 días</b> <span></span>
+                            .row
+                              .col-md-5
+                                #promedio-isn.promedio-isn 0.0
+                              .col-md-7
+                                .row
+                                  .col-md-6
+                                    ul.circles-assessment
+                                      li.sat Promotores
+                                      li.neu Neutros
+                                      li.ins Detractores
+                                  .col-md-6
+                                    .assessment
+                                      .col-5.yellow 
+                                      .col-3.gray
+                                      .col-1.blue
+
+                      a.download-cvs(pull-right)
+                        | Descargar CSV
+                        i.fa.fa-file-excel-o(aria-hidden="true")
+
+                  #by-range.tab-pane.fade(role="tabpanel")
+                    .scroll
+                      .row
+                        .col-md-12
+                          form(onsubmit="event.preventDefault()")
+                            .row
+                              .col-md-3
+                                fieldset
+                                  .form-group
+                                    .input-group.date
+                                      input.date-picker-days#desde(type="text", data-date-end-date="0d", name="", placeholder="Seleccione desde",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              .col-md-3
+                                fieldset
+                                  .form-group
+                                    .input-group.date
+                                      input.date-picker-days#hasta(type="text", data-date-end-date="0d", name="", placeholder="Seleccione hasta",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              .col-md-3
+                                button.btn(button, onclick="getDateInput('desde', 'isn', 'by-range', '')") Filtrar
+                        .col-md-12
+                          .inner
+                            h5 NPS <b>entre fechas</b> <span></span>
+                            .row
+                              .col-md-5
+                                #promedio-isn.promedio-isn 0.0
+                              .col-md-7
+                                .row
+                                  .col-md-6
+                                    ul.circles-assessment
+                                      li.sat Promotores
+                                      li.neu Neutros
+                                      li.ins Detractores
+                                  .col-md-6
+                                    .assessment
+                                      .col-5.yellow 
+                                      .col-3.gray
+                                      .col-1.blue
+
+                      a.download-cvs(pull-right)
+                        | Descargar CSV
+                        i.fa.fa-file-excel-o(aria-hidden="true")
+
+    include ../../includes/modal.pug
+    include ../../includes/modal-script.pug
+
+    script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
+    script(type="text/javascript" src= myPath +'/assets/js/bootstrap-datepicker.js')
+    script(type="text/javascript" src= myPath +'/assets/js/date.js')
+    script(type="text/javascript" src= myPath +'/assets/js/main.js')
+    
+    script.
+      var d = new Date();
+      var e = new Date();
+          f = e.setDate(e.getDate() - 30);
+          g = new Date(f);
+
+      var month = new Array();
+      month[0] = "Enero";
+      month[1] = "Febrero";
+      month[2] = "Marzo";
+      month[3] = "Abril";
+      month[4] = "Mayo";
+      month[5] = "Junio";
+      month[6] = "Julio";
+      month[7] = "Agosto";
+      month[8] = "Septiembre";
+      month[9] = "Octubre";
+      month[10] = "Noviembre";
+      month[11] = "Diciembre";
+      var n = month[d.getMonth()];
+      var getSession = user.user_id,
+        getTkn = user.tkn;
+      
+      function getDateInput(input, type, tab, chartName){
+
+        var getInputVal   = document.getElementById(input).value,
+            getDesde      = document.getElementById('desde').value,
+            getHasta      = document.getElementById('hasta').value,
+            desdeDate     = new Date(getDesde),
+            hastaDate     = new Date(getHasta),
+            getDate       = new Date(getInputVal),
+            dateStart     = '',
+            dateEnd       = '',
+            getInputEnd   = document.getElementById('hasta').value;
+
+        var getMonth      = getDate.getMonth(),
+            getYear       = getDate.getFullYear();
+
+        var lastDay       = new Date(getYear, getMonth + 1, 0),
+            formatDate    = getDate.setDate(getDate.getDate() - 30),
+            getDateFormat = new Date(formatDate),
+            getDateFormat = getDateFormat.toISOString().substring(0,10);
+
+        var myResponse    = '';
+
+        if(tab == 'last-days'){
+          dateEnd = getInputVal;
+          dateStart = getDateFormat;
+          getInteractions(type, dateStart, dateEnd, getSession, chartName);
+        } else {
+          if(desdeDate >= hastaDate) {
+            $('#desde, #hasta').addClass('error');
+            $('#desde, #hasta').parent().find('.input-group-addon').addClass('error');  
+          } else {
+            $('#desde, #hasta').removeClass('error');
+            $('#desde, #hasta').parent().find('.input-group-addon').removeClass('error');
+            dateEnd = getHasta;
+            dateStart = getDesde;
+            getInteractions(type, dateStart, dateEnd, getSession, chartName);
+          }
+        }
+        return false;
+      }
+
+      $('.date-picker-days').datepicker({
+        language: 'es',
+        minViewMode: 'days'
+      });
+
+      function getInteractions(tipo, fechaIni, fechaFin, id, divId){
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+'mant/filtros',
+          data:  JSON.stringify(
+            {
+              tipo: tipo,
+              inicio: fechaIni,
+              fin: fechaFin,
+              id_cliente: id
+            }
+          ),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#'+divId).html('<p>No se han encontrado datos</p>');
+            return false;
+          }
+          createCSV(response.csv, 'nps');
+          var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
+          var totalISN = ((response.respuesta.promotores - response.respuesta.detractores) / totalAssessment) * 100;
+          var getPromoters = (100 * response.respuesta.promotores) / totalAssessment;
+          $('.col-5').css('height', getPromoters.toFixed(1)+'%');
+          $('.col-5').empty().text(getPromoters.toFixed(1)+'%');
+          var getNeutral = (100 * response.respuesta.neutros) / totalAssessment;
+          $('.col-3').css('height', getNeutral.toFixed(1)+'%');
+          $('.col-3').empty().text(getNeutral.toFixed(1)+'%');
+          var getDetractors = (100 * response.respuesta.detractores) / totalAssessment;
+          $('.col-1').css('height', getDetractors.toFixed(1)+'%');
+          $('.col-1').empty().text(getDetractors.toFixed(1)+'%');
+          $('.promedio-isn').empty().append(totalISN.toFixed(1)+'<span class="percentage">%</span>');
+        });
+      }
+
+      $('a[href="#by-range"]').on('shown.bs.tab', function (e) {
+        getInteractions('isn', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_by_range');
+      })
+
+      function initial(){
+        if(hasToken){
+          getInteractions('isn', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_div');
+        }else{
+          setTimeout(()=>{
+            initial();
+          },300);
+        }
+      }
+
+      initial();

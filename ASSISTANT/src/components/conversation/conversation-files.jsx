@@ -13,7 +13,7 @@ export default class ConversationFiles extends Component {
         return (
           <div style={style} className="bubble-file img" key={i}>
             <a href={map} target="_blank">
-              <img src={map} />
+              <img src={map} alt={"Respuesta"}/>
             </a>
           </div>
         );

@@ -605,6 +605,7 @@ select {
     bottom: 0;
     width: 100%;
     border-top: 1px solid $border-color;
+    background: #f7f7f7;
 }
 
 .form-wrapp {
@@ -952,6 +953,18 @@ select {
     }
 }
 
+.likes {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+    justify-content: center;
+    button{
+        border: 0 none;
+        margin-left: 10px;
+        padding: 10px 20px;
+    }
+}
+
 .response-img {
     display: inline-block;
     vertical-align: top;
@@ -1078,9 +1091,11 @@ select {
 .loader {
     text-align: center; // width:100px;
     position: absolute;
-    bottom: 10px;
-    left: 16px;
-    right: 16px;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    left: 0;
+    padding-top: 15px;
     .dot {
         display: inline-block;
         width: 8px;
@@ -2378,7 +2393,7 @@ table {
                     padding-left: 20px;
                 }
                 p {
-                    font-size: 14px;
+                    font-size: 13px;
                     padding: 5px 15px 10px 15px;
                     margin-bottom: 0;
                 }

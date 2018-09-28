@@ -27,14 +27,13 @@ export default class Input extends Component {
         hrefLast = href.substring(href.length - 13, href.length),
         input = this.input.current;
       if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
-        input !== null ? input.focus() : null;
+        if(input !== null) input.focus();
     }, 300);
   }
 
   updateMsg(event) {
     const start = event.target.selectionStart,
-      end = event.target.selectionEnd,
-      msg = event.target.value;
+      end = event.target.selectionEnd;
     this.setState({
       start,
       end

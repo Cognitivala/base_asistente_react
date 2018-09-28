@@ -9,6 +9,7 @@ import ConversationMultiButtons from "./conversation-multi-buttons";
 import ConversationCalendar from "./conversation-calendar";
 import ConversationFiles from "./conversation-files";
 import ConversationAttach from "./conversation-attach";
+import ConversationLikes from "./conversation-likes";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -87,6 +88,7 @@ export default class Conversations extends Component {
           datepicker = conversation.get("datepicker"),
           files = conversation.get("files"),
           attach = conversation.get("attach"),
+          like = conversation.get("like"),
           map = {
             buttons: buttons !== undefined ? buttons.toJS() : buttons,
             selects: selects !== undefined ? selects.toJS() : selects,
@@ -99,7 +101,8 @@ export default class Conversations extends Component {
             form: form !== undefined ? form : form,
             datepicker: datepicker !== undefined ? datepicker : datepicker,
             files: files !== undefined ? files : files,
-            attach: attach !== undefined ? attach.toJS() : attach
+            attach: attach !== undefined ? attach.toJS() : attach,
+            like: like !== undefined ? like : like,
           };
         if (largo === i) map.general = conversation.get("general").toJS();
         hc.push(map);
@@ -167,10 +170,12 @@ export default class Conversations extends Component {
           liftUp = conversation.get("liftUp"),
           files = conversation.get("files"),
           attach = conversation.get("attach"),
+          like = conversation.get("like"),
           last = j + 1 === sizeConversation ? true : false,
           animation = last ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
         if (msg !== undefined) {
+          const {sendLike} = this.props;
           retorno.push(
             <ConversationMsg
               key={j}
@@ -180,6 +185,9 @@ export default class Conversations extends Component {
               send={send}
               userImg={userImg}
               colorHeader={colorHeader}
+              like={like}
+              last={last}
+              sendLike={sendLike}
             />
           );
         }
@@ -271,71 +279,80 @@ export default class Conversations extends Component {
         }
 
         //Sólo si es la última conversación y tiene para levantar modal
-        if (last && liftUp !== undefined) {
-          switch (liftUp) {
-            case "valoracion":
-              const { valoracionStates } = this.props,
-                enabledValoracion = valoracionStates.get("enabled");
-              if (enabledValoracion) {
+        if (last){
+          if (liftUp !== undefined) {
+            switch (liftUp) {
+              case "valoracion":
+                const { valoracionStates } = this.props,
+                  enabledValoracion = valoracionStates.get("enabled");
+                if (enabledValoracion) {
+                  const {
+                    setStar,
+                    setOverStar,
+                    setPudoResolverValoracion,
+                    sendValoracion,
+                    setCommentValoracion,
+                    setErrorValoracion,
+                    closeValoracion,
+                    generalStates,
+                    customParamsStates
+                  } = this.props;
+                  retorno.push(
+                    <Valoracion
+                      key={j}
+                      generalStates={generalStates}
+                      setErrorValoracion={setErrorValoracion}
+                      sendValoracion={sendValoracion}
+                      valoracionStates={valoracionStates}
+                      setStar={setStar}
+                      setOverStar={setOverStar}
+                      setCommentValoracion={setCommentValoracion}
+                      setPudoResolverValoracion={setPudoResolverValoracion}
+                      closeValoracion={closeValoracion}
+                      customParamsStates={customParamsStates}
+                    />
+                  );
+                }
+                break;
+              case "form":
                 const {
-                  setStar,
-                  setOverStar,
-                  setPudoResolverValoracion,
-                  sendValoracion,
-                  setCommentValoracion,
-                  setErrorValoracion,
-                  closeValoracion,
-                  generalStates
-                } = this.props;
-                retorno.push(
-                  <Valoracion
-                    key={j}
-                    generalStates={generalStates}
-                    setErrorValoracion={setErrorValoracion}
-                    sendValoracion={sendValoracion}
-                    valoracionStates={valoracionStates}
-                    setStar={setStar}
-                    setOverStar={setOverStar}
-                    setCommentValoracion={setCommentValoracion}
-                    setPudoResolverValoracion={setPudoResolverValoracion}
-                    closeValoracion={closeValoracion}
-                    customParamsStates={customParamsStates}
-                  />
-                );
-              }
-              break;
-            case "form":
-              const {
-                  formularioStates,
-                  closeForm,
-                  generalStates,
-                  attachFileForm,
-                  sendForm,
-                  deleteFileForm,
-                  customParamsStates
-                } = this.props,
-                enabledFormulario = formularioStates.get("enabled"),
-                form = conversation.get("form");
-
-              if (enabledFormulario) {
-                retorno.push(
-                  <Formulario
-                    key={j}
-                    formularioStates={formularioStates}
-                    form={form}
-                    general={generalStates}
-                    closeForm={closeForm}
-                    colorHeader={colorHeader}
-                    sendForm={sendForm}
-                    attachFileForm={attachFileForm}
-                    deleteFileForm={deleteFileForm}
-                    customParamsStates={customParamsStates}
-                  />
-                );
-              }
-              break;
-            default:
-              break;
+                    formularioStates,
+                    closeForm,
+                    generalStates,
+                    attachFileForm,
+                    sendForm,
+                    deleteFileForm,
+                    customParamsStates
+                  } = this.props,
+                  enabledFormulario = formularioStates.get("enabled"),
+                  form = conversation.get("form");
+  
+                if (enabledFormulario) {
+                  retorno.push(
+                    <Formulario
+                      key={j}
+                      formularioStates={formularioStates}
+                      form={form}
+                      general={generalStates}
+                      closeForm={closeForm}
+                      colorHeader={colorHeader}
+                      sendForm={sendForm}
+                      attachFileForm={attachFileForm}
+                      deleteFileForm={deleteFileForm}
+                      customParamsStates={customParamsStates}
+                    />
+                  );
+                }
+                break;
+              default:
+                break;
+            }
+          }
+          else if(like !== undefined) {
+            const { sendLike } = this.props;
+            retorno.push(
+              <ConversationLikes key={ j * 33 } sendLike={sendLike} colorHeader={colorHeader}/>
+            )
           }
         }
       }

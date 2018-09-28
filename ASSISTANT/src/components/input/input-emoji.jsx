@@ -37,8 +37,10 @@ export default class InputEmoji extends Component {
       enableEmoji: !this.state.enableEmoji
     });
     setTimeout(() => {
-      input !== null ? input.click() : null;
-      input !== null ? input.focus() : null;
+      if(input !== null){
+        input.click();
+        input.focus();
+      }
     }, 300);
   }
 
@@ -100,7 +102,7 @@ export default class InputEmoji extends Component {
   }
 }
 
-// InputEmoji.propTypes = {
-//   generalStates: PropTypes.any.isRequired,
-//   attachFile: PropTypes.func.isRequired
-// };
+InputEmoji.propTypes = {
+  start: PropTypes.number.isRequired,
+  end: PropTypes.number.isRequired
+};

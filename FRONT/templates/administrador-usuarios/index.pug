@@ -46,15 +46,10 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     script(type="text/javascript" src= myPath + '/assets/js/main.js')
     script.
       
-      var getPrf = sessionStorage.getItem('prf'),
-          getSession = "1",
-          getTkn = sessionStorage.getItem('tkn');
-      
       if(getPrf < 2) {
         function showTooltip(){
           $('[data-toggle="tooltip"]').tooltip({trigger: "hover"});
         }
-        showTooltip();
         
         function listUsers() {
 
@@ -163,7 +158,6 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           //- };
 
         }
-        listUsers();
 
         function validateEmail(email) {
           var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -209,7 +203,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             var emailfield  = document.getElementById('user-mail');
             emailfield.setCustomValidity("Complete el campo correspondiente");
           }
-          if(getEmailVal.trim() != '' && getEmailVal.lenght > 45 && getNameVal.trim() != ''  && getNameVal.lenght > 45&& getSelect == true && validateEmail(getEmailVal) == true){
+          if(getEmailVal.trim() != '' && getEmailVal.length <= 45 && getNameVal.trim() != ''  && getNameVal.length <= 45 && getSelect == true && validateEmail(getEmailVal) == true){
             if(getProfileVal == 1){
               addValProfile = 'Editor';
             } else {
@@ -246,13 +240,16 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 dataType: 'json',
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
-                console.log(response)
                 if(response.status  == '200' && response.estado == undefined){
                   //- console.log(response);
                   openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
-                  $('tr.action td:nth-child(1)').text(getNameVal);
-                  $('tr.action td:nth-child(2)').text(getEmailVal);
-                  $('tr.action td:nth-child(3)').text(addValProfile);
+                  var table = document.getElementById('users-list').getElementsByTagName('TABLE')[0],
+                    rows = table.getElementsByTagName('TBODY')[0].getElementsByTagName('TR'),
+                    lastRow = rows[rows.length - 1],
+                    columnas = lastRow.getElementsByTagName('TD');
+                  columnas[0].innerText = getNameVal;
+                  columnas[1].innerText = getEmailVal;
+                  columnas[2].innerText = addValProfile;
                 }else{
                   openCustomModal('#myModal', 'Ups!', 'No se ha podido editar el usuario', 'error');
                 }
@@ -351,6 +348,19 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             ev.preventDefault();
           }
         });
+
+        function initial(){
+          if(hasToken){
+            showTooltip();
+            listUsers();
+          }else{
+            setTimeout(()=>{
+              initial();
+            },300);
+          }
+        }
+
+        initial();
 
       } else {
         window.location.href = getPath;

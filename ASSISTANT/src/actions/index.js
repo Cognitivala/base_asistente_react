@@ -1,6 +1,6 @@
 import axios, { post } from "axios";
 import Geocode from "react-geocode";
-const APIURL = "http://asistente-react.mycognitiva.io/mad";
+import {APIURL} from "./constans";
 
 //GENERAL
 function defaultGeneral() {
@@ -175,7 +175,7 @@ export function getSaludo() {
       },
       err => {
         dispatch(
-          getSaludoEnd("Error de conexión con el servidor, intente nuevamente")
+          getSaludoError("Error de conexión con el servidor, intente nuevamente")
         );
       }
     );
@@ -201,6 +201,12 @@ function getSaludoError(error) {
   return {
     type: "GET_SALUDO_ERROR",
     error
+  };
+}
+export function updateSaludo(data) {
+  return function action(dispatch) {
+    dispatch({ type: "UPDATE_SALUDO", data:[data] });
+    dispatch({ type: "UPDATE_SALUDO_CONVERSATION", data:[data] });
   };
 }
 //ASSISTANT
@@ -430,7 +436,8 @@ export function updateConversation(data) {
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
       //8 = MULTIMSG
-      switch (8) {
+      //9 = 
+      switch (9) {
         case 1:
           data = {
             general: {
@@ -613,6 +620,20 @@ export function updateConversation(data) {
               location: null
             },
             msg: ["lorem ipsum","lorem ipsum","lorem ipsum","lorem ipsum"]
+          };  
+        case 9:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola soy una respuesta con me gusta"],
+            like: true
           };
           break;
       }
@@ -1095,6 +1116,17 @@ export function closeValoracion(data) {
     );
   };
 }
+//LIKE
+export function sendLike(data) {
+  debugger
+  console.log('sendLike')
+  setTimeout(() => {
+    
+  }, 400);
+  // return function action(dispatch) {
+
+  // };
+}
 //FORM
 export function closeForm(data) {
   return function action(dispatch) {
@@ -1130,7 +1162,6 @@ export function closeForm(data) {
     );
   };
 }
-
 export function sendForm(data, url) {
   return function action(dispatch) {
     dispatch({ type: "SEND_FORM_START" });
