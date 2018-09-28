@@ -1,6 +1,6 @@
 var $ = jQuery,
   user = JSON.parse(sessionStorage.getItem("user")),
-  getPath = "http://asistente_duoc.mycognitiva.io/",
+  getPath = "http://asistente-react.mycognitiva.io/",
   // getPath = "http://localhost:3000/",
   getTkn = user !== null ? user.tkn : user,
   getPrf = user !== null ? user.prf : user,
