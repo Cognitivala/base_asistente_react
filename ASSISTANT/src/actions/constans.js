@@ -1,1 +1,1 @@
-export const APIURL = "https://asistente-duoc.mycognitiva.io/mad";
+export const APIURL = "https://asistente-react.mycognitiva.io/mad";

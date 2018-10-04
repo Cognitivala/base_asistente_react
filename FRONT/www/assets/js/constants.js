@@ -1,1 +1,1 @@
-const getPath = "https://asistente-duoc.mycognitiva.io/";
+const getPath = "https://asistente-react.mycognitiva.io/";
