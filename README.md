@@ -2,8 +2,8 @@
 # DEV
 
 ## URLS
-- BACKEND : URL: http://asistente-react.mycognitiva.io/mad
-- MANTENEDOR :  URL: http://asistente-react.mycognitiva.io/mant
+- BACKEND : URL: http://asistente_duoc.mycognitiva.io/mad
+- MANTENEDOR :  URL: http://asistente_duoc.mycognitiva.io/mant
 
 ## CONVERSATION
 - CHITCHAT: 
@@ -30,9 +30,9 @@
 # DEV
 
 ## URLS
-- ASISTENTE : URL: http://asistente-react.mycognitiva.io/asistente/
-- MANTENEDOR :  URL: http://asistente-react.mycognitiva.io/
-- CDN :  URL: http://asistente-react.mycognitiva.io/cdn/
+- ASISTENTE : URL: http://asistente_duoc.mycognitiva.io/asistente/
+- MANTENEDOR :  URL: http://asistente_duoc.mycognitiva.io/
+- CDN :  URL: http://asistente_duoc.mycognitiva.io/cdn/
 
 ## JENKINS 
 - ASISTENTE: PROD_AR_ASISTENTE

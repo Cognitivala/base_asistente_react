@@ -302,7 +302,7 @@
                 var newWindow = targetInput.prop("checked");
                 self.editor.composer.commands.exec("createLink", {
                     'href' : url,
-                    'target' : (newWindow ? '_blank' : '_self'),
+                    'target' : '_blank',
                     'rel' : (newWindow ? 'nofollow' : '')
                 });
             };
@@ -438,7 +438,7 @@
                 "a":  {
                     check_attributes: {
                         'href': "url", // important to avoid XSS
-                        'target': 'alt',
+                        'target': '_blank',
                         'rel': 'alt'
                     }
                 },

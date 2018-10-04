@@ -1,13 +1,21 @@
 var $ = jQuery,
-  user = JSON.parse(sessionStorage.getItem("user")),
-  getPath = "http://asistente-react.mycognitiva.io/",
-  // getPath = "http://localhost:3000/",
-  getTkn = user !== null ? user.tkn : user,
-  getPrf = user !== null ? user.prf : user,
+  userAES = sessionStorage.getItem("user"),
+  userBytes  = null,
+  user = null,
+  getTkn = null,
+  getPrf = null,
   getSession = "1",
-  hasToken = false;
+  hasToken = false,
+  KEY_ENCRYPT = "711fd53d4faeec31a1e779d2eab9a02b";
+  
+  if(userAES!==null){
+    userBytes  = CryptoJS.AES.decrypt(userAES, KEY_ENCRYPT);
+    user = JSON.parse(userBytes.toString(CryptoJS.enc.Utf8));
+    getTkn = user !== null ? user.tkn : user;
+    getPrf = user !== null ? user.prf : user;
+  }
 
-function initMain() {
+function initMain() {  
   if (validateUser()) {
     isToken();
     uri();
@@ -37,8 +45,9 @@ function isToken() {
     n = d.getTime(),
     getNow = new Date(n),
     convTimeTnk = new Date(getTimeTkn + 120000),
-    // sessTimeTkn = new Date(getRfTimeTkn + 1.8e6);
-    sessTimeTkn = new Date(getRfTimeTkn);
+    sess = new Date(getRfTimeTkn);
+  sess = sess.setMinutes(sess.getMinutes()+4);
+  var sessTimeTkn = new Date(sess);
 
   if (sessTimeTkn < getNow) {
     if (convTimeTnk < getNow) {
@@ -60,7 +69,8 @@ function isToken() {
           user.rftkn = response.refresh_token;
           user.tmtkn = n;
           getTkn = user.tkn;
-          sessionStorage.setItem("user", JSON.stringify(user));
+          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(user), KEY_ENCRYPT).toString();
+          sessionStorage.setItem("user", ciphertext);
           setRequest();
           hasToken = true;
           return true;
@@ -68,7 +78,10 @@ function isToken() {
           hasToken = false;
           return false;
         }
-      });
+      }).error(((err)=>{
+        window.location.href = getPath + "login";
+        console.log(err.msg);
+      }));
     } else {
       hasToken = true;
       return true;
@@ -93,9 +106,8 @@ function isPass() {
 function validateUser() {
   if (user === undefined || user === null) {
     return false;
-  } else {
-    return true;
   }
+  return true;
 }
 
 function fillUser() {
@@ -145,8 +157,10 @@ function menu() {
 }
 
 function openScript() {
-  var customs = JSON.parse(localStorage.getItem("customParams")),
-    getUrl = customs.url;
+  let customs = localStorage.getItem("customParams"),
+    bytes  = CryptoJS.AES.decrypt(customs, KEY_ENCRYPT),
+    decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    getUrl = decryptedData.url;
   if (getUrl != "") {
     var setScript =
       '&lt;script type="text/javascript" src="' +

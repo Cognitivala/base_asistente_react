@@ -1,6 +1,8 @@
 import axios, { post } from "axios";
 import Geocode from "react-geocode";
-import {APIURL} from "./constans";
+import { APIURL } from "./constans";
+import AES from "crypto-js/aes";
+import { KEY_ENCRYPT } from "./key-encrypt";
 
 //GENERAL
 function defaultGeneral() {
@@ -13,6 +15,12 @@ function setGeneral(data) {
     type: "SET_GENERAL",
     data
   };
+}
+function setNodoId(data){
+  return{
+    type: "SET_NODO_ID",
+    data
+  }
 }
 export function getLocation() {
   return function action(dispatch) {
@@ -73,16 +81,17 @@ export function getCustomParams() {
         "Content-Type": "application/json"
       },
       url: APIURL + "/customize_param",
-      data: {id_cliente:"1"}
+      data: { id_cliente: "1" }
     });
     return request.then(
       response => {
         if (response.status === 200) {
           dispatch(getCustomParamsEnd(response.data));
-          window.top.postMessage({customParams:response.data}, "*");
+          let str_md5v = AES.encrypt(JSON.stringify(response.data),KEY_ENCRYPT).toString();
+          localStorage.setItem("customParams", str_md5v);
+          window.top.postMessage({ customParams: response.data }, "*");
         } else {
           dispatch(getCustomParamsError(response.statusText));
-
         }
       },
       err => {
@@ -168,6 +177,7 @@ export function getSaludo() {
           item.send = "from";
           item.enabled = true;
           dispatch(pushConversation(item));
+          dispatch(setNodoId( item.msg[item.msg.length - 1]));
           dispatch(getSaludoEnd(item));
         } else {
           dispatch(getSaludoError(response.statusText));
@@ -175,7 +185,9 @@ export function getSaludo() {
       },
       err => {
         dispatch(
-          getSaludoError("Error de conexión con el servidor, intente nuevamente")
+          getSaludoError(
+            "Error de conexión con el servidor, intente nuevamente"
+          )
         );
       }
     );
@@ -205,8 +217,8 @@ function getSaludoError(error) {
 }
 export function updateSaludo(data) {
   return function action(dispatch) {
-    dispatch({ type: "UPDATE_SALUDO", data:[data] });
-    dispatch({ type: "UPDATE_SALUDO_CONVERSATION", data:[data] });
+    dispatch({ type: "UPDATE_SALUDO", data: [data] });
+    dispatch({ type: "UPDATE_SALUDO_CONVERSATION", data: [data] });
   };
 }
 //ASSISTANT
@@ -250,7 +262,7 @@ export function getAyuda() {
     });
     return request.then(
       response => {
-        console.log(response)
+        console.log(response);
         if (response.data.estado.codigoEstado === 200) {
           dispatch(getAyudaEnd(response.data.respuesta));
         } else {
@@ -259,9 +271,7 @@ export function getAyuda() {
       },
       err => {
         dispatch(
-          getAyudaError(
-            "Error de conexión con el servidor, intente nuevamente"
-          )
+          getAyudaError("Error de conexión con el servidor, intente nuevamente")
         );
       }
     );
@@ -395,7 +405,6 @@ export function updateConversation(data) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
 
-
     const request = axios({
       method: "POST",
       headers: {
@@ -406,10 +415,11 @@ export function updateConversation(data) {
     });
     return request.then(
       response => {
-        if (response.status === 200) {
+        if (response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = "from";
           item.enabled = true;
+          dispatch(setNodoId( item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
         } else {
           dispatch(updateConversationError(response.statusText));
@@ -424,7 +434,6 @@ export function updateConversation(data) {
       }
     );
 
-
     //Respuesta
     setTimeout(() => {
       const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
@@ -436,7 +445,7 @@ export function updateConversation(data) {
       //5 = MSG + Multibutton
       //6 = MSG + Datepicker
       //8 = MULTIMSG
-      //9 = 
+      //9 =
       switch (9) {
         case 1:
           data = {
@@ -619,8 +628,8 @@ export function updateConversation(data) {
               token: null,
               location: null
             },
-            msg: ["lorem ipsum","lorem ipsum","lorem ipsum","lorem ipsum"]
-          };  
+            msg: ["lorem ipsum", "lorem ipsum", "lorem ipsum", "lorem ipsum"]
+          };
         case 9:
           data = {
             general: {
@@ -696,58 +705,68 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-  return function action(dispatch) {
-    dispatch(setGeneral(data.general));
-    dispatch(pushConversation(data));
-    const request = axios({
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      url: APIURL + "/message",
-      data: data
-    });
-    return request.then(
-      response => {
-        if (response.status === 200) {
-          let item = response.data;
-          item.send = "from";
-          item.enabled = true;
-          messageResponse(dispatch, item);
-        } else {
-          dispatch(updateConversationError(response.statusText));
-        }
-      },
-      err => {
-        dispatch(
-          updateConversationError(
-            "Error de conexión con el servidor, intente nuevamente"
-          )
-        );
-      }
-    );
-  };
+  // return function action(dispatch) {
+  //   dispatch(setGeneral(data.general));
+  //   dispatch(pushConversation(data));
+  //   const request = axios({
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     },
+  //     url: APIURL + "/message",
+  //     data: data
+  //   });
+  //   return request.then(
+  //     response => {
+  //       if (response.status === 200) {
+  //         let item = response.data;
+  //         item.send = "from";
+  //         item.enabled = true;
+  //         messageResponse(dispatch, item);
+  //       } else {
+  //         dispatch(updateConversationError(response.statusText));
+  //       }
+  //     },
+  //     err => {
+  //       dispatch(
+  //         updateConversationError(
+  //           "Error de conexión con el servidor, intente nuevamente"
+  //         )
+  //       );
+  //     }
+  //   );
+  // };
   switch (data.msg[0]) {
     case "siValorar":
       return function action(dispatch) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         setTimeout(() => {
-          let data = {
-            general: {
-              cid: "SOYELCID",
-              origen: "Sitio Público",
-              nodo_id: "node_3_1520961671401",
-              intent: "remanente",
-              auth: null,
-              token: null,
-              location: null
-            },
+          let _data = {
+            general: data.general,
             send: "from",
             enabled: true,
             liftUp: "valoracion"
           };
-          messageResponse(dispatch, data);
+          messageResponse(dispatch, _data);
+        }, 500);
+      };
+    case "noValorar":
+      return function action(dispatch) {
+        dispatch({ type: "DISABLED_VALORACION" });
+        dispatch(setGeneral(data.general));
+        dispatch(pushConversation(data));
+        setTimeout(() => {
+          let _data = {
+            general: data.general,
+            send: "from",
+            enabled: true,
+            msg: [
+              "Lamentamos que no quieras valorar",
+              "Recuerda que si vuelves a necesitar ayuda, estoy acá las 24 horas del día."
+            ]
+          };
+          messageResponse(dispatch, _data);
         }, 500);
       };
     case "siContacto":
@@ -931,24 +950,34 @@ export function updateConversationButton(data) {
       return function action(dispatch) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
-
-        setTimeout(() => {
-          let data = {
-            general: {
-              cid: "SOYELCID",
-              origen: "Sitio Público",
-              nodo_id: null,
-              intent: null,
-              auth: null,
-              token: null,
-              location: null
-            },
-            msg: ["Puedes preguntarme otra cosa..."],
-            send: "from",
-            enabled: true
-          };
-          messageResponse(dispatch, data);
-        }, 500);
+        const request = axios({
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          url: APIURL + "/message",
+          data: data
+        });
+        return request.then(
+          response => {
+            if (response.status === 200) {
+              let item = response.data;
+              item.send = "from";
+              item.enabled = true;
+              dispatch(setNodoId( item.msg[item.msg.length - 1]));
+              messageResponse(dispatch, item);
+            } else {
+              dispatch(updateConversationError(response.statusText));
+            }
+          },
+          err => {
+            dispatch(
+              updateConversationError(
+                "Error de conexión con el servidor, intente nuevamente"
+              )
+            );
+          }
+        );
       };
   }
 }
@@ -1047,27 +1076,27 @@ export function setErrorValoracion(data) {
     }, 4000);
   };
 }
-export function sendValoracion(data) {
+export function sendValoracion(data, general) {
   return function action(dispatch) {
     dispatch({ type: "SEND_VALORACION_START" });
-    dispatch(setGeneral(data.general));
-    dispatch(pushConversation(data));
     const request = axios({
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      url: APIURL + "/message",
+      url: APIURL + "/valorar",
       data: data
     });
     return request.then(
       response => {
-        if (response.status === 200) {
-          let item = response.data;
+        if (response.data.estado.codigoEstado === 200) {
+          let item = {};
+          item.msg = [response.data.respuesta]
           item.send = "from";
           item.enabled = true;
+          item.general = general;
           messageResponse(dispatch, item);
-          dispatch({type:"SEND_VALORACION_END"});
+          dispatch({ type: "SEND_VALORACION_END" });
         } else {
           dispatch(updateConversationError(response.statusText));
         }
@@ -1085,22 +1114,28 @@ export function sendValoracion(data) {
 export function closeValoracion(data) {
   return function action(dispatch) {
     dispatch({ type: "DISABLED_VALORACION" });
-    dispatch(setGeneral(data.general));
-    dispatch(pushConversation(data));
+    updateConversationButton(data);
+  };
+}
+//LIKE
+export function sendLike(data, general) {
+  return function action(dispatch){
     const request = axios({
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      url: APIURL + "/message",
+      url: APIURL + "/valorar",
       data: data
     });
     return request.then(
       response => {
-        if (response.status === 200) {
-          let item = response.data;
+        if (response.data.estado.codigoEstado === 200) {
+          let item = {};
+          item.msg = [response.data.respuesta]
           item.send = "from";
           item.enabled = true;
+          item.general = general;
           messageResponse(dispatch, item);
         } else {
           dispatch(updateConversationError(response.statusText));
@@ -1114,18 +1149,7 @@ export function closeValoracion(data) {
         );
       }
     );
-  };
-}
-//LIKE
-export function sendLike(data) {
-  debugger
-  console.log('sendLike')
-  setTimeout(() => {
-    
-  }, 400);
-  // return function action(dispatch) {
-
-  // };
+  }
 }
 //FORM
 export function closeForm(data) {
@@ -1143,10 +1167,11 @@ export function closeForm(data) {
     });
     return request.then(
       response => {
-        if (response.status === 200) {
+        if (response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = "from";
           item.enabled = true;
+          dispatch(setNodoId( item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
         } else {
           dispatch(updateConversationError(response.statusText));

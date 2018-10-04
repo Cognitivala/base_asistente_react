@@ -4,17 +4,16 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     
     include ../includes/meta.pug
 
-    script(type="text/javascript" src="http://asistente-react.mycognitiva.io/cdn/js/build/main.js")
+    script(type="text/javascript" src="/cdn/js/build/main.js")
     script.
       window.addEventListener('load', function () {
-        window.CognitiveAssistantMain.init('http://asistente-react.mycognitiva.io/asistente/');
+        window.CognitiveAssistantMain.init('/asistente/');
       });
 
   body.no-scroll.aui(heightfull)
     iframe#demo(src="", frameborder="0")
 
     script.
-      const customParams = JSON.parse(localStorage.getItem('customParams')),
-        url = customParams.url,
+      const url = localStorage.getItem('url'),
         getDemo = document.getElementById('demo');
       getDemo.src = url;

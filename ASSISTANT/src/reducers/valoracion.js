@@ -6,7 +6,7 @@ export function valoracionStates(
     enabled: false,
     stars: 0,
     comment: null,
-    pudoResolver: false,
+    pudoResolver: true,
     error: false,
     button: false,
     commentError: false,
@@ -25,7 +25,7 @@ export function valoracionStates(
           .set("enabled", false)
           .set("stars", 0)
           .set("comment", null)
-          .set("pudoResolver", false)
+          .set("pudoResolver", true)
           .set("error", false)
           .set("pudoResolverError", false)
           .set("commentError", false)
@@ -57,7 +57,7 @@ export function valoracionStates(
           .set("enabled", false)
           .set("stars", 0)
           .set("comment", null)
-          .set("pudoResolver", false)
+          .set("pudoResolver", true)
           .set("error", false)
           .set("pudoResolverError", false)
           .set("commentError", false)

@@ -3,7 +3,6 @@ import * as actions from "./actions/index";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
 import moment from "moment";
-
 import Launcher from "./components/launcher/launcher";
 import Assistant from "./components/assistant/assistant";
 
@@ -13,7 +12,6 @@ export class App extends Component {
     this.onMessageFunc = this.onMessageFunc.bind(this);
   }
   componentWillMount() {
-    console.log('will mount')
     moment.updateLocale("en", {
       months: [
         "Enero",

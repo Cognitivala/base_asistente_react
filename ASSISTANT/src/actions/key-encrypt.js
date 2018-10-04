@@ -1,0 +1,1 @@
+export const KEY_ENCRYPT = "711fd53d4faeec31a1e779d2eab9a02b";

@@ -5,12 +5,24 @@
       editorNew = '',
       $document = $(document),
       estado = '',
-      user = JSON.parse(sessionStorage.getItem('user')),
+      userAES = sessionStorage.getItem("user"),
+      userBytes  = CryptoJS.AES.decrypt(userAES, KEY_ENCRYPT),
+      user = JSON.parse(userBytes.toString(CryptoJS.enc.Utf8)),
       getTkn = user!==null?user.tkn:null;
   
   window.handler = function(){};
 
   window.handler.prototype = {
+    initMad: function(){
+      if(hasToken){
+        this.onReadySetup();
+        this.clearParams();
+      }else{
+        setTimeout(() => {
+          this.initMad();
+        }, 300);
+      }
+    },
     onReadySetup: function(){
       var self = this;
       self.$body = $('body');
@@ -1182,13 +1194,7 @@
   
   var Main = new window.handler(); 
   $document.ready(function () {
-    console.log('getTkn => ',getTkn)
-    if(getTkn!==null){
-      Main.onReadySetup();
-      Main.clearParams();
-    }else{
-      window.location.href = getPath + 'login';
-    }
+    Main.initMad();
   });
 
   $window.load(function () {

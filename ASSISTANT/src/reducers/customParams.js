@@ -30,7 +30,6 @@ export function customParamsStates(
     case "GET_CUSTOM_PARAMS_START":
       return state.set("isFetching", true);
     case "GET_CUSTOM_PARAMS_END":
-      localStorage.setItem('customParams',JSON.stringify(action.data));
       return state.withMutations(map => {
         map
           .set("isFetching", false)
@@ -66,7 +65,6 @@ export function customParamsStates(
         map.setIn(["customParams","avatar"],action.data);
       });
     case "SET_CUSTOM_PARAMS":
-      localStorage.setItem('customParams',action.data);
       return state.withMutations(map => {
         map
           .set("isFetching", false)

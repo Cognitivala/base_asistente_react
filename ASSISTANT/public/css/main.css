@@ -2217,7 +2217,7 @@ select {
   position: fixed;
   left: 0;
   right: 0;
-  top: 80px;
+  top: 0px;
   bottom: 0;
   overflow: hidden;
   opacity: 0;
@@ -2279,13 +2279,15 @@ select {
         font-weight: 300;
         position: relative; }
         .mymodal .container-form form .header p {
-          margin: 0; }
+          margin: 0;
+          font-size: 14px;
+          margin-bottom: 10px; }
           .mymodal .container-form form .header p.title {
-            margin-bottom: 16px;
+            margin-bottom: 5px;
             font-weight: bold;
-            font-size: 17px; }
+            font-size: 14px; }
         .mymodal .container-form form .header .icon {
-          margin: 0 auto 16px auto;
+          margin: 0 auto 0 auto;
           font-size: 24px; }
           .mymodal .container-form form .header .icon img {
             width: auto;
@@ -2304,15 +2306,16 @@ select {
             border: none;
             outline: 0; }
       .mymodal .container-form form .bkg-gray {
-        background: #f7f7f7;
         margin: 0 -32px 16px -32px;
-        padding: 16px 32px;
+        padding: 0px 32px 16px 32px;
         height: auto;
         opacity: 1;
         transition: opacity 300ms ease-in-out; }
         .mymodal .container-form form .bkg-gray fieldset legend {
           line-height: 1rem;
           text-align: center; }
+        .mymodal .container-form form .bkg-gray fieldset textarea#por-que {
+          margin-top: 10px; }
         .mymodal .container-form form .bkg-gray.inactive {
           height: 0px;
           opacity: 0;
@@ -2524,7 +2527,8 @@ select {
         display: block;
         position: relative;
         text-align: center;
-        margin-bottom: 16px; }
+        margin-bottom: 16px;
+        margin-top: 5px; }
         .mymodal .container-form form .ratingStars:after, .mymodal .container-form form .ratingStars:before {
           content: "";
           display: table;
@@ -2532,7 +2536,7 @@ select {
         .mymodal .container-form form .ratingStars a {
           color: #d3d4d3;
           display: inline-block;
-          width: 18%;
+          width: 14%;
           font-size: 22px;
           font-weight: normal;
           text-align: center; }
@@ -2540,7 +2544,6 @@ select {
             color: #d3d4d3; }
           .mymodal .container-form form .ratingStars a span {
             font-size: 0.6em;
-            margin-bottom: 10px;
             display: block;
             color: #666; }
       .mymodal .container-form form .round {
@@ -2846,7 +2849,8 @@ table {
   width: 100%;
   z-index: 999;
   background-color: #fff;
-  height: 100vh; }
+  height: 100vh;
+  left: 0; }
 
 .spinner {
   border-radius: 50%;
@@ -2976,12 +2980,11 @@ table {
     animation-duration: 1s;
     animation-fill-mode: both;
     border-radius: 24px 24px 0 24px;
-    color: #666;
-    font-family: "Lato"; }
-    #main-cognitive-assistant-container .cognitive-assistant-notification-container p {
+    line-height: 18px; }
+    #main-cognitive-assistant-container .cognitive-assistant-notification-container span {
       color: #666;
       font-family: "Lato", sans-serif;
-      font-size: 12px; }
+      font-size: 14px; }
     #main-cognitive-assistant-container .cognitive-assistant-notification-container .cognitive-assistant-notification-title {
       font: 300 12px "Lato", sans-serif;
       color: #333; }

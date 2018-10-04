@@ -1,0 +1,1 @@
+const getPath = "https://asistente-duoc.mycognitiva.io/";

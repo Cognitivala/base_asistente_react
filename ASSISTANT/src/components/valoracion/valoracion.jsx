@@ -18,36 +18,6 @@ export default class Valoracion extends Component {
     this.closeValoracion = this.closeValoracion.bind(this);
   }
 
-  //// VALORACION ////
-
-  //   sendValueMsg(yaVal, yaCont, yaSol, yaSum, msg) {
-  //     var args = {
-  //       cid: getCid,
-  //       msg: msg,
-  //       id_cliente: getSession,
-  //       token: getToken,
-  //       origen: origen,
-  //       yaValoro: yaVal,
-  //       yaContacto: yaCont,
-  //       yaSolicito: yaSol,
-  //       yaSuma: yaSum
-  //     }
-  //     var promise = $.ajax({
-  //       type: "POST",
-  //       url: this.ajaxCall,
-  //       crossDomain: true,
-  //       data: JSON.stringify(args),
-  //       contentType: "application/json",
-  //       dataType: "json"
-  //     });
-  //     promise.done(response => {
-  //       setTimeout(() => {
-  //         this.transversalResponseActions(response);
-  //       }, 500);
-  //     });
-  //   }
-  //// FIN VALORACION ////
-
   clickStar(e) {
     e.preventDefault();
     const _this = e.target.tagName === "I" ? e.target.closest("a") : e.target;
@@ -68,46 +38,32 @@ export default class Valoracion extends Component {
   }
 
   requestValue() {
-    const { valoracionStates, generalStates } = this.props,
+    const { valoracionStates, generalStates, conversationsStates } = this.props,
       general = generalStates.toJS(),
       comentario = valoracionStates.get("comment"),
       pudo_resolver = valoracionStates.get("pudoResolver") ? "Si" : "No",
-      valor = valoracionStates.get("stars"),
+      valoracion = valoracionStates.get("stars"),
+      conversaciones = conversationsStates.get('conversations'),
+      sizeConv = conversationsStates.get("conversations").size,
+      input = conversaciones.get(sizeConv-4).get("msg").get(0),
+      output =conversaciones.get(sizeConv-3).get("msg").get(0),
       args = {
-        general,
-        valoracion: {
-          comentario,
-          pudo_resolver,
-          valor
-        },
+        valoracion,
+        comentario,
+        origen: general.origen,
+        cid: general.cid,
+        nodo_id: general.nodo_id,
+        input,
+        output,
+        pudo_resolver,
         enabled: false
       };
-    this.props.sendValoracion(args);
-
-    // var promise = $.ajax({
-    //   type: "POST",
-    //   url: getPath + "mad/valorar",
-    //   crossDomain: true,
-    //   data: JSON.stringify(args),
-    //   contentType: "application/json",
-    //   dataType: "json"
-    // });
-
-    // promise.done(response => {
-    //   yaValoro = "True";
-    //   Main.sendValueMsg(yaValoro, yaContacto, yaSolicito, yaSuma, "No");
-    //   $("#modal-valoracion").removeClass("show");
-    //   modalOpen = false;
-    //   if (Main.inIframe() == true) {
-    //     Main.toggleActiveAyuda();
-    //   }
-    // });
+    this.props.sendValoracion(args, general);
   }
 
   closeValoracion(e) {
-    debugger
     const { generalStates } = this.props,
-      msg = e.target.dataset.msg,
+      msg = "noValorar",
       general = generalStates.toJS(),
       conversation = {
         general,
@@ -115,7 +71,7 @@ export default class Valoracion extends Component {
         send: "to",
         enabled: false
       };
-    this.props.closeValoracion(conversation);
+    this.props.updateConversationButton(conversation);
   }
 
   valorar(e) {
@@ -129,12 +85,13 @@ export default class Valoracion extends Component {
     if (!comment) {
       commentError = true;
     }
-    if (stars <= 3) {
-      if (!pudoResolver) {
-        pudoResolverError = true;
-      }
-    }
-    if (commentError || pudoResolverError) {
+    // if (stars <= 3) {
+    //   if (!pudoResolver) {
+    //     pudoResolverError = true;
+    //   }
+    // }
+    // if (commentError || pudoResolverError) {
+    if (commentError) {
       const data = {
         error: true,
         commentError,
@@ -147,7 +104,8 @@ export default class Valoracion extends Component {
   }
 
   setPudoResolver(e) {
-    this.props.setPudoResolverValoracion(e.target.value);
+    debugger
+    this.props.setPudoResolverValoracion(e.target.value==="si"?true:false);
   }
 
   setComment(e) {
@@ -233,6 +191,7 @@ Valoracion.propTypes = {
   setOverStar: PropTypes.func.isRequired,
   setCommentValoracion: PropTypes.func.isRequired,
   setPudoResolverValoracion: PropTypes.func.isRequired,
-  closeValoracion: PropTypes.func.isRequired,
-  customParamsStates: PropTypes.any.isRequired
+  updateConversationButton: PropTypes.func.isRequired,
+  customParamsStates: PropTypes.any.isRequired,
+  conversationsStates: PropTypes.any.isRequired
 };

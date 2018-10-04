@@ -18,11 +18,6 @@ html(lang="es-CL" dir="ltr" heightfull)
           .row
             .col-md-12
               .container-tabs
-                .test
-                  a(href="#;", onclick="openDemo(event)")
-                    | Demo
-                    i.fa.fa-rocket(aria-hidden="true")
-
                 ul#tabs.nav.nav-tabs(role="tablist")
                   li.active(role="presentation")
                     a(href="#" data-func="toggleTabs" data-index="0")
@@ -107,6 +102,7 @@ html(lang="es-CL" dir="ltr" heightfull)
     script(type="text/javascript" src="../assets/js/wysihtml5-0.3.0.min.js")
     script(type="text/javascript" src="../assets/js/bootstrap.min.js")
     script(type="text/javascript" src="../assets/js/bootstrap-wysihtml5.js")
+    script(type="text/javascript" src="../assets/js/crypto-js.min.js")
     script(type="text/javascript" src="../assets/js/main.js")
     script(type="text/javascript" src="../assets/js/main.mad.js")
 
@@ -1306,10 +1302,16 @@ html(lang="es-CL" dir="ltr" heightfull)
           }).done(function(response){
             if(response.estado.codigoEstado == '200'){
               openModal('#myModal', 'Genial!', 'La URL se ha agregado con éxito', 'success');
-              const customParams = JSON.parse(localStorage.getItem('customParams'));
-              customParams.url = getUrlVal;
-              localStorage.setItem('customParams', customParams);
+
+              const customParams = localStorage.getItem('customParams');
+              // Decrypt
+              var bytes  = CryptoJS.AES.decrypt(customParams, KEY_ENCRYPT);
+              var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+              decryptedData.url = getUrlVal;
+              var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(decryptedData), KEY_ENCRYPT).toString();
+              localStorage.setItem('customParams', ciphertext);
               $('#get-url').val(getUrlVal);
+              localStorage.setItem('url',getUrlVal);
             }else{
               openModal('#myModal', 'Lo sentimos', 'Tenemos un problema en el servidor<br><b>Error 500</b>', 'error');
             }
@@ -1386,9 +1388,13 @@ html(lang="es-CL" dir="ltr" heightfull)
       });
 
       function init(){
-        if(localStorage.getItem('customParams')!==undefined && localStorage.getItem('customParams')!==null){
-          const customParams = JSON.parse(localStorage.getItem('customParams')),
-            url = customParams.url;
+        if(localStorage.getItem('customParams')!==undefined 
+          && localStorage.getItem('customParams')!==null
+          && hasToken){
+          const customParams = localStorage.getItem('customParams');
+          let bytes  = CryptoJS.AES.decrypt(customParams, KEY_ENCRYPT),
+            decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+            url = decryptedData.url;
           document.getElementById('get-url').value = url;
         }else{
         setTimeout(() => {

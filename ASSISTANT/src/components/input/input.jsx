@@ -126,7 +126,7 @@ export default class Input extends Component {
                 onClickCapture={this.updatePosition}
                 ref={this.input}
                 tabIndex="0"
-                autoComplete="false"
+                autoComplete="off"
               />
               {this.fillAttach()}
               {this.fillEmoji()}

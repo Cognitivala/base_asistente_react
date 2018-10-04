@@ -28,13 +28,10 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     include ../../includes/modal.pug
 
     script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
-    script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
-    script(type="text/javascript" src= myPath +'/assets/js/md5.min.js')
-    //- script(type="text/javascript" src= myPath +'/assets/js/main.js')
+    script(type="text/javascript" src='../assets/js/bootstrap.min.js')
+    script(type="text/javascript" src='../assets/js/md5.min.js')
 
     script.
-   
-      var getPath = "http://asistente-react.mycognitiva.io/";
 
       var uri = window.location.toString();
       if (uri.indexOf("?") > 0) {

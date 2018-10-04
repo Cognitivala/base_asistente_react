@@ -4,6 +4,9 @@ import Input from "../input/input";
 import Help from "../help/help";
 import Conversations from "../conversation/conversations";
 import IsFetching from "../modules/is-fetching";
+import AES from "crypto-js/aes";
+import CryptoJS from "crypto-js";
+import { KEY_ENCRYPT } from "../../actions/key-encrypt"
 
 export default class Assistant extends Component {
   constructor(props) {
@@ -43,12 +46,15 @@ export default class Assistant extends Component {
         "settings",
         "keep_conversation"
       ]),
-      hc = JSON.parse(localStorage.getItem("hc")),
-      hcm = JSON.parse(localStorage.getItem("hcm"));
+      hcAES = localStorage.getItem("hc");
 
     //Si mantiene conversacion y tiene historial guardado
     //Lo abrirá y luego si tiene minimizado lo minimizará
-    if (keep_conversation && hc) {
+    if (keep_conversation && hcAES) {
+      const bytes = AES.decrypt(hcAES, KEY_ENCRYPT),
+        hcDecrypt = bytes.toString(CryptoJS.enc.Utf8),
+        hc = JSON.parse(hcDecrypt),
+        hcm = JSON.parse(localStorage.getItem("hcm"));
       setHistory(hc);
       openAssistant();
       this.openAssitantCDN();
@@ -65,20 +71,26 @@ export default class Assistant extends Component {
 
   //ORIGEN
   getOrigen() {
-    const token = false;
-    if (token) {
-      if (!this.isMobileDevice) {
-        this.props.setOrigen("Mobile Privado");
-      } else {
-        this.props.setOrigen("Sitio Privado");
-      }
+    if (!this.isMobileDevice) {
+      this.props.setOrigen("mobile");
     } else {
-      if (!this.isMobileDevice) {
-        this.props.setOrigen("Mobile Público");
-      } else {
-        this.props.setOrigen("Sitio Público");
-      }
+      this.props.setOrigen("desktop");
     }
+
+    // const token = false;
+    // if (token) {
+    //   if (!this.isMobileDevice) {
+    //     this.props.setOrigen("Mobile Privado");
+    //   } else {
+    //     this.props.setOrigen("Sitio Privado");
+    //   }
+    // } else {
+    //   if (!this.isMobileDevice) {
+    //     this.props.setOrigen("Mobile Público");
+    //   } else {
+    //     this.props.setOrigen("Sitio Público");
+    //   }
+    // }
   }
 
   getLocation() {
@@ -108,7 +120,6 @@ export default class Assistant extends Component {
   }
 
   minimizedCDN() {
-    console.log("minimizedCDN");
     window.top.postMessage(
       {
         test: [
@@ -122,7 +133,6 @@ export default class Assistant extends Component {
   }
 
   openAssitantCDN() {
-    console.log("openAssitantCDN");
     window.top.postMessage(
       {
         test: [
@@ -136,7 +146,6 @@ export default class Assistant extends Component {
   }
 
   notificationCDN() {
-    console.log("notificationCDN");
     window.top.postMessage(
       {
         test: [

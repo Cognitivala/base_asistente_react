@@ -60,7 +60,7 @@ export default class BtnHelp extends Component {
     }: {};
     return (
       <div id="button-helper" onClick={this.toggleHelper} className={css} onMouseLeave={this.outHover} onMouseOver={this.inHover} style={style}>
-        Help
+        Ayuda
       </div>
     );
   }

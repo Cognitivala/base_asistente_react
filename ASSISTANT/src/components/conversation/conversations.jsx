@@ -10,6 +10,8 @@ import ConversationCalendar from "./conversation-calendar";
 import ConversationFiles from "./conversation-files";
 import ConversationAttach from "./conversation-attach";
 import ConversationLikes from "./conversation-likes";
+import AES from 'crypto-js/aes';
+import { KEY_ENCRYPT } from "../../actions/key-encrypt";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -43,14 +45,16 @@ export default class Conversations extends Component {
         help = customParamsStates.getIn(["customParams", "settings", "help"]),
         datepicker = lastConversation.get("datepicker"),
         attach = lastConversation.get("attach"),
-        liftUp = lastConversation.get("liftUp");
+        liftUp = lastConversation.get("liftUp"),
+        like = lastConversation.get("like");
       if (
         buttons !== undefined ||
         selects !== undefined ||
         liftUp !== undefined ||
         multibuttons !== undefined ||
         datepicker !== undefined ||
-        attach !== undefined
+        attach !== undefined || 
+        (like !== undefined && like)
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
         if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
@@ -102,12 +106,13 @@ export default class Conversations extends Component {
             datepicker: datepicker !== undefined ? datepicker : datepicker,
             files: files !== undefined ? files : files,
             attach: attach !== undefined ? attach.toJS() : attach,
-            like: like !== undefined ? like : like,
+            like: like !== undefined ? like : like
           };
         if (largo === i) map.general = conversation.get("general").toJS();
         hc.push(map);
       });
-      localStorage.setItem("hc", JSON.stringify(hc));
+      let str_md5v = AES.encrypt(JSON.stringify(hc),KEY_ENCRYPT).toString();
+      localStorage.setItem("hc", str_md5v);
     }
   }
 
@@ -175,7 +180,7 @@ export default class Conversations extends Component {
           animation = last ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
 
         if (msg !== undefined) {
-          const {sendLike} = this.props;
+          const { sendLike } = this.props;
           retorno.push(
             <ConversationMsg
               key={j}
@@ -279,7 +284,7 @@ export default class Conversations extends Component {
         }
 
         //Sólo si es la última conversación y tiene para levantar modal
-        if (last){
+        if (last) {
           if (liftUp !== undefined) {
             switch (liftUp) {
               case "valoracion":
@@ -293,7 +298,7 @@ export default class Conversations extends Component {
                     sendValoracion,
                     setCommentValoracion,
                     setErrorValoracion,
-                    closeValoracion,
+                    updateConversationButton,
                     generalStates,
                     customParamsStates
                   } = this.props;
@@ -308,8 +313,9 @@ export default class Conversations extends Component {
                       setOverStar={setOverStar}
                       setCommentValoracion={setCommentValoracion}
                       setPudoResolverValoracion={setPudoResolverValoracion}
-                      closeValoracion={closeValoracion}
+                      updateConversationButton={updateConversationButton}
                       customParamsStates={customParamsStates}
+                      conversationsStates={conversationsStates}
                     />
                   );
                 }
@@ -326,7 +332,7 @@ export default class Conversations extends Component {
                   } = this.props,
                   enabledFormulario = formularioStates.get("enabled"),
                   form = conversation.get("form");
-  
+
                 if (enabledFormulario) {
                   retorno.push(
                     <Formulario
@@ -347,12 +353,17 @@ export default class Conversations extends Component {
               default:
                 break;
             }
-          }
-          else if(like !== undefined) {
-            const { sendLike } = this.props;
+          } else if (like !== undefined && like) {
+            const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
-              <ConversationLikes key={ j * 33 } sendLike={sendLike} colorHeader={colorHeader}/>
-            )
+              <ConversationLikes
+                key={j * 33}
+                conversationsStates={conversationsStates}
+                sendLike={sendLike}
+                colorHeader={colorHeader}
+                generalStates={generalStates}
+              />
+            );
           }
         }
       }
@@ -361,8 +372,13 @@ export default class Conversations extends Component {
   }
 
   render() {
-    const { ayudaStates, inputStates, conversationsStates, customParamsStates } = this.props,
-    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
+    const {
+        ayudaStates,
+        inputStates,
+        conversationsStates,
+        customParamsStates
+      } = this.props,
+      colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "",
       cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (

@@ -9,14 +9,6 @@ const ValoracionRadios = props => {
       <fieldset className="radios">
         <legend>¿Pudiste resolver tu inquietud en esta conversación?</legend>
         {<ValoracionRadio label="Sí" name="desicion" value="si" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}}/>}
-        {<ValoracionRadio label="No" name="desicion" value="no" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}}/>}
-      </fieldset>
-    );
-  } else if (pudoResolver === "no") {
-    return (
-      <fieldset className="radios">
-        <legend>¿Pudiste resolver tu inquietud en esta conversación?</legend>
-        {<ValoracionRadio label="Sí" name="desicion" value="si" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}}/>}
         {<ValoracionRadio label="No" name="desicion" value="no" click={setPudoResolver} classCss={pudoResolverCss} styleCss={style}/>}
       </fieldset>
     );

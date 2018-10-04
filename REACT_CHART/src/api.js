@@ -1,4 +1,4 @@
-const backend_host = "http://asistente-react.mycognitiva.io/mant/";
+const backend_host = "https://asistente-duoc.mycognitiva.io/mant/";
 var token = "7yJrzfxnbw6BMbbfNDoS";
 export function getTotalInteractions(start, end, cb) {
 	fetch(backend_host + 'interacciones_totales', {

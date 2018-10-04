@@ -28,21 +28,20 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                   input#pass(type="password", name="pass", required, placeholder="Ingresa tu contraseña", autocomplete="off")
                 button#submit(button type="submit") Ingresar
                 .text-center
-                  a(href=myPath +'/login/recuperar-contrasena/') ¿Olvidaste tu contraseña?
+                  a(href= '../login/recuperar-contrasena/') ¿Olvidaste tu contraseña?
 
     #bkg-login
 
     include ../includes/modal.pug
 
     script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
-    script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
-    script(type="text/javascript" src= myPath +'/assets/js/md5.min.js')
+    script(type="text/javascript" src= '../assets/js/bootstrap.min.js')
+    script(type="text/javascript" src= "../assets/js/crypto-js.min.js")
+    script(type="text/javascript" src= '../assets/js/md5.min.js')
     script.
-
-      var getPath = "http://asistente-react.mycognitiva.io/";
-      //- var getPath = "http://localhost:3000/";
       
       var uri = window.location.toString();
+      var KEY_ENCRYPT = "711fd53d4faeec31a1e779d2eab9a02b";
 
       if (uri.indexOf("?") > 0) {
         var clean_uri = uri.substring(0, uri.indexOf("?"));
@@ -87,17 +86,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               user.user_id = response.id_cliente;
               user.empresa = response.empresa;
               user.prf = response.perfil;
-              sessionStorage.setItem('user',JSON.stringify(user));
-              //- sessionStorage.setItem('tmtkn', n);
-              //- sessionStorage.setItem('rftmtkn', n);
-              
-              //- sessionStorage.setItem('tkn', theTkn);
-              //- sessionStorage.setItem('rftkn', rftkn);
-            
-              //- sessionStorage.setItem("user", response.nombre);
-              //- sessionStorage.setItem("user_id", response.id_cliente);
-              //- sessionStorage.setItem("empresa", response.empresa);
-              //- sessionStorage.setItem("prf", response.perfil);
+              var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(user), KEY_ENCRYPT).toString();
+              sessionStorage.setItem("user", ciphertext);
               
               setTimeout(function(){  
                 window.location.href=getPath

@@ -40,11 +40,6 @@ export function generalStates(
     case "SET_GENERAL":
       return state.withMutations(map =>{
         map.set("cid", action.data.cid)
-        .set("origen", action.data.origen)
-        .set("nodo_id", action.data.nodo_id)
-        .set("intent", action.data.intent)
-        .set("auth", action.data.auth)
-        .set("token", action.data.token)
       });
     default:
       return state;

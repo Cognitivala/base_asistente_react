@@ -39,7 +39,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                           .inner
                             h5 Interacciones <b>Diarias</b> <span></span>
                             #chart_div
-                            a.view-more(href= myPath +'/indicadores/interacciones/')
+                            a.view-more(href= '../indicadores/interacciones/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
                       .row
@@ -47,7 +47,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                           .inner
                             h5 Valoraciones por <b>Origen</b> <span></span>
                             #chart_div2
-                            a.view-more(href= myPath +'/indicadores/origen/')
+                            a.view-more(href= '../indicadores/origen/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
 
@@ -55,7 +55,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                           .inner
                             h5 Valoraciones <b>Totales</b> <span></span>
                             #chart_div3
-                            a.view-more(href= myPath +'/indicadores/valoraciones/')
+                            a.view-more(href= '../indicadores/valoraciones/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
                         .col-md-6(margin-bottom)
@@ -76,14 +76,14 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                                       .col-5.yellow 
                                       .col-3.gray
                                       .col-1.blue
-                            a.view-more(href= myPath +'/indicadores/nps/')
+                            a.view-more(href= '../indicadores/nps/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
                         .col-md-6(margin-bottom)
                           .inner
                             h5 Me Gusta <b>Totales</b> <span></span>
                             #chart_div4
-                            a.view-more(href= myPath +'/indicadores/me-gusta/')
+                            a.view-more(href= '../indicadores/me-gusta/')
                               | Ver más
                               i.fa.fa-plus(aria-hidden="true")
                   #details.tab-pane.fade(role="tabpanel")
@@ -191,8 +191,9 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     include ../includes/modal-script.pug
 
     script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
-    script(type="text/javascript" src= myPath +'/assets/js/bootstrap.min.js')
-    script(type="text/javascript" src= myPath +'/assets/js/main.js')
+    script(type="text/javascript" src= '../assets/js/bootstrap.min.js')
+    script(type="text/javascript" src= '../assets/js/crypto-js.min.js')
+    script(type="text/javascript" src= '../assets/js/main.js')
 
     script.
       var d = new Date();
@@ -425,7 +426,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           dataType: 'json',
           contentType: 'application/json; charset=utf-8'
         }).done(function(response){
-          if(response.estado !== undefined && response.estado.codigoEstado == '200'){
+          if(response.estado !== undefined && response.estado.codigoEstado == '200' && response[d.getMonth() + 1][0].cantidad!=null){
             var val1 = response[d.getMonth() + 1][0].cantidad,
                 val2 = response[d.getMonth() + 1][1].cantidad,
                 val3 = response[d.getMonth() + 1][2].cantidad,
