@@ -1,0 +1,853 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#" heightfull)
+  head
+    title Indicadores Asistente. MAD Cognitiva
+    
+    include ../includes/meta.pug
+    script(src="https://www.gstatic.com/charts/loader.js")
+    link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
+
+  body.no-scroll(heightfull)
+  
+    #wrapper(heightfull)
+      .f-row(heightfull)
+        
+        include ../includes/menu.pug
+
+        .f-col.content(padding heightfull)
+          
+          include ../includes/user.pug
+          
+          .row
+            .col-md-12
+
+              .container-tabs
+
+                ul#tabs.nav.nav-tabs(role="tablist")
+                  li.active(role="presentation")
+                    a(href="#assessment" aria-controls="assessment" role="tab" data-toggle="tab")
+                      span Indicadores
+                  //- li(role="presentation")
+                  //-   a(href="#details" aria-controls="details" role="tab" data-toggle="tab")
+                  //-     span Detalle
+
+                .tab-content
+
+                  #assessment.tab-pane.fade.in.active(role="tabpanel")
+                    .scroll
+                      .row
+                        .col-md-12(margin-bottom)
+                          .inner
+                            h5 Interacciones <b>Diarias</b> <span></span>
+                            #chart_div
+                            a.view-more(href= '../indicadores/interacciones/')
+                              | Ver más
+                              i.fa.fa-plus(aria-hidden="true")
+                      .row
+                        .col-md-6(margin-bottom)
+                          .inner
+                            h5 Valoraciones por <b>Origen</b> <span></span>
+                            #chart_div2
+                            a.view-more(href= '../indicadores/origen/')
+                              | Ver más
+                              i.fa.fa-plus(aria-hidden="true")
+
+                        .col-md-6(margin-bottom)
+                          .inner
+                            h5 Valoraciones <b>Totales</b> <span></span>
+                            #chart_div3
+                            a.view-more(href= '../indicadores/valoraciones/')
+                              | Ver más
+                              i.fa.fa-plus(aria-hidden="true")
+                        .col-md-6(margin-bottom)
+                          .inner
+                            h5 <b>NPS</b> <span></span>
+                            .row
+                              .col-md-5
+                                #promedio-isn 0.0
+                              .col-md-7
+                                .row
+                                  .col-md-6
+                                    ul.circles-assessment
+                                      li.sat Promotores
+                                      li.neu Neutros
+                                      li.ins Detractores
+                                  .col-md-6
+                                    .assessment
+                                      .col-5.yellow 
+                                      .col-3.gray
+                                      .col-1.blue
+                            a.view-more(href= '../indicadores/nps/')
+                              | Ver más
+                              i.fa.fa-plus(aria-hidden="true")
+                        .col-md-6(margin-bottom)
+                          .inner
+                            h5 Me Gusta <b>Totales</b> <span></span>
+                            #chart_div4
+                            a.view-more(href= '../indicadores/me-gusta/')
+                              | Ver más
+                              i.fa.fa-plus(aria-hidden="true")
+                  #details.tab-pane.fade(role="tabpanel")
+                    .scroll
+                      table.table.table-striped.table-bordered
+                        thead
+                          tr
+                            th Origen
+                            th Valoración
+                            th Comentario
+                            th Fecha
+                        tbody
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+                          tr
+                            td App
+                            td 2
+                            td Falta información más detallada
+                            td 13/11/2017
+
+    include ../includes/modal.pug
+    include ../includes/modal-script.pug
+
+    script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(type="text/javascript" src= '../assets/js/bootstrap.min.js')
+    script(type="text/javascript" src= '../assets/js/crypto-js.min.js')
+    script(type="text/javascript" src= '../assets/js/main.js')
+
+    script.
+      var d = new Date();
+      var e = new Date();
+          f = e.setDate(e.getDate() - 30);
+          g = new Date(f);
+
+      var month = new Array();
+        month[0] = "Enero";
+        month[1] = "Febrero";
+        month[2] = "Marzo";
+        month[3] = "Abril";
+        month[4] = "Mayo";
+        month[5] = "Junio";
+        month[6] = "Julio";
+        month[7] = "Agosto";
+        month[8] = "Septiembre";
+        month[9] = "Octubre";
+        month[10] = "Noviembre";
+        month[11] = "Diciembre";
+      var n = month[d.getMonth()];
+
+      $('.inner h5 span').text(n);
+
+      function getInteractions(){
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+'mant/indicadores_interaccion',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              mes: d.getMonth() + 1,
+              ano: d.getFullYear(),
+              id_cliente: getSession
+            }
+          ),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+
+          if(response.estado !== undefined && response.estado.codigoEstado===200){
+            var getMyArray = [['días', 'interacciones']];
+            var pushArray = [];
+            for(var i = 0; i < response.respuesta.length; i++) {
+              pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].total];
+              getMyArray.push(pushArray);
+            }
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable(getMyArray);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                  maxValue: (getMyArray.length - 1),
+                  gridlines: {
+                    color: 'none'
+                  }
+                },
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: 'none',
+                pointSize: 9,
+                tooltip: {
+                  showColorCode: true,
+                  textStyle: {
+                    color: '#1c75bc',
+                    fontName: 'Roboto',
+                  }
+                },
+                colors:['#001e37','#141921'],
+                areaOpacity: .85,
+                is3D: true,
+                backgroundColor: { fill:'transparent' }
+              };
+              var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+            }
+          }else{
+            $('#chart_div').html('<p>No se han encontrado datos</p>')
+            return false;
+          }
+
+        });
+      }
+
+      function getOriginData(){
+        var args = {
+          id_cliente: getSession,
+          mes: (d.getMonth() + 1)
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+"mant/datosOrigen",
+          data: JSON.stringify(args),
+          dataType: 'json',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado == '200'){
+            google.charts.load("current", {packages:['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              if(response.data[0]!==undefined){
+                var data = google.visualization.arrayToDataTable([
+                  ['', 'Valoraciones', { role: "style" }],
+                  ['APP', response.data[0].cantidad , 'color: #1c75bc'],
+                  ['DESKTOP', response.data[1].cantidad , 'color: #043d5d'],
+                  ['MOBILE', response.data[2].cantidad, 'color: #1c75bc']
+                ]);
+              }
+              var view = new google.visualization.DataView(data);
+              view.setColumns(
+                [0, 1, {
+                  type: "string",
+                  role: "annotation"
+                },
+                2]
+              );
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                  gridlines: {
+                    color: 'none'
+                  }
+                },
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                legend: 'none',
+                pointSize: 9,
+                tooltip: {
+                  showColorCode: true,
+                  textStyle: {
+                    color: '#1c75bc',
+                    fontName: 'Roboto',
+                  }
+                },
+                areaOpacity: .85,
+                is3D: true,
+                backgroundColor: {
+                  fill: 'transparent'
+                },
+                legend: {
+                  position: 'none'
+                },
+                bar: {
+                  groupWidth: "20%"
+                }
+              };
+              var chart = new google.visualization.ColumnChart(document.getElementById('chart_div2'));
+              chart.draw(view, options);
+            }
+          }else{
+            $('#chart_div2').html('<p>No se han encontrado datos</p>')
+            return false;
+          }
+        })
+      }
+
+      function getAssessment(){
+        var args = {
+          id_cliente: getSession,
+          mes: (d.getMonth() + 1),
+          ano: d.getFullYear()
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          url: getPath+"mant/indicadores_valoracion",
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado == '200' && response[d.getMonth() + 1][0].cantidad!=null){
+            var val1 = response[d.getMonth() + 1][0].cantidad,
+                val2 = response[d.getMonth() + 1][1].cantidad,
+                val3 = response[d.getMonth() + 1][2].cantidad,
+                val4 = response[d.getMonth() + 1][3].cantidad,
+                val5 = response[d.getMonth() + 1][4].cantidad;
+            var insatisfechos   = val1 + val2;
+            var neutros         = val3;
+            var satisfechos     = val4 + val5;
+            var totalAssessment = insatisfechos + neutros + satisfechos;
+            var totalISN        = ((satisfechos - insatisfechos) / totalAssessment) * 100;
+
+            var getFivePercent = (100 * satisfechos) / totalAssessment;
+            $('.col-5').css('height', getFivePercent.toFixed(1)+'%');
+            $('.col-5').empty().text(getFivePercent.toFixed(1)+'%');
+
+            //- var getFourPercent = (100 * val4) / totalAssessment;
+            //- $('.col-4').css('height', getFourPercent.toFixed(1)+'%');
+
+            var getThreePercent = (100 * val3) / totalAssessment;
+            $('.col-3').css('height', getThreePercent.toFixed(1)+'%');
+            $('.col-3').empty().text(getThreePercent.toFixed(1)+'%');
+
+            //- var getTwoPercent = (100 * val2) / totalAssessment;
+            //- $('.col-2').css('height', getTwoPercent.toFixed(1)+'%');
+
+            var getOnePercent = (100 * insatisfechos) / totalAssessment;
+            $('.col-1').css('height', getOnePercent.toFixed(1)+'%');
+            $('.col-1').empty().text(getOnePercent.toFixed(1)+'%');
+            
+            $('#promedio-isn').empty().append(totalISN.toFixed(1)+'<span class="percentage">%</span>');
+            
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+                ['', ''],
+                ['5 estrellas', val5],
+                ['4 estrellas', val4],
+                ['3 estrellas', val3],
+                ['2 estrellas', val2],
+                ['1 estrellas', val1]
+              ]);
+              var options = {
+                pieStartAngle: 90,
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                  gridlines: {
+                    color: 'none'
+                  }
+                },
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                pointSize: 9,
+                tooltip: {
+                  trigger: 'none'
+                },
+                colors:['#e7b81d','#001e37','#b4b8ba','#009dc3','#1c75bc'],
+                areaOpacity: .85,
+                backgroundColor: {
+                  fill:'transparent'
+                },
+                chartArea: {
+                  height: 160
+                },
+                pieSliceText: 'value'
+              };
+              var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+              chart.draw(data, options);
+            }
+          }else{
+            $('#chart_div3').html('<p>No se han encontrado datos</p>')
+            return false;
+          }
+        })
+      }
+
+      function getLikes(){
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+'mant/indicadores_likes',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              mes: d.getMonth() + 1,
+              ano: d.getFullYear()
+            }
+          ),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).promise().done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#chart_div5').html('<p>No se han encontrado datos</p>')
+            return false;
+          }else{
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+                ['', ''],
+                ['Positivos', response.descripcion[0].positivo],
+                ['Negativos', response.descripcion[0].negativo]
+              ]);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                },
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                pieHole: 0.4,
+                is3D: true,
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                colors:['#e7b81d','#001e37','#b4b8ba','#009dc3','#1c75bc'],
+                areaOpacity: .85,
+                backgroundColor: {
+                  fill:'transparent'
+                },
+                chartArea: {
+                  height: 160
+                }
+              };
+              var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+              chart.draw(data, options);
+            }
+          }
+        });
+      }
+      
+      function getInteraccionesValoradas(){
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+'mant/filtros',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              tipo: 'interacciones_valoradas',
+              inicio: g.toISOString().substring(0,10),
+              fin: d.toISOString().substring(0,10),
+              id_cliente: getSession,
+              canal: 'all'
+            }
+          ),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).promise().done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#chart_div5').html('<p>No se han encontrado datos</p>')
+            return false;
+          }else{
+            var data = [
+              ['Día', 'Totales', 'Valoradas']
+            ];
+            var responseData = response.respuesta;
+
+            for(var i = 0; i < responseData.length; i++){
+              var day = parseInt(responseData[i].dia)+' '+month[parseInt(responseData[i].mes) - 1];
+              if($('#by-hour').hasClass('active') == true)
+                day = responseData[i].hora + ':00';
+              data.push([day, responseData[i].total_interacciones, responseData[i].total_interacciones_valoradas])
+            }
+
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+              var arrayData = google.visualization.arrayToDataTable(data)
+              var getMyArray = [['días', 'interacciones', 'interacciones valoradas']];
+
+              var options = {
+                  height: 180,
+                  hAxis: {
+                    textStyle: {
+                      fontName: 'Roboto',
+                      bold: true
+                    },
+                    title: '',
+                    titleTextStyle: {
+                      color: '#f00'
+                    },
+                    minValue: 1,
+                    maxValue: (getMyArray.length - 1),
+                    gridlines: {
+                      color: 'none'
+                    }
+                  },
+                  vAxis: {
+                    minValue: 0,
+                    textStyle: {
+                      fontName: 'Roboto',
+                      bold: true
+                    }
+                  },
+                  chartArea:{
+                    left: '5%',
+                    top: '5%',
+                    width: '93%',
+                    height: '75%'
+                  },
+                  crosshair: {
+                    focused: {
+                      color: '#3bc',
+                      opacity: 0.8
+                    }
+                  },
+                  legend: 'none',
+                  pointSize: 9,
+                  tooltip: {
+                    showColorCode: true,
+                    textStyle: {
+                      color: '#1c75bc',
+                      fontName: 'Roboto',
+                    }
+                  },
+                  colors:['#007fa3', '#001e37'],
+                  areaOpacity: 0.9,
+                  backgroundColor: { fill:'transparent' }
+                };
+                var chart = new google.visualization.AreaChart(document.getElementById('chart_div5'));
+                chart.draw(arrayData, options);
+            }
+          }
+        });
+      }
+      //getInteraccionesValoradas();
+
+      function getTMO(){
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+'mant/tmo',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              tipo: 'interacciones_valoradas',
+              inicio: g.toISOString().substring(0,10),
+              fin: d.toISOString().substring(0,10),
+              id_cliente: getSession,
+              canal: 'all'
+            }
+          ),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+
+        }).done(function(response){
+          var getMyArray = [['días', 'interacciones']];
+        }).promise().done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#chart_div6').html('<p>No se han encontrado datos</p>')
+            return false;
+          }else{
+            var getMyArray = [['días', 'TMO']];
+            var pushArray = [];
+            for(var i = 0; i < response.respuesta.length; i++) {
+              pushArray = [parseInt(response.respuesta[i].dia)+' '+month[parseInt(response.respuesta[i].mes) - 1], response.respuesta[i].tmo_segundos];
+              getMyArray.push(pushArray);
+            }
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable(getMyArray);
+              var options = {
+                height: 180,
+                hAxis: {
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  },
+                  title: '',
+                  titleTextStyle: {
+                    color: '#f00'
+                  },
+                  minValue: 1,
+                  maxValue: (getMyArray.length - 1),
+                  gridlines: {
+                    color: 'none'
+                  }
+                },
+                vAxis: {
+                  minValue: 0,
+                  textStyle: {
+                    fontName: 'Roboto',
+                    bold: true
+                  }
+                },
+                chartArea:{
+                  left: '5%',
+                  top: '5%',
+                  width: '93%',
+                  height: '75%'
+                },
+                crosshair: {
+                  focused: {
+                    color: '#3bc',
+                    opacity: 0.8
+                  }
+                },
+                legend: 'none',
+                pointSize: 9,
+                tooltip: {
+                  showColorCode: true,
+                  textStyle: {
+                    color: '#1c75bc',
+                    fontName: 'Roboto',
+                  }
+                },
+                colors:['#009dc3', '#001e37'],
+                areaOpacity: .85,
+                backgroundColor: { fill:'transparent' }
+              };
+              var chart = new google.visualization.AreaChart(document.getElementById('chart_div6'));
+              chart.draw(data, options);
+            }
+          }
+
+        });
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+"mant/indicadores_interaccion",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              mes: (d.getMonth() + 1).toString(),
+              ano: d.getFullYear().toString(),
+              id_cliente: getSession
+            }
+          ),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+        });
+      }
+      //getTMO();
+
+      function initial(){
+        if(hasToken){
+          getInteractions();
+          getOriginData();
+          getAssessment();
+          getLikes();
+        }else{
+          setTimeout(()=>{
+            initial();
+          },300);
+        }
+      }
+
+      initial();

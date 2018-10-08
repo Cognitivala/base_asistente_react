@@ -1,0 +1,270 @@
+html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#" heightfull)
+  head
+    title Me Gusta. MAD Cognitiva
+    
+    include ../../includes/meta.pug
+    script(src="https://www.gstatic.com/charts/loader.js")
+    link(href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet")
+
+  body.no-scroll(heightfull)
+  
+    #wrapper(heightfull)
+      .f-row(heightfull)
+        
+        include ../../includes/menu.pug
+
+        .f-col.content(padding heightfull)
+          
+          include ../../includes/user.pug
+          
+          .row
+            .col-md-12
+
+              h1.title-page Me Gusta
+
+              .container-tabs
+
+                ul#tabs.nav.nav-tabs(role="tablist")
+                  li.active(role="presentation")
+                    a(href="#last-days" aria-controls="last-days" role="tab" data-toggle="tab")
+                      span Últimos 30 días
+                  li(role="presentation")
+                    a(href="#by-range" aria-controls="by-range" role="tab" data-toggle="tab")
+                      span Por rango
+
+                .tab-content.has-title
+                  #last-days.tab-pane.fade.in.active(role="tabpanel")
+                    .scroll
+                      .row
+                        .col-md-12
+                          form(onsubmit="event.preventDefault()")
+                            .row
+                              .col-md-3
+                                fieldset
+                                  .form-group
+                                    .input-group.date
+                                      input.date-picker-days#last30(type="text", data-date-end-date="0d", name="last30", placeholder="Seleccione",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              .col-md-3
+                                button.btn(button, onclick="getDateInput('last30', 'likes', 'last-days', 'chart_div')") Filtrar
+                        .col-md-12
+                          .inner
+                            h5 Me Gusta <b>últimos 30 días</b> <span></span>
+                            #chart_div
+                      a.download-cvs(pull-right)
+                        | Descargar CSV
+                        i.fa.fa-file-excel-o(aria-hidden="true")
+        
+                  #by-range.tab-pane.fade(role="tabpanel")
+                    .scroll
+                      .row
+                        .col-md-12
+                          form(onsubmit="event.preventDefault()")
+                            .row
+                              .col-md-3
+                                fieldset
+                                  .form-group
+                                    .input-group.date
+                                      input.date-picker-days#desde(type="text", data-date-end-date="0d", name="", placeholder="Seleccione desde",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              .col-md-3
+                                fieldset
+                                  .form-group
+                                    .input-group.date
+                                      input.date-picker-days#hasta(type="text", data-date-end-date="0d", name="", placeholder="Seleccione hasta",autocomplete="off")
+                                      span.input-group-addon
+                                        i.fa.fa-calendar(aria-hidden="true")
+                              .col-md-3
+                                button.btn(button, onclick="getDateInput('desde', 'likes', 'by-range', 'chart_by_range')") Filtrar
+                        .col-md-12
+                          .inner
+                            h5 Me Gusta <b>entre fechas</b>
+                            #chart_by_range
+                      a.download-cvs(pull-right)
+                        | Descargar CSV
+                        i.fa.fa-file-excel-o(aria-hidden="true")
+                        
+    include ../../includes/modal.pug
+    include ../../includes/modal-script.pug
+
+    script(type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js")
+    script(type="text/javascript" src= myPath+'/assets/js/bootstrap.min.js')
+    script(type="text/javascript" src= myPath+'/assets/js/bootstrap-datepicker.js')
+    script(type="text/javascript" src= myPath+'/assets/js/date.js')
+    script(type="text/javascript" src= myPath+'/assets/js/crypto-js.min.js')
+    script(type="text/javascript" src= myPath+'/assets/js/main.js')
+
+    script.
+      var d = new Date();
+      var e = new Date();
+          f = e.setDate(e.getDate() - 30);
+          g = new Date(f);
+
+      var month = new Array();
+      month[0] = "Enero";
+      month[1] = "Febrero";
+      month[2] = "Marzo";
+      month[3] = "Abril";
+      month[4] = "Mayo";
+      month[5] = "Junio";
+      month[6] = "Julio";
+      month[7] = "Agosto";
+      month[8] = "Septiembre";
+      month[9] = "Octubre";
+      month[10] = "Noviembre";
+      month[11] = "Diciembre";
+      var n = month[d.getMonth()];
+      var getSession = user.user_id,
+      getTkn = user.tkn;
+      
+      function getDateInput(input, type, tab, chartName){
+
+        var getInputVal   = document.getElementById(input).value,
+            getDesde      = document.getElementById('desde').value,
+            getHasta      = document.getElementById('hasta').value,
+            desdeDate     = new Date(getDesde),
+            hastaDate     = new Date(getHasta),
+            getDate       = new Date(getInputVal),
+            dateStart     = '',
+            dateEnd       = '',
+            getInputEnd   = document.getElementById('hasta').value;
+
+        var getMonth      = getDate.getMonth(),
+            getYear       = getDate.getFullYear();
+
+        var lastDay       = new Date(getYear, getMonth + 1, 0),
+            formatDate    = getDate.setDate(getDate.getDate() - 30),
+            getDateFormat = new Date(formatDate),
+            getDateFormat = getDateFormat.toISOString().substring(0,10);
+
+        var myResponse    = '';
+
+        if(tab == 'last-days'){
+          dateEnd = getInputVal;
+          dateStart = getDateFormat;
+          getInteractions(type, dateStart, dateEnd, getSession, chartName);
+        } else {
+          if(desdeDate >= hastaDate) {
+            $('#desde, #hasta').addClass('error');
+            $('#desde, #hasta').parent().find('.input-group-addon').addClass('error');  
+          } else {
+            $('#desde, #hasta').removeClass('error');
+            $('#desde, #hasta').parent().find('.input-group-addon').removeClass('error');
+            dateEnd = getHasta;
+            dateStart = getDesde;
+            getInteractions(type, dateStart, dateEnd, getSession, chartName);
+          }
+        }
+        return false;
+      }
+
+      $('.date-picker-days').datepicker({
+        language: 'es',
+        minViewMode: 'days'
+      });
+
+      function getInteractions(tipo, fechaIni, fechaFin, id, divId){
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath+'mant/filtros',
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
+          data:  JSON.stringify(
+            {
+              tipo: tipo,
+              inicio: fechaIni,
+              fin: fechaFin,
+              id_cliente: id
+            }
+          ),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.estado !== undefined && response.estado.codigoEstado !== 200){
+            $('#'+divId).html('<p>No se han encontrado datos</p>');
+            return false;
+          }
+          createCSV(response.csv, 'me-gusta');
+          google.charts.load('current', {'packages':['corechart']});
+          google.charts.setOnLoadCallback(drawChart);
+          function drawChart() {
+            var data = google.visualization.arrayToDataTable([
+              ['', ''],
+              ['Positivos', response.data[0].positivo],
+              ['Negativos', response.data[0].negativo]
+            ]);
+            var options = {
+              height: 280,
+              hAxis: {
+                textStyle: {
+                  fontName: 'Roboto',
+                  bold: true
+                },
+                title: '',
+                titleTextStyle: {
+                  color: '#f00'
+                },
+                minValue: 1,
+              },
+              vAxis: {
+                minValue: 0,
+                textStyle: {
+                  fontName: 'Roboto',
+                  bold: true
+                }
+              },
+              pieHole: 0.4,
+              is3D: true,
+              chartArea:{
+                left: '5%',
+                top: '5%',
+                width: '93%',
+                height: '75%'
+              },
+              crosshair: {
+                focused: {
+                  color: '#3bc',
+                  opacity: 0.8
+                }
+              },
+              legend: {
+                textStyle: {
+                  fontName: 'Roboto',
+                  bold: true
+                }
+              },
+              colors:['#e7b81d','#001e37','#b4b8ba','#009dc3','#1c75bc'],
+              areaOpacity: .85,
+              backgroundColor: {
+                fill:'transparent'
+              },
+              chartArea: {
+                height: 160
+              }
+            };
+            var chart = new google.visualization.PieChart(document.getElementById(divId));
+            chart.draw(data, options);
+          }
+        });
+      }
+
+      $('a[href="#by-range"]').on('shown.bs.tab', function (e) {
+        getInteractions('likes', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_by_range');
+      })
+
+      function initial(){
+        if(hasToken){
+          getInteractions('likes', g.toISOString().substring(0,10), d.toISOString().substring(0,10), getSession, 'chart_div');
+        }else{
+          setTimeout(()=>{
+            initial();
+          },300);
+        }
+      }
+
+      initial();

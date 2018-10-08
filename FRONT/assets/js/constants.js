@@ -1,0 +1,1 @@
+const getPath = "http://asistente-react.mycognitiva.io/";

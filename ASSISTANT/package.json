@@ -1,0 +1,40 @@
+{
+    "name": "boilerplate",
+    "version": "0.1.0",
+    "private": true,
+    "homepage": "/asistente/",
+    "dependencies": {
+        "axios": "^0.18.0",
+        "crypto-js": "^3.1.9-1",
+        "emoji-mart": "^2.8.1",
+        "moment": "^2.21.0",
+        "node-sass-chokidar": "1.3.3",
+        "npm-run-all": "^4.1.2",
+        "react": "^16.2.0",
+        "react-datepicker": "^1.6.0",
+        "react-dom": "^16.2.0",
+        "react-geocode": "^0.1.2",
+        "react-redux": "^5.0.6",
+        "react-scripts": "1.1.4",
+        "react-transition-group": "^2.4.0",
+        "redux": "^4.0.0"
+    },
+    "scripts": {
+        "build-css": "node-sass-chokidar src/assets/styles/main.scss -o public/css/ --output-style compressed",
+        "watch-css": "npm run build-css && node-sass-chokidar src/assets/styles/main.scss -o public/css/ --watch --recursive",
+        "start-js": "react-scripts start",
+        "start": "npm-run-all -p watch-css start-js",
+        "build-js": "react-scripts build",
+        "build": "npm-run-all build-css build-js",
+        "test": "react-scripts test --env=jsdom",
+        "eject": "react-scripts eject",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d build"
+    },
+    "devDependencies": {
+        "immutable": "^3.8.2",
+        "redux-freeze": "^0.1.5",
+        "redux-thunk": "^2.2.0",
+        "vinyl-source-stream": "^2.0.0"
+    }
+}

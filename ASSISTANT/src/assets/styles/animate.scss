@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+.animated-av {
+  animation-duration: 500ms;
+  animation-fill-mode: both;
+  visibility: hidden !important;
+}
+
+@-webkit-keyframes fadeInUp-av {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes fadeInUp-av {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+  100% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.fadeInUp-av {
+  animation-name: fadeInUp-av;
+  visibility: visible !important
+}
+
+@keyframes wave {
+  0%, 
+  60%,
+  100% {
+		transform: initial;
+	}
+	30% {
+		transform: translateY(-10px);
+	}
+}

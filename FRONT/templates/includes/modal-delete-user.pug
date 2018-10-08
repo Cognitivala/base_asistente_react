@@ -1,0 +1,9 @@
+.modal.fade#myModalDeleteUser(tabindex="-1" role="dialog" aria-labelledby="myModalDeleteUserLabel")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        h6.modal-title
+      .modal-body#user-id-delete
+      .modal-footer
+        button.pull-left(type="button" data-dismiss="modal" button delete onclick="confirmDeleteUser()") Eliminar 
+        button(type="button" data-dismiss="modal" button close onclick="removeData()") Cerrar

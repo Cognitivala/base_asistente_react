@@ -1,0 +1,8 @@
+.modal.fade#myModalAssistant(tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        button.close(type="button" data-dismiss="modal" aria-label="Close")
+          i.fa.fa-close
+      .modal-body.heightfull
+        iframe#assistant-iframe.assistant(src= '/asistente/', frameborder="0")

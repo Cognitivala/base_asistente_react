@@ -1,0 +1,11 @@
+.modal.fade#myModalChoiceDialog(tabindex="-1" role="dialog" aria-labelledby="myModalLabel")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        button.close(type="button" data-dismiss="modal" aria-label="Close" onclick="removeData()")
+          i.fa.fa-close
+        h6.modal-title
+      .modal-body
+      .modal-footer
+        button.pull-left(type="button" data-dismiss="modal" button data-func="confirmDeleteDialog") Aceptar
+        button.pull-right(type="button" data-dismiss="modal" button close onclick="removeData()") Cancelar

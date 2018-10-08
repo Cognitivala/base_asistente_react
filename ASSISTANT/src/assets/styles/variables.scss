@@ -1,0 +1,44 @@
+$font-family-base: 'Lato', sans-serif; //Familia tipográfica base
+$line-height-base: 130%; //Line height base
+$font-size-base: 14; //Tamaño base en pixeles
+$padding-base: #{(10 / $font-size-base)}rem;
+
+
+
+$h1-size: #{(16 / $font-size-base)}rem;
+$h2-size: #{(14 / $font-size-base)}rem;
+$h3-size: #{(13 / $font-size-base)}rem;
+$h4-size: #{(12 / $font-size-base)}rem;
+$h5-size: #{(10 / $font-size-base)}rem;
+$h6-size: #{(9 / $font-size-base)}rem;
+
+$margin: 30px; //Margen general
+
+/*----Colores----*/
+$main-header-bg: #FFF;
+
+$titles: #333333;
+$text-color: #6b6a6f;
+$bubble-to: #f7f7f7;
+
+$primary: #d64b36;
+$primary-hover: #999;
+
+$bubble-bg: #eee;
+$bubble-bg-message: #0078c7;
+$bubble-bg-message-text: #666666;
+$bubble-bg-message-text-send: #FFFFFF;
+
+$link-color: $primary; //Color del link principal
+$link-hover-color: darken($link-color, 15%);
+$body-bg: #fff; //Fondo del body
+$border-color: #e7e7e7; //Color de los bordes
+$box-bg: #f8f8f8; //Fondo de elementos
+
+/*----Breakpoints----*/
+$breakpoints: (
+  xlarge: "(min-width : 1300px)",
+  large: "(min-width: 1024px) and (max-width : 1300px)",
+  medium: "(min-width: 768px) and (max-width:1024px)",
+  small: "(max-width : 767px)"
+);
