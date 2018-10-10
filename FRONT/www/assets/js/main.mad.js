@@ -507,7 +507,8 @@
       }
 
       var args = {
-        'estado': estado
+        'estado': estado,
+        'id_cliente': '1'
       }
       var promise = $.ajax({
         type: 'POST',

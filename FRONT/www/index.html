@@ -27,7 +27,7 @@
     <meta name="apptrana" content="37adefb730ca40ca9d12cb9e55ed2ca3"/>
     <link href="http://asistente-react.mycognitiva.io/assets/css/main.css" rel="stylesheet"/>
     <link href="http://asistente-react.mycognitiva.io/assets/img/favicon/favicon-32x32.png" rel="Shortcut Icon"/>
-    <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/constants.js"></script><!--[if lt IE 9]><script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script><script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+    <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/constant.js"></script><!--[if lt IE 9]><script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script><script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
   </head>
   <body class="no-scroll home" heightfull="heightfull">
     <div id="wrapper" heightfull="heightfull">
@@ -949,7 +949,7 @@
           var getService = 'edit_intent';
           var args = {
             id_cliente: getSession,
-            intent: intent
+            intent: intent.toString()
           }
           var promise = $.ajax({
             type: 'POST',
