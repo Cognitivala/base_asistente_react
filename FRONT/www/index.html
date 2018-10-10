@@ -949,7 +949,7 @@
           var getService = 'edit_intent';
           var args = {
             id_cliente: getSession,
-            intent: intent
+            intent: intent.toString()
           }
           var promise = $.ajax({
             type: 'POST',
