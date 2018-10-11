@@ -38,32 +38,12 @@ html(lang="es-CL" dir="ltr" heightfull)
                 .tab-content
 
                   #intents.tab-pane.fade.in.active(role="tabpanel" data-tab-target="0")
-
-                    //- button#new-intent(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-intent', false, 'create_intent')")
-                      | Añadir intención 
-                      i.fa.fa-plus-circle( aria-hidden="true")
-
                     ul#list-intents.list-intents
 
                     include includes/modal-intents.pug
                     include includes/modal-intents-edit.pug
 
-                  //- #entities.tab-pane.fade(role="tabpanel" data-tab-target="1")
-
-                    //- button#new-entitie(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-entities', false, 'create_entity')" )
-                      | Añadir entidad 
-                      i.fa.fa-plus-circle( aria-hidden="true")
-
-                    ul#list-entities.list-intents
-
-                    include includes/modal-entities.pug
-                    include includes/modal-entities-edit.pug
-
                   #dialog.tab-pane.fade(role="tabpanel" data-tab-target="2")
-
-                    //- button#new-dialog(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-dialog', false, 'create_dialog')")
-                      | Añadir diálogo 
-                      i.fa.fa-plus-circle( aria-hidden="true")
 
                     ul.list-dialogs.scroll#list-dialogs        
                     
@@ -103,8 +83,14 @@ html(lang="es-CL" dir="ltr" heightfull)
     script(type="text/javascript" src="../assets/js/bootstrap.min.js")
     script(type="text/javascript" src="../assets/js/bootstrap-wysihtml5.js")
     script(type="text/javascript" src="../assets/js/crypto-js.min.js")
-    script(type="text/javascript" src="../assets/js/main.js")
-    script(type="text/javascript" src="../assets/js/main.mad.js")
+    script(type="text/javascript" id="mainJS")
+    script(type="text/javascript" id="mainMadJS")
+
+    script.
+      var zzz = Date.now();
+      document.getElementById('mainJS').setAttribute('src','../assets/js/main.js?v'+zzz);
+      document.getElementById('mainMadJS').setAttribute('src','../assets/js/main.mad.js?v'+zzz);
+      document.getElementById('mainMadJS').setAttribute('href','../assets/css/main.css?v'+zzz);
 
     script.
       var wysihtml5ParserRules = {

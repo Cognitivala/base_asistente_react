@@ -83,8 +83,14 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     script(type="text/javascript" src='../assets/js/bootstrap-colorpicker.min.js')
     script(type="text/javascript" src="../assets/js/bootstrap-wysihtml5.js")
     script(type="text/javascript" src="../assets/js/crypto-js.min.js")
-    script(type="text/javascript" src="../assets/js/main.js")
-    script(type="text/javascript" src="../assets/js/main.mad.js")
+    script(type="text/javascript" id="mainJS")
+    script(type="text/javascript" id="mainMadJS")
+
+    script.
+      var zzz = Date.now();
+      document.getElementById('mainJS').setAttribute('src','../assets/js/main.js?v'+zzz);
+      document.getElementById('mainMadJS').setAttribute('src','../assets/js/main.mad.js?v'+zzz);
+      document.getElementById('mainCss').setAttribute('href','../assets/css/main.css?v'+zzz);
 
     script.
       var wysihtml5ParserRules = {

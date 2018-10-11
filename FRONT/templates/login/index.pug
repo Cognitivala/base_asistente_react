@@ -38,6 +38,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     script(type="text/javascript" src= '../assets/js/bootstrap.min.js')
     script(type="text/javascript" src= "../assets/js/crypto-js.min.js")
     script(type="text/javascript" src= '../assets/js/md5.min.js')
+
+    script.
+      var zzz = Date.now();
+      document.getElementById('mainCss').setAttribute('href','../assets/css/main.css?v'+zzz);
+
     script.
       
       var uri = window.location.toString();

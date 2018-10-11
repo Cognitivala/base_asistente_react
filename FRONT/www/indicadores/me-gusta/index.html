@@ -25,7 +25,7 @@
     <meta name="_csrf" content=""/>
     <meta name="insight-app-sec-validation" content="4d0a31e7-ca78-40a0-b0dd-a0b8415541e4"/>
     <meta name="apptrana" content="37adefb730ca40ca9d12cb9e55ed2ca3"/>
-    <link href="http://asistente-react.mycognitiva.io/assets/css/main.css" rel="stylesheet"/>
+    <link id="mainCss" rel="stylesheet"/>
     <link href="http://asistente-react.mycognitiva.io/assets/img/favicon/favicon-32x32.png" rel="Shortcut Icon"/>
     <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/constant.js"></script><!--[if lt IE 9]><script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script><script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     <script src="https://www.gstatic.com/charts/loader.js"></script>
@@ -182,7 +182,13 @@
     <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/date.js"></script>
     <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/crypto-js.min.js"></script>
-    <script type="text/javascript" src="http://asistente-react.mycognitiva.io/assets/js/main.js"></script>
+    <script type="text/javascript" id="mainJS"></script>
+    <script>
+      var zzz = Date.now();
+      document.getElementById('mainJS').setAttribute('src','../../assets/js/main.js?v'+zzz);
+      document.getElementById('mainCss').setAttribute('href','../../assets/css/main.css?v'+zzz);
+      
+    </script>
     <script>
       var d = new Date();
       var e = new Date();
