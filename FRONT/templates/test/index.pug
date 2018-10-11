@@ -5,16 +5,26 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     meta(name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no")
 
     include ../includes/meta.pug
-    script.
-      var zzz = Date.now();
-      document.getElementById('mainJS').setAttribute('src','/cdn/js/build/main.js?v'+zzz);
 
-    script(type="text/javascript" id="mainJS")
+    script(type="text/javascript" src="/cdn/js/build/main.js")
     
     script.
       window.addEventListener('load', function () {
         window.CognitiveAssistantMain.init('/asistente/');
       });
+
+    //- script.
+      (
+        function (window, document) {
+          "use strict";
+          class getTkn {
+            constructor(){
+              //- this.theTkn = '4702dace-b4e8-407c-8da5-c9678cf8c720';
+            }
+          }
+          window.CognitiveGetTkn = new getTkn();
+        } (window, document)
+      );
 
   body.no-scroll.aui(heightfull)
     iframe#demo(src="https://www.example.com/", frameborder="0")

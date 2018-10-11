@@ -3,11 +3,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     title Demo. MAD Cognitiva
     
     include ../includes/meta.pug
-    script.
-      var zzz = Date.now();
-      document.getElementById('mainJS').setAttribute('src','/cdn/js/build/main.js?v'+zzz);
 
-    script(type="text/javascript" id="mainJS")
+    script(type="text/javascript" src="/cdn/js/build/main.js")
     script.
       window.addEventListener('load', function () {
         window.CognitiveAssistantMain.init('/asistente/');
