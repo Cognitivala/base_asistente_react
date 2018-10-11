@@ -357,7 +357,7 @@
                   } else {
   
                     buttonReplace = data[i].output.text.values[j].substring(data[i].output.text.values[j].indexOf("%"), data[i].output.text.values[j].lastIndexOf("%") + 1);
-                    buttonReplace = '<span class="ocultar-botones">' + buttonReplace + '<span>';
+                    // buttonReplace = '<span class="ocultar-botones">' + buttonReplace + '<span>';
   
                     htmlResponse += '<li class="response">';
                     htmlResponse += '  <div class="data-response">';
