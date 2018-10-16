@@ -120,7 +120,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                             #chart_by_range
                       a.download-interactions-cvs(href="#;", onclick="downInteractions('by-range')" ,pull-left)
                         | Descargar Total Interacciones
-                        i.fa.fa-envelope(aria-hidden="true")
+                        i.fa.fa-file-excel-o(aria-hidden="true")
                       a.hide
                       a.download-cvs(pull-right)
                         | Descargar CSV
@@ -471,7 +471,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }
 
         if(mybool == true){
-          $('.toast p span').text(user.userMail);
+          $('.toast p span').text(user.mail);
           $('.'+button+'').append('<div class="spinner-holder"><div class="spinner"></div></div>');
 
           var promise = $.ajax({
@@ -482,7 +482,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 tipo: 'interacciones',
                 inicio: fechaIni,
                 fin: fechaFin,
-                correo: user.userMail
+                correo: user.mail
               }
             ),
             dataType: 'json',

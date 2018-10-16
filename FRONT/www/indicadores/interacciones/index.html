@@ -150,7 +150,7 @@
                             <div id="chart_by_range"></div>
                           </div>
                         </div>
-                      </div><a class="download-interactions-cvs" href="#;" onclick="downInteractions('by-range')" pull-left="pull-left">Descargar Total Interacciones<i class="fa fa-envelope" aria-hidden="true"></i></a><a class="hide"></a><a class="download-cvs" pull-right="pull-right">Descargar CSV<i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+                      </div><a class="download-interactions-cvs" href="#;" onclick="downInteractions('by-range')" pull-left="pull-left">Descargar Total Interacciones<i class="fa fa-file-excel-o" aria-hidden="true"></i></a><a class="hide"></a><a class="download-cvs" pull-right="pull-right">Descargar CSV<i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
                     </div>
                   </div>
                   <div class="tab-pane fade" id="by-week" role="tabpanel">
@@ -515,7 +515,7 @@
         }
       
         if(mybool == true){
-          $('.toast p span').text(user.userMail);
+          $('.toast p span').text(user.mail);
           $('.'+button+'').append('<div class="spinner-holder"><div class="spinner"></div></div>');
       
           var promise = $.ajax({
@@ -526,7 +526,7 @@
                 tipo: 'interacciones',
                 inicio: fechaIni,
                 fin: fechaFin,
-                correo: user.userMail
+                correo: user.mail
               }
             ),
             dataType: 'json',
