@@ -477,6 +477,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           var promise = $.ajax({
             type: 'POST',
             url: getPath+"mant/generar_csv",
+            headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn,
+            "Cache-Control": "no-cache",
+          },
             data:  JSON.stringify(
               {
                 tipo: 'interacciones',
