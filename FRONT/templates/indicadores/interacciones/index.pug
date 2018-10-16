@@ -471,7 +471,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }
 
         if(mybool == true){
-          $('.toast p span').text(user.mail);
+          $('.toast p span').text(user.email);
           $('.'+button+'').append('<div class="spinner-holder"><div class="spinner"></div></div>');
 
           var promise = $.ajax({
@@ -482,7 +482,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 tipo: 'interacciones',
                 inicio: fechaIni,
                 fin: fechaFin,
-                correo: user.mail
+                correo: user.email
               }
             ),
             dataType: 'json',
