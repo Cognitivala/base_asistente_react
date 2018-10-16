@@ -493,10 +493,15 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
           }).done(function(response){
-            createInteractionsCSV(response.csv, 'total_interacciones', boton);
+            if(response.estado.codigoEstado!==400){
+              createInteractionsCSV(response.csv, 'total_interacciones', boton);
+            }else{
+              openCustomModal('#myModal', 'Ups!', 'No se ha podido editar el usuario', 'error');
+            }
             setTimeout(()=>{
               $('.'+button).find('.spinner-holder').remove();
             },200);
+
           });
         }
 
