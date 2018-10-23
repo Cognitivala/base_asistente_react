@@ -42,6 +42,7 @@ export function getLocation() {
     });
 
     location.then(res => {
+      console.log('res => ',res)
       const keyGoogleMaps = "AIzaSyCo6bnAVIDdjuacm4KZD79U9u-j0DiMkEA",
         latitud = res.coords.latitude,
         longitud = res.coords.longitude;
@@ -49,11 +50,12 @@ export function getLocation() {
       Geocode.enableDebug();
       Geocode.fromLatLng(latitud, longitud).then(
         response => {
+          console.log(response)
           const address = response.results[0].address_components[2].long_name;
           dispatch({ type: "SET_LOCATION", data: address });
         },
         error => {
-          console.error(error);
+          console.log(error);
         }
       );
     });
