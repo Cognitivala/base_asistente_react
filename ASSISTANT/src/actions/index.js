@@ -42,7 +42,7 @@ export function getLocation() {
     });
 
     location.then(res => {
-      const keyGoogleMaps = "AIzaSyADG7P3Zw2isanqpUlGOHftJuB84FE8Efc",
+      const keyGoogleMaps = "AIzaSyCo6bnAVIDdjuacm4KZD79U9u-j0DiMkEA",
         latitud = res.coords.latitude,
         longitud = res.coords.longitude;
       Geocode.setApiKey(keyGoogleMaps);
