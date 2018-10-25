@@ -39,8 +39,21 @@ export class App extends Component {
       weekdaysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
       weekdaysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"]
     });
+    this.integracion();
     this.customParams();
     this.onMessageFunc();
+  }
+
+  integracion(){
+    const src = window.location.search;
+    let firstSplit = src.replace('?','').split("&"),
+      integracion = {};
+    firstSplit.forEach((element,i) => {
+      var secondSplit = element.split("=");
+      integracion[secondSplit[0]] = secondSplit[1];
+    });
+    // debugger
+    this.props.setIntegracion(integracion);
   }
 
   customParams() {
