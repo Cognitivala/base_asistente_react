@@ -9,7 +9,8 @@ export function generalStates(
     auth: null,
     token: null,
     location: null,
-    id_cliente: "1"
+    id_cliente: "1",
+    integracion: null,
   }),
   action
 ) {
@@ -28,6 +29,8 @@ export function generalStates(
       return state.set("token", action.data);
     case "SET_LOCATION":
       return state.set("location", action.data);
+    case "SET_INTEGRACION":
+      return state.set("integracion", action.data);
     case "DEFAULT_GENERAL":
       return state.withMutations(map =>{
         map.set("cid", null)
