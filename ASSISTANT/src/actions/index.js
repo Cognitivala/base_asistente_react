@@ -68,6 +68,11 @@ export function setOrigen(data) {
     dispatch({ type: "SET_ORIGEN", data });
   };
 }
+export function setIntegracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_INTEGRACION", data });
+  };
+}
 //LAUNCHER
 export function closeLauncher() {
   return function action(dispatch) {
