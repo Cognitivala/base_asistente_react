@@ -58,6 +58,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             pass: pw,
             //- pass: md5(pw)
           }
+          var email = us;
           var promise = $.ajax({
             async: true,
             type: 'POST',
@@ -86,6 +87,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
               user.user_id = response.id_cliente;
               user.empresa = response.empresa;
               user.prf = response.perfil;
+              user.email = email;
               var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(user), KEY_ENCRYPT).toString();
               sessionStorage.setItem("user", ciphertext);
               

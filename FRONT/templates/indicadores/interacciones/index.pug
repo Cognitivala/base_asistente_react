@@ -75,7 +75,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                               .col-md-6
                       a.download-interactions-cvs(href="#;", onclick="downInteractions('last-days')", pull-left)
                         | Descargar Total Interacciones
-                        i.fa.fa-envelope(aria-hidden="true")
+                        i.fa.fa-file-excel-o(aria-hidden="true")
                       a.hide
                       a.download-cvs(pull-right)
                         | Descargar CSV
@@ -120,7 +120,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                             #chart_by_range
                       a.download-interactions-cvs(href="#;", onclick="downInteractions('by-range')" ,pull-left)
                         | Descargar Total Interacciones
-                        i.fa.fa-envelope(aria-hidden="true")
+                        i.fa.fa-file-excel-o(aria-hidden="true")
                       a.hide
                       a.download-cvs(pull-right)
                         | Descargar CSV
@@ -470,10 +470,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           }
         }
 
-        var userMail = sessionStorage.getItem('userMail');
-
         if(mybool == true){
-          $('.toast p span').text(sessionStorage.getItem('userMail'));
+          $('.toast p span').text(user.email);
           $('.'+button+'').append('<div class="spinner-holder"><div class="spinner"></div></div>');
 
           var promise = $.ajax({
@@ -489,16 +487,21 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 tipo: 'interacciones',
                 inicio: fechaIni,
                 fin: fechaFin,
-                correo: userMail
+                correo: user.email
               }
             ),
             dataType: 'json',
             contentType: 'application/json; charset=utf-8'
           }).done(function(response){
-            createInteractionsCSV(response.csv, 'total_interacciones', boton);
+            if(response.estado.codigoEstado!==400){
+              createInteractionsCSV(response.csv, 'total_interacciones', boton);
+            }else{
+              openCustomModal('#myModal', 'Ups!', 'No se ha podido editar el usuario', 'error');
+            }
             setTimeout(()=>{
               $('.'+button).find('.spinner-holder').remove();
             },200);
+
           });
         }
 
