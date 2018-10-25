@@ -24,43 +24,44 @@ function setNodoId(data){
 }
 export function getLocation() {
   return function action(dispatch) {
-    dispatch({ type: "SET_LOCATION", data: 'Santiago' });
+    const geolocation = navigator.geolocation;
+    const location = new Promise((resolve, reject) => {
+      if (!geolocation) {
+        reject(new Error("Not Supported"));
+      }
 
-    // const geolocation = navigator.geolocation;
-    // const location = new Promise((resolve, reject) => {
-    //   if (!geolocation) {
-    //     reject(new Error("Not Supported"));
-    //   }
+      geolocation.getCurrentPosition(
+        position => {
+          resolve(position);
+        },
+        () => {
+          console.log("Permiso denegado");
+          //reject(new Error("Permission denied"));
+        }
+      );
+    });
 
-    //   geolocation.getCurrentPosition(
-    //     position => {
-    //       resolve(position);
-    //     },
-    //     () => {
-    //       console.log("Permiso denegado");
-    //       //reject(new Error("Permission denied"));
-    //     }
-    //   );
-    // });
-
-    // location.then(res => {
-    //   console.log('res => ',res)
-    //   const keyGoogleMaps = "AIzaSyCo6bnAVIDdjuacm4KZD79U9u-j0DiMkEA",
-    //     latitud = res.coords.latitude,
-    //     longitud = res.coords.longitude;
-    //   Geocode.setApiKey(keyGoogleMaps);
-    //   Geocode.enableDebug();
-    //   Geocode.fromLatLng(latitud, longitud).then(
-    //     response => {
-    //       console.log(response)
-    //       const address = response.results[0].address_components[2].long_name;
-    //       dispatch({ type: "SET_LOCATION", data: address });
-    //     },
-    //     error => {
-    //       console.log(error);
-    //     }
-    //   );
-    // });
+    location.then(res => {
+      const keyGoogleMaps = "AIzaSyCUcBJ-8QZA1UQY-K6P0Mo5Y2amnLLPTes",
+        latitud = res.coords.latitude.toString(),
+        longitud = res.coords.longitude.toString();
+      Geocode.setApiKey(keyGoogleMaps);
+      Geocode.enableDebug();
+      Geocode.fromLatLng(latitud, longitud).then(
+        response => {
+          let data = {};
+          data.region = response.results[0].address_components[5].long_name;
+          data.comuna = response.results[0].address_components[2].long_name;
+          data.pais = response.results[0].address_components[6].long_name;
+          dispatch({ type: "SET_LOCATION", data: data });
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    }).catch(err=>{
+      console.log(err)
+    });
   };
 }
 export function setOrigen(data) {
