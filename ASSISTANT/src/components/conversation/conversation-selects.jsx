@@ -84,7 +84,7 @@ export default class FormSelect extends Component {
           </div>
         );
       } else if (map.get("value") == -1) {
-        null;
+        return null;
       } else {
         // si es otro
         retorno.push(

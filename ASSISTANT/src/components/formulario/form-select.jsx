@@ -73,7 +73,7 @@ export default class FormSelect extends Component {
             <div data-value={map.get("value")} key={i + map.get('text')} className="disabled">{map.get("text")}</div>
           );
         }else if(map.get('value') == -1){
-          null;
+          return null;
         }else{// si es otro
           retorno.push(
             <div data-value={map.get("value")} key={i + map.get('text')} onClick={this.setSelected.bind(this, validate, name, validateFunc)}>{map.get("text")}</div>
