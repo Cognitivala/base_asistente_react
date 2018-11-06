@@ -16,11 +16,11 @@ function setGeneral(data) {
     data
   };
 }
-function setNodoId(data){
-  return{
+function setNodoId(data) {
+  return {
     type: "SET_NODO_ID",
     data
-  }
+  };
 }
 export function getLocation() {
   return function action(dispatch) {
@@ -41,27 +41,29 @@ export function getLocation() {
       );
     });
 
-    location.then(res => {
-      const keyGoogleMaps = "AIzaSyCUcBJ-8QZA1UQY-K6P0Mo5Y2amnLLPTes",
-        latitud = res.coords.latitude.toString(),
-        longitud = res.coords.longitude.toString();
-      Geocode.setApiKey(keyGoogleMaps);
-      Geocode.enableDebug();
-      Geocode.fromLatLng(latitud, longitud).then(
-        response => {
-          let data = {};
-          data.region = response.results[0].address_components[5].long_name;
-          data.comuna = response.results[0].address_components[2].long_name;
-          data.pais = response.results[0].address_components[6].long_name;
-          dispatch({ type: "SET_LOCATION", data: data });
-        },
-        error => {
-          console.log(error);
-        }
-      );
-    }).catch(err=>{
-      console.log(err)
-    });
+    location
+      .then(res => {
+        const keyGoogleMaps = "AIzaSyCUcBJ-8QZA1UQY-K6P0Mo5Y2amnLLPTes",
+          latitud = res.coords.latitude.toString(),
+          longitud = res.coords.longitude.toString();
+        Geocode.setApiKey(keyGoogleMaps);
+        Geocode.enableDebug();
+        Geocode.fromLatLng(latitud, longitud).then(
+          response => {
+            let data = {};
+            data.region = response.results[0].address_components[5].long_name;
+            data.comuna = response.results[0].address_components[2].long_name;
+            data.pais = response.results[0].address_components[6].long_name;
+            dispatch({ type: "SET_LOCATION", data: data });
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 }
 export function setOrigen(data) {
@@ -97,7 +99,10 @@ export function getCustomParams() {
       response => {
         if (response.status === 200) {
           dispatch(getCustomParamsEnd(response.data));
-          let str_md5v = AES.encrypt(JSON.stringify(response.data),KEY_ENCRYPT).toString();
+          let str_md5v = AES.encrypt(
+            JSON.stringify(response.data),
+            KEY_ENCRYPT
+          ).toString();
           localStorage.setItem("customParams", str_md5v);
           window.top.postMessage({ customParams: response.data }, "*");
         } else {
@@ -187,7 +192,7 @@ export function getSaludo() {
           item.send = "from";
           item.enabled = true;
           dispatch(pushConversation(item));
-          dispatch(setNodoId( item.msg[item.msg.length - 1]));
+          dispatch(setNodoId(item.msg[item.msg.length - 1]));
           dispatch(getSaludoEnd(item));
         } else {
           dispatch(getSaludoError(response.statusText));
@@ -272,8 +277,10 @@ export function getAyuda() {
     });
     return request.then(
       response => {
-        console.log(response);
-        if (response.data.estado.codigoEstado === 200) {
+        if (
+          response.status === 200 &&
+          response.data.estado.codigoEstado === 200
+        ) {
           dispatch(getAyudaEnd(response.data.respuesta));
         } else {
           dispatch(getAyudaError(response.data.respuesta));
@@ -408,13 +415,16 @@ export function updateConversationCalendar(data) {
   };
 }
 function updateConversationError(data) {
-  return { type: "PUSH_CONVERSATIONS_ERROR", data };
+  let conv = {};
+  conv.msg = [data];
+  conv.enabled = true;
+  conv.from = "from";
+  return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
   return function action(dispatch) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-
     const request = axios({
       method: "POST",
       headers: {
@@ -423,26 +433,24 @@ export function updateConversation(data) {
       url: APIURL + "/message",
       data: data
     });
-    return request.then(
-      response => {
-        if (response.data.estado.codigoEstado === 200) {
+    return request
+      .then(response => {
+        if (
+          response.status === 200 &&
+          response.data.estado.codigoEstado === 200
+        ) {
           let item = response.data;
           item.send = "from";
           item.enabled = true;
-          dispatch(setNodoId( item.msg[item.msg.length - 1]));
+          dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
         } else {
           dispatch(updateConversationError(response.statusText));
         }
-      },
-      err => {
-        dispatch(
-          updateConversationError(
-            "Error de conexión con el servidor, intente nuevamente"
-          )
-        );
-      }
-    );
+      })
+      .catch(err => {
+        dispatch(updateConversationError(err.response.data.msg));
+      });
 
     //Respuesta
     setTimeout(() => {
@@ -681,7 +689,7 @@ function messageResponse(dispatch, data) {
         break;
     }
   } else {
-    dispatch(setGeneral(data.general));
+    if (data.general !== undefined) dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
   }
 }
@@ -974,18 +982,14 @@ export function updateConversationButton(data) {
               let item = response.data;
               item.send = "from";
               item.enabled = true;
-              dispatch(setNodoId( item.msg[item.msg.length - 1]));
+              dispatch(setNodoId(item.msg[item.msg.length - 1]));
               messageResponse(dispatch, item);
             } else {
               dispatch(updateConversationError(response.statusText));
             }
           },
           err => {
-            dispatch(
-              updateConversationError(
-                "Error de conexión con el servidor, intente nuevamente"
-              )
-            );
+            dispatch(updateConversationError(err.response.data.msg));
           }
         );
       };
@@ -1099,9 +1103,12 @@ export function sendValoracion(data, general) {
     });
     return request.then(
       response => {
-        if (response.data.estado.codigoEstado === 200) {
+        if (
+          response.status === 200 &&
+          response.data.estado.codigoEstado === 200
+        ) {
           let item = {};
-          item.msg = [response.data.respuesta]
+          item.msg = [response.data.respuesta];
           item.send = "from";
           item.enabled = true;
           item.general = general;
@@ -1112,11 +1119,7 @@ export function sendValoracion(data, general) {
         }
       },
       err => {
-        dispatch(
-          updateConversationError(
-            "Error de conexión con el servidor, intente nuevamente"
-          )
-        );
+        dispatch(updateConversationError(err.response.data.msg));
       }
     );
   };
@@ -1129,7 +1132,7 @@ export function closeValoracion(data) {
 }
 //LIKE
 export function sendLike(data, general) {
-  return function action(dispatch){
+  return function action(dispatch) {
     const request = axios({
       method: "POST",
       headers: {
@@ -1140,9 +1143,12 @@ export function sendLike(data, general) {
     });
     return request.then(
       response => {
-        if (response.data.estado.codigoEstado === 200) {
+        if (
+          response.status === 200 &&
+          response.data.estado.codigoEstado === 200
+        ) {
           let item = {};
-          item.msg = [response.data.respuesta]
+          item.msg = [response.data.respuesta];
           item.send = "from";
           item.enabled = true;
           item.general = general;
@@ -1154,12 +1160,12 @@ export function sendLike(data, general) {
       err => {
         dispatch(
           updateConversationError(
-            "Error de conexión con el servidor, intente nuevamente"
+            "Disculpa, se ha producido un error al valorar. Puedes continuar con la conversación."
           )
         );
       }
     );
-  }
+  };
 }
 //FORM
 export function closeForm(data) {
@@ -1177,22 +1183,21 @@ export function closeForm(data) {
     });
     return request.then(
       response => {
-        if (response.data.estado.codigoEstado === 200) {
+        if (
+          response.status === 200 &&
+          response.data.estado.codigoEstado === 200
+        ) {
           let item = response.data;
           item.send = "from";
           item.enabled = true;
-          dispatch(setNodoId( item.msg[item.msg.length - 1]));
+          dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
         } else {
           dispatch(updateConversationError(response.statusText));
         }
       },
       err => {
-        dispatch(
-          updateConversationError(
-            "Error de conexión con el servidor, intente nuevamente"
-          )
-        );
+        dispatch(updateConversationError(err.response.data.msg));
       }
     );
   };

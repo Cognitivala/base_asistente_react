@@ -51,8 +51,10 @@ export function conversationsStates(
         map.update("conversations", list => list.push(conversation));
       });
     case "PUSH_CONVERSATIONS_ERROR":
+      const general = state.getIn(['conversations',-1,'general']).toJS();
+      action.data.general = general;
       return state.withMutations(map => {
-        map.set("isFetching", false).set("error", action.error);
+        map.set("loading", false).update("conversations", list => list.push(Immutable.fromJS(action.data)));
       });
     case "DELETE_HISTORY":
       const first = state.get('conversations').get(0);
