@@ -453,7 +453,7 @@ export function updateConversation(data) {
       .catch(err => {
           dispatch(
             updateConversationError(
-              err.msg
+              err.data.msg
             )
           );
       });
@@ -1000,7 +1000,7 @@ export function updateConversationButton(data) {
           err => {
             dispatch(
               updateConversationError(
-                err.msg
+                err.data.msg
               )
             );
           }
@@ -1134,7 +1134,7 @@ export function sendValoracion(data, general) {
       err => {
         dispatch(
           updateConversationError(
-            err.msg
+            err.data.msg
           )
         );
       }
@@ -1217,7 +1217,7 @@ export function closeForm(data) {
       err => {
         dispatch(
           updateConversationError(
-            err.msg
+            err.data.msg
           )
         );
       }
