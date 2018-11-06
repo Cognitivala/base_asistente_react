@@ -1,21 +1,21 @@
 var $ = jQuery,
   userAES = sessionStorage.getItem("user"),
-  userBytes  = null,
+  userBytes = null,
   user = null,
   getTkn = null,
   getPrf = null,
   getSession = "1",
   hasToken = false,
   KEY_ENCRYPT = "711fd53d4faeec31a1e779d2eab9a02b";
-  
-  if(userAES!==null){
-    userBytes  = CryptoJS.AES.decrypt(userAES, KEY_ENCRYPT);
-    user = JSON.parse(userBytes.toString(CryptoJS.enc.Utf8));
-    getTkn = user !== null ? user.tkn : user;
-    getPrf = user !== null ? user.prf : user;
-  }
 
-function initMain() {  
+if (userAES !== null) {
+  userBytes = CryptoJS.AES.decrypt(userAES, KEY_ENCRYPT);
+  user = JSON.parse(userBytes.toString(CryptoJS.enc.Utf8));
+  getTkn = user !== null ? user.tkn : user;
+  getPrf = user !== null ? user.prf : user;
+}
+
+function initMain() {
   if (validateUser()) {
     isToken();
     uri();
@@ -46,7 +46,7 @@ function isToken() {
     getNow = new Date(n),
     convTimeTnk = new Date(getTimeTkn + 120000),
     sess = new Date(getRfTimeTkn);
-  sess = sess.setMinutes(sess.getMinutes()+4);
+  sess = sess.setMinutes(sess.getMinutes() + 4);
   var sessTimeTkn = new Date(sess);
 
   if (sessTimeTkn < getNow) {
@@ -62,26 +62,31 @@ function isToken() {
           "Cache-Control": "no-cache"
         }
       };
-      $.ajax(settings).done(function(response) {
-        if (response.status == 200) {
-          $("meta[name='_csrf']").attr("content", response.token);
-          user.tkn = response.token;
-          user.rftkn = response.refresh_token;
-          user.tmtkn = n;
-          getTkn = user.tkn;
-          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(user), KEY_ENCRYPT).toString();
-          sessionStorage.setItem("user", ciphertext);
-          setRequest();
-          hasToken = true;
-          return true;
-        } else {
-          hasToken = false;
-          return false;
-        }
-      }).error(((err)=>{
-        window.location.href = getPath + "login";
-        console.log(err.msg);
-      }));
+      $.ajax(settings)
+        .done(function(response) {
+          if (response.status == 200) {
+            $("meta[name='_csrf']").attr("content", response.token);
+            user.tkn = response.token;
+            user.rftkn = response.refresh_token;
+            user.tmtkn = n;
+            getTkn = user.tkn;
+            var ciphertext = CryptoJS.AES.encrypt(
+              JSON.stringify(user),
+              KEY_ENCRYPT
+            ).toString();
+            sessionStorage.setItem("user", ciphertext);
+            setRequest();
+            hasToken = true;
+            return true;
+          } else {
+            hasToken = false;
+            return false;
+          }
+        })
+        .error(err => {
+          window.location.href = getPath + "login";
+          console.log(err.msg);
+        });
     } else {
       hasToken = true;
       return true;
@@ -120,8 +125,8 @@ function filterUser() {
     $(
       "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch']"
     ).remove();
-  } 
-  
+  }
+
   if (user.prf == 2) {
     $(
       "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
@@ -158,9 +163,9 @@ function menu() {
 
 function openScript() {
   let customs = localStorage.getItem("customParams"),
-    bytes  = CryptoJS.AES.decrypt(customs, KEY_ENCRYPT),
+    bytes = CryptoJS.AES.decrypt(customs, KEY_ENCRYPT),
     decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    getUrl = decryptedData.url;
+  getUrl = decryptedData.url;
   if (getUrl != "") {
     var setScript =
       '&lt;script type="text/javascript" src="' +
@@ -223,18 +228,19 @@ function createCSVValoraciones(content, nameFile, idDiv) {
 }
 
 function createInteractionsCSV(content, nameFile, button) {
-  var result = decodeURIComponent(Array.prototype.map.call(atob(content.substring(21)), function(c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-  }).join(''));
-  const rows = result;
-  var csvContent = "data:text/csv;charset=utf-8,";
-      csvContent += rows;
-  var encodedUri = encodeURI(csvContent);
-
+  var result = decodeURIComponent(
+    Array.prototype.map
+      .call(atob(content.substring(21)), function(c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  var csvData = new Blob([result], { type: "text/csv;charset=utf-8;" });
+  csvUrl = URL.createObjectURL(csvData);
   var link = button.nextElementSibling;
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", nameFile+".csv");
-    link.click();
+  link.setAttribute("href", csvUrl);
+  link.setAttribute("download", nameFile + ".csv");
+  link.click();
 }
 
 $("document").ready(() => {
