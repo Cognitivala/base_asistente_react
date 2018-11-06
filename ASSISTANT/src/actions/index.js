@@ -451,7 +451,7 @@ export function updateConversation(data) {
         }
       )
       .catch(err => {
-        debugger
+        
           dispatch(
             updateConversationError(
               err.response.data.msg
@@ -696,7 +696,6 @@ function messageResponse(dispatch, data) {
         break;
     }
   } else {
-    debugger
     if(data.general!==undefined) dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
   }
@@ -976,7 +975,6 @@ export function updateConversationButton(data) {
       return function action(dispatch) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
-        debugger;
         const request = axios({
           method: "POST",
           headers: {
@@ -987,7 +985,6 @@ export function updateConversationButton(data) {
         });
         return request.then(
           response => {
-            debugger;
             if (response.status === 200) {
               let item = response.data;
               item.send = "from";
@@ -1201,7 +1198,6 @@ export function closeForm(data) {
     });
     return request.then(
       response => {
-        debugger;
         if (
           response.status === 200 &&
           response.data.estado.codigoEstado === 200

@@ -51,7 +51,6 @@ export function conversationsStates(
         map.update("conversations", list => list.push(conversation));
       });
     case "PUSH_CONVERSATIONS_ERROR":
-      debugger;
       const general = state.getIn(['conversations',-1,'general']).toJS();
       action.data.general = general;
       return state.withMutations(map => {
