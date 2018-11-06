@@ -434,29 +434,22 @@ export function updateConversation(data) {
       data: data
     });
     return request
-      .then(
-        response => {
-          if (
-            response.status === 200 &&
-            response.data.estado.codigoEstado === 200
-          ) {
-            let item = response.data;
-            item.send = "from";
-            item.enabled = true;
-            dispatch(setNodoId(item.msg[item.msg.length - 1]));
-            messageResponse(dispatch, item);
-          } else {
-            dispatch(updateConversationError(response.statusText));
-          }
+      .then(response => {
+        if (
+          response.status === 200 &&
+          response.data.estado.codigoEstado === 200
+        ) {
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          dispatch(setNodoId(item.msg[item.msg.length - 1]));
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
         }
-      )
+      })
       .catch(err => {
-        
-          dispatch(
-            updateConversationError(
-              err.response.data.msg
-            )
-          );
+        dispatch(updateConversationError(err.response.data.msg));
       });
 
     //Respuesta
@@ -696,7 +689,7 @@ function messageResponse(dispatch, data) {
         break;
     }
   } else {
-    if(data.general!==undefined) dispatch(setGeneral(data.general));
+    if (data.general !== undefined) dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
   }
 }
@@ -996,11 +989,7 @@ export function updateConversationButton(data) {
             }
           },
           err => {
-            dispatch(
-              updateConversationError(
-                err.response.data.msg
-              )
-            );
+            dispatch(updateConversationError(err.response.data.msg));
           }
         );
       };
@@ -1130,11 +1119,7 @@ export function sendValoracion(data, general) {
         }
       },
       err => {
-        dispatch(
-          updateConversationError(
-            err.response.data.msg
-          )
-        );
+        dispatch(updateConversationError(err.response.data.msg));
       }
     );
   };
@@ -1212,11 +1197,7 @@ export function closeForm(data) {
         }
       },
       err => {
-        dispatch(
-          updateConversationError(
-            err.response.data.msg
-          )
-        );
+        dispatch(updateConversationError(err.response.data.msg));
       }
     );
   };
