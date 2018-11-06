@@ -223,18 +223,19 @@ function createCSVValoraciones(content, nameFile, idDiv) {
 }
 
 function createInteractionsCSV(content, nameFile, button) {
-  var result = decodeURIComponent(Array.prototype.map.call(atob(content.substring(21)), function(c) {
-    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-  }).join(''));
-  const rows = result;
-  var csvContent = "data:text/csv;charset=utf-8,";
-      csvContent += rows;
-  var encodedUri = encodeURI(csvContent);
-
+  var result = decodeURIComponent(
+    Array.prototype.map
+      .call(atob(content.substring(21)), function(c) {
+        return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+      })
+      .join("")
+  );
+  var csvData = new Blob([result], { type: "text/csv;charset=utf-8;" });
+  csvUrl = URL.createObjectURL(csvData);
   var link = button.nextElementSibling;
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", nameFile+".csv");
-    link.click();
+  link.setAttribute("href", csvUrl);
+  link.setAttribute("download", nameFile + ".csv");
+  link.click();
 }
 
 $("document").ready(() => {
