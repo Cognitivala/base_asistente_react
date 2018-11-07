@@ -128,7 +128,7 @@ function filterUser() {
   // 2 = Lector
   switch (user.prf) {
     case "1":
-      if(pathName === "/administrador-usuarios/" || pathName === "/administrador-usuarios/") window.location.href = getPath;
+      if(pathName === "/administrador-usuarios/") window.location.href = getPath;
       $(
         "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
         "#intents, #dialog, #url, #killswitch, [data-name='intents'], [data-name='dialogs'],[data-name='url'],[data-name='killswitch'] "
