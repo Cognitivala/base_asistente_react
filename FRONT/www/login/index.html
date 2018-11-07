@@ -127,8 +127,8 @@
               var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(user), KEY_ENCRYPT).toString();
               sessionStorage.setItem("user", ciphertext);
               
-              setTimeout(function(){  
-                window.location.href=getPath
+              setTimeout(function(){
+                window.location.href = user.prf!=="2"?getPath:getPath + 'indicadores/'
               }, 500);
       
             } else {

@@ -1,21 +1,21 @@
 var $ = jQuery,
   userAES = sessionStorage.getItem("user"),
-  userBytes  = null,
+  userBytes = null,
   user = null,
   getTkn = null,
   getPrf = null,
   getSession = "1",
   hasToken = false,
   KEY_ENCRYPT = "711fd53d4faeec31a1e779d2eab9a02b";
-  
-  if(userAES!==null){
-    userBytes  = CryptoJS.AES.decrypt(userAES, KEY_ENCRYPT);
-    user = JSON.parse(userBytes.toString(CryptoJS.enc.Utf8));
-    getTkn = user !== null ? user.tkn : user;
-    getPrf = user !== null ? user.prf : user;
-  }
 
-function initMain() {  
+if (userAES !== null) {
+  userBytes = CryptoJS.AES.decrypt(userAES, KEY_ENCRYPT);
+  user = JSON.parse(userBytes.toString(CryptoJS.enc.Utf8));
+  getTkn = user !== null ? user.tkn : user;
+  getPrf = user !== null ? user.prf : user;
+}
+
+function initMain() {
   if (validateUser()) {
     isToken();
     uri();
@@ -46,7 +46,7 @@ function isToken() {
     getNow = new Date(n),
     convTimeTnk = new Date(getTimeTkn + 120000),
     sess = new Date(getRfTimeTkn);
-  sess = sess.setMinutes(sess.getMinutes()+4);
+  sess = sess.setMinutes(sess.getMinutes() + 4);
   var sessTimeTkn = new Date(sess);
 
   if (sessTimeTkn < getNow) {
@@ -62,26 +62,31 @@ function isToken() {
           "Cache-Control": "no-cache"
         }
       };
-      $.ajax(settings).done(function(response) {
-        if (response.status == 200) {
-          $("meta[name='_csrf']").attr("content", response.token);
-          user.tkn = response.token;
-          user.rftkn = response.refresh_token;
-          user.tmtkn = n;
-          getTkn = user.tkn;
-          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(user), KEY_ENCRYPT).toString();
-          sessionStorage.setItem("user", ciphertext);
-          setRequest();
-          hasToken = true;
-          return true;
-        } else {
-          hasToken = false;
-          return false;
-        }
-      }).error(((err)=>{
-        window.location.href = getPath + "login";
-        console.log(err.msg);
-      }));
+      $.ajax(settings)
+        .done(function(response) {
+          if (response.status == 200) {
+            $("meta[name='_csrf']").attr("content", response.token);
+            user.tkn = response.token;
+            user.rftkn = response.refresh_token;
+            user.tmtkn = n;
+            getTkn = user.tkn;
+            var ciphertext = CryptoJS.AES.encrypt(
+              JSON.stringify(user),
+              KEY_ENCRYPT
+            ).toString();
+            sessionStorage.setItem("user", ciphertext);
+            setRequest();
+            hasToken = true;
+            return true;
+          } else {
+            hasToken = false;
+            return false;
+          }
+        })
+        .error(err => {
+          window.location.href = getPath + "login";
+          console.log(err.msg);
+        });
     } else {
       hasToken = true;
       return true;
@@ -116,16 +121,28 @@ function fillUser() {
 }
 
 function filterUser() {
-  if (user.prf > 0) {
-    $(
-      "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch']"
-    ).remove();
-  } 
-  
-  if (user.prf == 2) {
-    $(
-      "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
-    ).remove();
+  //REDIRECT
+  const pathName = window.location.pathname;
+  // 0 = Super
+  // 1 = Editor
+  // 2 = Lector
+  switch (user.prf) {
+    case "1":
+      if(pathName === "/administrador-usuarios/" || pathName === "/administrador-usuarios/") window.location.href = getPath;
+      $(
+        "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
+        "#intents, #dialog, #url, #killswitch, [data-name='intents'], [data-name='dialogs'],[data-name='url'],[data-name='killswitch'] "
+      ).remove();
+      break;
+    case "2":
+      if(pathName !== "/indicadores/") window.location.href = getPath + "indicadores/";
+      $(
+        "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
+        "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
+      ).remove();
+      break;
+    default:
+      break;
   }
 }
 
@@ -158,9 +175,9 @@ function menu() {
 
 function openScript() {
   let customs = localStorage.getItem("customParams"),
-    bytes  = CryptoJS.AES.decrypt(customs, KEY_ENCRYPT),
+    bytes = CryptoJS.AES.decrypt(customs, KEY_ENCRYPT),
     decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    getUrl = decryptedData.url;
+  getUrl = decryptedData.url;
   if (getUrl != "") {
     var setScript =
       '&lt;script type="text/javascript" src="' +
