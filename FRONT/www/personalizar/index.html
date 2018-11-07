@@ -983,8 +983,8 @@
         $('#color-buttons, .assistant .send').css("background-color", customParams.colorBtn);
         $('#logotipo img').attr('src', customParams.logo);
         $('#avatar img').attr('src', customParams.avatar);
-        document.getElementById('title-assistant').value = customParams.titulo;
-        document.getElementById('subtitle-assistant').value = customParams.subtitulo;
+        $('#subtitle-assistant').val(customParams.subtitulo);
+        $('#title-assistant').val(customParams.titulo);
         loadAll = loadAll + 1;
         if(loadAll===2){
           spinnerOut('#custom');
