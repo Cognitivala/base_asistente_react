@@ -121,16 +121,28 @@ function fillUser() {
 }
 
 function filterUser() {
-  if (user.prf > 0) {
-    $(
-      "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch']"
-    ).remove();
-  }
-
-  if (user.prf == 2) {
-    $(
-      "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
-    ).remove();
+  //REDIRECT
+  const pathName = window.location.pathname;
+  // 0 = Super
+  // 1 = Editor
+  // 2 = Lector
+  switch (user.prf) {
+    case "1":
+      if(pathName === "/administrador-usuarios/" || pathName === "/administrador-usuarios/") window.location.href = getPath;
+      $(
+        "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
+        "#intents, #dialog, #url, #killswitch, [data='intents'], [data='dialogs'],[data='url'],[data='killswitch'] "
+      ).remove();
+      break;
+    case "2":
+      if(pathName !== "/indicadores/") window.location.href = getPath;
+      $(
+        "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
+        "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
+      ).remove();
+      break;
+    default:
+      break;
   }
 }
 
