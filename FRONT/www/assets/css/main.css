@@ -12094,32 +12094,37 @@ ul.list-dialogs {
       padding-bottom: 0; }
 
 #url form label,
-#url .form label {
+#url .form label, .custom-col form label,
+.custom-col .form label {
   color: #54575c; }
 
 #url form input::-webkit-input-placeholder,
-#url .form input::-webkit-input-placeholder {
+#url .form input::-webkit-input-placeholder, .custom-col form input::-webkit-input-placeholder,
+.custom-col .form input::-webkit-input-placeholder {
   color: #009dc3;
   text-transform: initial;
   font-weight: 300;
   letter-spacing: 0.1em; }
 
 #url form input::-moz-placeholder,
-#url .form input::-moz-placeholder {
+#url .form input::-moz-placeholder, .custom-col form input::-moz-placeholder,
+.custom-col .form input::-moz-placeholder {
   color: #009dc3;
   text-transform: initial;
   font-weight: 300;
   letter-spacing: 0.1em; }
 
 #url form input:-ms-input-placeholder,
-#url .form input:-ms-input-placeholder {
+#url .form input:-ms-input-placeholder, .custom-col form input:-ms-input-placeholder,
+.custom-col .form input:-ms-input-placeholder {
   color: #009dc3;
   text-transform: initial;
   font-weight: 300;
   letter-spacing: 0.1em; }
 
 #url form input:-moz-placeholder,
-#url .form input:-moz-placeholder {
+#url .form input:-moz-placeholder, .custom-col form input:-moz-placeholder,
+.custom-col .form input:-moz-placeholder {
   color: #009dc3;
   text-transform: initial;
   font-weight: 300;
