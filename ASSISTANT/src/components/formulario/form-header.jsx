@@ -21,7 +21,7 @@ export default class FormHeader extends Component {
 
   closeFill() {
     const { closeMsg } = this.props;
-    if (closeMsg !== null) {
+    if (closeMsg !== "Null") {
       return (
         <div className="close-form">
           <button type="button" data-msg={closeMsg} onClick={this.closeForm}>
