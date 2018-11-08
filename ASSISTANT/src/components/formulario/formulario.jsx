@@ -21,6 +21,7 @@ export default class Formulario extends Component {
   }
 
   validate(validates, name, e) {
+    
     const typesValidate = validates.get("types");
     let error = false,
       input = e.target === undefined ? e : e.target,
@@ -40,7 +41,7 @@ export default class Formulario extends Component {
   }
 
   validateAll(fields, fieldsDOM) {
-    debugger
+    
     let arr = [];
     for (let i = 0; i < fieldsDOM.length; i++) {
       const map = fieldsDOM[i],
@@ -71,7 +72,7 @@ export default class Formulario extends Component {
   }
 
   closeForm() {
-    debugger;
+    
     const { general, closeForm } = this.props,
       conversation = {
         general,

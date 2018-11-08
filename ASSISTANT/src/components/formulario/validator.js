@@ -3,11 +3,11 @@ export function required(input, validates, required) {
   switch (input.tagName) {
     case "INPUT":
       if(input.type==="checkbox"){
-        return !input.value === "off";
+        return input.value !== "off";
       }else if(input.type==="file"){
-        return !input.files.length===0;
+        return input.files.length!==0;
       }else{
-        return !input.value.length === 0;
+        return input.value.length !== 0;
       }
     case "DIV"://Select
       if(input.classList.contains("options")){
@@ -77,6 +77,7 @@ export function tel(input, validates, required) {
 }
 
 export function text(input, validator, required) {
+  // debugger
   if (required) {
     if (input.value === "") return false;
     const min = validator.getIn(["rules", "min"]),
