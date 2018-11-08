@@ -1203,6 +1203,7 @@ export function closeForm(data) {
   };
 }
 export function sendForm(data, url, general) {
+  data.general = general;
   debugger
   return function action(dispatch) {
     dispatch({ type: "SEND_FORM_START" });
