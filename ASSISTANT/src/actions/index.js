@@ -1202,33 +1202,62 @@ export function closeForm(data) {
     );
   };
 }
-export function sendForm(data, url) {
+export function sendForm(data, url, general) {
+  debugger
   return function action(dispatch) {
     dispatch({ type: "SEND_FORM_START" });
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      url: url,
+      data: data
+    });
+    return request.then(
+      response => {
+        if (
+          response.status === 200 &&
+          response.data.estado.codigoEstado === 200
+        ) {
+          let item = {};
+          item.msg = [response.data.respuesta];
+          item.send = "from";
+          item.enabled = true;
+          item.general = general;
+          messageResponse(dispatch, item);
+        } else {
+          dispatch(updateConversationError(response.statusText));
+        }
+      },
+      err => {
+        dispatch(updateConversationError(err.response.data.msg));
+      }
+    );
 
     // dispatch(setGeneral(data.general));
     // dispatch(pushConversation(data));
 
     //Respuesta
-    setTimeout(() => {
-      console.log("url ==> ", url);
-      let data = {
-        general: {
-          cid: "SOYELCID",
-          origen: "Sitio Público",
-          nodo_id: null,
-          intent: null,
-          auth: null,
-          token: null,
-          location: null
-        },
-        msg: ["Se ha enviado el formulario"]
-      };
-      data.send = "from";
-      data.enabled = true;
-      messageResponse(dispatch, data);
-      dispatch({ type: "SEND_FORM_END" });
-      dispatch({ type: "DISABLED_FORM" });
-    }, 500);
+    // setTimeout(() => {
+    //   console.log("url ==> ", url);
+    //   let data = {
+    //     general: {
+    //       cid: "SOYELCID",
+    //       origen: "Sitio Público",
+    //       nodo_id: null,
+    //       intent: null,
+    //       auth: null,
+    //       token: null,
+    //       location: null
+    //     },
+    //     msg: ["Se ha enviado el formulario"]
+    //   };
+    //   data.send = "from";
+    //   data.enabled = true;
+    //   messageResponse(dispatch, data);
+    //   dispatch({ type: "SEND_FORM_END" });
+    //   dispatch({ type: "DISABLED_FORM" });
+    // }, 500);
   };
 }
