@@ -1234,10 +1234,13 @@ export function sendForm(data, url, general) {
           dispatch({ type: "DISABLED_FORM" });
         } else {
           dispatch(updateConversationError(response.statusText));
+          dispatch({ type: "DISABLED_FORM" });
         }
       },
       err => {
-        dispatch(updateConversationError(err.response.data.msg));
+        debugger
+        dispatch({ type: "DISABLED_FORM" });
+        dispatch(updateConversationError(err.response===undefined?err.message:err.response.data.msg));
       }
     );
 

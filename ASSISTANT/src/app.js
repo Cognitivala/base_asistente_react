@@ -45,7 +45,7 @@ export class App extends Component {
   }
 
   integracion(){
-    debugger
+    // debugger
     const src = window.location.search;
     let firstSplit = src.replace('?','').split("&"),
       integracion = {};
