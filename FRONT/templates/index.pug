@@ -28,12 +28,15 @@ html(lang="es-CL" dir="ltr" heightfull)
                   li(role="presentation")
                     a(href="#", data-func="toggleTabs", data-index="2", data-name="dialogs")
                       span Diálogo
-                  li(role="presentation")
+                  li(role="url")
                     a(href="#", data-func="toggleTabs", data-index="3", data-name="url")
                       span URL
                   li(role="killswitch")
                     a(href="#", data-func="toggleTabs", data-index="4",data-name="killswitch")
                       span Switch
+                  li(role="uploadfiles")
+                    a(href="#", data-func="toggleTabs", data-index="5",data-name="uploadfiles")
+                      span Subir Archivos
 
                 .tab-content
 
@@ -85,8 +88,10 @@ html(lang="es-CL" dir="ltr" heightfull)
                         label
                           input(type="checkbox")
                           .my-switch
-
                       button#save-switch(button data-func="saveSwitch") Guardar
+
+                  #url.tab-pane.fade(role="tabpanel", data-tab-target="5")
+                    
 
     include includes/modal.pug
     include includes/modal-choice.pug
