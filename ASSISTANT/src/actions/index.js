@@ -674,17 +674,21 @@ export function updateConversation(data) {
   };
 }
 function messageResponse(dispatch, data) {
-  debugger
+  debugger;
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
       case "valoracion":
-        dispatch(setGeneral(data.general));
+        if (data.general !== undefined) dispatch(setGeneral(data.general));
+        if (data.general.integracion !== undefined)
+          dispatch(setIntegracion(data.general.integracion));
         dispatch({ type: "ENABLED_VALORACION" });
         dispatch(pushConversation(data));
         break;
       case "form":
-        dispatch(setGeneral(data.general));
+        if (data.general !== undefined) dispatch(setGeneral(data.general));
+        if (data.general.integracion !== undefined)
+          dispatch(setIntegracion(data.general.integracion));
         dispatch({ type: "ENABLED_FORM" });
         dispatch(pushConversation(data));
         break;
@@ -693,7 +697,8 @@ function messageResponse(dispatch, data) {
     }
   } else {
     if (data.general !== undefined) dispatch(setGeneral(data.general));
-    if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+    if (data.general.integracion !== undefined)
+      dispatch(setIntegracion(data.general.integracion));
     dispatch(pushConversation(data));
   }
 }
@@ -1208,9 +1213,8 @@ export function closeForm(data) {
 }
 export function sendForm(data, url, general) {
   data.general = general;
-  debugger
+  debugger;
   return function action(dispatch) {
-
     dispatch({ type: "SEND_FORM_START" });
     const request = axios({
       method: "POST",
@@ -1240,9 +1244,13 @@ export function sendForm(data, url, general) {
         }
       },
       err => {
-        debugger
+        debugger;
         dispatch({ type: "DISABLED_FORM" });
-        dispatch(updateConversationError(err.response===undefined?err.message:err.response.data.msg));
+        dispatch(
+          updateConversationError(
+            err.response === undefined ? err.message : err.response.data.msg
+          )
+        );
       }
     );
 
