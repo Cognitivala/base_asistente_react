@@ -674,6 +674,7 @@ export function updateConversation(data) {
   };
 }
 function messageResponse(dispatch, data) {
+  debugger
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -692,6 +693,7 @@ function messageResponse(dispatch, data) {
     }
   } else {
     if (data.general !== undefined) dispatch(setGeneral(data.general));
+    if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
     dispatch(pushConversation(data));
   }
 }
