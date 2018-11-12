@@ -7,7 +7,7 @@ export default class FormHeader extends Component {
     this.closeForm = this.closeForm.bind(this);
   }
 
-  closeForm(e){
+  closeForm(e) {
     const { general } = this.props,
       msg = e.target.dataset.msg,
       conversation = {
@@ -19,26 +19,43 @@ export default class FormHeader extends Component {
     this.props.closeForm(conversation);
   }
 
-  content() {
-    const { icon, textA, textB, textStrong, closeMsg, colorHeader } = this.props,
-    style = {
-      backgroundColor: colorHeader
+  closeFill() {
+    const { closeMsg } = this.props;
+    if (closeMsg !== "Null") {
+      return (
+        <div className="close-form">
+          <button type="button" data-msg={closeMsg} onClick={this.closeForm}>
+            <i className="fas fa-times" data-msg={closeMsg} />
+          </button>
+        </div>
+      );
+    } else {
+      return <React.Fragment/>;
     }
+  }
+
+  content() {
+    const {
+        icon,
+        textA,
+        textB,
+        textStrong,
+        colorHeader
+      } = this.props,
+      style = {
+        backgroundColor: colorHeader
+      };
 
     return (
       <div className="header" style={style}>
-        <div className="close-form">
-          <button type="button" data-msg={closeMsg} onClick={this.closeForm}>
-            <i className="fas fa-times" data-msg={closeMsg}/>
-          </button>
-        </div>
+        {this.closeFill()}
         <div className="icon">
-          <i className={icon!==undefined?icon:null} />
+          <i className={icon !== undefined ? icon : null} />
         </div>
         <p>
-          {textA!==undefined?textA:null}{" "}
-          <strong>{textStrong!==undefined?textStrong:null}</strong>{" "}
-          {textB!==undefined?textB:null}
+          {textA !== undefined ? textA : null}{" "}
+          <strong>{textStrong !== undefined ? textStrong : null}</strong>{" "}
+          {textB !== undefined ? textB : null}
         </p>
       </div>
     );
@@ -56,4 +73,4 @@ FormHeader.propTypes = {
   textStrong: PropTypes.string.isRequired,
   closeMsg: PropTypes.string.isRequired,
   colorHeader: PropTypes.string.isRequired
-}
+};

@@ -21,6 +21,7 @@ export default class Formulario extends Component {
   }
 
   validate(validates, name, e) {
+    
     const typesValidate = validates.get("types");
     let error = false,
       input = e.target === undefined ? e : e.target,
@@ -40,7 +41,7 @@ export default class Formulario extends Component {
   }
 
   validateAll(fields, fieldsDOM) {
-    debugger
+    
     let arr = [];
     for (let i = 0; i < fieldsDOM.length; i++) {
       const map = fieldsDOM[i],
@@ -71,7 +72,7 @@ export default class Formulario extends Component {
   }
 
   closeForm() {
-    debugger;
+    
     const { general, closeForm } = this.props,
       conversation = {
         general,
@@ -84,24 +85,27 @@ export default class Formulario extends Component {
   }
 
   sendDataForm(e) {
-    const { form, sendForm } = this.props,
+    const { form, sendForm, generalStates } = this.props,
+      general = generalStates.toJS(),
       fields = form.get("fields"),
       fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset"),
       arr = this.validateAll(fields, fieldsDOM),
-      url = form.get('url')
+      url = form.get('url');
+    let dataForm = {};
     if (arr.length > 0) {
       this.setState({
         invalidFiels: arr
       });
     } else {
-      let arrayOut = [];
+      //let arrayOut = [];
       for (let i = 0; i < fieldsDOM.length; i++) {
         let input = fieldsDOM[i].elements[0],
           value = input.value,
           name = input.name;
-        arrayOut.push({ name, value });
+        dataForm[name] = value;
+        //arrayOut.push({ name, value });
       }
-      sendForm(arrayOut, url);
+      sendForm(dataForm, url, general);
     }
   }
 

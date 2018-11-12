@@ -45,12 +45,15 @@ export class App extends Component {
   }
 
   integracion(){
+    // debugger
     const src = window.location.search;
     let firstSplit = src.replace('?','').split("&"),
       integracion = {};
     firstSplit.forEach((element,i) => {
-      var secondSplit = element.split("=");
-      integracion[secondSplit[0]] = secondSplit[1];
+      if(element!==""){
+        var secondSplit = element.split("=");
+        integracion[secondSplit[0]] = secondSplit[1];
+      }
     });
     // debugger
     this.props.setIntegracion(integracion);
