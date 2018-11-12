@@ -51,9 +51,9 @@ export function getLocation() {
         Geocode.fromLatLng(latitud, longitud).then(
           response => {
             let data = {};
-            data.region = response.results[0].address_components[5].long_name;
+            data.region = response.results[0].address_components[3].long_name;
             data.comuna = response.results[0].address_components[2].long_name;
-            data.pais = response.results[0].address_components[6].long_name;
+            data.pais = response.results[0].address_components[4].long_name;
             dispatch({ type: "SET_LOCATION", data: data });
           },
           error => {
