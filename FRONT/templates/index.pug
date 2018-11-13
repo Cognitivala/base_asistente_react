@@ -19,23 +19,23 @@ html(lang="es-CL" dir="ltr" heightfull)
             .col-md-12
               .container-tabs
                 ul#tabs.nav.nav-tabs(role="tablist")
-                  li.active(role="presentation")
+                  li.active(role="intents")
                     a(href="#", data-func="toggleTabs", data-index="0", data-name="intents")
                       span Intenciones
                   //- li(role="presentation")
                     a(href="#", data-func="toggleTabs", data-index="1")
                       span Entidades
-                  li(role="presentation")
-                    a(href="#", data-func="toggleTabs", data-index="2", data-name="dialogs")
+                  li(role="dialogs")
+                    a(href="#", data-func="toggleTabs", data-index="1", data-name="dialogs")
                       span Diálogo
                   li(role="url")
-                    a(href="#", data-func="toggleTabs", data-index="3", data-name="url")
+                    a(href="#", data-func="toggleTabs", data-index="2", data-name="url")
                       span URL
                   li(role="killswitch")
-                    a(href="#", data-func="toggleTabs", data-index="4",data-name="killswitch")
+                    a(href="#", data-func="toggleTabs", data-index="3",data-name="killswitch")
                       span Switch
                   li(role="uploadfiles")
-                    a(href="#", data-func="toggleTabs", data-index="5",data-name="uploadfiles")
+                    a(href="#", data-func="toggleTabs", data-index="4",data-name="uploadfiles")
                       span Subir Archivos
 
                 .tab-content
@@ -62,7 +62,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                     include includes/modal-entities.pug
                     include includes/modal-entities-edit.pug
 
-                  #dialog.tab-pane.fade(role="tabpanel" data-tab-target="2")
+                  #dialog.tab-pane.fade(role="tabpanel" data-tab-target="1")
 
                     //- button#new-dialog(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-dialog', false, 'create_dialog')")
                       | Añadir diálogo 
@@ -74,14 +74,14 @@ html(lang="es-CL" dir="ltr" heightfull)
                     include includes/modal-dialog-edit.pug
                     include includes/modal-choice-dialog.pug
 
-                  #url.tab-pane.fade(role="tabpanel", data-tab-target="3")
+                  #url.tab-pane.fade(role="tabpanel", data-tab-target="2")
                     .form#form-url(autocomplete="off")
                       fieldset
                         label Ingresa la url del sitio en donde estará el asistente
                         input#get-url(type="url", pattern="https?://.+", placeholder="Ej. https://www.google.cl", required, autocomplete="off")
                       button#save-url(button onclick="saveUrl()") Guardar
 
-                  #killswitch.tab-pane.fade(role="tabpanel", data-tab-target="4")
+                  #killswitch.tab-pane.fade(role="tabpanel", data-tab-target="3")
                     .form#form-switch(autocomplete="off")
                       fieldset
                         label.title Activa o desactiva el asistente virtual que se encuentra en tu sitio web.
@@ -90,7 +90,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                           .my-switch
                       button#save-switch(button data-func="saveSwitch") Guardar
 
-                  #upload-file.tab-pane.fade(role="tabpanel", data-tab-target="5")
+                  #upload-file.tab-pane.fade(role="tabpanel", data-tab-target="4")
                     .header
                       p Cargue el archivo excel
                     form.upload(name="uploadExcel" enctype="multipart/form-data" method="post")

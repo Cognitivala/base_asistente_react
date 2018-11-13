@@ -12139,7 +12139,9 @@ div#upload-file {
     font-weight: normal;
     font-size: 1.2rem;
     color: #54575c;
-    margin: 0; }
+    margin: 0;
+    letter-spacing: 0.2rem;
+    font-family: geomanistbold; }
   div#upload-file form.upload {
     display: flex;
     margin-top: 2rem; }

@@ -73,11 +73,11 @@
             <div class="col-md-12">
               <div class="container-tabs">
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
-                  <li class="active" role="presentation"><a href="#" data-func="toggleTabs" data-index="0" data-name="intents"><span>Intenciones</span></a></li>
-                  <li role="presentation"><a href="#" data-func="toggleTabs" data-index="2" data-name="dialogs"><span>Diálogo</span></a></li>
-                  <li role="url"><a href="#" data-func="toggleTabs" data-index="3" data-name="url"><span>URL</span></a></li>
-                  <li role="killswitch"><a href="#" data-func="toggleTabs" data-index="4" data-name="killswitch"><span>Switch</span></a></li>
-                  <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="5" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
+                  <li class="active" role="intents"><a href="#" data-func="toggleTabs" data-index="0" data-name="intents"><span>Intenciones</span></a></li>
+                  <li role="dialogs"><a href="#" data-func="toggleTabs" data-index="1" data-name="dialogs"><span>Diálogo</span></a></li>
+                  <li role="url"><a href="#" data-func="toggleTabs" data-index="2" data-name="url"><span>URL</span></a></li>
+                  <li role="killswitch"><a href="#" data-func="toggleTabs" data-index="3" data-name="killswitch"><span>Switch</span></a></li>
+                  <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="4" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane fade in active" id="intents" role="tabpanel" data-tab-target="0">
@@ -113,7 +113,7 @@
                       <div class="backdrop-modal"></div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="2">
+                  <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="1">
                     <ul class="list-dialogs scroll" id="list-dialogs">       </ul>
                     <div class="container-modal" id="modal-dialog">
                       <div class="container-form">
@@ -168,7 +168,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="url" role="tabpanel" data-tab-target="3">
+                  <div class="tab-pane fade" id="url" role="tabpanel" data-tab-target="2">
                     <div class="form" id="form-url" autocomplete="off">
                       <fieldset>
                         <label>Ingresa la url del sitio en donde estará el asistente</label>
@@ -177,7 +177,7 @@
                       <button id="save-url" button="button" onclick="saveUrl()">Guardar</button>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="killswitch" role="tabpanel" data-tab-target="4">
+                  <div class="tab-pane fade" id="killswitch" role="tabpanel" data-tab-target="3">
                     <div class="form" id="form-switch" autocomplete="off">
                       <fieldset>
                         <label class="title">Activa o desactiva el asistente virtual que se encuentra en tu sitio web.</label>
@@ -189,7 +189,7 @@
                       <button id="save-switch" button="button" data-func="saveSwitch">Guardar</button>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="upload-file" role="tabpanel" data-tab-target="5">
+                  <div class="tab-pane fade" id="upload-file" role="tabpanel" data-tab-target="4">
                     <div class="header">
                       <p>Cargue el archivo excel</p>
                     </div>
