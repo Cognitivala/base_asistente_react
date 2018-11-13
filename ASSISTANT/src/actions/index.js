@@ -50,11 +50,7 @@ export function getLocation() {
         Geocode.enableDebug();
         Geocode.fromLatLng(latitud, longitud).then(
           response => {
-            let data = {};
-            data.region = response.results[0].address_components[5].long_name;
-            data.comuna = response.results[0].address_components[2].long_name;
-            data.pais = response.results[0].address_components[6].long_name;
-            dispatch({ type: "SET_LOCATION", data: data });
+            dispatch({ type: "SET_LOCATION", data: getLocationObject(response) });
           },
           error => {
             console.log(error);
@@ -66,6 +62,27 @@ export function getLocation() {
       });
   };
 }
+
+function getLocationObject(res){
+  let data = {};
+  res.results.forEach(ele => {
+    ele.types.forEach(type => {
+      if(type==="administrative_area_level_3"){
+        ele.address_components.forEach(address => {
+          if(address.types[0]==="administrative_area_level_3"){
+            data.comuna = address.long_name;
+          }else if(address.types[0]==="administrative_area_level_1"){
+            data.region = address.long_name;
+          }else if(address.types[0]==="country"){
+            data.pais = address.long_name;
+          }
+        });
+        return data;
+      }
+    });
+  });
+}
+
 export function setOrigen(data) {
   return function action(dispatch) {
     dispatch({ type: "SET_ORIGEN", data });
