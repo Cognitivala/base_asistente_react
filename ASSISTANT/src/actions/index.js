@@ -64,6 +64,7 @@ export function getLocation() {
 }
 
 function getLocationObject(res){
+  debugger;
   let data = {};
   res.results.forEach(ele => {
     ele.types.forEach(type => {
