@@ -74,7 +74,7 @@ export function getLocationObject(results){
     for (let j = 0; j < types.length; j++) {
       const type = types[j];
       if(type==="administrative_area_level_3"){
-        let address_components = type.address_components;
+        let address_components = ele.address_components;
         for (let k = 0; k < address_components.length; k++) {
           const address = address_components[k];
           if(address.types[0]==="administrative_area_level_3"){
