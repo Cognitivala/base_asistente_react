@@ -80,7 +80,7 @@ export function getLocationObject(res){
             data.pais = address.long_name;
           }
         });
-        return data;
+        break;
       }
     });
   });
