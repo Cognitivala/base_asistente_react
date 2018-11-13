@@ -12130,6 +12130,22 @@ ul.list-dialogs {
   font-weight: 300;
   letter-spacing: 0.1em; }
 
+div#upload-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%; }
+  div#upload-file p {
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: 1.2rem;
+    color: #54575c;
+    margin: 0; }
+  div#upload-file form.upload {
+    display: flex;
+    height: 100%;
+    align-items: center; }
+
 .block {
   min-height: calc(100% - 6rem);
   padding: 3rem;
