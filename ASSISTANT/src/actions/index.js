@@ -51,7 +51,7 @@ export function getLocation() {
         Geocode.fromLatLng(latitud, longitud).then(
           response => {
             debugger
-            let data = getLocationObject(response);
+            let data = getLocationObject(response.results);
             dispatch({ type: "SET_LOCATION", data: data });
           },
           error => {
@@ -65,13 +65,18 @@ export function getLocation() {
   };
 }
 
-export function getLocationObject(res){
+export function getLocationObject(results){
   debugger;
   let data = {};
-  res.results.forEach(ele => {
-    ele.types.forEach(type => {
+  for (let i = 0; i < results.length; i++) {
+    const ele = results[i];
+    let types = ele.types;
+    for (let j = 0; j < types.length; j++) {
+      const type = types[j];
       if(type==="administrative_area_level_3"){
-        ele.address_components.forEach(address => {
+        let address_components = type.address_components;
+        for (let k = 0; k < address_components.length; k++) {
+          const address = address_components[k];
           if(address.types[0]==="administrative_area_level_3"){
             data.comuna = address.long_name;
           }else if(address.types[0]==="administrative_area_level_1"){
@@ -79,11 +84,13 @@ export function getLocationObject(res){
           }else if(address.types[0]==="country"){
             data.pais = address.long_name;
           }
-        });
-        return true;
+        }
+        i = results.length;
+        break;
       }
-    });
-  });
+    }
+  }
+  return data;
 }
 
 export function setOrigen(data) {
