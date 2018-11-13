@@ -189,11 +189,12 @@
                       <button id="save-switch" button="button" data-func="saveSwitch">Guardar</button>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="url" role="tabpanel" data-tab-target="5">
+                  <div class="tab-pane fade" id="upload-file" role="tabpanel" data-tab-target="5">
+                    <div class="header">
+                      <p>Instrucciones</p>
+                    </div>
                     <form class="upload" name="uploadExcel" enctype="multipart/form-data" method="post"><a class="download-csv" pull-right="pull-right" onClick="this.nextElementSibling.click()">Cargar<i class="fa fa-upload" aria-hidden="true"></i></a>
                       <input class="btn hide download-csv" type="file" accept=".xls, .xlsx" onchange="changeExcel(this)" name="file"/>
-                      <button id="upload-excel" button="button" onclick="uploadExcel()">Subir</button>
-                      <button id="save-upload-excel" button="button" onclick="saveUploadExcel()">Guardar</button>
                     </form>
                   </div>
                 </div>

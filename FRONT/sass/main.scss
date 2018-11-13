@@ -972,8 +972,9 @@ select:-webkit-autofill {
     }
 }
 
-a.download-cvs,
-a.download-interactions-cvs {
+a.download-csv,
+input.download-csv
+a.download-interactions-csv {
   margin-top: 1.5rem;
   padding: 1.2rem 3rem;
   display: inline-block;
@@ -993,7 +994,7 @@ a.download-interactions-cvs {
   }
 }
 
-a.download-interactions-cvs {
+a.download-interactions-csv {
   position: relative;
   &:before {
     content: '';

@@ -90,14 +90,14 @@ html(lang="es-CL" dir="ltr" heightfull)
                           .my-switch
                       button#save-switch(button data-func="saveSwitch") Guardar
 
-                  #url.tab-pane.fade(role="tabpanel", data-tab-target="5")
+                  #upload-file.tab-pane.fade(role="tabpanel", data-tab-target="5")
+                    .header
+                      p Instrucciones
                     form.upload(name="uploadExcel" enctype="multipart/form-data" method="post")
                       a.download-csv(pull-right,onClick="this.nextElementSibling.click()")
                         | Cargar
                         i.fa.fa-upload(aria-hidden="true")
                       input.btn.hide.download-csv(type="file", accept=".xls, .xlsx", onchange="changeExcel(this)", name="file")
-                      button#upload-excel(button onclick="uploadExcel()") Subir
-                      button#save-upload-excel(button onclick="saveUploadExcel()") Guardar
                     
 
     include includes/modal.pug
