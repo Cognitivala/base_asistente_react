@@ -11,6 +11,7 @@ export function generalStates(
     location: null,
     id_cliente: "1",
     integracion: null,
+    region: null
   }),
   action
 ) {
@@ -31,6 +32,8 @@ export function generalStates(
       return state.set("location", action.data);
     case "SET_INTEGRACION":
       return state.set("integracion", action.data);
+    case "SET_REGION":
+      return state.set("region", action.data);
     case "DEFAULT_GENERAL":
       return state.withMutations(map =>{
         map.set("cid", null)

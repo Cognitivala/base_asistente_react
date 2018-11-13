@@ -66,7 +66,6 @@ export function getLocation() {
 }
 
 export function getLocationObject(results){
-  debugger;
   let data = {};
   for (let i = 0; i < results.length; i++) {
     const ele = results[i];
@@ -103,6 +102,12 @@ export function setIntegracion(data) {
     dispatch({ type: "SET_INTEGRACION", data });
   };
 }
+export function setRegion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_REGION", data });
+  };
+}
+
 //LAUNCHER
 export function closeLauncher() {
   return function action(dispatch) {
@@ -724,8 +729,8 @@ function messageResponse(dispatch, data) {
     }
   } else {
     if (data.general !== undefined) dispatch(setGeneral(data.general));
-    if (data.general.integracion !== undefined)
-      dispatch(setIntegracion(data.general.integracion));
+    if (data.general.region !== undefined) dispatch(setRegion(data.general.region));
+    if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
     dispatch(pushConversation(data));
   }
 }
