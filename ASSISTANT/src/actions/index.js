@@ -50,6 +50,7 @@ export function getLocation() {
         Geocode.enableDebug();
         Geocode.fromLatLng(latitud, longitud).then(
           response => {
+            debugger
             let data = getLocationObject(response);
             dispatch({ type: "SET_LOCATION", data: data });
           },
