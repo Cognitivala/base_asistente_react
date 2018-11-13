@@ -91,6 +91,13 @@ html(lang="es-CL" dir="ltr" heightfull)
                       button#save-switch(button data-func="saveSwitch") Guardar
 
                   #url.tab-pane.fade(role="tabpanel", data-tab-target="5")
+                    form.upload(name="uploadExcel" enctype="multipart/form-data" method="post")
+                      a.download-csv(pull-right,onClick="this.nextElementSibling.click()")
+                        | Cargar
+                        i.fa.fa-upload(aria-hidden="true")
+                      input.btn.hide.download-csv(type="file", accept=".xls, .xlsx", onchange="changeExcel(this)", name="file")
+                      button#upload-excel(button onclick="uploadExcel()") Subir
+                      button#save-upload-excel(button onclick="saveUploadExcel()") Guardar
                     
 
     include includes/modal.pug
@@ -1383,6 +1390,62 @@ html(lang="es-CL" dir="ltr" heightfull)
             openModal('#myModal', 'Lo sentimos', 'Tenemos un problema en el servidor<br><b>Error 500</b>', 'error');
           }
         })
+      }
+
+      function changeExcel(e){
+        debugger
+        if(e.files[0].type!=="text/xls" || e.files[0].type!=="text/xlsx"){
+          openModal('#myModal', 'Auch!', 'Debe ser formato excel', 'error');
+          return false;
+        }
+        const file = e.files[0];
+        const reader = new FileReader();
+        //- reader.readAsText(file);
+        reader.onloadend = (el) => {
+          if (el.target.readyState == FileReader.DONE) {            
+            var excelData = el.target.result;
+            e.dataset.csv = excelData;
+            e.parentElement.lastElementChild.click();
+          } 
+        }
+              
+        var blob = file;
+        reader.readAsBinaryString(blob);
+      }
+
+      function uploadExcel(form){
+        debugger;
+        $('.container-tabs').append('<div class="spinner"><div class="loader"></div></div>');
+        
+        var formData = new FormData(),
+          elemento = form["file"],
+          //- checked = $('#personaCheckbox')[0].checked;
+        formData.append("file", elemento.files[0]);
+        //- formData.append("file", "/Users/sebastianhe/Downloads/Pruebas_dominios_fase_1_y_2_/Libro8.xlsx");
+        //- formData.append("tipo", checked?"0":"1");
+        formData.append("id_cliente", "1");
+
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": getPath+"mad/create_synonyms_csv",
+          "method": "POST",
+          "processData": false,
+          "contentType": false,
+          "mimeType": "multipart/form-data",
+          "data": formData
+        }
+
+        $.ajax(settings).done(function (resp) {
+          var response = JSON.parse(resp);
+          if(response.estado.codigoEstado == 200){
+            openModal('#myModal', 'Genial!', 'Se ha subido el archivo con éxito', 'success');
+          } else {
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+          $('.container-tabs').find('.spinner').remove();
+          elemento.value = "";
+        });
       }
       
       $(function(){
