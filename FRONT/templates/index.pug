@@ -94,7 +94,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                     .header
                       p para cargar nuevos diplomados/cursos, debe seleccionar el tipo de archivo que desea subir, a continuación use el botón "CARGAR" para subir su archivo
                     form.upload(name="uploadExcel" enctype="multipart/form-data" method="post")
-                      .select
+                      label.select
                         select(name="selectUploadExcel")
                           option(value="0", selected="true") Cursos
                           option(value="1") Diplomados

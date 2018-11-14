@@ -2466,11 +2466,39 @@ div#upload-file {
     form.upload {
         display: flex;
         margin-top: 2rem;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        transition: all .3s ease-in-out;
+        border: .1rem solid #e2e2e2;
+        padding: 2rem 0;
+        &:hover{
+            background: #f7f8f8;
+        }
         a{
             cursor: pointer;
+            margin: 0;
         }
         .select{
             width: 100%;
+            display: flex;
+            justify-content: center;
+            &:after{
+                content: "\f13a ";
+                font-family: FontAwesome;
+                color: #000;
+                position: absolute;
+                right: 0;
+                top: 18px;
+                z-index: 1;
+                width: 10%;
+                height: 100%;
+                pointer-events: none;
+            }
+            select {
+                width: 20rem;
+                padding: 1rem;
+            }
         }
     }
 }
