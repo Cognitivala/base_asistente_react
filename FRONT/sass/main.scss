@@ -2480,7 +2480,7 @@ div#upload-file {
             margin: 0;
         }
         .select{
-            width: 100%;
+            position: relative;
             display: flex;
             justify-content: center;
             &:after{
@@ -2488,12 +2488,13 @@ div#upload-file {
                 font-family: FontAwesome;
                 color: #000;
                 position: absolute;
-                right: 0;
-                top: 18px;
+                right: 4px;
+                top: 11px;
                 z-index: 1;
                 width: 10%;
                 height: 100%;
                 pointer-events: none;
+                font-size: 16px;
             }
             select {
                 width: 20rem;
