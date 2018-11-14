@@ -1425,6 +1425,7 @@ html(lang="es-CL" dir="ltr" heightfull)
         if(select==="-1"){
           openModal('#myModal', 'Auch!', 'Debe seleccionar el tipo de documento a subir', 'error');
           $('.container-tabs').find('.spinner').remove();
+          form["file"] = "";
           return false;
         }
 
