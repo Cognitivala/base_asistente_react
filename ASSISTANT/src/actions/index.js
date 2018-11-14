@@ -476,7 +476,9 @@ export function updateConversation(data) {
           item.enabled = true;
           dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
-        } else {
+        } else if(response.data!== undefined){
+          dispatch(updateConversationError(response.data.msg));
+        }else{
           dispatch(updateConversationError(response.statusText));
         }
       })
