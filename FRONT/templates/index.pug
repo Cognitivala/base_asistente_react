@@ -93,7 +93,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                   #upload-file.tab-pane.fade(role="tabpanel", data-tab-target="4")
                     .header
                       p Cargue el archivo excel
-                    form.upload(name="uploadExcel" enctype="multipart/form-data")
+                    form.upload(name="uploadExcel" enctype="multipart/form-data" method="post")
                       select(name="selectUploadExcel")
                         option(value="-1") Seleccione
                         option(value="0") Cursos
