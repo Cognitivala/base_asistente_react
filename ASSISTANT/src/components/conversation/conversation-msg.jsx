@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import ConversationBubble from "./conversation-bubble";
 import PropTypes from "prop-types";
-import ConversationLikes from "./conversation-likes";
+// import ConversationLikes from "./conversation-likes";
 
 export default class ConversationMsg extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const { msgs, animation, send, avatar, colorHeader , userImg} = this.props,

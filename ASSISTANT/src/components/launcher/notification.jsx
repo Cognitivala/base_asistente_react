@@ -3,10 +3,6 @@ import PropTypes from 'prop-types';
 import NotificationCircle from "./notification-circle";
 
 export default class Notification extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { saludo } = this.props;
     return saludo.map((map,i)=>{

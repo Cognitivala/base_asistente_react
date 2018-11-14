@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import RatingStarsStar from "./rating-stars-star";
 
 export default class RatingStars extends Component{
-  constructor(props){
-    super(props);
-  }
-
   render(){
     let content = [];
     const {over, stars, clickStar, colorHeader, overStar, overStarDefault} = this.props;

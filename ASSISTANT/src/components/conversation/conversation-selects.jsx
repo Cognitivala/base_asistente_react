@@ -58,8 +58,8 @@ export default class FormSelect extends Component {
 
   fillOptionsShow(options) {
     let retorno = [];
-    options.map((map, i) => {
-      if (this.state.selected == map.get("value")) {
+    options.forEach((map,i) => {
+      if (this.state.selected === map.get("value")) {
         retorno.push(
           <div
             key={i}
@@ -71,8 +71,8 @@ export default class FormSelect extends Component {
         );
       }
     });
-    options.map((map, i) => {
-      if (this.state.selected == map.get("value") && map.get("value") != -1) {
+    options.forEach((map,i) => {
+      if (this.state.selected === map.get("value") && map.get("value") !== -1) {
         // si esta seleccionado y no es el seleccione
         retorno.push(
           <div
@@ -83,7 +83,7 @@ export default class FormSelect extends Component {
             {map.get("text")}
           </div>
         );
-      } else if (map.get("value") == -1) {
+      } else if (map.get("value") === -1) {
         return null;
       } else {
         // si es otro

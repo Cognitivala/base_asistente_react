@@ -27,8 +27,6 @@ export function formularioStates(
       return state.withMutations(map => {
         map.update("files", list => list.delete(action.data));
       });
-
-      return state;
     default:
       return state;
   }

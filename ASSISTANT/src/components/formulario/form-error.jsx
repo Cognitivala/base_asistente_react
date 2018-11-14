@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 
 export default class FormError extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { error } = this.props;
     if (error) {

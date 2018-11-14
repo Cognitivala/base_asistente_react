@@ -1,4 +1,4 @@
-import axios, { post } from "axios";
+import axios from "axios";
 import Geocode from "react-geocode";
 import { APIURL } from "./constans";
 import AES from "crypto-js/aes";
@@ -325,66 +325,66 @@ export function getAyuda() {
       }
     );
 
-    setTimeout(() => {
-      let item;
-      item = [
-        {
-          action: false,
-          collapse: false,
-          description:
-            "Te puedo ayudar a consultar tu remanente, formas para aumentarlo, detalle de tus cuotas de participaci\u00f3n, entre otras cosas.\r\nPreg\u00fantame algo o usa alguna de estas alternativas:",
-          listChild: [
-            {
-              title: "\u00bfQu\u00e9 es el remanente?"
-            },
-            {
-              title: "Detalle de las Cuotas de Participaci\u00f3n"
-            },
-            {
-              title: "Formas de pago de la cuota de participaci\u00f3n"
-            }
-          ],
-          title: "Remanente y Cuotas de Participaci\u00f3n"
-        },
-        {
-          action: false,
-          collapse: false,
-          description:
-            "Me puedes preguntar sobre la Cooperativa, sus representantes, como hacerte socio y todos los beneficios que Coopeuch te entrega en tu comuna, en comercios, salud, educaci\u00f3n, espect\u00e1culos y productos SUMA.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
-          listChild: [
-            {
-              title: "\u00bfQuiero ser socio?"
-            },
-            {
-              title: "\u00bfQu\u00e9 beneficios tengo? "
-            },
-            {
-              title: "Quiero actualizar mis datos"
-            }
-          ],
-          title: "La Cooperativa y sus beneficios"
-        },
-        {
-          action: false,
-          collapse: false,
-          description:
-            "Te puedo ayudar a obtener, bloquear y recuperar tus distintas claves, indicarte direcciones y horarios de oficinas y a comunicarte con Coopeuch.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
-          listChild: [
-            {
-              title: "\u00bfDonde hay una oficina en mi comuna?"
-            },
-            {
-              title: "\u00bfComo obtener o activar mi clave?"
-            },
-            {
-              title: "\u00bfComo contacto a un ejecutivo?"
-            }
-          ],
-          title: "Claves y Oficinas"
-        }
-      ];
-      dispatch(getAyudaEnd(item));
-    }, 500);
+    // setTimeout(() => {
+    //   let item;
+    //   item = [
+    //     {
+    //       action: false,
+    //       collapse: false,
+    //       description:
+    //         "Te puedo ayudar a consultar tu remanente, formas para aumentarlo, detalle de tus cuotas de participaci\u00f3n, entre otras cosas.\r\nPreg\u00fantame algo o usa alguna de estas alternativas:",
+    //       listChild: [
+    //         {
+    //           title: "\u00bfQu\u00e9 es el remanente?"
+    //         },
+    //         {
+    //           title: "Detalle de las Cuotas de Participaci\u00f3n"
+    //         },
+    //         {
+    //           title: "Formas de pago de la cuota de participaci\u00f3n"
+    //         }
+    //       ],
+    //       title: "Remanente y Cuotas de Participaci\u00f3n"
+    //     },
+    //     {
+    //       action: false,
+    //       collapse: false,
+    //       description:
+    //         "Me puedes preguntar sobre la Cooperativa, sus representantes, como hacerte socio y todos los beneficios que Coopeuch te entrega en tu comuna, en comercios, salud, educaci\u00f3n, espect\u00e1culos y productos SUMA.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
+    //       listChild: [
+    //         {
+    //           title: "\u00bfQuiero ser socio?"
+    //         },
+    //         {
+    //           title: "\u00bfQu\u00e9 beneficios tengo? "
+    //         },
+    //         {
+    //           title: "Quiero actualizar mis datos"
+    //         }
+    //       ],
+    //       title: "La Cooperativa y sus beneficios"
+    //     },
+    //     {
+    //       action: false,
+    //       collapse: false,
+    //       description:
+    //         "Te puedo ayudar a obtener, bloquear y recuperar tus distintas claves, indicarte direcciones y horarios de oficinas y a comunicarte con Coopeuch.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
+    //       listChild: [
+    //         {
+    //           title: "\u00bfDonde hay una oficina en mi comuna?"
+    //         },
+    //         {
+    //           title: "\u00bfComo obtener o activar mi clave?"
+    //         },
+    //         {
+    //           title: "\u00bfComo contacto a un ejecutivo?"
+    //         }
+    //       ],
+    //       title: "Claves y Oficinas"
+    //     }
+    //   ];
+    //   dispatch(getAyudaEnd(item));
+    // }, 500);
   };
 }
 function getAyudaStart() {
@@ -1095,12 +1095,12 @@ function attachFileEnd(data) {
     type: "GET_CONVERSATIONS_END"
   };
 }
-function attachFileError(error) {
-  return {
-    type: "GET_CONVERSATIONS_ERROR",
-    error
-  };
-}
+// function attachFileError(error) {
+//   return {
+//     type: "GET_CONVERSATIONS_ERROR",
+//     error
+//   };
+// }
 //VALORACIÓN
 export function setStar(data) {
   return function action(dispatch) {

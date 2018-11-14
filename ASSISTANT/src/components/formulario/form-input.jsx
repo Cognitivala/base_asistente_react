@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class FormInput extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   content() {
     const { type, name, placeholder, autocomplete, validateFunc ,validate, withError } = this.props;

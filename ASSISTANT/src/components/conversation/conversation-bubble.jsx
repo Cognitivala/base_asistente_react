@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class ConversationBubble extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const { msg, colorHeader, send } = this.props,

@@ -42,7 +42,7 @@ export default class HelpBox extends Component {
     return (
       <div className="assitant-helper-child">
         <div className="assistant-title" onClick={this.toggleIndex}>
-          <a style={{color:colorHeader}}>{ayuda.get("title")}</a>
+          <a href style={{color:colorHeader}}>{ayuda.get("title")}</a>
           <i style={{color:colorHeader}} className="icon-li fas fa-angle-down" />
         </div>
         {this.fillHelp(ayuda, colorHeader)}
