@@ -102,7 +102,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                         | Cargar
                         i.fa.fa-upload(aria-hidden="true")
                       input.btn.hide.download-csv(type="file", accept=".xls, .xlsx", onchange="changeExcel(this)", name="file")
-                      button.hide(onclick="uploadExcel()",type="button")
+                      button.hide(onclick="uploadExcel(this)",type="button")
                     
 
     include includes/modal.pug
