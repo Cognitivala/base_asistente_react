@@ -95,8 +95,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                       p Cargue el archivo excel
                     form.upload(name="uploadExcel" enctype="multipart/form-data" method="post")
                       select(name="selectUploadExcel")
-                        option(value="-1") Seleccione
-                        option(value="0") Cursos
+                        option(value="0", selected="true") Cursos
                         option(value="1") Diplomados
                       a.download-csv(pull-right,onClick="this.nextElementSibling.click()")
                         | Cargar
@@ -1422,16 +1421,16 @@ html(lang="es-CL" dir="ltr" heightfull)
         debugger;
         $('.container-tabs').append('<div class="spinner"><div class="loader"></div></div>');
         var select = $('[name="selectUploadExcel"]').val();
-        if(select==="-1"){
-          openModal('#myModal', 'Auch!', 'Debe seleccionar el tipo de documento a subir', 'error');
-          $('.container-tabs').find('.spinner').remove();
-          form["file"] = "";
-          return false;
-        }
+        //- if(select==="-1"){
+        //-   openModal('#myModal', 'Auch!', 'Debe seleccionar el tipo de documento a subir', 'error');
+        //-   $('.container-tabs').find('.spinner').remove();
+        //-   form["file"] = "";
+        //-   return false;
+        //- }
 
         var formData = new FormData(),
           elemento = form["file"];
-          checked = $('#personaCheckbox')[0].checked;
+          //- checked = $('#personaCheckbox')[0].checked;
         formData.append("file", elemento.files[0]);
         //- formData.append("file", "/Users/sebastianhe/Downloads/Pruebas_dominios_fase_1_y_2_/Libro8.xlsx");
         formData.append("tipo", select);

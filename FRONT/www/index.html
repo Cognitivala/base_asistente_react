@@ -195,8 +195,7 @@
                     </div>
                     <form class="upload" name="uploadExcel" enctype="multipart/form-data" method="post">
                       <select name="selectUploadExcel">
-                        <option value="-1">Seleccione</option>
-                        <option value="0">Cursos</option>
+                        <option value="0" selected="true">Cursos</option>
                         <option value="1">Diplomados</option>
                       </select><a class="download-csv" pull-right="pull-right" onClick="this.nextElementSibling.click()">Cargar<i class="fa fa-upload" aria-hidden="true"></i></a>
                       <input class="btn hide download-csv" type="file" accept=".xls, .xlsx" onchange="changeExcel(this)" name="file"/>
@@ -1687,16 +1686,16 @@
         debugger;
         $('.container-tabs').append('<div class="spinner"><div class="loader"></div></div>');
         var select = $('[name="selectUploadExcel"]').val();
-        if(select==="-1"){
-          openModal('#myModal', 'Auch!', 'Debe seleccionar el tipo de documento a subir', 'error');
-          $('.container-tabs').find('.spinner').remove();
-          form["file"] = "";
-          return false;
-        }
+        //- if(select==="-1"){
+        //-   openModal('#myModal', 'Auch!', 'Debe seleccionar el tipo de documento a subir', 'error');
+        //-   $('.container-tabs').find('.spinner').remove();
+        //-   form["file"] = "";
+        //-   return false;
+        //- }
       
         var formData = new FormData(),
           elemento = form["file"];
-          checked = $('#personaCheckbox')[0].checked;
+          //- checked = $('#personaCheckbox')[0].checked;
         formData.append("file", elemento.files[0]);
         //- formData.append("file", "/Users/sebastianhe/Downloads/Pruebas_dominios_fase_1_y_2_/Libro8.xlsx");
         formData.append("tipo", select);
