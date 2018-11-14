@@ -1675,7 +1675,7 @@
           if (el.target.readyState == FileReader.DONE) {
             var excelData = el.target.result;
             e.dataset.csv = excelData;
-            uploadExcel();
+            uploadExcel(e.parentElement);
           } 
         }
               
