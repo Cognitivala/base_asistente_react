@@ -1456,6 +1456,8 @@ html(lang="es-CL" dir="ltr" heightfull)
           }
           $('.container-tabs').find('.spinner').remove();
           elemento.value = "";
+        }).error(function(err){
+          console.log(err);
         });
       }
       

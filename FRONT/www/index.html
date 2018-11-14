@@ -1721,6 +1721,8 @@
           }
           $('.container-tabs').find('.spinner').remove();
           elemento.value = "";
+        }).error(function(err){
+          console.log(err);
         });
       }
       
