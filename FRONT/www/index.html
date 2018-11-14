@@ -1664,7 +1664,7 @@
       
       function changeExcel(e){
         debugger
-        if(e.files[0].type!=="text/xls" || e.files[0].type!=="text/xlsx"){
+        if(e.files[0].type!=="application/vnd.ms-excel" || e.files[0].type!=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
           openModal('#myModal', 'Auch!', 'Debe ser formato excel', 'error');
           return false;
         }
