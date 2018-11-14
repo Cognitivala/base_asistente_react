@@ -12147,6 +12147,8 @@ div#upload-file {
     margin-top: 2rem; }
     div#upload-file form.upload a {
       cursor: pointer; }
+    div#upload-file form.upload .select {
+      width: 100%; }
 
 .block {
   min-height: calc(100% - 6rem);
