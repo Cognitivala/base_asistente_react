@@ -1266,10 +1266,12 @@ export function sendForm(data, url, general) {
         ) {
           let item = {};
           item.msg = [response.data.respuesta];
-          item.send = "from";
-          item.enabled = true;
+          // item.msg = [response.data.msg];
+          item.send = "to";
+          item.enabled = false;
           item.general = general;
-          messageResponse(dispatch, item);
+          updateConversation(item);
+          // messageResponse(dispatch, item);
           dispatch({ type: "SEND_FORM_END" });
           dispatch({ type: "DISABLED_FORM" });
         } else {
