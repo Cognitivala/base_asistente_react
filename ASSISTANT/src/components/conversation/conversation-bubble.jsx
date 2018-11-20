@@ -31,5 +31,5 @@ export default class ConversationBubble extends Component {
 ConversationBubble.propTypes = {
   msg: PropTypes.any.isRequired,
   colorHeader: PropTypes.string.isRequired,
-  send: PropTypes.any.isRequired
+  send: PropTypes.any
 };

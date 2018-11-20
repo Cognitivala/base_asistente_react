@@ -50,7 +50,6 @@ export function getLocation() {
         Geocode.enableDebug();
         Geocode.fromLatLng(latitud, longitud).then(
           response => {
-            debugger
             let data = getLocationObject(response.results);
             dispatch({ type: "SET_LOCATION", data: data });
           },
@@ -708,7 +707,6 @@ export function updateConversation(data) {
   };
 }
 function messageResponse(dispatch, data) {
-  debugger;
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -1308,7 +1306,6 @@ export function sendForm(data, url, general) {
         }
       },
       err => {
-        debugger;
         dispatch({ type: "DISABLED_FORM" });
         dispatch(
           updateConversationError(

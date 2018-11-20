@@ -9,6 +9,7 @@ export default class ConversationMsg extends Component {
     const { msgs, animation, send, avatar, colorHeader , userImg} = this.props,
     to = send==="to"?true:false;
     return msgs.map((map, i) => {
+      debugger
       if(map.trim()!==""){
         if(to){
           return (
@@ -54,7 +55,7 @@ ConversationMsg.propTypes = {
   animation: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
   msgs: PropTypes.any.isRequired,
-  send: PropTypes.any.isRequired,
+  send: PropTypes.any,
   colorHeader: PropTypes.string.isRequired,
   userImg: PropTypes.string,
   like: PropTypes.bool,
