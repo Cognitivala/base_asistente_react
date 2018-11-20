@@ -9,38 +9,42 @@ export default class ConversationMsg extends Component {
     const { msgs, animation, send, avatar, colorHeader , userImg} = this.props,
     to = send==="to"?true:false;
     return msgs.map((map, i) => {
-      if(to){
-        return (
-          <div
-            key={i}
-            className={
-              "conversation-bubble " + animation + send
-            }
-          >
-            <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
-            {/* <img
-              className="rounded-img"
-              src={send==="to"?userImg:avatar}
-              alt="Respuesta"
-            /> */}
-          </div>
-        );
+      if(map.trim()!==""){
+        if(to){
+          return (
+            <div
+              key={i}
+              className={
+                "conversation-bubble " + animation + send
+              }
+            >
+              <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
+              {/* <img
+                className="rounded-img"
+                src={send==="to"?userImg:avatar}
+                alt="Respuesta"
+              /> */}
+            </div>
+          );
+        }else{
+          return (
+            <div
+              key={i}
+              className={
+                "conversation-bubble " + animation + send
+              }
+            >
+              <img
+                className="rounded-img"
+                src={send==="to"?userImg:avatar}
+                alt=""
+              />
+              <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
+            </div>
+          );
+        }
       }else{
-        return (
-          <div
-            key={i}
-            className={
-              "conversation-bubble " + animation + send
-            }
-          >
-            <img
-              className="rounded-img"
-              src={send==="to"?userImg:avatar}
-              alt=""
-            />
-            <ConversationBubble msg={map} colorHeader={colorHeader} send={send}/>
-          </div>
-        );
+        return null;
       }
     });
   }
