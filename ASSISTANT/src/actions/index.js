@@ -1261,7 +1261,7 @@ export function sendForm(data, url, general) {
           response.status === 200 &&
           response.data.estado.codigoEstado === 200
         ) {
-          console.log('response =>>>> ',response.data);
+          // console.log('response =>>>> ',response.data);
           let item = {};
           //item.msg = [response.data.respuesta];
           item.msg = [response.data.msg];
@@ -1270,7 +1270,6 @@ export function sendForm(data, url, general) {
           item.general = general;
           //updateConversation(item);
           // messageResponse(dispatch, item);
-          dispatch({ type: "SEND_FORM_END" });
           dispatch({ type: "DISABLED_FORM" });
           const request = axios({
             method: "POST",
@@ -1286,6 +1285,7 @@ export function sendForm(data, url, general) {
                 response.status === 200 &&
                 response.data.estado.codigoEstado === 200
               ) {
+                dispatch({ type: "SEND_FORM_END" });
                 let item = response.data;
                 item.send = "from";
                 item.enabled = true;
@@ -1294,10 +1294,12 @@ export function sendForm(data, url, general) {
               } else if(response.data!== undefined){
                 dispatch(updateConversationError(response.data.msg));
               }else{
+                dispatch({ type: "SEND_FORM_END" });
                 dispatch(updateConversationError(response.statusText));
               }
             })
             .catch(err => {
+              dispatch({ type: "SEND_FORM_END" });
               dispatch(updateConversationError(err.response.data.msg));
             });
         } else {
