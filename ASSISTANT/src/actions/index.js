@@ -821,7 +821,7 @@ export function updateConversationButton(data) {
             send: "from",
             enabled: true,
             msg: [
-              "Lamentamos que no quieras valorar",
+              "Lamentamos que no quieras.",
               "Recuerda que si vuelves a necesitar ayuda, estoy acá las 24 horas del día."
             ]
           };
