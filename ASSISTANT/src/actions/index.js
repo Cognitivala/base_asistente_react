@@ -1265,11 +1265,12 @@ export function sendForm(data, url, general) {
           response.data.estado.codigoEstado === 200
         ) {
           let item = {};
-          item.msg = [response.data.respuesta];
-          // item.msg = [response.data.msg];
+          //item.msg = [response.data.respuesta];
+          item.msg = [response.data.msg];
           item.send = "to";
           item.enabled = false;
           item.general = general;
+          debugger
           updateConversation(item);
           // messageResponse(dispatch, item);
           dispatch({ type: "SEND_FORM_END" });
