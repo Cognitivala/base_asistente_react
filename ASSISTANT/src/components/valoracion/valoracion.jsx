@@ -76,8 +76,8 @@ export default class Valoracion extends Component {
 
   valorar(e) {
     const { valoracionStates } = this.props,
-      stars = valoracionStates.get("stars"),
-      pudoResolver = valoracionStates.get("pudoResolver"),
+      // stars = valoracionStates.get("stars"),
+      // pudoResolver = valoracionStates.get("pudoResolver"),
       comment = valoracionStates.get("comment");
     let pudoResolverError = false,
       commentError = false;

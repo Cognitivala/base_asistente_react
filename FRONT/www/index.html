@@ -73,11 +73,11 @@
             <div class="col-md-12">
               <div class="container-tabs">
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
-                  <li class="active" role="presentation"><a href="#" data-func="toggleTabs" data-index="0" data-name="intents"><span>Intenciones</span></a></li>
-                  <li role="presentation"><a href="#" data-func="toggleTabs" data-index="2" data-name="dialogs"><span>Diálogo</span></a></li>
-                  <li role="url"><a href="#" data-func="toggleTabs" data-index="3" data-name="url"><span>URL</span></a></li>
-                  <li role="killswitch"><a href="#" data-func="toggleTabs" data-index="4" data-name="killswitch"><span>Switch</span></a></li>
-                  <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="5" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
+                  <li class="active" role="intents"><a href="#" data-func="toggleTabs" data-index="0" data-name="intents"><span>Intenciones</span></a></li>
+                  <li role="dialogs"><a href="#" data-func="toggleTabs" data-index="1" data-name="dialogs"><span>Diálogo</span></a></li>
+                  <li role="url"><a href="#" data-func="toggleTabs" data-index="2" data-name="url"><span>URL</span></a></li>
+                  <li role="killswitch"><a href="#" data-func="toggleTabs" data-index="3" data-name="killswitch"><span>Switch</span></a></li>
+                  <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="4" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
                 </ul>
                 <div class="tab-content">
                   <div class="tab-pane fade in active" id="intents" role="tabpanel" data-tab-target="0">
@@ -113,7 +113,7 @@
                       <div class="backdrop-modal"></div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="2">
+                  <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="1">
                     <ul class="list-dialogs scroll" id="list-dialogs">       </ul>
                     <div class="container-modal" id="modal-dialog">
                       <div class="container-form">
@@ -168,7 +168,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="url" role="tabpanel" data-tab-target="3">
+                  <div class="tab-pane fade" id="url" role="tabpanel" data-tab-target="2">
                     <div class="form" id="form-url" autocomplete="off">
                       <fieldset>
                         <label>Ingresa la url del sitio en donde estará el asistente</label>
@@ -177,7 +177,7 @@
                       <button id="save-url" button="button" onclick="saveUrl()">Guardar</button>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="killswitch" role="tabpanel" data-tab-target="4">
+                  <div class="tab-pane fade" id="killswitch" role="tabpanel" data-tab-target="3">
                     <div class="form" id="form-switch" autocomplete="off">
                       <fieldset>
                         <label class="title">Activa o desactiva el asistente virtual que se encuentra en tu sitio web.</label>
@@ -189,7 +189,21 @@
                       <button id="save-switch" button="button" data-func="saveSwitch">Guardar</button>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="url" role="tabpanel" data-tab-target="5"></div>
+                  <div class="tab-pane fade" id="upload-file" role="tabpanel" data-tab-target="4">
+                    <div class="header">
+                      <p>para cargar nuevos cursos/diplomados, debe seleccionar el tipo de archivo que desea subir, a continuación use el botón "CARGAR" para subir su archivo</p>
+                    </div>
+                    <form class="upload" name="uploadExcel" enctype="multipart/form-data" method="post">
+                      <label class="select">
+                        <select name="selectUploadExcel">
+                          <option value="0" selected="true">Cursos</option>
+                          <option value="1">Diplomados</option>
+                        </select>
+                      </label><a class="download-csv" pull-right="pull-right" onClick="this.nextElementSibling.click()">Cargar<i class="fa fa-upload" aria-hidden="true"></i></a>
+                      <input class="btn hide download-csv" type="file" accept=".xls, .xlsx" onchange="changeExcel(this)" name="file"/>
+                      <button class="hide" onclick="uploadExcel(this)" type="button"></button>
+                    </form>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1647,6 +1661,67 @@
             openModal('#myModal', 'Lo sentimos', 'Tenemos un problema en el servidor<br><b>Error 500</b>', 'error');
           }
         })
+      }
+      
+      function changeExcel(e){
+        if(e.files[0].type!=="application/vnd.ms-excel" && e.files[0].type!=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+          openModal('#myModal', 'Auch!', 'Debe ser formato excel', 'error');
+          return false;
+        }
+        const file = e.files[0];
+        const reader = new FileReader();
+        reader.onloadend = (el) => {
+          if (el.target.readyState == FileReader.DONE) {
+            var excelData = el.target.result;
+            e.dataset.csv = excelData;
+            uploadExcel(e.parentElement);
+          } 
+        }
+              
+        var blob = file;
+        reader.readAsBinaryString(blob);
+      }
+      
+      function uploadExcel(form){
+        debugger;
+        $('.container-tabs').append('<div class="spinner"><div class="loader"></div></div>');
+        var select = $('[name="selectUploadExcel"]').val();
+        //- if(select==="-1"){
+        //-   openModal('#myModal', 'Auch!', 'Debe seleccionar el tipo de documento a subir', 'error');
+        //-   $('.container-tabs').find('.spinner').remove();
+        //-   form["file"] = "";
+        //-   return false;
+        //- }
+      
+        var formData = new FormData(),
+          elemento = form["file"];
+        formData.append("file", elemento.files[0]);
+        formData.append("tipo", select);
+        formData.append("id_cliente", "1");
+      
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": getPath+"mad/create_synonyms_csv",
+          "method": "POST",
+          "processData": false,
+          "contentType": false,
+          "mimeType": "multipart/form-data",
+          "data": formData
+        }
+      
+        $.ajax(settings).done(function (resp) {
+          var response = JSON.parse(resp);
+          if(response.estado.codigoEstado == 200){
+            openModal('#myModal', 'Genial!', 'Se ha subido el archivo con éxito', 'success');
+          } else {
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+          $('.container-tabs').find('.spinner').remove();
+          elemento.value = "";
+        }).error(function(err){
+          console.log(err);
+        });
       }
       
       $(function(){

@@ -1,4 +1,4 @@
-import axios, { post } from "axios";
+import axios from "axios";
 import Geocode from "react-geocode";
 import { APIURL } from "./constans";
 import AES from "crypto-js/aes";
@@ -50,10 +50,7 @@ export function getLocation() {
         Geocode.enableDebug();
         Geocode.fromLatLng(latitud, longitud).then(
           response => {
-            let data = {};
-            data.region = response.results[0].address_components[5].long_name;
-            data.comuna = response.results[0].address_components[2].long_name;
-            data.pais = response.results[0].address_components[6].long_name;
+            let data = getLocationObject(response.results);
             dispatch({ type: "SET_LOCATION", data: data });
           },
           error => {
@@ -66,6 +63,34 @@ export function getLocation() {
       });
   };
 }
+
+export function getLocationObject(results){
+  let data = {};
+  for (let i = 0; i < results.length; i++) {
+    const ele = results[i];
+    let types = ele.types;
+    for (let j = 0; j < types.length; j++) {
+      const type = types[j];
+      if(type==="administrative_area_level_3"){
+        let address_components = ele.address_components;
+        for (let k = 0; k < address_components.length; k++) {
+          const address = address_components[k];
+          if(address.types[0]==="administrative_area_level_3"){
+            data.comuna = address.long_name;
+          }else if(address.types[0]==="administrative_area_level_1"){
+            data.region = address.long_name;
+          }else if(address.types[0]==="country"){
+            data.pais = address.long_name;
+          }
+        }
+        i = results.length;
+        break;
+      }
+    }
+  }
+  return data;
+}
+
 export function setOrigen(data) {
   return function action(dispatch) {
     dispatch({ type: "SET_ORIGEN", data });
@@ -76,6 +101,12 @@ export function setIntegracion(data) {
     dispatch({ type: "SET_INTEGRACION", data });
   };
 }
+export function setRegion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_REGION", data });
+  };
+}
+
 //LAUNCHER
 export function closeLauncher() {
   return function action(dispatch) {
@@ -293,66 +324,66 @@ export function getAyuda() {
       }
     );
 
-    setTimeout(() => {
-      let item;
-      item = [
-        {
-          action: false,
-          collapse: false,
-          description:
-            "Te puedo ayudar a consultar tu remanente, formas para aumentarlo, detalle de tus cuotas de participaci\u00f3n, entre otras cosas.\r\nPreg\u00fantame algo o usa alguna de estas alternativas:",
-          listChild: [
-            {
-              title: "\u00bfQu\u00e9 es el remanente?"
-            },
-            {
-              title: "Detalle de las Cuotas de Participaci\u00f3n"
-            },
-            {
-              title: "Formas de pago de la cuota de participaci\u00f3n"
-            }
-          ],
-          title: "Remanente y Cuotas de Participaci\u00f3n"
-        },
-        {
-          action: false,
-          collapse: false,
-          description:
-            "Me puedes preguntar sobre la Cooperativa, sus representantes, como hacerte socio y todos los beneficios que Coopeuch te entrega en tu comuna, en comercios, salud, educaci\u00f3n, espect\u00e1culos y productos SUMA.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
-          listChild: [
-            {
-              title: "\u00bfQuiero ser socio?"
-            },
-            {
-              title: "\u00bfQu\u00e9 beneficios tengo? "
-            },
-            {
-              title: "Quiero actualizar mis datos"
-            }
-          ],
-          title: "La Cooperativa y sus beneficios"
-        },
-        {
-          action: false,
-          collapse: false,
-          description:
-            "Te puedo ayudar a obtener, bloquear y recuperar tus distintas claves, indicarte direcciones y horarios de oficinas y a comunicarte con Coopeuch.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
-          listChild: [
-            {
-              title: "\u00bfDonde hay una oficina en mi comuna?"
-            },
-            {
-              title: "\u00bfComo obtener o activar mi clave?"
-            },
-            {
-              title: "\u00bfComo contacto a un ejecutivo?"
-            }
-          ],
-          title: "Claves y Oficinas"
-        }
-      ];
-      dispatch(getAyudaEnd(item));
-    }, 500);
+    // setTimeout(() => {
+    //   let item;
+    //   item = [
+    //     {
+    //       action: false,
+    //       collapse: false,
+    //       description:
+    //         "Te puedo ayudar a consultar tu remanente, formas para aumentarlo, detalle de tus cuotas de participaci\u00f3n, entre otras cosas.\r\nPreg\u00fantame algo o usa alguna de estas alternativas:",
+    //       listChild: [
+    //         {
+    //           title: "\u00bfQu\u00e9 es el remanente?"
+    //         },
+    //         {
+    //           title: "Detalle de las Cuotas de Participaci\u00f3n"
+    //         },
+    //         {
+    //           title: "Formas de pago de la cuota de participaci\u00f3n"
+    //         }
+    //       ],
+    //       title: "Remanente y Cuotas de Participaci\u00f3n"
+    //     },
+    //     {
+    //       action: false,
+    //       collapse: false,
+    //       description:
+    //         "Me puedes preguntar sobre la Cooperativa, sus representantes, como hacerte socio y todos los beneficios que Coopeuch te entrega en tu comuna, en comercios, salud, educaci\u00f3n, espect\u00e1culos y productos SUMA.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
+    //       listChild: [
+    //         {
+    //           title: "\u00bfQuiero ser socio?"
+    //         },
+    //         {
+    //           title: "\u00bfQu\u00e9 beneficios tengo? "
+    //         },
+    //         {
+    //           title: "Quiero actualizar mis datos"
+    //         }
+    //       ],
+    //       title: "La Cooperativa y sus beneficios"
+    //     },
+    //     {
+    //       action: false,
+    //       collapse: false,
+    //       description:
+    //         "Te puedo ayudar a obtener, bloquear y recuperar tus distintas claves, indicarte direcciones y horarios de oficinas y a comunicarte con Coopeuch.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
+    //       listChild: [
+    //         {
+    //           title: "\u00bfDonde hay una oficina en mi comuna?"
+    //         },
+    //         {
+    //           title: "\u00bfComo obtener o activar mi clave?"
+    //         },
+    //         {
+    //           title: "\u00bfComo contacto a un ejecutivo?"
+    //         }
+    //       ],
+    //       title: "Claves y Oficinas"
+    //     }
+    //   ];
+    //   dispatch(getAyudaEnd(item));
+    // }, 500);
   };
 }
 function getAyudaStart() {
@@ -444,7 +475,9 @@ export function updateConversation(data) {
           item.enabled = true;
           dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
-        } else {
+        } else if(response.data!== undefined){
+          dispatch(updateConversationError(response.data.msg));
+        }else{
           dispatch(updateConversationError(response.statusText));
         }
       })
@@ -674,7 +707,6 @@ export function updateConversation(data) {
   };
 }
 function messageResponse(dispatch, data) {
-  debugger;
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -697,8 +729,8 @@ function messageResponse(dispatch, data) {
     }
   } else {
     if (data.general !== undefined) dispatch(setGeneral(data.general));
-    if (data.general.integracion !== undefined)
-      dispatch(setIntegracion(data.general.integracion));
+    if (data.general.region !== undefined) dispatch(setRegion(data.general.region));
+    if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
     dispatch(pushConversation(data));
   }
 }
@@ -789,7 +821,7 @@ export function updateConversationButton(data) {
             send: "from",
             enabled: true,
             msg: [
-              "Lamentamos que no quieras valorar",
+              "Lamentamos que no quieras.",
               "Recuerda que si vuelves a necesitar ayuda, estoy acá las 24 horas del día."
             ]
           };
@@ -1063,12 +1095,12 @@ function attachFileEnd(data) {
     type: "GET_CONVERSATIONS_END"
   };
 }
-function attachFileError(error) {
-  return {
-    type: "GET_CONVERSATIONS_ERROR",
-    error
-  };
-}
+// function attachFileError(error) {
+//   return {
+//     type: "GET_CONVERSATIONS_ERROR",
+//     error
+//   };
+// }
 //VALORACIÓN
 export function setStar(data) {
   return function action(dispatch) {
@@ -1213,7 +1245,6 @@ export function closeForm(data) {
 }
 export function sendForm(data, url, general) {
   data.general = general;
-  debugger;
   return function action(dispatch) {
     dispatch({ type: "SEND_FORM_START" });
     const request = axios({
@@ -1230,21 +1261,53 @@ export function sendForm(data, url, general) {
           response.status === 200 &&
           response.data.estado.codigoEstado === 200
         ) {
+          // console.log('response =>>>> ',response.data);
           let item = {};
-          item.msg = [response.data.respuesta];
-          item.send = "from";
-          item.enabled = true;
+          //item.msg = [response.data.respuesta];
+          item.msg = [response.data.msg];
+          item.send = "to";
+          item.enabled = false;
           item.general = general;
-          messageResponse(dispatch, item);
-          dispatch({ type: "SEND_FORM_END" });
+          //updateConversation(item);
+          // messageResponse(dispatch, item);
           dispatch({ type: "DISABLED_FORM" });
+          const request = axios({
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            url: APIURL + "/message",
+            data: item
+          });
+          return request
+            .then(response => {
+              if (
+                response.status === 200 &&
+                response.data.estado.codigoEstado === 200
+              ) {
+                dispatch({ type: "SEND_FORM_END" });
+                let item = response.data;
+                item.send = "from";
+                item.enabled = true;
+                dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                messageResponse(dispatch, item);
+              } else if(response.data!== undefined){
+                dispatch(updateConversationError(response.data.msg));
+              }else{
+                dispatch({ type: "SEND_FORM_END" });
+                dispatch(updateConversationError(response.statusText));
+              }
+            })
+            .catch(err => {
+              dispatch({ type: "SEND_FORM_END" });
+              dispatch(updateConversationError(err.response.data.msg));
+            });
         } else {
           dispatch(updateConversationError(response.statusText));
           dispatch({ type: "DISABLED_FORM" });
         }
       },
       err => {
-        debugger;
         dispatch({ type: "DISABLED_FORM" });
         dispatch(
           updateConversationError(

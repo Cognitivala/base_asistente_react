@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class ConversationBubble extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const { msg, colorHeader, send } = this.props,
@@ -34,5 +31,5 @@ export default class ConversationBubble extends Component {
 ConversationBubble.propTypes = {
   msg: PropTypes.any.isRequired,
   colorHeader: PropTypes.string.isRequired,
-  send: PropTypes.any.isRequired
+  send: PropTypes.any
 };

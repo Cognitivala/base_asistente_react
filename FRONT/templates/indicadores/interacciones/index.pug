@@ -73,12 +73,12 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                               .col-md-12
                                 #chart_div
                               .col-md-6
-                      a.download-interactions-cvs(href="#;", onclick="downInteractions('last-days')", pull-left)
+                      a.download-interactions-csv(href="#;", onclick="downInteractions('last-days')", pull-left)
                         | Descargar Total Interacciones
                         i.fa.fa-file-excel-o(aria-hidden="true")
                       a.hide
-                      a.download-cvs(pull-right)
-                        | Descargar CSV
+                      a.download-csv(pull-right)
+                        | Descargar csv
                         i.fa.fa-file-excel-o(aria-hidden="true")
         
                   #by-range.tab-pane.fade(role="tabpanel")
@@ -118,12 +118,12 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                           .inner
                             h5 Interacciones <b>entre fechas</b>
                             #chart_by_range
-                      a.download-interactions-cvs(href="#;", onclick="downInteractions('by-range')" ,pull-left)
+                      a.download-interactions-csv(href="#;", onclick="downInteractions('by-range')" ,pull-left)
                         | Descargar Total Interacciones
                         i.fa.fa-file-excel-o(aria-hidden="true")
                       a.hide
-                      a.download-cvs(pull-right)
-                        | Descargar CSV
+                      a.download-csv(pull-right)
+                        | Descargar csv
                         i.fa.fa-file-excel-o(aria-hidden="true")
 
                   #by-week.tab-pane.fade(role="tabpanel")
@@ -156,8 +156,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                           .inner
                             h5 Interacciones <b>por semanas</b>
                             #chart_by_week
-                      a.download-cvs(pull-right)
-                        | Descargar CSV
+                      a.download-csv(pull-right)
+                        | Descargar csv
                         i.fa.fa-file-excel-o(aria-hidden="true")
 
                   #by-hour.tab-pane.fade(role="tabpanel")
@@ -190,8 +190,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                           .inner
                             h5 Interacciones <b>por hora</b>
                             #chart_by_hour
-                      a.download-cvs(pull-right)
-                        | Descargar CSV
+                      a.download-csv(pull-right)
+                        | Descargar csv
                         i.fa.fa-file-excel-o(aria-hidden="true")
 
     .toast

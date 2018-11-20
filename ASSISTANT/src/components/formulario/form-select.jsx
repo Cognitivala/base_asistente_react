@@ -13,9 +13,7 @@ export default class FormSelect extends Component {
     this.setSelected = this.setSelected.bind(this);
   }
 
-  componentDidUpdate() {
-
-  }
+  componentDidUpdate() {}
 
   fillOptions(options) {
     return options.map((map, i) => {
@@ -28,24 +26,25 @@ export default class FormSelect extends Component {
     });
   }
 
-  setSelected(validate, name, validateFunc, e){
+  setSelected(validate, name, validateFunc, e) {
     let selected = e.target.dataset.value;
     this.options.current.dataset.valor = selected;
-    validateFunc(validate, name, e.target.closest('.options'));
+    validateFunc(validate, name, e.target.closest(".options"));
     this.setState({
       selected,
-      active:false
-    })
-
+      active: false
+    });
   }
 
   fillOptionsShow(options) {
     const { validateFunc, validate, name } = this.props;
     let retorno = [];
-    const required = validate.get('types').filter(item => item === "required");
-    options.map((map, i) => {
-      if (this.state.selected == map.get("value")) {
-        retorno.push(
+    const required = validate.get("types").filter(item => item === "required");
+    retorno.push(options
+      .filter(filter => filter.get("value") === this.state.selected)
+      .map((map, i) => {
+        // if (this.state.selected === map.get("value")) {
+        return(
           <div
             key={i}
             data-value={map.get("value")}
@@ -54,29 +53,72 @@ export default class FormSelect extends Component {
             {map.get("text")}
           </div>
         );
-      }
-    });
-    options.map((map, i) => {
-      if(required.size === 0){//NO REQUERIDO
-        if (this.state.selected == map.get("value")) {// si esta seleccionado y no es el seleccione
+        // }
+      }));
+    options.forEach((map, i) => {
+      if (required.size === 0) {
+        //NO REQUERIDO
+        if (this.state.selected === map.get("value")) {
+          // si esta seleccionado y no es el seleccione
           retorno.push(
-            <div data-value={map.get("value")} key={i + map.get('text')} className="disabled">{map.get("text")}</div>
+            <div
+              data-value={map.get("value")}
+              key={i + map.get("text")}
+              className="disabled"
+            >
+              {map.get("text")}
+            </div>
           );
-        }else{// si es otro
+        } else {
+          // si es otro
           retorno.push(
-            <div data-value={map.get("value")} key={i + map.get('text')} onClick={this.setSelected.bind(this, validate, name, validateFunc)}>{map.get("text")}</div>
+            <div
+              data-value={map.get("value")}
+              key={i + map.get("text")}
+              onClick={this.setSelected.bind(
+                this,
+                validate,
+                name,
+                validateFunc
+              )}
+            >
+              {map.get("text")}
+            </div>
           );
         }
-      }else{//SI ES REQUERIDO
-        if (this.state.selected == map.get("value") && map.get('value') != -1) {// si esta seleccionado y no es el seleccione
+      } else {
+        //SI ES REQUERIDO
+        if (
+          this.state.selected === map.get("value") &&
+          map.get("value") !== -1
+        ) {
+          // si esta seleccionado y no es el seleccione
           retorno.push(
-            <div data-value={map.get("value")} key={i + map.get('text')} className="disabled">{map.get("text")}</div>
+            <div
+              data-value={map.get("value")}
+              key={i + map.get("text")}
+              className="disabled"
+            >
+              {map.get("text")}
+            </div>
           );
-        }else if(map.get('value') == -1){
+        } else if (map.get("value") === -1) {
           return null;
-        }else{// si es otro
+        } else {
+          // si es otro
           retorno.push(
-            <div data-value={map.get("value")} key={i + map.get('text')} onClick={this.setSelected.bind(this, validate, name, validateFunc)}>{map.get("text")}</div>
+            <div
+              data-value={map.get("value")}
+              key={i + map.get("text")}
+              onClick={this.setSelected.bind(
+                this,
+                validate,
+                name,
+                validateFunc
+              )}
+            >
+              {map.get("text")}
+            </div>
           );
         }
       }
@@ -90,7 +132,10 @@ export default class FormSelect extends Component {
       cssClassError = withError ? " error" : "";
     return (
       <div className="select">
-        <div className={"options" + cssClass + cssClassError} ref={this.options}>
+        <div
+          className={"options" + cssClass + cssClassError}
+          ref={this.options}
+        >
           {this.fillOptionsShow(options)}
         </div>
       </div>

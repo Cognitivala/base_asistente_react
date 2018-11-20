@@ -19,23 +19,23 @@ html(lang="es-CL" dir="ltr" heightfull)
             .col-md-12
               .container-tabs
                 ul#tabs.nav.nav-tabs(role="tablist")
-                  li.active(role="presentation")
+                  li.active(role="intents")
                     a(href="#", data-func="toggleTabs", data-index="0", data-name="intents")
                       span Intenciones
                   //- li(role="presentation")
                     a(href="#", data-func="toggleTabs", data-index="1")
                       span Entidades
-                  li(role="presentation")
-                    a(href="#", data-func="toggleTabs", data-index="2", data-name="dialogs")
+                  li(role="dialogs")
+                    a(href="#", data-func="toggleTabs", data-index="1", data-name="dialogs")
                       span Diálogo
                   li(role="url")
-                    a(href="#", data-func="toggleTabs", data-index="3", data-name="url")
+                    a(href="#", data-func="toggleTabs", data-index="2", data-name="url")
                       span URL
                   li(role="killswitch")
-                    a(href="#", data-func="toggleTabs", data-index="4",data-name="killswitch")
+                    a(href="#", data-func="toggleTabs", data-index="3",data-name="killswitch")
                       span Switch
                   li(role="uploadfiles")
-                    a(href="#", data-func="toggleTabs", data-index="5",data-name="uploadfiles")
+                    a(href="#", data-func="toggleTabs", data-index="4",data-name="uploadfiles")
                       span Subir Archivos
 
                 .tab-content
@@ -62,7 +62,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                     include includes/modal-entities.pug
                     include includes/modal-entities-edit.pug
 
-                  #dialog.tab-pane.fade(role="tabpanel" data-tab-target="2")
+                  #dialog.tab-pane.fade(role="tabpanel" data-tab-target="1")
 
                     //- button#new-dialog(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-dialog', false, 'create_dialog')")
                       | Añadir diálogo 
@@ -74,14 +74,14 @@ html(lang="es-CL" dir="ltr" heightfull)
                     include includes/modal-dialog-edit.pug
                     include includes/modal-choice-dialog.pug
 
-                  #url.tab-pane.fade(role="tabpanel", data-tab-target="3")
+                  #url.tab-pane.fade(role="tabpanel", data-tab-target="2")
                     .form#form-url(autocomplete="off")
                       fieldset
                         label Ingresa la url del sitio en donde estará el asistente
                         input#get-url(type="url", pattern="https?://.+", placeholder="Ej. https://www.google.cl", required, autocomplete="off")
                       button#save-url(button onclick="saveUrl()") Guardar
 
-                  #killswitch.tab-pane.fade(role="tabpanel", data-tab-target="4")
+                  #killswitch.tab-pane.fade(role="tabpanel", data-tab-target="3")
                     .form#form-switch(autocomplete="off")
                       fieldset
                         label.title Activa o desactiva el asistente virtual que se encuentra en tu sitio web.
@@ -90,7 +90,19 @@ html(lang="es-CL" dir="ltr" heightfull)
                           .my-switch
                       button#save-switch(button data-func="saveSwitch") Guardar
 
-                  #url.tab-pane.fade(role="tabpanel", data-tab-target="5")
+                  #upload-file.tab-pane.fade(role="tabpanel", data-tab-target="4")
+                    .header
+                      p para cargar nuevos cursos/diplomados, debe seleccionar el tipo de archivo que desea subir, a continuación use el botón "CARGAR" para subir su archivo
+                    form.upload(name="uploadExcel" enctype="multipart/form-data" method="post")
+                      label.select
+                        select(name="selectUploadExcel")
+                          option(value="0", selected="true") Cursos
+                          option(value="1") Diplomados
+                      a.download-csv(pull-right,onClick="this.nextElementSibling.click()")
+                        | Cargar
+                        i.fa.fa-upload(aria-hidden="true")
+                      input.btn.hide.download-csv(type="file", accept=".xls, .xlsx", onchange="changeExcel(this)", name="file")
+                      button.hide(onclick="uploadExcel(this)",type="button")
                     
 
     include includes/modal.pug
@@ -1383,6 +1395,67 @@ html(lang="es-CL" dir="ltr" heightfull)
             openModal('#myModal', 'Lo sentimos', 'Tenemos un problema en el servidor<br><b>Error 500</b>', 'error');
           }
         })
+      }
+
+      function changeExcel(e){
+        if(e.files[0].type!=="application/vnd.ms-excel" && e.files[0].type!=="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+          openModal('#myModal', 'Auch!', 'Debe ser formato excel', 'error');
+          return false;
+        }
+        const file = e.files[0];
+        const reader = new FileReader();
+        reader.onloadend = (el) => {
+          if (el.target.readyState == FileReader.DONE) {
+            var excelData = el.target.result;
+            e.dataset.csv = excelData;
+            uploadExcel(e.parentElement);
+          } 
+        }
+              
+        var blob = file;
+        reader.readAsBinaryString(blob);
+      }
+
+      function uploadExcel(form){
+        debugger;
+        $('.container-tabs').append('<div class="spinner"><div class="loader"></div></div>');
+        var select = $('[name="selectUploadExcel"]').val();
+        //- if(select==="-1"){
+        //-   openModal('#myModal', 'Auch!', 'Debe seleccionar el tipo de documento a subir', 'error');
+        //-   $('.container-tabs').find('.spinner').remove();
+        //-   form["file"] = "";
+        //-   return false;
+        //- }
+
+        var formData = new FormData(),
+          elemento = form["file"];
+        formData.append("file", elemento.files[0]);
+        formData.append("tipo", select);
+        formData.append("id_cliente", "1");
+
+        var settings = {
+          "async": true,
+          "crossDomain": true,
+          "url": getPath+"mad/create_synonyms_csv",
+          "method": "POST",
+          "processData": false,
+          "contentType": false,
+          "mimeType": "multipart/form-data",
+          "data": formData
+        }
+
+        $.ajax(settings).done(function (resp) {
+          var response = JSON.parse(resp);
+          if(response.estado.codigoEstado == 200){
+            openModal('#myModal', 'Genial!', 'Se ha subido el archivo con éxito', 'success');
+          } else {
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+          $('.container-tabs').find('.spinner').remove();
+          elemento.value = "";
+        }).error(function(err){
+          console.log(err);
+        });
       }
       
       $(function(){

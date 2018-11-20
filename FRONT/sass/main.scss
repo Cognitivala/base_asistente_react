@@ -972,8 +972,9 @@ select:-webkit-autofill {
     }
 }
 
-a.download-cvs,
-a.download-interactions-cvs {
+a.download-csv,
+input.download-csv
+a.download-interactions-csv {
   margin-top: 1.5rem;
   padding: 1.2rem 3rem;
   display: inline-block;
@@ -993,7 +994,7 @@ a.download-interactions-cvs {
   }
 }
 
-a.download-interactions-cvs {
+a.download-interactions-csv {
   position: relative;
   &:before {
     content: '';
@@ -2444,6 +2445,60 @@ ul.list-dialogs {
                 text-transform: initial;
                 font-weight: 300;
                 letter-spacing: 0.1em;
+            }
+        }
+    }
+}
+
+div#upload-file {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    p{
+        text-transform: uppercase;
+        font-weight: normal;
+        font-size: 1.2rem;
+        color: #54575c;
+        margin: 0;
+        letter-spacing: 0.2rem;
+        font-family: geomanistbold;
+    }
+    form.upload {
+        display: flex;
+        margin-top: 2rem;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        transition: all .3s ease-in-out;
+        border: .1rem solid #e2e2e2;
+        padding: 2rem 0;
+        &:hover{
+            background: #f7f8f8;
+        }
+        a{
+            cursor: pointer;
+            margin: 0;
+        }
+        .select{
+            position: relative;
+            display: flex;
+            justify-content: center;
+            &:after{
+                content: "\f13a ";
+                font-family: FontAwesome;
+                color: #000;
+                position: absolute;
+                right: 4px;
+                top: 11px;
+                z-index: 1;
+                width: 10%;
+                height: 100%;
+                pointer-events: none;
+                font-size: 16px;
+            }
+            select {
+                width: 20rem;
+                padding: 1rem;
             }
         }
     }

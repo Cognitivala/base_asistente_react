@@ -80,36 +80,36 @@ export default class Conversations extends Component {
     ) {
       let hc = [],
         largo = conversations.size - 1;
-      conversations.map((conversation, i) => {
+      conversations.forEach((conversation,i) => {
         const buttons = conversation.get("buttons"),
-          multibuttons = conversation.get("multibuttons"),
-          selects = conversation.get("selects"),
-          msg = conversation.get("msg"),
-          send = conversation.get("send"),
-          liftUp = conversation.get("liftUp"),
-          enabled = conversation.get("enabled"),
-          form = conversation.get("form"),
-          datepicker = conversation.get("datepicker"),
-          files = conversation.get("files"),
-          attach = conversation.get("attach"),
-          like = conversation.get("like"),
-          map = {
-            buttons: buttons !== undefined ? buttons.toJS() : buttons,
-            selects: selects !== undefined ? selects.toJS() : selects,
-            multibuttons:
-              multibuttons !== undefined ? multibuttons.toJS() : multibuttons,
-            msg: msg !== undefined ? msg.toJS() : msg,
-            send: send !== undefined ? send : send,
-            liftUp: liftUp !== undefined ? liftUp : liftUp,
-            enabled: enabled !== undefined ? enabled : enabled,
-            form: form !== undefined ? form : form,
-            datepicker: datepicker !== undefined ? datepicker : datepicker,
-            files: files !== undefined ? files : files,
-            attach: attach !== undefined ? attach.toJS() : attach,
-            like: like !== undefined ? like : like
-          };
-        if (largo === i) map.general = conversation.get("general").toJS();
-        hc.push(map);
+        multibuttons = conversation.get("multibuttons"),
+        selects = conversation.get("selects"),
+        msg = conversation.get("msg"),
+        send = conversation.get("send"),
+        liftUp = conversation.get("liftUp"),
+        enabled = conversation.get("enabled"),
+        form = conversation.get("form"),
+        datepicker = conversation.get("datepicker"),
+        files = conversation.get("files"),
+        attach = conversation.get("attach"),
+        like = conversation.get("like"),
+        map = {
+          buttons: buttons !== undefined ? buttons.toJS() : buttons,
+          selects: selects !== undefined ? selects.toJS() : selects,
+          multibuttons:
+            multibuttons !== undefined ? multibuttons.toJS() : multibuttons,
+          msg: msg !== undefined ? msg.toJS() : msg,
+          send: send !== undefined ? send : send,
+          liftUp: liftUp !== undefined ? liftUp : liftUp,
+          enabled: enabled !== undefined ? enabled : enabled,
+          form: form !== undefined ? form : form,
+          datepicker: datepicker !== undefined ? datepicker : datepicker,
+          files: files !== undefined ? files : files,
+          attach: attach !== undefined ? attach.toJS() : attach,
+          like: like !== undefined ? like : like
+        };
+      if (largo === i) map.general = conversation.get("general").toJS();
+      hc.push(map);
       });
       let str_md5v = AES.encrypt(JSON.stringify(hc),KEY_ENCRYPT).toString();
       localStorage.setItem("hc", str_md5v);

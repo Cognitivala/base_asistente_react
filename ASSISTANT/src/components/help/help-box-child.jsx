@@ -26,7 +26,7 @@ export default class HelpBoxChild extends Component {
   content(ayuda, colorHeader) {
     return (
       <div className="li-child" onClick={this.sendHelp}>
-        <a style={{color:colorHeader}} className="cur-pointer">{ayuda.get("title")}</a>
+        <a href style={{color:colorHeader}} className="cur-pointer">{ayuda.get("title")}</a>
       </div>
     );
   }

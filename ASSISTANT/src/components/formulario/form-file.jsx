@@ -67,7 +67,7 @@ export default class FormFile extends Component {
     let retorno = files.map((map, i) => {
       return (
         <li key={i}>
-          <a target="_blank" href={map.get("url")} style={style}>
+          <a target="_blank" href={map.get("url")} style={style} rel="noopener noreferrer">
             {map.get("name")}
           </a>
           <i

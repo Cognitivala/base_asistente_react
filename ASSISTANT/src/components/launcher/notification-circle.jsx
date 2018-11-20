@@ -1,13 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class NotificationCircle extends Component {
-  constructor(props) {
-    super(props);
-  }
+const NotificationCircle = () => (
+  <span className="bubble-cognitive-assistant">1</span>
+);
 
-  render() {
-      return (
-          <span className="bubble-cognitive-assistant">1</span>
-      );
-  }
-}
+export default NotificationCircle

@@ -3,9 +3,6 @@ import PropTypes from "prop-types";
 import BtnHelp from "../help/btn-help";
 
 export default class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   fillHelp(ayuda, minimized) {
     if (ayuda && !minimized) {

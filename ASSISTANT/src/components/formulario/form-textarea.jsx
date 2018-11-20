@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class FormTextarea extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   content() {
     const { name,placeholder,autocomplete,rows, validateFunc ,validate, withError } = this.props;

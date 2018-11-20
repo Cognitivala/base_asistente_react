@@ -29,7 +29,7 @@ export default class Formulario extends Component {
     arr = arr.filter(item => item !== name);
     let required = typesValidate.filter(item => item === "required");
     required = required.size > 0;
-    typesValidate.map((map, i) => {
+    typesValidate.forEach(map => {
       if (!Validator[map](input, validates, required)) error = true;
     });
     if (error) {
@@ -60,7 +60,7 @@ export default class Formulario extends Component {
 
       arr = arr.filter(item => item !== name);
 
-      typesValidate.map((map, i) => {
+      typesValidate.forEach(map => {
         if (!Validator[map](input, validates, required)) error = true;
       });
 
@@ -140,7 +140,7 @@ export default class Formulario extends Component {
   fillContent(fields) {
     if (fields.size > 0) {
       const retorno = [];
-      fields.map((map, i) => {
+      fields.forEach((map,i) => {
         const withError = this.state.invalidFiels.includes(map.get("name"));
         switch (map.get("type")) {
           case "textarea":
