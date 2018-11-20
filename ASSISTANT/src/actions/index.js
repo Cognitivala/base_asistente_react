@@ -1264,14 +1264,14 @@ export function sendForm(data, url, general) {
           response.status === 200 &&
           response.data.estado.codigoEstado === 200
         ) {
+          console.log('response =>>>> ',response.data);
           let item = {};
           //item.msg = [response.data.respuesta];
           item.msg = [response.data.msg];
           item.send = "to";
           item.enabled = false;
           item.general = general;
-          debugger
-          updateConversation(item);
+          //updateConversation(item);
           // messageResponse(dispatch, item);
           dispatch({ type: "SEND_FORM_END" });
           dispatch({ type: "DISABLED_FORM" });
