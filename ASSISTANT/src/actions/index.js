@@ -1275,6 +1275,34 @@ export function sendForm(data, url, general) {
           // messageResponse(dispatch, item);
           dispatch({ type: "SEND_FORM_END" });
           dispatch({ type: "DISABLED_FORM" });
+          const request = axios({
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            url: APIURL + "/message",
+            data: item
+          });
+          return request
+            .then(response => {
+              if (
+                response.status === 200 &&
+                response.data.estado.codigoEstado === 200
+              ) {
+                let item = response.data;
+                item.send = "from";
+                item.enabled = true;
+                dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                messageResponse(dispatch, item);
+              } else if(response.data!== undefined){
+                dispatch(updateConversationError(response.data.msg));
+              }else{
+                dispatch(updateConversationError(response.statusText));
+              }
+            })
+            .catch(err => {
+              dispatch(updateConversationError(err.response.data.msg));
+            });
         } else {
           dispatch(updateConversationError(response.statusText));
           dispatch({ type: "DISABLED_FORM" });
