@@ -1417,7 +1417,7 @@ html(lang="es-CL" dir="ltr" heightfull)
       }
 
       function uploadExcel(form){
-        debugger;
+        //- debugger;
         $('.container-tabs').append('<div class="spinner"><div class="loader"></div></div>');
         var select = $('[name="selectUploadExcel"]').val();
         //- if(select==="-1"){
@@ -1436,7 +1436,7 @@ html(lang="es-CL" dir="ltr" heightfull)
         var settings = {
           "async": true,
           "crossDomain": true,
-          "url": getPath+"mad/carga_archivo",
+          "url": getPath+"mant/carga_archivo",
           "method": "POST",
           "processData": false,
           "contentType": false,
