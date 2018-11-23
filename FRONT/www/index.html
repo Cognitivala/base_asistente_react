@@ -1721,7 +1721,7 @@
           elemento.value = "";
         }).error(function(err){
           var response = JSON.parse(err.responseText);
-          openModal('#myModal', 'Auch!', 'Tenemos un problema: '+response.glosaEstado, 'error');
+          openModal('#myModal', 'Auch!', 'Tenemos un problema: '+response.estado.glosaEstado, 'error');
           $('.container-tabs').find('.spinner').remove();
           elemento.value = "";
         });
