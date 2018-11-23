@@ -339,7 +339,7 @@ export default class Conversations extends Component {
                       key={j}
                       formularioStates={formularioStates}
                       form={form}
-                      generalStates={generalStates}
+                      general={generalStates}
                       closeForm={closeForm}
                       colorHeader={colorHeader}
                       sendForm={sendForm}

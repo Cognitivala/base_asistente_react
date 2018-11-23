@@ -1683,7 +1683,7 @@
       }
       
       function uploadExcel(form){
-        debugger;
+        //- debugger;
         $('.container-tabs').append('<div class="spinner"><div class="loader"></div></div>');
         var select = $('[name="selectUploadExcel"]').val();
         //- if(select==="-1"){
@@ -1702,7 +1702,7 @@
         var settings = {
           "async": true,
           "crossDomain": true,
-          "url": getPath+"mad/create_synonyms_csv",
+          "url": getPath+"mant/carga_archivo",
           "method": "POST",
           "processData": false,
           "contentType": false,
@@ -1720,7 +1720,10 @@
           $('.container-tabs').find('.spinner').remove();
           elemento.value = "";
         }).error(function(err){
-          console.log(err);
+          var response = JSON.parse(err.responseText);
+          openModal('#myModal', 'Auch!', 'Tenemos un problema: '+response.estado.glosaEstado, 'error');
+          $('.container-tabs').find('.spinner').remove();
+          elemento.value = "";
         });
       }
       

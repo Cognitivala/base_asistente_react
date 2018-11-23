@@ -9,7 +9,6 @@ export default class ConversationMsg extends Component {
     const { msgs, animation, send, avatar, colorHeader , userImg} = this.props,
     to = send==="to"?true:false;
     return msgs.map((map, i) => {
-      debugger
       if(map.trim()!==""){
         if(to){
           return (
