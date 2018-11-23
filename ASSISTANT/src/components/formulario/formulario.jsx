@@ -111,7 +111,7 @@ export default class Formulario extends Component {
 
   fillHeader(header) {
     if (header.size > 0) {
-      const { general, closeForm, colorHeader } = this.props;
+      const { generalStates, closeForm, colorHeader } = this.props;
       return (
         <FormHeader
           icon={header.get("icon")}
@@ -119,7 +119,7 @@ export default class Formulario extends Component {
           textStrong={header.get("textStrong")}
           textB={header.get("textB")}
           closeMsg={header.get("closeMsg")}
-          general={general}
+          general={generalStates}
           closeForm={closeForm}
           colorHeader={colorHeader}
         />

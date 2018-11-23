@@ -30,7 +30,6 @@ export default class ConversationLikes extends Component {
   }
 
   render() {
-    const { colorHeader } = this.props;
     return (
       <div className="likes">
         <button
