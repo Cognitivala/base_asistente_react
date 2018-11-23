@@ -30,25 +30,24 @@ export default class ConversationLikes extends Component {
   }
 
   render() {
-    const { colorHeader } = this.props,
-      style = { backgroundColor: colorHeader };
+    const { colorHeader } = this.props;
     return (
       <div className="likes">
         <button
           className="btn"
-          style={style}
-          onClick={this.sendLikeHandled}
-          data-like={1}
-        >
-          <i className="fas fa-thumbs-up" />
-        </button>
-        <button
-          className="btn"
-          style={style}
           onClick={this.sendLikeHandled}
           data-like={0}
         >
+          No
           <i className="fas fa-thumbs-down" />
+        </button>
+        <button
+          className="btn"
+          onClick={this.sendLikeHandled}
+          data-like={1}
+        >
+        Si
+          <i className="fas fa-thumbs-up" />
         </button>
       </div>
     );
