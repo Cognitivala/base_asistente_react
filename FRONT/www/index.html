@@ -1720,6 +1720,7 @@
           $('.container-tabs').find('.spinner').remove();
           elemento.value = "";
         }).error(function(err){
+          var response = JSON.parse(err);
           console.log(err);
         });
       }
