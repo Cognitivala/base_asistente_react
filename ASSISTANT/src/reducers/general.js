@@ -42,6 +42,8 @@ export function generalStates(
         .set("intent", null)
         .set("auth", null)
         .set("token", null)
+        .set("integracion",null)
+        .set("region",null)
       });
     case "SET_GENERAL":
       return state.withMutations(map =>{
