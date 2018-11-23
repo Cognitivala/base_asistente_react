@@ -1455,9 +1455,9 @@ html(lang="es-CL" dir="ltr" heightfull)
           elemento.value = "";
         }).error(function(err){
           var response = JSON.parse(err.responseText);
+          openModal('#myModal', 'Auch!', 'Tenemos un problema: '+response.glosaEstado, 'error');
           $('.container-tabs').find('.spinner').remove();
           elemento.value = "";
-          console.log(err);
         });
       }
       
