@@ -1720,7 +1720,9 @@
           $('.container-tabs').find('.spinner').remove();
           elemento.value = "";
         }).error(function(err){
-          var response = JSON.parse(err);
+          var response = JSON.parse(err.responseText);
+          $('.container-tabs').find('.spinner').remove();
+          elemento.value = "";
           console.log(err);
         });
       }
