@@ -10732,7 +10732,8 @@ select:-webkit-autofill {
       margin: 0 auto; }
 
 a.download-csv,
-input.download-csv a.download-interactions-csv {
+input.download-csv,
+a.download-interactions-csv {
   margin-top: 1.5rem;
   padding: 1.2rem 3rem;
   display: inline-block;
@@ -10745,14 +10746,18 @@ input.download-csv a.download-interactions-csv {
   -o-transition: all 200ms linear;
   transition: all 200ms linear; }
   a.download-csv[pull-right],
-  input.download-csv a.download-interactions-csv[pull-right] {
+  input.download-csv[pull-right],
+  a.download-interactions-csv[pull-right] {
     float: right; }
   a.download-csv .fa,
-  input.download-csv a.download-interactions-csv .fa {
+  input.download-csv .fa,
+  a.download-interactions-csv .fa {
     margin: 0 0 0 .5rem; }
   a.download-csv:focus, a.download-csv:hover,
-  input.download-csv a.download-interactions-csv:focus,
-  input.download-csv a.download-interactions-csv:hover {
+  input.download-csv:focus,
+  input.download-csv:hover,
+  a.download-interactions-csv:focus,
+  a.download-interactions-csv:hover {
     -moz-transform: scale(1.035);
     -webkit-transform: scale(1.035);
     -o-transform: scale(1.035);
