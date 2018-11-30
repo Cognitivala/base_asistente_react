@@ -19,9 +19,9 @@ function initMain() {
   if (validateUser()) {
     isToken();
     uri();
-    filterUser();
     fillUser();
     showSubMenu();
+    filterUser();
   } else {
     if (!isPass()) {
       window.location.href = getPath + "login";
