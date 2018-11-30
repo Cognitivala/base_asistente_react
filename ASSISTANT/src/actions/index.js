@@ -1343,3 +1343,18 @@ export function sendForm(data, url, general) {
     // }, 500);
   };
 }
+
+export function focus() {
+  setTimeout(() => {
+    const hrefLocal = window.location.origin;
+    if(hrefLocal!=="http://localhost:3000"){
+      const href = window.top.location.href,
+        hrefLast = href.substring(href.length - 13, href.length),
+        input = document.documentElement.getElementsByClassName('input-user')[0];
+    if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
+      if(input !== null) input.focus();
+    }else{
+      if(document.documentElement.getElementsByClassName('input-user')[0] !== null) document.documentElement.getElementsByClassName('input-user')[0].focus();
+    }
+  }, 300);
+}
