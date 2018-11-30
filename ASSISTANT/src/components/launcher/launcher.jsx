@@ -42,13 +42,28 @@ export default class Launcher extends Component {
     );
   }
 
+  focus() {
+    setTimeout(() => {
+      const hrefLocal = window.location.origin;
+      if(hrefLocal!=="http://localhost:3000"){
+        const href = window.top.location.href,
+          hrefLast = href.substring(href.length - 13, href.length),
+          input = document.documentElement.getElementsByClassName('input-user')[0];
+      if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
+        if(input !== null) input.focus();
+      }else{
+        if(document.documentElement.getElementsByClassName('input-user')[0] !== null) document.documentElement.getElementsByClassName('input-user')[0].focus();
+      }
+    }, 300);
+  }
+
   closeLauncher() {
-    const { closeLauncher, closeHelp,openAssistant, ayudaStates, focus } = this.props;
+    const { closeLauncher, closeHelp,openAssistant, ayudaStates } = this.props;
     closeLauncher();
     this.openAssitantCDN();
     openAssistant();
     if (ayudaStates.get("open")) closeHelp();
-    focus();
+    this.focus();
   }
 
   notification(saludoStates, launcherStates) {
