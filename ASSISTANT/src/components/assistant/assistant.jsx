@@ -69,21 +69,6 @@ export default class Assistant extends Component {
     }
   }
 
-  focus() {
-    setTimeout(() => {
-      const hrefLocal = window.location.origin;
-      if(hrefLocal!=="http://localhost:3000"){
-        const href = window.top.location.href,
-          hrefLast = href.substring(href.length - 13, href.length),
-          input = document.documentElement.getElementsByClassName('input-user')[0];
-      if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
-        if(input !== null) input.focus();
-      }else{
-        if(document.documentElement.getElementsByClassName('input-user')[0] !== null) document.documentElement.getElementsByClassName('input-user')[0].focus();
-      }
-    }, 300);
-  }
-
   //ORIGEN
   getOrigen() {
     if (!this.isMobileDevice) {
@@ -177,7 +162,8 @@ export default class Assistant extends Component {
     const {
         assistantStates,
         toggleMinimizedAssistant,
-        customParamsStates
+        customParamsStates,
+        focus
       } = this.props,
       minimized = assistantStates.get("minimized"),
       keep_conversation = customParamsStates.getIn([
@@ -193,7 +179,7 @@ export default class Assistant extends Component {
       this.minimizedCDN();
     } else {
       this.openAssitantCDN();
-      this.focus();
+      focus();
 
     }
     toggleMinimizedAssistant(!minimized);

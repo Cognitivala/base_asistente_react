@@ -43,11 +43,12 @@ export default class Launcher extends Component {
   }
 
   closeLauncher() {
-    const { closeLauncher, closeHelp,openAssistant, ayudaStates } = this.props;
+    const { closeLauncher, closeHelp,openAssistant, ayudaStates, focus } = this.props;
     closeLauncher();
     this.openAssitantCDN();
     openAssistant();
     if (ayudaStates.get("open")) closeHelp();
+    focus();
   }
 
   notification(saludoStates, launcherStates) {
