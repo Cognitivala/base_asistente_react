@@ -65,6 +65,22 @@ export class App extends Component {
     //   this.props.setCustomParams(customParams);
     // } else {
     this.props.getCustomParams();
+    this.setScript();
+    // }
+  }
+
+  setScript(){
+    // if(this.props.customParamsStates.getIn(["customParams","avatar"])!==null){
+    //   debugger
+    //   const script = this.props.customParamsStates.getIn(["customParams","script"]);
+    //   if(script!==null){
+    //     const a = "<script>alert('hola');</script>";
+    //     document.head.appendChild(a);
+    //   }
+    // }else{
+    //   setTimeout(() => {
+    //     this.setScript();
+    //   }, 150);
     // }
   }
 

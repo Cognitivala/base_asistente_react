@@ -14,6 +14,7 @@ export function customParamsStates(
       url: null,
       userImg: null,
       estado: null,
+      script: null,
       settings: {
         keep_conversation: false,
         geolocalization: false,
