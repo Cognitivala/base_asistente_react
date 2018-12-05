@@ -6,7 +6,8 @@ import Conversations from "../conversation/conversations";
 import IsFetching from "../modules/is-fetching";
 import AES from "crypto-js/aes";
 import CryptoJS from "crypto-js";
-import { KEY_ENCRYPT } from "../../actions/key-encrypt"
+import { KEY_ENCRYPT } from "../../actions/key-encrypt";
+import {isMobile} from 'react-device-detect';
 
 export default class Assistant extends Component {
   constructor(props) {
@@ -71,7 +72,7 @@ export default class Assistant extends Component {
 
   //ORIGEN
   getOrigen() {
-    if (!this.isMobileDevice) {
+    if (isMobile) {
       this.props.setOrigen("mobile");
     } else {
       this.props.setOrigen("desktop");
