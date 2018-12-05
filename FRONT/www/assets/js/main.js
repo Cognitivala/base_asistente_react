@@ -226,8 +226,10 @@ function createCSV(content, nameFile) {
   var encodedUri = encodeURI(csvContent);
   var link_2 = document.getElementsByClassName("download-csv");
   for (var i = 0; i < link_2.length; i++) {
-    link_2[i].setAttribute("href", encodedUri);
-    link_2[i].setAttribute("download", nameFile + ".csv");
+    if(link_2[i].id===""){
+      link_2[i].setAttribute("href", encodedUri);
+      link_2[i].setAttribute("download", nameFile + ".csv");
+    }
   }
 }
 
