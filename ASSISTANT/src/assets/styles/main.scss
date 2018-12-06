@@ -606,6 +606,8 @@ select {
     width: 100%;
     border-top: 1px solid $border-color;
     background: #f7f7f7;
+    border-radius: 0px 5px 0px 5px;
+    overflow: hidden;
 }
 
 .form-wrapp {
@@ -2133,6 +2135,7 @@ table {
         display: flex;
         align-items: center;
         height: 80px;
+        border-radius: 5px 5px 0px 0px;
         .iframe-cognitive-assistant-container-header-image {
             width: 100%;
             max-width: 48px;
