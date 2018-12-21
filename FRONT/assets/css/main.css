@@ -12614,7 +12614,9 @@ form #error,
   margin: 0 auto;
   padding: 20px;
   border: 1px solid #cccc;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2); }
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  overflow-x: scroll;
+  max-height: calc( 100vh - 23%); }
   .valoracion-detail-holder h4 {
     font-size: 18px;
     margin-bottom: 10px; }
