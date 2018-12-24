@@ -1817,7 +1817,9 @@ select {
   bottom: 0;
   width: 100%;
   border-top: 1px solid #e7e7e7;
-  background: #f7f7f7; }
+  background: #f7f7f7;
+  border-radius: 0px 5px 0px 5px;
+  overflow: hidden; }
 
 .form-wrapp {
   display: flex;
@@ -3041,7 +3043,8 @@ table {
   transition: all 200ms ease;
   display: flex;
   align-items: center;
-  height: 80px; }
+  height: 80px;
+  border-radius: 5px 5px 0px 0px; }
   .main-cognitive-assistant-container .iframe-cognitive-assistant-container-header .iframe-cognitive-assistant-container-header-image {
     width: 100%;
     max-width: 48px;
