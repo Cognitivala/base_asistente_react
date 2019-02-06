@@ -1817,7 +1817,9 @@ select {
   bottom: 0;
   width: 100%;
   border-top: 1px solid #e7e7e7;
-  background: #f7f7f7; }
+  background: #f7f7f7;
+  border-radius: 0px 5px 0px 5px;
+  overflow: hidden; }
 
 .form-wrapp {
   display: flex;
@@ -2327,7 +2329,7 @@ select {
           opacity: 0;
           padding: 0; }
       .mymodal .container-form form fieldset {
-        margin-bottom: 10px;
+        margin-bottom: 1px;
         position: relative; }
         .mymodal .container-form form fieldset input {
           -webkit-transition: all 300ms ease;
@@ -2516,6 +2518,62 @@ select {
               border-radius: 0px 0px 18px 18px;
               margin-bottom: 20px; }
             .mymodal .container-form form fieldset .select .options div.disabled {
+              background: #d0d0d0;
+              opacity: 1; }
+        .mymodal .container-form form fieldset .select-search .select.active {
+          border-radius: 18px 18px 0px 0px; }
+        .mymodal .container-form form fieldset .select-search .close-select:before {
+          content: "";
+          position: absolute;
+          top: 32px;
+          right: 15px;
+          width: 0;
+          height: 0;
+          border-left: 8px solid transparent;
+          border-right: 8px solid transparent;
+          border-top: 10px solid #333;
+          z-index: 13;
+          cursor: pointer; }
+        .mymodal .container-form form fieldset .select-search:before {
+          content: "";
+          position: absolute;
+          top: 32px;
+          right: 15px;
+          width: 0;
+          height: 0;
+          border-left: 8px solid transparent;
+          border-right: 8px solid transparent;
+          border-top: 10px solid #333;
+          z-index: 11; }
+        .mymodal .container-form form fieldset .select-search .options {
+          margin: 0;
+          height: 36px;
+          background: transparent;
+          color: #666;
+          font-weight: 300;
+          -webkit-border-radius: 18px;
+          overflow: hidden;
+          display: flex;
+          flex-flow: column; }
+          .mymodal .container-form form fieldset .select-search .options.active {
+            overflow: initial; }
+          .mymodal .container-form form fieldset .select-search .options.error div:first-child {
+            border-radius: 18px;
+            border: 1px solid;
+            border-color: #d9534f;
+            color: #d9534f; }
+          .mymodal .container-form form fieldset .select-search .options div {
+            cursor: pointer;
+            padding: 5px 17px;
+            z-index: 10;
+            background: #f8f8f8;
+            position: relative;
+            border-right: 1px solid #999;
+            border-bottom: 1px solid #999;
+            border-left: 1px solid #999; }
+            .mymodal .container-form form fieldset .select-search .options div:hover {
+              background: #eee; }
+            .mymodal .container-form form fieldset .select-search .options div.disabled {
               background: #d0d0d0;
               opacity: 1; }
         .mymodal .container-form form fieldset textarea {
@@ -3041,7 +3099,8 @@ table {
   transition: all 200ms ease;
   display: flex;
   align-items: center;
-  height: 80px; }
+  height: 80px;
+  border-radius: 5px 5px 0px 0px; }
   .main-cognitive-assistant-container .iframe-cognitive-assistant-container-header .iframe-cognitive-assistant-container-header-image {
     width: 100%;
     max-width: 48px;

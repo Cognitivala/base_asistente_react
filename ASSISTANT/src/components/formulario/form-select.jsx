@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import Immutable from "immutable";
 
 export default class FormSelect extends Component {
   constructor(props) {
@@ -13,13 +14,24 @@ export default class FormSelect extends Component {
     this.setSelected = this.setSelected.bind(this);
   }
 
-  componentDidUpdate() {}
+  shouldComponentUpdate = (prevProps, prevStates) => {
+    return (
+      prevProps.name !== this.props.name ||
+      prevProps.validateFunc !== this.props.validateFunc ||
+      prevProps.validate !== this.props.validate ||
+      prevProps.withError !== this.props.withError ||
+      !Immutable.is(prevProps.options, this.props.options) ||
+      prevStates.selected !== this.state.selected ||
+      prevStates.active !== this.state.active
+    );
+  };
 
   fillOptions(options) {
     return options.map((map, i) => {
       return <option value={map.get("value")}>{map.get("text")}</option>;
     });
   }
+
   activeSelect() {
     this.setState({
       active: !this.state.active
@@ -27,38 +39,49 @@ export default class FormSelect extends Component {
   }
 
   setSelected(validate, name, validateFunc, e) {
+    
     let selected = e.target.dataset.value;
     this.options.current.dataset.valor = selected;
     validateFunc(validate, name, e.target.closest(".options"));
-    this.setState({
-      selected,
-      active: false
-    });
+    this.setState(
+      {
+        selected,
+        active: false
+      },
+      () => {
+        if (this.props.setSelectedParent !== undefined) {
+          this.props.setSelectedParent(this.state.selected);
+        }
+      }
+    );
   }
 
   fillOptionsShow(options) {
-    const { validateFunc, validate, name } = this.props;
+    const { validateFunc, validate, name } = this.props,
+     {selected} = this.state;
     let retorno = [];
     const required = validate.get("types").filter(item => item === "required");
-    retorno.push(options
-      .filter(filter => filter.get("value") === this.state.selected)
-      .map((map, i) => {
-        // if (this.state.selected === map.get("value")) {
-        return(
-          <div
-            key={i}
-            data-value={map.get("value")}
-            onClick={this.activeSelect}
-          >
-            {map.get("text")}
-          </div>
-        );
-        // }
-      }));
+    retorno.push(
+      options
+        .filter(filter => filter.get("value") === selected)
+        .map((map, i) => {
+          // if (selected === map.get("value")) {
+          return (
+            <div
+              key={i}
+              data-value={map.get("value")}
+              onClick={this.activeSelect}
+            >
+              {map.get("text")}
+            </div>
+          );
+          // }
+        })
+    );
     options.forEach((map, i) => {
       if (required.size === 0) {
         //NO REQUERIDO
-        if (this.state.selected === map.get("value")) {
+        if (selected === map.get("value")) {
           // si esta seleccionado y no es el seleccione
           retorno.push(
             <div
@@ -89,7 +112,7 @@ export default class FormSelect extends Component {
       } else {
         //SI ES REQUERIDO
         if (
-          this.state.selected === map.get("value") &&
+          selected === map.get("value") &&
           map.get("value") !== -1
         ) {
           // si esta seleccionado y no es el seleccione
@@ -152,5 +175,6 @@ FormSelect.propTypes = {
   options: PropTypes.any.isRequired,
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
-  withError: PropTypes.bool
+  withError: PropTypes.bool,
+  selectedParent: PropTypes.any
 };

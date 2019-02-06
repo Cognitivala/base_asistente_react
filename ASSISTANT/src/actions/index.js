@@ -64,22 +64,22 @@ export function getLocation() {
   };
 }
 
-export function getLocationObject(results){
+export function getLocationObject(results) {
   let data = {};
   for (let i = 0; i < results.length; i++) {
     const ele = results[i];
     let types = ele.types;
     for (let j = 0; j < types.length; j++) {
       const type = types[j];
-      if(type==="administrative_area_level_3"){
+      if (type === "administrative_area_level_3") {
         let address_components = ele.address_components;
         for (let k = 0; k < address_components.length; k++) {
           const address = address_components[k];
-          if(address.types[0]==="administrative_area_level_3"){
+          if (address.types[0] === "administrative_area_level_3") {
             data.comuna = address.long_name;
-          }else if(address.types[0]==="administrative_area_level_1"){
+          } else if (address.types[0] === "administrative_area_level_1") {
             data.region = address.long_name;
-          }else if(address.types[0]==="country"){
+          } else if (address.types[0] === "country") {
             data.pais = address.long_name;
           }
         }
@@ -456,254 +456,254 @@ export function updateConversation(data) {
   return function action(dispatch) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
-    const request = axios({
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      url: APIURL + "/message",
-      data: data
-    });
-    return request
-      .then(response => {
-        if (
-          response.status === 200 &&
-          response.data.estado.codigoEstado === 200
-        ) {
-          let item = response.data;
-          item.send = "from";
-          item.enabled = true;
-          dispatch(setNodoId(item.msg[item.msg.length - 1]));
-          messageResponse(dispatch, item);
-        } else if(response.data!== undefined){
-          dispatch(updateConversationError(response.data.msg));
-        }else{
-          dispatch(updateConversationError(response.statusText));
-        }
-      })
-      .catch(err => {
-        dispatch(updateConversationError(err.response.data.msg));
-      });
+    // const request = axios({
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   url: APIURL + "/message",
+    //   data: data
+    // });
+    // return request
+    //   .then(response => {
+    //     if (
+    //       response.status === 200 &&
+    //       response.data.estado.codigoEstado === 200
+    //     ) {
+    //       let item = response.data;
+    //       item.send = "from";
+    //       item.enabled = true;
+    //       dispatch(setNodoId(item.msg[item.msg.length - 1]));
+    //       messageResponse(dispatch, item);
+    //     } else if(response.data!== undefined){
+    //       dispatch(updateConversationError(response.data.msg));
+    //     }else{
+    //       dispatch(updateConversationError(response.statusText));
+    //     }
+    //   })
+    //   .catch(err => {
+    //     dispatch(updateConversationError(err.response.data.msg));
+    //   });
 
     // Respuesta
-    // setTimeout(() => {
-    //   const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
-    //   let data;
-    //   //1 = MSG + Buttons (Valoración)
-    //   //2 = MSG + Buttons (Contactar)
-    //   //3 = MSG + Attach
-    //   //4 = MSG + Select
-    //   //5 = MSG + Multibutton
-    //   //6 = MSG + Datepicker
-    //   //8 = MULTIMSG
-    //   //9 =
-    //   switch (9) {
-    //     case 1:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
-    //         buttons: [
-    //           {
-    //             title: "SI",
-    //             value: "siValorar"
-    //           },
-    //           {
-    //             title: "NO",
-    //             value: "noValorar"
-    //           }
-    //         ]
-    //       };
-    //       break;
-    //     case 2:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Contactar?"],
-    //         buttons: [
-    //           {
-    //             title: "SI",
-    //             value: "siContacto"
-    //           },
-    //           {
-    //             title: "NO",
-    //             value: "noContacto"
-    //           }
-    //         ]
-    //       };
-    //       break;
-    //     case 3:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Debes adjuntar tu imagen"],
-    //         attach: {
-    //           types: [
-    //             "image/jpeg",
-    //             "image/gif",
-    //             "image/png",
-    //             "application/pdf",
-    //             "application/word"
-    //           ],
-    //           maxSize: 300000
-    //         }
-    //       };
-    //       break;
-    //     case 4:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Por favor, selecciona una opción: "],
-    //         selects: [
-    //           {
-    //             text: "Seleccione",
-    //             value: "-1"
-    //           },
-    //           {
-    //             text: "Option 1",
-    //             value: "1"
-    //           },
-    //           {
-    //             text: "Option 2",
-    //             value: "2"
-    //           },
-    //           {
-    //             text: "Option 3",
-    //             value: "3"
-    //           },
-    //           {
-    //             text: "Option 4",
-    //             value: "4"
-    //           },
-    //           {
-    //             text: "Option 5",
-    //             value: "5"
-    //           },
-    //           {
-    //             text: "Option 6",
-    //             value: "6"
-    //           }
-    //         ]
-    //       };
-    //       break;
-    //     case 5:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, selecciona uno o varios botones:"],
-    //         multibuttons: [
-    //           { title: "hola", value: "1" },
-    //           { title: "holanda", value: "2" },
-    //           { title: "holiwis", value: "3" },
-    //           { title: "holo", value: "4" },
-    //           { title: "holawa", value: "5" }
-    //         ]
-    //       };
-    //       break;
-    //     case 6:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, seleccione una fecha:"],
-    //         datepicker: [
-    //           { name: "inicial", value: "22/05/1991" },
-    //           { name: "final", value: "22/05/1991" }
-    //         ]
-    //       };
-    //       break;
-    //     case 7:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, seleccione una fecha:"],
-    //         datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
-    //       };
-    //       break;
-    //     case 8:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["lorem ipsum", "lorem ipsum", "lorem ipsum", "lorem ipsum"]
-    //       };
-    //      break;
-    //     case 9:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola soy una respuesta con me gusta"],
-    //         like: true
-    //       };
-    //       break;
-    //   }
+    setTimeout(() => {
+      const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
+      let data;
+      //1 = MSG + Buttons (Valoración)
+      //2 = MSG + Buttons (Contactar)
+      //3 = MSG + Attach
+      //4 = MSG + Select
+      //5 = MSG + Multibutton
+      //6 = MSG + Datepicker
+      //8 = MULTIMSG
+      //9 =
+      switch (2) {
+        case 1:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
+            buttons: [
+              {
+                title: "SI",
+                value: "siValorar"
+              },
+              {
+                title: "NO",
+                value: "noValorar"
+              }
+            ]
+          };
+          break;
+        case 2:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Contactar?"],
+            buttons: [
+              {
+                title: "SI",
+                value: "siContacto"
+              },
+              {
+                title: "NO",
+                value: "noContacto"
+              }
+            ]
+          };
+          break;
+        case 3:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Debes adjuntar tu imagen"],
+            attach: {
+              types: [
+                "image/jpeg",
+                "image/gif",
+                "image/png",
+                "application/pdf",
+                "application/word"
+              ],
+              maxSize: 300000
+            }
+          };
+          break;
+        case 4:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Por favor, selecciona una opción: "],
+            selects: [
+              {
+                text: "Seleccione",
+                value: "-1"
+              },
+              {
+                text: "Option 1",
+                value: "1"
+              },
+              {
+                text: "Option 2",
+                value: "2"
+              },
+              {
+                text: "Option 3",
+                value: "3"
+              },
+              {
+                text: "Option 4",
+                value: "4"
+              },
+              {
+                text: "Option 5",
+                value: "5"
+              },
+              {
+                text: "Option 6",
+                value: "6"
+              }
+            ]
+          };
+          break;
+        case 5:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, selecciona uno o varios botones:"],
+            multibuttons: [
+              { title: "hola", value: "1" },
+              { title: "holanda", value: "2" },
+              { title: "holiwis", value: "3" },
+              { title: "holo", value: "4" },
+              { title: "holawa", value: "5" }
+            ]
+          };
+          break;
+        case 6:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, seleccione una fecha:"],
+            datepicker: [
+              { name: "inicial", value: "22/05/1991" },
+              { name: "final", value: "22/05/1991" }
+            ]
+          };
+          break;
+        case 7:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola, seleccione una fecha:"],
+            datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
+          };
+          break;
+        case 8:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["lorem ipsum", "lorem ipsum", "lorem ipsum", "lorem ipsum"]
+          };
+          break;
+        case 9:
+          data = {
+            general: {
+              cid: "SOYELCID",
+              origen: "Sitio Público",
+              nodo_id: null,
+              intent: null,
+              auth: null,
+              token: null,
+              location: null
+            },
+            msg: ["Hola soy una respuesta con me gusta"],
+            like: true
+          };
+          break;
+      }
 
-    //   data.send = "from";
-    //   data.enabled = true;
+      data.send = "from";
+      data.enabled = true;
 
-    //   messageResponse(dispatch, data);
-    // }, 500);
+      messageResponse(dispatch, data);
+    }, 500);
   };
 }
 function messageResponse(dispatch, data) {
@@ -729,8 +729,10 @@ function messageResponse(dispatch, data) {
     }
   } else {
     if (data.general !== undefined) dispatch(setGeneral(data.general));
-    if (data.general.region !== undefined) dispatch(setRegion(data.general.region));
-    if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+    if (data.general.region !== undefined)
+      dispatch(setRegion(data.general.region));
+    if (data.general.integracion !== undefined)
+      dispatch(setIntegracion(data.general.integracion));
     dispatch(pushConversation(data));
   }
 }
@@ -847,44 +849,6 @@ export function updateConversationButton(data) {
             send: "from",
             enabled: true,
             liftUp: "form",
-            // form: {
-            //   header: {
-            //     icon: "fas fa-user-tie",
-            //     textA: "Por favor ingrese sus datos y",
-            //     textStrong:
-            //       "uno de nuestros ejecutivos le responderá a la brevedad posible",
-            //     textB: "o en horario hábil siguiente",
-            //     closeMsg: "No"
-            //   },
-            //   bajada: "Campos obligatorios (*)",
-            //   url: "https://www.google.cl",
-            //   fields: [
-            //     {
-            //       legend: "Correo electrónico*",
-            //       type: "email",
-            //       name: "email",
-            //       placeholder: "Ej. nombre@micorreo.cl",
-            //       autocomplete: "off",
-            //       validate: {
-            //         types: ["required", "email"],
-            //         error: "Debes ingresar un correo electrónico válido"
-            //       }
-            //     },
-            //     {
-            //       legend: "Password*",
-            //       type: "password",
-            //       name: "password",
-            //       placeholder: "Ej. nombre@micorreo.cl",
-            //       autocomplete: "off",
-            //       validate: {
-            //         types: ["required", "text"],
-            //         rules: { min: 4, max: 10 },
-            //         error: "Debes ingresar una password válida"
-            //       }
-            //     },
-            //   ]
-            // }
-
             form: {
               header: {
                 icon: "fas fa-user-tie",
@@ -897,6 +861,7 @@ export function updateConversationButton(data) {
               bajada: "Campos obligatorios (*)",
               url: "",
               fields: [
+
                 {
                   legend: "Nombre*",
                   type: "text",
@@ -909,6 +874,86 @@ export function updateConversationButton(data) {
                     error: "Debes completar el nombre (mínimo 3, máximo 10)"
                   }
                 },
+                {
+                  type: "selects-link",
+                  parent: {
+                    legend: "Select",
+                    type: "select",
+                    name: "opciones",
+                    options: [
+                      { text: "Seleccione", value: -1 },
+                      { text: "Hola", value: "Hola" },
+                      { text: "Holanda", value: "Holanda" },
+                      { text: "Holo", value: "Holo" }
+                    ],
+                    validate: {
+                      types: ["required", "select"],
+                      error: "Debes seleccionar una opción"
+                    }
+                  },
+                  children: {
+                    legend: "Select Search",
+                    type: "search",
+                    name: "opciones",
+                    options: [
+                      {
+                        key: "Hola",
+                        options: [
+                          { text: "PerroHola" },
+                          { text: "GatoHola" },
+                          { text: "CocodriloHola" },
+                          { text: "SerpienteHola" },
+                          { text: "ChanchoHola" },
+                          { text: "RatónHola" }
+                        ]
+                      },
+                      {
+                        key: "Holanda",
+                        options: [
+                          { text: "PerroHolanda" },
+                          { text: "GatoHolanda" },
+                          { text: "CocodriloHolanda" },
+                          { text: "SerpienteHolanda" },
+                          { text: "ChanchoHolanda" },
+                          { text: "RatónHolanda" }
+                        ]
+                      },
+                      {
+                        key: "Holo",
+                        options: [
+                          { text: "PerroHolo" },
+                          { text: "GatoHolo" },
+                          { text: "CocodriloHolo" },
+                          { text: "SerpienteHolo" },
+                          { text: "ChanchoHolo" },
+                          { text: "RatónHolo" }
+                        ]
+                      },
+                      
+                    ],
+                    validate: {
+                      types: ["required", "text"],
+                      error: "Debes seleccionar una opción"
+                    }
+                  }
+                },
+                // {
+                //   legend: "Select Search",
+                //   type: "search",
+                //   name: "opciones",
+                //   options: [
+                //     { text: "Perro" },
+                //     { text: "Gato" },
+                //     { text: "Cocodrilo" },
+                //     { text: "Serpiente" },
+                //     { text: "Chancho" },
+                //     { text: "Ratón" }
+                //   ],
+                //   validate: {
+                //     types: ["required", "search"],
+                //     error: "Debes seleccionar una opción"
+                //   }
+                // },
                 {
                   legend: "Rut*",
                   type: "text",
@@ -1291,9 +1336,9 @@ export function sendForm(data, url, general) {
                 item.enabled = true;
                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                 messageResponse(dispatch, item);
-              } else if(response.data!== undefined){
+              } else if (response.data !== undefined) {
                 dispatch(updateConversationError(response.data.msg));
-              }else{
+              } else {
                 dispatch({ type: "SEND_FORM_END" });
                 dispatch(updateConversationError(response.statusText));
               }

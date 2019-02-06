@@ -1,10 +1,19 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { formatRut } from "./validator";
 
 export default class FormInput extends Component {
 
+  validateInput = (e) => {
+    const { validateFunc ,validate, name } = this.props;
+    if(validate.get("types").filter(type => type === "rut").size > 0){
+      e.currentTarget.value = formatRut(e.currentTarget);
+    }
+    validateFunc(validate, name,e);
+  }
+
   content() {
-    const { type, name, placeholder, autocomplete, validateFunc ,validate, withError } = this.props;
+    const { type, name, placeholder, autocomplete, withError } = this.props;
     let cssClass = withError?" error":"";
     return (
       <input
@@ -12,7 +21,7 @@ export default class FormInput extends Component {
         name={name}
         placeholder={placeholder}
         autoComplete={autocomplete}
-        onKeyUp={validateFunc.bind(this, validate, name)}
+        onKeyUp={(e) => { this.validateInput(e) }}
         className={cssClass}
       />
     );
