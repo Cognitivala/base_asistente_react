@@ -56,7 +56,7 @@ export default class Input extends Component {
 
   submitMessage(event) {
     event.preventDefault();
-    const inputValue = this.input.current.value;
+    const inputValue = this.input.current.value.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;");
     if (inputValue.length > 0) {
       const { generalStates } = this.props,
         general = generalStates.toJS(),
