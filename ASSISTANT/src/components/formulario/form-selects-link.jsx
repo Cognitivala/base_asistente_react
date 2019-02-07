@@ -3,10 +3,13 @@ import PropTypes from "prop-types";
 import FormSelect from "./form-select";
 import FormSearch from "./form-search";
 import Immutable from "immutable";
+import FormSelectLink from "./form-select-link";
+import FormSearchLink from "./form-search-link";
 
 export default class FormSelectsLink extends Component {
   state = {
-    selectedParent: null
+    selectedParent: -1,
+    selectedChildren: -1
   };
 
   shouldComponentUpdate = (prevProps, prevStates) => {
@@ -15,12 +18,17 @@ export default class FormSelectsLink extends Component {
       prevProps.validateFunc !== this.props.validateFunc ||
       prevProps.withErrorParent !== this.props.withErrorParent ||
       prevProps.withErrorChildren !== this.props.withErrorChildren ||
-      prevStates.selectedParent !== this.state.selectedParent
+      prevStates.selectedParent !== this.state.selectedParent ||
+      prevStates.selectedChildren !== this.state.selectedChildren
     );
   };
 
   setSelectedParent = selected => {
-    this.setState({ selectedParent: selected });
+    this.setState({ selectedParent: selected, selectedChildren: -1, childrenChange:true});
+  };
+
+  setSelectedChildren = selected => {
+    this.setState({ selectedChildren: selected});
   };
 
   fillError = (withError, error) => {
@@ -39,13 +47,15 @@ export default class FormSelectsLink extends Component {
         return (
           <fieldset className="selects-link">
             <legend>{parent.get("legend")}</legend>
-            <FormSelect
+            <FormSelectLink
               name={parent.get("name")}
               validateFunc={validateFunc}
               validate={parent.get("validate")}
               withError={withErrorParent}
               options={parent.get("options")}
               setSelectedParent={this.setSelectedParent}
+              selectedParent={this.state.selectedParent}
+              typeLink={"parent"}
             />
             {this.fillError(
               withErrorParent,
@@ -57,13 +67,15 @@ export default class FormSelectsLink extends Component {
         return (
           <fieldset className="selects-link">
             <legend>{parent.get("legend")}</legend>
-            <FormSearch
+            <FormSearchLink
               name={parent.get("name")}
               validateFunc={validateFunc}
               validate={parent.get("validate")}
               withError={withErrorParent}
               options={parent.get("options")}
               setSelectedParent={this.setSelectedParent}
+              selectedParent={this.state.selectedParent}
+              typeLink={"parent"}
             />
             {this.fillError(
               withErrorParent,
@@ -80,7 +92,7 @@ export default class FormSelectsLink extends Component {
     const type = children.get("type"),
       { withErrorChildren, validateFunc } = this.props,
       {selectedParent} = this.state;
-    if(selectedParent!==null){
+    if(selectedParent!==-1){
       const optionsChildren = children.get("options");
       const options = optionsChildren.filter(opt => opt.get("key") === selectedParent)
       switch (type) {
@@ -88,13 +100,16 @@ export default class FormSelectsLink extends Component {
           return (
             <fieldset className="selects-link">
               <legend>{children.get("legend")}</legend>
-              <FormSelect
+              <FormSelectLink
                 name={children.get("name")}
                 validateFunc={validateFunc}
                 validate={children.get("validate")}
                 withError={withErrorChildren}
                 options={options.get(0).get("options")}
                 selectedParent={this.state.selectedParent}
+                selectedChildren={this.state.selectedChildren}
+                setSelectedChildren={this.setSelectedChildren}
+                typeLink={"children"}
               />
               {this.fillError(
                 withErrorChildren,
@@ -106,13 +121,16 @@ export default class FormSelectsLink extends Component {
           return (
             <fieldset className="selects-link">
               <legend>{children.get("legend")}</legend>
-              <FormSearch
+              <FormSearchLink
                 name={children.get("name")}
                 validateFunc={validateFunc}
                 validate={children.get("validate")}
                 withError={withErrorChildren}
                 options={options.get(0).get("options")}
                 selectedParent={this.state.selectedParent}
+                selectedChildren={this.state.selectedChildren}
+                setSelectedChildren={this.setSelectedChildren}
+                typeLink={"children"}
               />
               {this.fillError(
                 withErrorChildren,
@@ -129,14 +147,14 @@ export default class FormSelectsLink extends Component {
           return (
             <fieldset className="selects-link disabled">
               <legend>{children.get("legend")}</legend>
-              <FormSelect
+              <FormSelectLink
                 name={children.get("name")}
                 validateFunc={validateFunc}
                 validate={children.get("validate")}
                 withError={withErrorChildren}
-                options={children.get("options").get(1).get("options")}
-                selectedParent={this.state.selectedParent}
                 disabled={true}
+                selectedChildren={this.state.selectedChildren}
+                typeLink={"children"}
               />
               {this.fillError(
                 withErrorChildren,
@@ -148,14 +166,14 @@ export default class FormSelectsLink extends Component {
           return (
             <fieldset className="selects-link disabled">
               <legend>{children.get("legend")}</legend>
-              <FormSearch
+              <FormSearchLink
                 name={children.get("name")}
                 validateFunc={validateFunc}
                 validate={children.get("validate")}
                 withError={withErrorChildren}
-                options={children.get("options").get(1).get("options")}
-                selectedParent={this.state.selectedParent}
                 disabled={true}
+                selectedChildren={this.state.selectedChildren}
+                typeLink={"children"}
               />
               {this.fillError(
                 withErrorChildren,

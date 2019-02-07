@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Immutable from "immutable";
 
-export default class FormSelect extends Component {
+export default class FormSelectLink extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: -1,
       active: false
     };
     this.options = React.createRef();
@@ -14,18 +13,22 @@ export default class FormSelect extends Component {
     this.setSelected = this.setSelected.bind(this);
   }
 
-  shouldComponentUpdate = (prevProps, prevStates) => {
-    return (
-      prevProps.name !== this.props.name ||
-      prevProps.validateFunc !== this.props.validateFunc ||
-      prevProps.validate !== this.props.validate ||
-      prevProps.withError !== this.props.withError ||
-      prevProps.disabled !== this.props.disabled ||
-      !Immutable.is(prevProps.options, this.props.options) ||
-      prevStates.selected !== this.state.selected ||
-      prevStates.active !== this.state.active
-    );
-  };
+    shouldComponentUpdate = (prevProps, prevStates) => {
+      return (
+        prevProps.name !== this.props.name ||
+        prevProps.validateFunc !== this.props.validateFunc ||
+        prevProps.validate !== this.props.validate ||
+        prevProps.withError !== this.props.withError ||
+        prevProps.disabled !== this.props.disabled ||
+        !Immutable.is(prevProps.options, this.props.options) ||
+        prevProps.setSelectedParent !== this.props.setSelectedParent ||
+        prevProps.setSelectedChildren !== this.props.setSelectedChildren ||
+        prevProps.selectedParent !== this.props.selectedParent ||
+        prevProps.selectedChildren !== this.props.selectedChildren ||
+        prevProps.typeLink !== this.props.typeLink ||
+        prevStates.active !== this.state.active
+      );
+    };
 
   fillOptions(options) {
     return options.map((map, i) => {
@@ -40,47 +43,47 @@ export default class FormSelect extends Component {
   }
 
   setSelected(validate, name, validateFunc, e) {
-    
-    let selected = e.target.dataset.value;
+    let selected = e.target.dataset.valor;
     this.options.current.dataset.valor = selected;
-    validateFunc(validate, name, e.target.closest(".options"));
+    validateFunc(validate, name, this.options.current.closest(".options"));
     this.setState(
       {
-        selected,
         active: false
       },
       () => {
-        if (this.props.setSelectedParent !== undefined) {
-          this.props.setSelectedParent(this.state.selected);
+        if (this.props.typeLink !== "children") {
+          this.props.setSelectedParent(selected);
+        } else {
+          this.props.setSelectedChildren(selected);
         }
       }
     );
   }
 
   fillOptionsShow(options) {
-    const { validateFunc, validate, name, selectedChange } = this.props,
-     {selected} = this.state;
+    const { validateFunc, validate, name, typeLink } = this.props;
+    const selected =
+      typeLink === "parent"
+        ? this.props.selectedParent
+        : this.props.selectedChildren;
     let retorno = [];
     const required = validate.get("types").filter(item => item === "required");
-    if(!selectedChange){
-      retorno.push(
-        options
-          .filter(filter => filter.get("value") === selected)
-          .map((map, i) => {
-            // if (selected === map.get("value")) {
-            return (
-              <div
-                key={i}
-                data-value={map.get("value")}
-                onClick={this.activeSelect}
-              >
-                {map.get("text")}
-              </div>
-            );
-            // }
-          })
-      );
-    }
+    //PONE EL SELECCCIONADO ARRIBA
+    retorno.push(
+      options
+        .filter(filter => filter.get("value") === selected)
+        .map((map, i) => {
+          return (
+            <div
+              key={i}
+              data-valor={map.get("value")}
+              onClick={this.activeSelect}
+            >
+              {map.get("text")}
+            </div>
+          );
+        })
+    );
     options.forEach((map, i) => {
       if (required.size === 0) {
         //NO REQUERIDO
@@ -88,7 +91,7 @@ export default class FormSelect extends Component {
           // si esta seleccionado y no es el seleccione
           retorno.push(
             <div
-              data-value={map.get("value")}
+              data-valor={map.get("value")}
               key={i + map.get("text")}
               className="disabled"
             >
@@ -99,7 +102,7 @@ export default class FormSelect extends Component {
           // si es otro
           retorno.push(
             <div
-              data-value={map.get("value")}
+              data-valor={map.get("value")}
               key={i + map.get("text")}
               onClick={this.setSelected.bind(
                 this,
@@ -114,14 +117,11 @@ export default class FormSelect extends Component {
         }
       } else {
         //SI ES REQUERIDO
-        if (
-          selected === map.get("value") &&
-          map.get("value") !== -1
-        ) {
+        if (selected === map.get("value") && map.get("value") !== -1) {
           // si esta seleccionado y no es el seleccione
           retorno.push(
             <div
-              data-value={map.get("value")}
+              data-valor={map.get("value")}
               key={i + map.get("text")}
               className="disabled"
             >
@@ -134,7 +134,7 @@ export default class FormSelect extends Component {
           // si es otro
           retorno.push(
             <div
-              data-value={map.get("value")}
+              data-valor={map.get("value")}
               key={i + map.get("text")}
               onClick={this.setSelected.bind(
                 this,
@@ -153,11 +153,11 @@ export default class FormSelect extends Component {
   }
 
   content() {
-    const { options, withError, disabled } = this.props;
+    const { options, withError, disabled, name } = this.props;
     let cssClass = this.state.active ? " active" : "",
       cssClassError = withError ? " error" : "";
     return (
-      <div className="select" disabled={disabled===undefined?false:true}>
+      <div className="select" name={name} disabled={disabled === undefined ? false : true}>
         <div
           className={"options" + cssClass + cssClassError}
           ref={this.options}
@@ -173,7 +173,7 @@ export default class FormSelect extends Component {
   }
 }
 
-FormSelect.propTypes = {
+FormSelectLink.propTypes = {
   name: PropTypes.string.isRequired,
   options: PropTypes.any.isRequired,
   validateFunc: PropTypes.func.isRequired,
@@ -181,5 +181,5 @@ FormSelect.propTypes = {
   withError: PropTypes.bool,
   selectedParent: PropTypes.any,
   disabled: PropTypes.bool,
-  selectedChildren: PropTypes.bool,
+  selectedChildren: PropTypes.any
 };

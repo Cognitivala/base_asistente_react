@@ -5,10 +5,7 @@ export default class FormSearch extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: "Seleccione",
       active: false,
-      select: false,
-      inputValue: ""
     };
     this.options = React.createRef();
     this.input = React.createRef();
@@ -23,6 +20,9 @@ export default class FormSearch extends Component {
       prevProps.validateFunc !== this.props.validateFunc ||
       prevProps.validate !== this.props.validate ||
       prevProps.withError !== this.props.withError ||
+      prevProps.disabled !== this.props.disabled ||
+      prevProps.selectedChange !== this.props.selectedChange ||
+      prevProps.selectedParent !== this.props.selectedParent ||
       prevStates.selected !== this.state.selected ||
       prevStates.active !== this.state.active ||
       prevStates.select !== this.state.select ||
@@ -34,10 +34,10 @@ export default class FormSearch extends Component {
     let selected = e.currentTarget.textContent;
     this.input.current.value = selected;
     this.setState({
-      selected,
-      active: false,
-      select: true,
-      inputValue: selected
+      active: false
+    },()=>{
+      //PASARLE EL SELECTED 
+      this.props.setSelectedChange();
     });
   }
 
@@ -84,7 +84,7 @@ export default class FormSearch extends Component {
           <div>
             <input
               ref={this.input}
-              disabled={disabled}
+              disabled={disabled===undefined?false:true}
               type="text"
               tabIndex={-1}
               className={"select " + cssClass}
@@ -109,6 +109,7 @@ export default class FormSearch extends Component {
         </div>
       );
     } else {
+      debugger
       return (
         <div className="select-search">
           <input
@@ -118,7 +119,7 @@ export default class FormSearch extends Component {
               this.setState({ active: true });
             }}
             disabled={disabled}
-            value={this.state.selected}
+            value={this.props.selectedChange?"":this.state.selected}
             onChange={(e)=>{e.preventDefault()}}
           />
         </div>
@@ -137,5 +138,7 @@ FormSearch.propTypes = {
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
   withError: PropTypes.bool,
-  selectedParent: PropTypes.any
+  selectedParent: PropTypes.any,
+  selectedChange: PropTypes.bool,
+  disabled: PropTypes.bool
 };
