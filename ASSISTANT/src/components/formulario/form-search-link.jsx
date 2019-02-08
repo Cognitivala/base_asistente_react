@@ -144,6 +144,7 @@ export default class FormSearchLink extends Component {
         <div className="select-search">
           <input
             name={name}
+            data-valor={valueSelected}
             type="text"
             ref={this.input}
             className={"select " + cssClass}

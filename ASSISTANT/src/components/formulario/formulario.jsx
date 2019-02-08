@@ -111,16 +111,13 @@ export default class Formulario extends Component {
         invalidFiels: arr
       });
     } else {
-      //let arrayOut = [];
       for (let i = 0; i < fieldsDOM.length; i++) {
         let input = fieldsDOM[i].children[1];
         let value = !fieldsDOM[i].classList.contains("selects-link")?input.value:input.children[0].dataset.valor;
-        let name = value!==undefined?input.attributes.name.value:input.children[0].attributes.name.value;
+        let name = input.attributes.name!==undefined?input.attributes.name.value:input.children[0].attributes.name.value;
         value = value!==undefined?value:input.children[0].value;
         dataForm[name] = value;
-        //arrayOut.push({ name, value });
       }
-      debugger
       sendForm(dataForm, url, general);
     }
   }
