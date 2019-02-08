@@ -2520,8 +2520,10 @@ select {
             .mymodal .container-form form fieldset .select .options div.disabled {
               background: #d0d0d0;
               opacity: 1; }
-        .mymodal .container-form form fieldset .select-search .select.active {
-          border-radius: 18px 18px 0px 0px; }
+        .mymodal .container-form form fieldset .select-search .select {
+          padding-right: 2.3rem !important; }
+          .mymodal .container-form form fieldset .select-search .select.active {
+            border-radius: 18px 18px 0px 0px; }
         .mymodal .container-form form fieldset .select-search .close-select:before {
           content: "";
           position: absolute;
@@ -2556,7 +2558,17 @@ select {
           display: flex;
           flex-flow: column; }
           .mymodal .container-form form fieldset .select-search .options.active {
-            overflow: initial; }
+            max-height: 200px;
+            height: 100%;
+            border-radius: initial;
+            border-bottom: 1px solid #999;
+            overflow-y: scroll; }
+            .mymodal .container-form form fieldset .select-search .options.active::-webkit-scrollbar {
+              width: 6px; }
+            .mymodal .container-form form fieldset .select-search .options.active::-webkit-scrollbar-thumb {
+              background: #adadad; }
+            .mymodal .container-form form fieldset .select-search .options.active::-webkit-scrollbar-track {
+              background: transparent; }
           .mymodal .container-form form fieldset .select-search .options.error div:first-child {
             border-radius: 18px;
             border: 1px solid;
@@ -2661,7 +2673,8 @@ select {
         padding: 0 20px;
         margin: 0 auto;
         display: block;
-        width: 100%; }
+        width: 100%;
+        margin-top: 10px; }
         .mymodal .container-form form button:hover,
         .mymodal .container-form form button:focus:hover,
         .mymodal .container-form form button:active:hover,

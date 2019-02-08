@@ -1484,8 +1484,8 @@ select {
                 }
                 .select-search {
                     .select{
+                        padding-right: 2.3rem !important;
                         &.active{
-
                             border-radius: 18px 18px 0px 0px;
                         }
                     }
@@ -1527,7 +1527,20 @@ select {
                         display: flex;
                         flex-flow: column;
                         &.active {
-                            overflow: initial;
+                            max-height: 200px;
+                            height: 100%;
+                            border-radius: initial;
+                            border-bottom: 1px solid #999;
+                            overflow-y: scroll;
+                            &::-webkit-scrollbar {
+                                width: 6px;
+                            }
+                            &::-webkit-scrollbar-thumb {
+                                background: #adadad;
+                            }
+                            &::-webkit-scrollbar-track {
+                                background: transparent;
+                            }
                         }
                         &.error {
                             div {
@@ -1672,6 +1685,7 @@ select {
                 margin: 0 auto;
                 display: block;
                 width: 100%;
+                margin-top: 10px;
                 &:hover {
                     // box-shadow: 0 0 15px rgba(218,94,75,.7);
                     background: $primary-hover;
