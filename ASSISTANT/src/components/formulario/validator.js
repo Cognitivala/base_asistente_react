@@ -107,7 +107,7 @@ export function rut(rut, validates, required) {
     if (typeof rut !== "string") {
       return false;
     }
-    if (!/^0*(d{1,3}(.?d{3})*)-?([dkK])$/.test(rut)) {
+    if (!/^0*(\d{1,3}(\.?\d{3})*)-?([\dkK])$/.test(rut)) {
       return false;
     }
 

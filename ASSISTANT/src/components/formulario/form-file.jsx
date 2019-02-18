@@ -25,7 +25,7 @@ export default class FormFile extends Component {
 
   attachFile() {
     const size = this.attach.current.files[0].size,
-      { attachFileForm, general, attach } = this.props;
+      { attachFileForm, attach } = this.props;
     if (size > 0 && size <= attach.get("maxSize")) {
       const file = this.attach.current.files[0],
         type = file.type,
@@ -37,7 +37,6 @@ export default class FormFile extends Component {
       if (valid) {
         let item = {};
         item.file = file;
-        item.general = general.toJS();
         attachFileForm(item);
         this.setState({
           error: null,

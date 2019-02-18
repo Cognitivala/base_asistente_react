@@ -8,6 +8,9 @@ import FormSelect from "./form-select";
 import FormSwitch from "./form-switch";
 import IsFetching from "../modules/is-fetching";
 import FormFile from "./form-file";
+import FormSearch from "./form-search";
+import FormSelectsLink from "./form-selects-link";
+import Immutable from "immutable";
 
 export default class Formulario extends Component {
   constructor(props) {
@@ -86,10 +89,21 @@ export default class Formulario extends Component {
 
   sendDataForm(e) {
     const { form, sendForm, generalStates } = this.props,
-      general = generalStates.toJS(),
-      fields = form.get("fields"),
-      fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset"),
-      arr = this.validateAll(fields, fieldsDOM),
+      general = generalStates.toJS();
+    let fields = form.get("fields"),
+      fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset");
+    const selectLink = fields.filter(fiel => fiel.get("type") === "selects-link");
+    if(selectLink.size>0){
+      fields = fields.filter(fiel => fiel.get("type") !== "selects-link").toJS();
+      fields.push(selectLink.get(0).get("parent").toJS())
+      fields.push(selectLink.get(0).get("children").toJS())
+      fields = Immutable.fromJS(fields);
+      const selectLinkDOM = Array.from(fieldsDOM).filter(fiel => fiel.classList.contains("selects-link"));
+      fieldsDOM = Array.from(fieldsDOM).filter(fiel => !fiel.classList.contains("selects-link"));
+      fieldsDOM.push(selectLinkDOM[0]);
+      fieldsDOM.push(selectLinkDOM[1]);
+    }
+    const arr = this.validateAll(fields, fieldsDOM),
       url = form.get('url');
     let dataForm = {};
     if (arr.length > 0) {
@@ -97,13 +111,12 @@ export default class Formulario extends Component {
         invalidFiels: arr
       });
     } else {
-      //let arrayOut = [];
       for (let i = 0; i < fieldsDOM.length; i++) {
-        let input = fieldsDOM[i].elements[0],
-          value = input.value,
-          name = input.name;
+        let input = fieldsDOM[i].children[1];
+        let value = !fieldsDOM[i].classList.contains("selects-link")?input.value:input.children[0].dataset.valor;
+        let name = input.attributes.name!==undefined?input.attributes.name.value:input.children[0].attributes.name.value;
+        value = value!==undefined?value:input.children[0].value;
         dataForm[name] = value;
-        //arrayOut.push({ name, value });
       }
       sendForm(dataForm, url, general);
     }
@@ -173,6 +186,34 @@ export default class Formulario extends Component {
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>
+            );
+            break;
+          case "search":
+            retorno.push(
+              <fieldset key={i + map.get("name")}>
+                <legend>{map.get("legend")}</legend>
+                <FormSearch
+                  name={map.get("name")}
+                  validateFunc={this.validate}
+                  validate={map.get("validate")}
+                  withError={withError}
+                  options={map.get("options")}
+                />
+                {this.fillError(withError, map.getIn(["validate", "error"]))}
+              </fieldset>
+            );
+            break;
+          case "selects-link":
+            const withErrorParent = this.state.invalidFiels.includes(map.get("parent").get("name"));
+            const withErrorChildren = this.state.invalidFiels.includes(map.get("children").get("name"));
+            retorno.push(
+              <FormSelectsLink
+                key={i}
+                selects={map} 
+                withErrorParent={withErrorParent}
+                withErrorChildren={withErrorChildren} 
+                validateFunc={this.validate}
+              />
             );
             break;
           case "checkbox":

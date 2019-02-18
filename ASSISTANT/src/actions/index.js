@@ -64,22 +64,22 @@ export function getLocation() {
   };
 }
 
-export function getLocationObject(results){
+export function getLocationObject(results) {
   let data = {};
   for (let i = 0; i < results.length; i++) {
     const ele = results[i];
     let types = ele.types;
     for (let j = 0; j < types.length; j++) {
       const type = types[j];
-      if(type==="administrative_area_level_3"){
+      if (type === "administrative_area_level_3") {
         let address_components = ele.address_components;
         for (let k = 0; k < address_components.length; k++) {
           const address = address_components[k];
-          if(address.types[0]==="administrative_area_level_3"){
+          if (address.types[0] === "administrative_area_level_3") {
             data.comuna = address.long_name;
-          }else if(address.types[0]==="administrative_area_level_1"){
+          } else if (address.types[0] === "administrative_area_level_1") {
             data.region = address.long_name;
-          }else if(address.types[0]==="country"){
+          } else if (address.types[0] === "country") {
             data.pais = address.long_name;
           }
         }
@@ -497,7 +497,7 @@ export function updateConversation(data) {
     //   //6 = MSG + Datepicker
     //   //8 = MULTIMSG
     //   //9 =
-    //   switch (9) {
+    //   switch (2) {
     //     case 1:
     //       data = {
     //         general: {
@@ -681,7 +681,7 @@ export function updateConversation(data) {
     //         },
     //         msg: ["lorem ipsum", "lorem ipsum", "lorem ipsum", "lorem ipsum"]
     //       };
-    //      break;
+    //       break;
     //     case 9:
     //       data = {
     //         general: {
@@ -729,8 +729,10 @@ function messageResponse(dispatch, data) {
     }
   } else {
     if (data.general !== undefined) dispatch(setGeneral(data.general));
-    if (data.general.region !== undefined) dispatch(setRegion(data.general.region));
-    if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+    if (data.general.region !== undefined)
+      dispatch(setRegion(data.general.region));
+    if (data.general.integracion !== undefined)
+      dispatch(setIntegracion(data.general.integracion));
     dispatch(pushConversation(data));
   }
 }
@@ -833,177 +835,313 @@ export function updateConversationButton(data) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
 
-        setTimeout(() => {
-          let data = {
-            general: {
-              cid: "SOYELCID",
-              origen: "Sitio Público",
-              nodo_id: null,
-              intent: null,
-              auth: null,
-              token: null,
-              location: null
-            },
-            send: "from",
-            enabled: true,
-            liftUp: "form",
-            // form: {
-            //   header: {
-            //     icon: "fas fa-user-tie",
-            //     textA: "Por favor ingrese sus datos y",
-            //     textStrong:
-            //       "uno de nuestros ejecutivos le responderá a la brevedad posible",
-            //     textB: "o en horario hábil siguiente",
-            //     closeMsg: "No"
-            //   },
-            //   bajada: "Campos obligatorios (*)",
-            //   url: "https://www.google.cl",
-            //   fields: [
-            //     {
-            //       legend: "Correo electrónico*",
-            //       type: "email",
-            //       name: "email",
-            //       placeholder: "Ej. nombre@micorreo.cl",
-            //       autocomplete: "off",
-            //       validate: {
-            //         types: ["required", "email"],
-            //         error: "Debes ingresar un correo electrónico válido"
-            //       }
-            //     },
-            //     {
-            //       legend: "Password*",
-            //       type: "password",
-            //       name: "password",
-            //       placeholder: "Ej. nombre@micorreo.cl",
-            //       autocomplete: "off",
-            //       validate: {
-            //         types: ["required", "text"],
-            //         rules: { min: 4, max: 10 },
-            //         error: "Debes ingresar una password válida"
-            //       }
-            //     },
-            //   ]
-            // }
-
-            form: {
-              header: {
-                icon: "fas fa-user-tie",
-                textA: "Por favor ingrese sus datos y",
-                textStrong:
-                  "uno de nuestros ejecutivos le responderá a la brevedad posible",
-                textB: "o en horario hábil siguiente",
-                closeMsg: "No"
-              },
-              bajada: "Campos obligatorios (*)",
-              url: "",
-              fields: [
-                {
-                  legend: "Nombre*",
-                  type: "text",
-                  name: "nombre",
-                  placeholder: "Ej. Juan",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["required", "text"],
-                    rules: { min: 3, max: 10 },
-                    error: "Debes completar el nombre (mínimo 3, máximo 10)"
-                  }
-                },
-                {
-                  legend: "Rut*",
-                  type: "text",
-                  name: "rut",
-                  placeholder: "Ej. 11111111-1",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["required", "rut"],
-                    error: "Debes ingresar un rut válido"
-                  }
-                },
-                {
-                  legend: "Teléfono",
-                  type: "tel",
-                  name: "telefono",
-                  placeholder: "Ej. 912345678",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["tel"],
-                    error: "Debes ingresar un teléfono válido"
-                  }
-                },
-                {
-                  legend: "Correo electrónico*",
-                  type: "email",
-                  name: "email",
-                  placeholder: "Ej. nombre@micorreo.cl",
-                  autocomplete: "off",
-                  validate: {
-                    types: ["required", "email"],
-                    error: "Debes ingresar un correo electrónico válido"
-                  }
-                },
-                {
-                  legend: "Switch*",
-                  type: "checkbox",
-                  name: "switch",
-                  validate: {
-                    types: ["checkbox"],
-                    error: "Debes seleccionar el checkbox"
-                  }
-                },
-                {
-                  legend: "Select prueba",
-                  type: "select",
-                  name: "opciones",
-                  options: [
-                    { text: "Seleccione", value: -1 },
-                    { text: "Opcion #1", value: 1 },
-                    { text: "Opcion #2", value: 2 },
-                    { text: "Opcion #3", value: 3 }
-                  ],
-                  validate: {
-                    types: ["required", "select"],
-                    error: "Debes seleccionar una opción"
-                  }
-                },
-                {
-                  legend: "Adjuntar*",
-                  type: "file",
-                  name: "attach",
-                  validate: {
-                    types: ["required", "file"],
-                    error: "Debes adjuntar",
-                    rules: {
-                      types: [
-                        "image/jpeg",
-                        "image/gif",
-                        "image/png",
-                        "application/pdf",
-                        "application/word"
-                      ],
-                      maxSize: 300000,
-                      maxQuantity: 3
-                    }
-                  }
-                },
-                {
-                  legend: "Comentario",
-                  type: "textarea",
-                  name: "comentario",
-                  placeholder: "Escriba aquí su comentario",
-                  autocomplete: "off",
-                  rows: 5,
-                  validate: {
-                    types: ["text"],
-                    rules: { min: 3, max: 150 },
-                    error: "Debes completar el nombre (mínimo 3, máximo 150)"
-                  }
-                }
-              ]
-            }
-          };
-          messageResponse(dispatch, data);
-        }, 500);
+        // setTimeout(() => {
+        //   let data = {
+        //     general: {
+        //       cid: "SOYELCID",
+        //       origen: "Sitio Público",
+        //       nodo_id: null,
+        //       intent: null,
+        //       auth: null,
+        //       token: null,
+        //       location: null
+        //     },
+        //     send: "from",
+        //     enabled: true,
+        //     liftUp: "form",
+        //     form: {
+        //       header: {
+        //         icon: "fas fa-user-tie",
+        //         textA: "Por favor ingrese sus datos y",
+        //         textStrong:
+        //           "uno de nuestros ejecutivos le responderá a la brevedad posible",
+        //         textB: "o en horario hábil siguiente",
+        //         closeMsg: "No"
+        //       },
+        //       bajada: "Campos obligatorios (*)",
+        //       url: "",
+        //       fields: [
+        //         {
+        //           legend: "Nombre*",
+        //           type: "text",
+        //           name: "nombre",
+        //           placeholder: "Ej. Juan",
+        //           autocomplete: "off",
+        //           validate: {
+        //             types: ["required", "text"],
+        //             rules: { min: 3, max: 10 },
+        //             error: "Debes completar el nombre (mínimo 3, máximo 10)"
+        //           }
+        //         },
+        //         {
+        //           type: "selects-link",
+        //           parent: {
+        //             legend: "Select",
+        //             type: "select",
+        //             name: "region",
+        //             options: [
+        //               { text: "Seleccione", value: -1 },
+        //               { text: "Region 1", value: "R1" },
+        //               { text: "Region 2", value: "R2" },
+        //               { text: "Region 3", value: "R3" }
+        //             ],
+        //             validate: {
+        //               types: ["required", "select"],
+        //               error: "Debes seleccionar una opción"
+        //             }
+        //           },
+        //           children: {
+        //             legend: "Select Search",
+        //             type: "search",
+        //             name: "cursos",
+        //             options: [
+        //               {
+        //                 key: "R1",
+        //                 options: [
+        //                   { text: "Curso 1 R1", value: "COD1" },
+        //                   { text: "Curso 2 R1", value: "COD2" },
+        //                   { text: "Curso 3 R1", value: "COD3" },
+        //                   { text: "Curso 4 R1", value: "COD4" }
+        //                 ]
+        //               },
+        //               {
+        //                 key: "R2",
+        //                 options: [
+        //                   { text: "Curso 1 R2", value: "COD1" },
+        //                   { text: "Curso 2 R2", value: "COD2" },
+        //                   { text: "Curso 3 R2", value: "COD3" },
+        //                   { text: "Curso 4 R2", value: "COD4" }
+        //                 ]
+        //               },
+        //               {
+        //                 key: "R3",
+        //                 options: [
+        //                   { text: "Curso 1 R3", value: "COD1" },
+        //                   { text: "Curso 2 R3", value: "COD2" },
+        //                   { text: "Curso 3 R3", value: "COD3" },
+        //                   { text: "Curso 4 R3", value: "COD4" }
+        //                 ]
+        //               },
+                      
+        //             ],
+        //             validate: {
+        //               types: ["required", "text"],
+        //               rules: { min: 3, max: 1000 },
+        //               error: "Debes seleccionar una opción"
+        //             }
+        //           }
+        //         },
+        //         // {
+        //         //   legend: "Select Search",
+        //         //   type: "search",
+        //         //   name: "opciones",
+        //         //   options: [
+        //         //     { text: "Perro" },
+        //         //     { text: "Gato" },
+        //         //     { text: "Cocodrilo" },
+        //         //     { text: "Serpiente" },
+        //         //     { text: "Chancho" },
+        //         //     { text: "Ratón" }
+        //         //   ],
+        //         //   validate: {
+        //         //     types: ["required", "search"],
+        //         //     error: "Debes seleccionar una opción"
+        //         //   }
+        //         // },
+        //         {
+        //           legend: "Rut*",
+        //           type: "text",
+        //           name: "rut",
+        //           placeholder: "Ej. 11111111-1",
+        //           autocomplete: "off",
+        //           validate: {
+        //             types: ["required", "rut"],
+        //             error: "Debes ingresar un rut válido"
+        //           }
+        //         },
+        //         {
+        //           legend: "Teléfono",
+        //           type: "tel",
+        //           name: "telefono",
+        //           placeholder: "Ej. 912345678",
+        //           autocomplete: "off",
+        //           validate: {
+        //             types: ["tel"],
+        //             error: "Debes ingresar un teléfono válido"
+        //           }
+        //         },
+        //         {
+        //           legend: "Correo electrónico*",
+        //           type: "email",
+        //           name: "email",
+        //           placeholder: "Ej. nombre@micorreo.cl",
+        //           autocomplete: "off",
+        //           validate: {
+        //             types: ["required", "email"],
+        //             error: "Debes ingresar un correo electrónico válido"
+        //           }
+        //         },
+        //         {
+        //           legend: "Switch*",
+        //           type: "checkbox",
+        //           name: "switch",
+        //           validate: {
+        //             types: ["checkbox"],
+        //             error: "Debes seleccionar el checkbox"
+        //           }
+        //         },
+        //         {
+        //           legend: "Select prueba",
+        //           type: "select",
+        //           name: "opciones",
+        //           options: [
+        //             { text: "Seleccione", value: -1 },
+        //             { text: "Opcion #1", value: 1 },
+        //             { text: "Opcion #2", value: 2 },
+        //             { text: "Opcion #3", value: 3 }
+        //           ],
+        //           validate: {
+        //             types: ["required", "select"],
+        //             error: "Debes seleccionar una opción"
+        //           }
+        //         },
+        //         {
+        //           legend: "Adjuntar*",
+        //           type: "file",
+        //           name: "attach",
+        //           validate: {
+        //             types: ["required", "file"],
+        //             error: "Debes adjuntar",
+        //             rules: {
+        //               types: [
+        //                 "image/jpeg",
+        //                 "image/gif",
+        //                 "image/png",
+        //                 "application/pdf",
+        //                 "application/word"
+        //               ],
+        //               maxSize: 300000,
+        //               maxQuantity: 3
+        //             }
+        //           }
+        //         },
+        //         {
+        //           legend: "Comentario",
+        //           type: "textarea",
+        //           name: "comentario",
+        //           placeholder: "Escriba aquí su comentario",
+        //           autocomplete: "off",
+        //           rows: 5,
+        //           validate: {
+        //             types: ["text"],
+        //             rules: { min: 3, max: 150 },
+        //             error: "Debes completar el nombre (mínimo 3, máximo 150)"
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   };
+        //    data = {
+        //     general: {
+        //       cid: "SOYELCID",
+        //       origen: "Sitio Público",
+        //       nodo_id: null,
+        //       intent: null,
+        //       auth: null,
+        //       token: null,
+        //       location: null
+        //     },
+        //     send: "from",
+        //     enabled: true,
+        //     liftUp: "form",
+        //     form: {
+        //       header: {
+        //         icon: "fas fa-user-tie",
+        //         textA: "Por favor ingrese sus datos y",
+        //         textStrong:
+        //           "uno de nuestros ejecutivos le responderá a la brevedad posible",
+        //         textB: "o en horario hábil siguiente",
+        //         closeMsg: "No"
+        //       },
+        //       bajada: "Campos obligatorios (*)",
+        //       url: "",
+        //       fields: [
+        //         {
+        //           type: "selects-link",
+        //           parent: {
+        //             legend: "Select",
+        //             type: "select",
+        //             name: "region",
+        //             options: [
+        //               { text: "Seleccione", value: -1 },
+        //               { text: "Region 1", value: "R1" },
+        //               { text: "Region 2", value: "R2" },
+        //               { text: "Region 3", value: "R3" }
+        //             ],
+        //             validate: {
+        //               types: ["required", "select"],
+        //               error: "Debes seleccionar una opción"
+        //             }
+        //           },
+        //           children: {
+        //             legend: "Select Search",
+        //             type: "search",
+        //             name: "cursos",
+        //             options: [
+        //               {
+        //                 key: "R1",
+        //                 options: [
+        //                   { text: "Curso 1 R1", value: "COD1" },
+        //                   { text: "Curso 2 R1", value: "COD2" },
+        //                   { text: "Curso 3 R1", value: "COD3" },
+        //                   { text: "Curso 4 R1", value: "COD4" }
+        //                 ]
+        //               },
+        //               {
+        //                 key: "R2",
+        //                 options: [
+        //                   { text: "Curso 1 R2", value: "COD1" },
+        //                   { text: "Curso 2 R2", value: "COD2" },
+        //                   { text: "Curso 3 R2", value: "COD3" },
+        //                   { text: "Curso 4 R2", value: "COD4" }
+        //                 ]
+        //               },
+        //               {
+        //                 key: "R3",
+        //                 options: [
+        //                   { text: "Curso 1 R3", value: "COD1" },
+        //                   { text: "Curso 2 R3", value: "COD2" },
+        //                   { text: "Curso 3 R3", value: "COD3" },
+        //                   { text: "Curso 4 R3", value: "COD4" }
+        //                 ]
+        //               },
+                      
+        //             ],
+        //             validate: {
+        //               types: ["required", "text"],
+        //               rules: { min: 3, max: 1000 },
+        //               error: "Debes seleccionar una opción"
+        //             }
+        //           }
+        //         },
+        //         {
+        //           legend: "Comentario",
+        //           type: "textarea",
+        //           name: "comentario",
+        //           placeholder: "Escriba aquí su comentario",
+        //           autocomplete: "off",
+        //           rows: 5,
+        //           validate: {
+        //             types: ["text"],
+        //             rules: { min: 3, max: 150 },
+        //             error: "Debes completar el nombre (mínimo 3, máximo 150)"
+        //           }
+        //         }
+        //       ]
+        //     }
+        //   };
+        //   messageResponse(dispatch, data);
+        // }, 500);
       };
     default:
       return function action(dispatch) {
@@ -1291,9 +1429,9 @@ export function sendForm(data, url, general) {
                 item.enabled = true;
                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                 messageResponse(dispatch, item);
-              } else if(response.data!== undefined){
+              } else if (response.data !== undefined) {
                 dispatch(updateConversationError(response.data.msg));
-              }else{
+              } else {
                 dispatch({ type: "SEND_FORM_END" });
                 dispatch(updateConversationError(response.statusText));
               }
