@@ -205,7 +205,7 @@ export function updateCustomAvatar(data) {
 export function getSaludo() {
   return function action(dispatch) {
     dispatch(getSaludoStart());
-    const data = { general: { cid: null, id_cliente: "1" }, msg: [null] },
+    const data = { general: { cid: null, id_cliente: "1" }, msg: null },
       request = axios({
         method: "POST",
         headers: {
