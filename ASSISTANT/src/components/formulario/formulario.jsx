@@ -264,6 +264,7 @@ export default class Formulario extends Component {
                   validateFunc={this.validate}
                   validate={map.get("validate")}
                   withError={withError}
+                  value={map.get("value")}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>
