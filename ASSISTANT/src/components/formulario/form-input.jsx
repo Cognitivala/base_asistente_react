@@ -13,7 +13,7 @@ export default class FormInput extends Component {
   }
 
   content() {
-    const { type, name, placeholder, autocomplete, withError } = this.props;
+    const { type, name, placeholder, autocomplete, withError, value } = this.props;
     let cssClass = withError?" error":"";
     return (
       <input
@@ -23,6 +23,7 @@ export default class FormInput extends Component {
         autoComplete={autocomplete}
         onKeyUp={(e) => { this.validateInput(e) }}
         className={cssClass}
+        defaultValue={!value?'':value}
       />
     );
   }
@@ -39,5 +40,6 @@ FormInput.propTypes = {
   autocomplete: PropTypes.string.isRequired,
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
-  withError: PropTypes.bool
+  withError: PropTypes.bool,
+  value: PropTypes.value
 };
