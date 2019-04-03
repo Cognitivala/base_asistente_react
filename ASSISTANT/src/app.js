@@ -80,6 +80,7 @@ export class App extends Component {
       } else if (e.data.saludo !== undefined) {
         _this.props.updateSaludo(e.data.saludo);
       } else if (e.data.responsive !== undefined) {
+        console.log("responsive onmessage ASSISTANT")
         _this.props.responsive(e.data.responsive);
       }
     };
@@ -89,6 +90,7 @@ export class App extends Component {
     const avatar = customParamsStates.getIn(["customParams", "avatar"]),
       estado = customParamsStates.getIn(["customParams", "estado"]);
     if (avatar && estado !== 0) {
+      console.log('postMessage responsiveFunc in ASSISTANT');
       window.top.postMessage({ responsiveFunc: true },"*");
       return (
         <div>

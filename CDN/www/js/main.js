@@ -98,6 +98,7 @@
     styleIframeMessage() {
       const iframe = document.getElementById("ifrm-assitant");
       const contentWindow = iframe?iframe.contentWindow:null;
+      console.log("styleIframeMessage", contentWindow);
       if (contentWindow) {
           contentWindow.postMessage({ responsive: this.responsive }, "*");
       } else {
