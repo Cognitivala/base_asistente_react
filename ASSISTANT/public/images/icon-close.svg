@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="38px" height="39px" viewBox="0 0 38 39" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>Combined Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <filter x="-71.4%" y="-74.1%" width="242.9%" height="248.1%" filterUnits="objectBoundingBox" id="filter-1">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
+            <feMerge>
+                <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
+                <feMergeNode in="SourceGraphic"></feMergeNode>
+            </feMerge>
+        </filter>
+    </defs>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="button_close" transform="translate(-11.000000, -10.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="button">
+                <g id="icon" filter="url(#filter-1)" transform="translate(29.617009, 29.617009) rotate(-45.000000) translate(-29.617009, -29.617009) translate(15.617009, 16.117009)">
+                    <path d="M12.6730827,12.2383297 L12.6730827,2 C12.6730827,1.17157288 13.3446555,0.5 14.1730827,0.5 C15.0015098,0.5 15.6730827,1.17157288 15.6730827,2 L15.6730827,12.2383297 L25.9114124,12.2383297 C26.7398395,12.2383297 27.4114124,12.9099026 27.4114124,13.7383297 C27.4114124,14.5667568 26.7398395,15.2383297 25.9114124,15.2383297 L15.6730827,15.2383297 L15.6730827,25.4766594 C15.6730827,26.3050865 15.0015098,26.9766594 14.1730827,26.9766594 C13.3446555,26.9766594 12.6730827,26.3050865 12.6730827,25.4766594 L12.6730827,15.2383297 L2.43475295,15.2383297 C1.60632583,15.2383297 0.934752952,14.5667568 0.934752952,13.7383297 C0.934752952,12.9099026 1.60632583,12.2383297 2.43475295,12.2383297 L12.6730827,12.2383297 Z" id="Combined-Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

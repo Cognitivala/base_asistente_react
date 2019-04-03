@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="48px" height="51px" viewBox="0 0 48 51" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.1 (67048) - http://www.bohemiancoding.com/sketch -->
+    <title>icono</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M27.989241,24.2956305 L27.989241,30.4980116 C27.989241,31.0268161 27.5622863,31.4554968 27.035611,31.4554968 C26.7826926,31.4554968 26.5401331,31.3546192 26.3612927,31.1750559 L23.1990208,28 L4,28 C1.790861,28 2.705415e-16,26.209139 0,24 L0,4 C-2.705415e-16,1.790861 1.790861,4.05812251e-16 4,0 L24,0 C26.209139,-4.05812251e-16 28,1.790861 28,4 L28,24 C28,24.0994326 27.9963719,24.1980178 27.989241,24.2956305 Z" id="path-1"></path>
+        <filter x="-53.6%" y="-47.7%" width="207.1%" height="195.4%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="0" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="5" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-80.000000, -60.000000)" fill-rule="nonzero">
+            <g id="icono" transform="translate(90.000000, 70.000000)">
+                <g id="Combined-Shape">
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                    <use fill="#FFFFFF" xlink:href="#path-1"></use>
+                </g>
+                <path d="M6.54103752,19.4041614 C11.3352357,21.0888732 16.3849192,21.0888732 21.6900881,19.4041614" id="Line" stroke="#2979FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="bevel"></path>
+                <circle id="Oval-2" fill="#2979FF" cx="7.5" cy="13.5" r="1.5"></circle>
+                <circle id="Oval-2" fill="#2979FF" cx="20.5" cy="13.5" r="1.5"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

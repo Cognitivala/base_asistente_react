@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import FormHeader from "./form-header";
 import FormError from "./form-error";
 import FormInput from "./form-input";
@@ -9,8 +9,15 @@ import FormSwitch from "./form-switch";
 import IsFetching from "../modules/is-fetching";
 import FormFile from "./form-file";
 import FormSearch from "./form-search";
-import FormSelectsLink from "./form-selects-link";
-import Immutable from "immutable";
+import FormSelectsLink from "./form-selects-link"
+import logo from "../../assets/images/icono-cognitiva-2.svg";
+
+// const Formulario = () => {
+//   //STATES
+//   const [invalidFields,setInvalidFields] = useState([]),
+//     [validator,setValidator] = useState(false);
+
+// }
 
 export default class Formulario extends Component {
   constructor(props) {
@@ -24,7 +31,6 @@ export default class Formulario extends Component {
   }
 
   validate(validates, name, e) {
-    
     const typesValidate = validates.get("types");
     let error = false,
       input = e.target === undefined ? e : e.target,
@@ -44,25 +50,24 @@ export default class Formulario extends Component {
   }
 
   validateAll(fields, fieldsDOM) {
-    
+    const { mainCss } = this.props;
     let arr = [];
     for (let i = 0; i < fieldsDOM.length; i++) {
       const map = fieldsDOM[i],
-        field = fields.get(i),
-        name = field.get("name"),
+        field = fields.get(i);
+      const name = field.get("name"),
         validates = field.get("validate"),
         typesValidate = validates.get("types");
       let input = map.elements[0],
         error = false,
         required = typesValidate.filter(item => item === "required");
-
       required = required.size > 0;
-
       input =
-        input !== undefined ? input : map.getElementsByClassName("options")[0];
+        input !== undefined
+          ? input
+          : map.getElementsByClassName(mainCss.Options)[0];
 
       arr = arr.filter(item => item !== name);
-
       typesValidate.forEach(map => {
         if (!Validator[map](input, validates, required)) error = true;
       });
@@ -75,7 +80,6 @@ export default class Formulario extends Component {
   }
 
   closeForm() {
-    
     const { general, closeForm } = this.props,
       conversation = {
         general,
@@ -83,40 +87,30 @@ export default class Formulario extends Component {
         send: "to",
         enabled: false
       };
-      
-      closeForm(conversation);
+
+    closeForm(conversation);
   }
 
   sendDataForm(e) {
     const { form, sendForm, generalStates } = this.props,
-      general = generalStates.toJS();
-    let fields = form.get("fields"),
-      fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset");
-    const selectLink = fields.filter(fiel => fiel.get("type") === "selects-link");
-    if(selectLink.size>0){
-      fields = fields.filter(fiel => fiel.get("type") !== "selects-link").toJS();
-      fields.push(selectLink.get(0).get("parent").toJS())
-      fields.push(selectLink.get(0).get("children").toJS())
-      fields = Immutable.fromJS(fields);
-      const selectLinkDOM = Array.from(fieldsDOM).filter(fiel => fiel.classList.contains("selects-link"));
-      fieldsDOM = Array.from(fieldsDOM).filter(fiel => !fiel.classList.contains("selects-link"));
-      fieldsDOM.push(selectLinkDOM[0]);
-      fieldsDOM.push(selectLinkDOM[1]);
-    }
-    const arr = this.validateAll(fields, fieldsDOM),
-      url = form.get('url');
+      general = generalStates.toJS(),
+      fields = form.get("fields"),
+      fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset"),
+      arr = this.validateAll(fields, fieldsDOM),
+      url = form.get("url");
     let dataForm = {};
     if (arr.length > 0) {
       this.setState({
         invalidFiels: arr
       });
     } else {
+      //let arrayOut = [];
       for (let i = 0; i < fieldsDOM.length; i++) {
-        let input = fieldsDOM[i].children[1];
-        let value = !fieldsDOM[i].classList.contains("selects-link")?input.value:input.children[0].dataset.valor;
-        let name = input.attributes.name!==undefined?input.attributes.name.value:input.children[0].attributes.name.value;
-        value = value!==undefined?value:input.children[0].value;
+        let input = fieldsDOM[i].elements[0],
+          value = input.value,
+          name = input.name;
         dataForm[name] = value;
+        //arrayOut.push({ name, value });
       }
       sendForm(dataForm, url, general);
     }
@@ -124,7 +118,7 @@ export default class Formulario extends Component {
 
   fillHeader(header) {
     if (header.size > 0) {
-      const { generalStates, closeForm, colorHeader } = this.props;
+      const { generalStates, closeForm, colorHeader, mainCss } = this.props;
       return (
         <FormHeader
           icon={header.get("icon")}
@@ -135,6 +129,7 @@ export default class Formulario extends Component {
           general={generalStates}
           closeForm={closeForm}
           colorHeader={colorHeader}
+          mainCss={mainCss}
         />
       );
     } else {
@@ -143,17 +138,19 @@ export default class Formulario extends Component {
   }
 
   fillError(withError, error) {
+    const { mainCss } = this.props;
     return withError ? (
       <p>
-        <small className="error">{error}</small>
+        <small className={mainCss.Error}>{error}</small>
       </p>
     ) : null;
   }
 
   fillContent(fields) {
+    const { mainCss } = this.props;
     if (fields.size > 0) {
       const retorno = [];
-      fields.forEach((map,i) => {
+      fields.forEach((map, i) => {
         const withError = this.state.invalidFiels.includes(map.get("name"));
         switch (map.get("type")) {
           case "textarea":
@@ -168,6 +165,7 @@ export default class Formulario extends Component {
                   validateFunc={this.validate}
                   validate={map.get("validate")}
                   withError={withError}
+                  mainCss={mainCss}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>
@@ -183,6 +181,7 @@ export default class Formulario extends Component {
                   validate={map.get("validate")}
                   withError={withError}
                   options={map.get("options")}
+                  mainCss={mainCss}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>
@@ -198,6 +197,7 @@ export default class Formulario extends Component {
                   validate={map.get("validate")}
                   withError={withError}
                   options={map.get("options")}
+                  mainCss={mainCss}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>
@@ -213,6 +213,7 @@ export default class Formulario extends Component {
                 withErrorParent={withErrorParent}
                 withErrorChildren={withErrorChildren} 
                 validateFunc={this.validate}
+                mainCss={mainCss}
               />
             );
             break;
@@ -222,6 +223,7 @@ export default class Formulario extends Component {
                 <legend>{map.get("legend")}</legend>
                 <FormSwitch
                   name={map.get("name")}
+                  mainCss={mainCss}
                   validateFunc={this.validate}
                   validate={map.get("validate")}
                   withError={withError}
@@ -231,7 +233,13 @@ export default class Formulario extends Component {
             );
             break;
           case "file":
-            const { attachFileForm,formularioStates, general, colorHeader, deleteFileForm } = this.props;
+            const {
+              attachFileForm,
+              formularioStates,
+              general,
+              colorHeader,
+              deleteFileForm
+            } = this.props;
             retorno.push(
               <fieldset key={i + map.get("name")}>
                 <legend>{map.get("legend")}</legend>
@@ -246,7 +254,8 @@ export default class Formulario extends Component {
                   name={map.get("name")}
                   formularioStates={formularioStates}
                   deleteFileForm={deleteFileForm}
-                  attach={map.getIn(['validate','rules'])}
+                  attach={map.getIn(["validate", "rules"])}
+                  mainCss={mainCss}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>
@@ -265,6 +274,7 @@ export default class Formulario extends Component {
                   validate={map.get("validate")}
                   withError={withError}
                   value={map.get("value")}
+                  mainCss={mainCss}
                 />
                 {this.fillError(withError, map.getIn(["validate", "error"]))}
               </fieldset>
@@ -279,39 +289,47 @@ export default class Formulario extends Component {
   }
 
   content() {
-    const { formularioStates, form } = this.props,
+    const { formularioStates, form, mainCss, animation } = this.props,
       header = form.get("header"),
       bajada = form.get("bajada"),
       fields = form.get("fields"),
       error = formularioStates.get("error");
     return (
-      <div className="mymodal show">
-        <div className="overflow">
-          <div className="container-form">
-            <form autoComplete="off">
-              {this.fillHeader(header)}
-              <p className="red">{bajada}</p>
-              {this.fillContent(fields)}
-              <button type="button" onClick={this.sendDataForm}>
-                Enviar
-              </button>
-            </form>
-          </div>
+      <div
+        className={
+          mainCss.ConversationBubbleForm + " " + animation + " " + mainCss.Send
+        }
+      >
+        <img className={mainCss.RoundedImg} src={logo} alt="" />
+
+        <div className={mainCss.ContainerForm}>
+          <form autoComplete="off">
+            {this.fillHeader(header)}
+            <p className={mainCss.Red}>{bajada}</p>
+            {this.fillContent(fields)}
+            <button
+              type="button"
+              onClick={this.sendDataForm}
+              className={mainCss.ButtonSend}
+            >
+              Enviar
+            </button>
+          </form>
+          <FormError error={error} mainCss={mainCss} />
         </div>
-        <FormError error={error} />
-        <div className="overlay" />
       </div>
     );
   }
 
   render() {
-    const { formularioStates, customParamsStates } = this.props,
-    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
+    const { formularioStates, customParamsStates,mainCss } = this.props,
+      colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     return (
       <IsFetching
         isFetching={formularioStates.get("isFetching")}
         showChildren={true}
         colorHeader={colorHeader}
+        mainCss={mainCss}
       >
         {this.content()}
       </IsFetching>

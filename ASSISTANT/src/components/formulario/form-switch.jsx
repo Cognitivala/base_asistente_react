@@ -4,19 +4,19 @@ import PropTypes from "prop-types";
 export default class FormSwitch extends Component {
 
   content() {
-    const { name, validateFunc, validate, withError } = this.props;
-    let cssClass = withError ? " error" : "";
+    const { name, validateFunc, validate, withError, mainCss } = this.props;
+    let cssClass = withError ? " "+mainCss.Error : "";
     return (
-      <label className="switch">
-        <p>NO</p>
+      <label className={mainCss.Switch}>
+        <strong>NO</strong>
         <input
           type="checkbox"
           className={cssClass}
           name={name}
           onChange={validateFunc.bind(this, validate, name)}
         />
-        <span className="slider round" />
-        <p>SI</p>
+        <span className={mainCss.Slider+" "+mainCss.Round} />
+        <strong>SI</strong>
       </label>
     );
   }
@@ -30,5 +30,6 @@ FormSwitch.propTypes = {
   name: PropTypes.string.isRequired,
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
-  withError: PropTypes.bool
+  withError: PropTypes.bool,
+  mainCss: PropTypes.object.isRequired,
 };

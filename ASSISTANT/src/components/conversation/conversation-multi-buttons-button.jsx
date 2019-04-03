@@ -19,15 +19,13 @@ export default class ConversationMultiButtonsButton extends Component {
   }
 
   render() {
-    const { colorHeader, button } = this.props,
-      style = { backgroundColor: colorHeader },
-      cssClass = this.state.active?"":" hover"
+    const { button, mainCss } = this.props,
+      cssClass = this.state.active?"":" "+mainCss.Hover
     return (
       <button
-        className={"btn btn-big"+cssClass}
+        className={mainCss.Btn + " " + mainCss.BtnBig +cssClass}
         data-msg={button.get("value")}
         onClick={this.toggleButton}
-        style={style}
       >
         {button.get("title")}
       </button>
@@ -37,6 +35,6 @@ export default class ConversationMultiButtonsButton extends Component {
 
 ConversationMultiButtonsButton.propTypes = {
     button: PropTypes.any.isRequired,
-    colorHeader: PropTypes.string.isRequired,
-    toggleSelectButton: PropTypes.func.isRequired
+    toggleSelectButton: PropTypes.func.isRequired,
+    mainCss: PropTypes.any.isRequired
 };

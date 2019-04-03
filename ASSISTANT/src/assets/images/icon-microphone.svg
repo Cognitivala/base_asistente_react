@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 58">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #9a9a9a;
+      }
+    </style>
+  </defs>
+  <g id="microphone" transform="translate(-13)">
+    <path id="Path_1" data-name="Path 1" class="cls-1" d="M44,28a1,1,0,0,0-1,1v6a14,14,0,0,1-28,0V29a1,1,0,0,0-2,0v6A16.007,16.007,0,0,0,28,50.949V56H23a1,1,0,0,0,0,2H35a1,1,0,0,0,0-2H30V50.949A16.007,16.007,0,0,0,45,35V29A1,1,0,0,0,44,28Z"/>
+    <path id="Path_2" data-name="Path 2" class="cls-1" d="M29,46A11.013,11.013,0,0,0,40,35V11a11,11,0,0,0-22,0V35A11.013,11.013,0,0,0,29,46ZM20,11a9,9,0,0,1,18,0V35a9,9,0,0,1-18,0Z"/>
+  </g>
+</svg>

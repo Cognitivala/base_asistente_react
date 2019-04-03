@@ -19,38 +19,17 @@ export default class FormHeader extends Component {
     this.props.closeForm(conversation);
   }
 
-  closeFill() {
-    const { closeMsg } = this.props;
-    if (closeMsg !== "Null") {
-      return (
-        <div className="close-form">
+  content() {
+    const { textA, textB, textStrong, mainCss } = this.props;
+
+    return (
+      <div className={mainCss.HeaderForm}>
+        {/* <div className={mainCss.CloseForm}>
           <button type="button" data-msg={closeMsg} onClick={this.closeForm}>
             <i className="fas fa-times" data-msg={closeMsg} />
           </button>
-        </div>
-      );
-    } else {
-      return <React.Fragment/>;
-    }
-  }
-
-  content() {
-    const {
-        icon,
-        textA,
-        textB,
-        textStrong,
-        colorHeader
-      } = this.props,
-      style = {
-        backgroundColor: colorHeader
-      };
-
-    return (
-      <div className="header" style={style}>
-        {this.closeFill()}
-        <div className="icon">
-          <i className={icon !== undefined ? icon : null} />
+        </div> */}
+        <div className={mainCss.Icon}>
         </div>
         <p>
           {textA !== undefined ? textA : null}{" "}
@@ -67,10 +46,11 @@ export default class FormHeader extends Component {
 }
 
 FormHeader.propTypes = {
-  icon: PropTypes.string.isRequired,
+  // icon: PropTypes.string.isRequired,
   textA: PropTypes.string.isRequired,
   textB: PropTypes.string.isRequired,
   textStrong: PropTypes.string.isRequired,
-  closeMsg: PropTypes.string.isRequired,
-  colorHeader: PropTypes.string.isRequired
-};
+  // closeMsg: PropTypes.string.isRequired,
+  colorHeader: PropTypes.string.isRequired,
+  mainCss: PropTypes.object.isRequired
+}

@@ -1,19 +1,18 @@
 import React from "react";
 
 const ValoracionRadio = props => {
-  const { label, name, value, click, classCss, styleCss } = props;
+  const { label, name, value, click, mainCss, active } = props;
   return (
     <label>
-      <div className="round">
+      <div className={mainCss.Round}>
+        <div className={active?mainCss.Active+" " +mainCss.Circle:mainCss.Circle} />
         {label}
         <input
           type="radio"
           name={name}
           value={value}
           onClick={click}
-          className={classCss}
         />
-        <div className="circle" style={styleCss} />
       </div>
     </label>
   );

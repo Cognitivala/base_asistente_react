@@ -56,21 +56,19 @@ export default class FormFile extends Component {
 
   fillError() {
     if (this.state.error !== null) {
-      return <p className="error">{this.state.error}</p>;
+      const { mainCss } = this.props;
+      return <p className={mainCss.Error}>{this.state.error}</p>;
     }
   }
 
   fillFiles(files) {
-    const { colorHeader } = this.props,
-      style = { color: colorHeader };
     let retorno = files.map((map, i) => {
       return (
         <li key={i}>
-          <a target="_blank" href={map.get("url")} style={style} rel="noopener noreferrer">
+          <a target="_blank" rel="noopener noreferrer" href={map.get("url")}>
             {map.get("name")}
           </a>
           <i
-            style={style}
             onClickCapture={this.deleteFile.bind(this, i)}
             className="fas fa-times"
           />
@@ -81,10 +79,9 @@ export default class FormFile extends Component {
   }
 
   content() {
-    const { type, name, colorHeader, formularioStates } = this.props,
-      files = formularioStates.get("files"),
-      style = { backgroundColor: colorHeader };
-    let cssClass = this.state.error ? " error" : "";
+    const { type, name, formularioStates, mainCss } = this.props,
+      files = formularioStates.get("files");
+    let cssClass = this.state.error ? " "+mainCss.Error : "";
     if (files && files.size > 0) {
       return (
         <div>
@@ -99,8 +96,7 @@ export default class FormFile extends Component {
             disabled={this.state.enabled}
             type="button"
             onClick={this.attachIconClick}
-            style={style}
-            className={"btn btn-attach"+cssClass}
+            className={mainCss.Btn + " " + mainCss.BtnAttach+cssClass}
           >
             Adjuntar
             <i className="fas fa-paperclip" />
@@ -114,15 +110,14 @@ export default class FormFile extends Component {
           <input
             type={type}
             ref={this.attach}
-            className="hide"
+            className={mainCss.Hide}
             name={name}
             onChange={this.attachFile}
           />
           <button
             type="button"
             onClick={this.attachIconClick}
-            style={style}
-            className={"btn btn-attach"+cssClass}
+            className={mainCss.Btn + " " + mainCss.BtnAttach+cssClass}
           >
             Adjuntar
             <i className="fas fa-paperclip" />
@@ -142,5 +137,6 @@ FormFile.propTypes = {
   name: PropTypes.string.isRequired,
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
-  withError: PropTypes.bool
+  withError: PropTypes.bool,
+  mainCss: PropTypes.object.isRequired,
 };

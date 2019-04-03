@@ -31,6 +31,8 @@ export default class BtnHelp extends Component {
   }
 
   toggleHelper(e) {
+    // debugger
+    const {mainCss} = this.props;
     //Ver si está deshabilitada para enviar mensaje
     if (!this.props.ayudaStates.get("enabled")) {
       const showWarning = this.props.ayudaStates.get("showWarning"),
@@ -47,21 +49,25 @@ export default class BtnHelp extends Component {
       }
     } else {
       this.desactivarIndex();
-      this.props.ayudaStates.get("open")
-        ? this.props.closeHelp()
-        : this.props.openHelp();
+      if(this.props.ayudaStates.get("open")){
+        const divHelp = document.getElementsByClassName(mainCss.AssistantHelper)[0];
+        divHelp.classList.remove(mainCss.Active);
+        setTimeout(() => {
+          this.props.closeHelp();
+        }, 300);
+      }else{
+        this.props.openHelp();
+      }
     }
   }
 
   render() {
-    let css = this.props.ayudaStates.get("enabled") ? "" : "disabled";
-    const style = this.state.hover?{
-      color: this.props.colorHeader
-    }: {};
+    const {mainCss, ayudaStates} = this.props;
+    let css = ayudaStates.get("enabled") ? "" : mainCss.Disabled,
+    css2 = ayudaStates.get("open") ? mainCss.Active : "";
     return (
-      <div id="button-helper" onClick={this.toggleHelper} className={css} onMouseLeave={this.outHover} onMouseOver={this.inHover} style={style}>
-        Ayuda
-      </div>
+      <button onClick={this.toggleHelper} className={mainCss.Btn + " " + mainCss.BtnTransparent + " " + mainCss.ButtonHelp + " " + css + " " + css2} onMouseLeave={this.outHover} onMouseOver={this.inHover}>
+      </button>
     );
   }
 }
@@ -72,5 +78,6 @@ BtnHelp.propTypes = {
   closeHelp: PropTypes.func.isRequired,
   showWarningHelp: PropTypes.func.isRequired,
   hideWarningHelp: PropTypes.func.isRequired,
-  colorHeader: PropTypes.string.isRequired
+  colorHeader: PropTypes.string.isRequired,
+  mainCss: PropTypes.any.isRequired,
 };

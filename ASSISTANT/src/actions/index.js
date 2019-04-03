@@ -63,23 +63,22 @@ export function getLocation() {
       });
   };
 }
-
-export function getLocationObject(results) {
+export function getLocationObject(results){
   let data = {};
   for (let i = 0; i < results.length; i++) {
     const ele = results[i];
     let types = ele.types;
     for (let j = 0; j < types.length; j++) {
       const type = types[j];
-      if (type === "administrative_area_level_3") {
+      if(type==="administrative_area_level_3"){
         let address_components = ele.address_components;
         for (let k = 0; k < address_components.length; k++) {
           const address = address_components[k];
-          if (address.types[0] === "administrative_area_level_3") {
+          if(address.types[0]==="administrative_area_level_3"){
             data.comuna = address.long_name;
-          } else if (address.types[0] === "administrative_area_level_1") {
+          }else if(address.types[0]==="administrative_area_level_1"){
             data.region = address.long_name;
-          } else if (address.types[0] === "country") {
+          }else if(address.types[0]==="country"){
             data.pais = address.long_name;
           }
         }
@@ -90,7 +89,6 @@ export function getLocationObject(results) {
   }
   return data;
 }
-
 export function setOrigen(data) {
   return function action(dispatch) {
     dispatch({ type: "SET_ORIGEN", data });
@@ -112,12 +110,46 @@ export function closeLauncher() {
   return function action(dispatch) {
     dispatch({ type: "CLOSE_LAUNCHER" });
     dispatch({ type: "SET_NOTIFICATION", data: false });
+    dispatch({ type: "TOGGLE_MINIMIZED", data: false });
   };
 }
 //CUSTOM PARAMS
 export function getCustomParams() {
   return function action(dispatch) {
     dispatch(getCustomParamsStart());
+
+    // const response = {
+    //   avatar:  "/static/media/icono-cognitiva-2.9dc78e8e.svg",
+    //   colorHeader: "#6f4aad",
+    //   colorBtn: "#2979ff",
+    //   estado: "1",
+    //   // logo:
+    //   //   "/static/media/icon-assistant-jose.a0612191.svg",
+    //   logo:
+    //     "/static/media/logoH.8c71aadb.svg",
+    //   status: 200,
+    //   subtitulo: "Asistente virtual",
+    //   titulo: "Cognitiva",
+    //   url: "https://example.com",
+    //   userImg:
+    //     "https://yt3.ggpht.com/a-/ACSszfo",
+    //   imgBackHeader: "/static/media/nodos.772747fe.svg",
+    //   settings: {
+    //     keep_conversation: true,
+    //     geolocalization: false,
+    //     help: true,
+    //     attach: false, // no está desarrollado al 100%
+    //     emoji: false,
+    //     voice: true,
+    //     positionHelp: "bottom"
+    //   }
+    // };
+    // setColors(response.colorHeader);
+    // dispatch(getCustomParamsEnd(response));
+    // let str_md5v = AES.encrypt(JSON.stringify(response),KEY_ENCRYPT).toString();
+    // localStorage.setItem("customParams", str_md5v);
+    // window.top.postMessage({ customParams: response }, "*");
+
     const request = axios({
       method: "POST",
       headers: {
@@ -129,11 +161,10 @@ export function getCustomParams() {
     return request.then(
       response => {
         if (response.status === 200) {
+          //UPDATE COLORS
+          setColors(response.data.colorHeader);
           dispatch(getCustomParamsEnd(response.data));
-          let str_md5v = AES.encrypt(
-            JSON.stringify(response.data),
-            KEY_ENCRYPT
-          ).toString();
+          let str_md5v = AES.encrypt(JSON.stringify(response.data),KEY_ENCRYPT).toString();
           localStorage.setItem("customParams", str_md5v);
           window.top.postMessage({ customParams: response.data }, "*");
         } else {
@@ -183,6 +214,7 @@ export function updateCustomSubtitle(data) {
   };
 }
 export function updateCustomColorHeader(data) {
+  setColors(data);
   return function action(dispatch) {
     dispatch({ type: "SET_CUSTOM_COLOR_HEADER", data });
   };
@@ -202,6 +234,18 @@ export function updateCustomAvatar(data) {
     dispatch({ type: "SET_CUSTOM_AVATAR", data });
   };
 }
+export function blendColors(c0, c1, p) {
+  var f=parseInt(c0.slice(1),16),t=parseInt(c1.slice(1),16),R1=f>>16,G1=f>>8&0x00FF,B1=f&0x0000FF,R2=t>>16,G2=t>>8&0x00FF,B2=t&0x0000FF;
+  return "#"+(0x1000000+(Math.round((R2-R1)*p)+R1)*0x10000+(Math.round((G2-G1)*p)+G1)*0x100+(Math.round((B2-B1)*p)+B1)).toString(16).slice(1);
+}
+export function setColors(colorHeader){
+  const gradientMedium = blendColors(colorHeader,"#000000",.2),
+    gradientLow = blendColors(colorHeader,"#000000",.3);
+  document.documentElement.style.setProperty("--first",colorHeader);
+  document.documentElement.style.setProperty("--laucher",colorHeader);
+  document.documentElement.style.setProperty("--gradient-medium",gradientMedium);
+  document.documentElement.style.setProperty("--gradient-dark",gradientLow);
+}
 //SALUDO
 export function getSaludo() {
   return function action(dispatch) {
@@ -217,14 +261,21 @@ export function getSaludo() {
       });
     return request.then(
       response => {
+
         if (response.status === 200) {
           let item = {};
-          item.msg = [response.data.msg];
+          item.msg = response.data.msg;
+          let str_md5v = AES.encrypt(JSON.stringify(item),KEY_ENCRYPT).toString();
+          localStorage.setItem("gr", str_md5v);
+          dispatch(getSaludoEnd(item));
+
+          //PRIMER MENSAJE
+          const msg_inicial = response.data.msg_inicial;
+          msg_inicial?item = msg_inicial : item.msg = ["¿Qué puedo hacer por ti?"];
           item.send = "from";
           item.enabled = true;
           dispatch(pushConversation(item));
           dispatch(setNodoId(item.msg[item.msg.length - 1]));
-          dispatch(getSaludoEnd(item));
         } else {
           dispatch(getSaludoError(response.statusText));
         }
@@ -249,7 +300,7 @@ function getSaludoStart() {
     type: "GET_SALUDO_START"
   };
 }
-function getSaludoEnd(data) {
+export function getSaludoEnd(data) {
   return {
     type: "GET_SALUDO_END",
     data
@@ -288,6 +339,8 @@ export function closeAssistant() {
 export function toggleMinimizedAssistant(data) {
   return function action(dispatch) {
     dispatch({ type: "TOGGLE_MINIMIZED", data });
+    dispatch({ type: "OPEN_LAUNCHER" });
+
   };
 }
 export function defaultAssistant() {
@@ -308,10 +361,8 @@ export function getAyuda() {
     });
     return request.then(
       response => {
-        if (
-          response.status === 200 &&
-          response.data.estado.codigoEstado === 200
-        ) {
+        console.log(response);
+        if (response.data.estado.codigoEstado === 200) {
           dispatch(getAyudaEnd(response.data.respuesta));
         } else {
           dispatch(getAyudaError(response.data.respuesta));
@@ -414,11 +465,13 @@ export function closeHelp() {
   };
 }
 export function enabledHelp() {
+  
   return function action(dispatch) {
     dispatch({ type: "ENABLED_HELP" });
   };
 }
 export function disabledHelp() {
+  
   return function action(dispatch) {
     dispatch({ type: "DISABLED_HELP" });
   };
@@ -475,9 +528,7 @@ export function updateConversation(data) {
           item.enabled = true;
           dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
-        } else if(response.data!== undefined){
-          dispatch(updateConversationError(response.data.msg));
-        }else{
+        } else {
           dispatch(updateConversationError(response.statusText));
         }
       })
@@ -485,7 +536,8 @@ export function updateConversation(data) {
         dispatch(updateConversationError(err.response.data.msg));
       });
 
-    // Respuesta
+    //Respuesta
+    // const msg = parseInt(data.msg[0]);
     // setTimeout(() => {
     //   const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
     //   let data;
@@ -497,54 +549,56 @@ export function updateConversation(data) {
     //   //6 = MSG + Datepicker
     //   //8 = MULTIMSG
     //   //9 =
-    //   switch (2) {
+    //   // debugger
+      
+    //   switch (msg) {
     //     case 1:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
-    //         buttons: [
-    //           {
-    //             title: "SI",
-    //             value: "siValorar"
-    //           },
-    //           {
-    //             title: "NO",
-    //             value: "noValorar"
-    //           }
-    //         ]
-    //       };
+          // data = {
+          //   general: {
+          //     cid: "SOYELCID",
+          //     origen: "Sitio Público",
+          //     nodo_id: null,
+          //     intent: null,
+          //     auth: null,
+          //     token: null,
+          //     location: null
+          //   },
+          //   msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
+          //   buttons: [
+          //     {
+          //       title: "SI",
+          //       value: "siValorar"
+          //     },
+          //     {
+          //       title: "NO",
+          //       value: "noValorar"
+          //     }
+          //   ]
+          // };
     //       break;
     //     case 2:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Contactar?"],
-    //         buttons: [
-    //           {
-    //             title: "SI",
-    //             value: "siContacto"
-    //           },
-    //           {
-    //             title: "NO",
-    //             value: "noContacto"
-    //           }
-    //         ]
-    //       };
+          // data = {
+          //   general: {
+          //     cid: "SOYELCID",
+          //     origen: "Sitio Público",
+          //     nodo_id: null,
+          //     intent: null,
+          //     auth: null,
+          //     token: null,
+          //     location: null
+          //   },
+          //   msg: ["Contactar?"],
+          //   buttons: [
+          //     {
+          //       title: "SI",
+          //       value: "siContacto"
+          //     },
+          //     {
+          //       title: "NO",
+          //       value: "noContacto"
+          //     }
+          //   ]
+          // };
     //       break;
     //     case 3:
     //       data = {
@@ -571,103 +625,103 @@ export function updateConversation(data) {
     //       };
     //       break;
     //     case 4:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Por favor, selecciona una opción: "],
-    //         selects: [
-    //           {
-    //             text: "Seleccione",
-    //             value: "-1"
-    //           },
-    //           {
-    //             text: "Option 1",
-    //             value: "1"
-    //           },
-    //           {
-    //             text: "Option 2",
-    //             value: "2"
-    //           },
-    //           {
-    //             text: "Option 3",
-    //             value: "3"
-    //           },
-    //           {
-    //             text: "Option 4",
-    //             value: "4"
-    //           },
-    //           {
-    //             text: "Option 5",
-    //             value: "5"
-    //           },
-    //           {
-    //             text: "Option 6",
-    //             value: "6"
-    //           }
-    //         ]
-    //       };
+          // data = {
+          //   general: {
+          //     cid: "SOYELCID",
+          //     origen: "Sitio Público",
+          //     nodo_id: null,
+          //     intent: null,
+          //     auth: null,
+          //     token: null,
+          //     location: null
+          //   },
+          //   msg: ["Por favor, selecciona una opción: "],
+          //   selects: [
+          //     {
+          //       text: "Seleccione",
+          //       value: "-1"
+          //     },
+          //     {
+          //       text: "Option 1",
+          //       value: "1"
+          //     },
+          //     {
+          //       text: "Option 2",
+          //       value: "2"
+          //     },
+          //     {
+          //       text: "Option 3",
+          //       value: "3"
+          //     },
+          //     {
+          //       text: "Option 4",
+          //       value: "4"
+          //     },
+          //     {
+          //       text: "Option 5",
+          //       value: "5"
+          //     },
+          //     {
+          //       text: "Option 6",
+          //       value: "6"
+          //     }
+          //   ]
+          // };
     //       break;
     //     case 5:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, selecciona uno o varios botones:"],
-    //         multibuttons: [
-    //           { title: "hola", value: "1" },
-    //           { title: "holanda", value: "2" },
-    //           { title: "holiwis", value: "3" },
-    //           { title: "holo", value: "4" },
-    //           { title: "holawa", value: "5" }
-    //         ]
-    //       };
+          // data = {
+          //   general: {
+          //     cid: "SOYELCID",
+          //     origen: "Sitio Público",
+          //     nodo_id: null,
+          //     intent: null,
+          //     auth: null,
+          //     token: null,
+          //     location: null
+          //   },
+          //   msg: ["Hola, selecciona uno o varios botones:"],
+          //   multibuttons: [
+          //     { title: "hola", value: "1" },
+          //     { title: "holanda", value: "2" },
+          //     { title: "holiwis", value: "3" },
+          //     { title: "holo", value: "4" },
+          //     { title: "holawa", value: "5" }
+          //   ]
+          // };
     //       break;
     //     case 6:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, seleccione una fecha:"],
-    //         datepicker: [
-    //           { name: "inicial", value: "22/05/1991" },
-    //           { name: "final", value: "22/05/1991" }
-    //         ]
-    //       };
+          // data = {
+          //   general: {
+          //     cid: "SOYELCID",
+          //     origen: "Sitio Público",
+          //     nodo_id: null,
+          //     intent: null,
+          //     auth: null,
+          //     token: null,
+          //     location: null
+          //   },
+          //   msg: ["Hola, seleccione una fecha:"],
+          //   datepicker: [
+          //     { name: "inicial", value: "22/05/1991" },
+          //     { name: "final", value: "22/05/1991" }
+          //   ]
+          // };
     //       break;
-    //     case 7:
-    //       data = {
-    //         general: {
-    //           cid: "SOYELCID",
-    //           origen: "Sitio Público",
-    //           nodo_id: null,
-    //           intent: null,
-    //           auth: null,
-    //           token: null,
-    //           location: null
-    //         },
-    //         msg: ["Hola, seleccione una fecha:"],
-    //         datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
-    //       };
-    //       break;
+    //     // case 7:
+    //     //   data = {
+    //     //     general: {
+    //     //       cid: "SOYELCID",
+    //     //       origen: "Sitio Público",
+    //     //       nodo_id: null,
+    //     //       intent: null,
+    //     //       auth: null,
+    //     //       token: null,
+    //     //       location: null
+    //     //     },
+    //     //     msg: ["Hola, seleccione una fecha:"],
+    //     //     datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
+    //     //   };
+    //     //   break;
     //     case 8:
     //       data = {
     //         general: {
@@ -683,6 +737,20 @@ export function updateConversation(data) {
     //       };
     //       break;
     //     case 9:
+          // data = {
+          //   general: {
+          //     cid: "SOYELCID",
+          //     origen: "Sitio Público",
+          //     nodo_id: null,
+          //     intent: null,
+          //     auth: null,
+          //     token: null,
+          //     location: null
+          //   },
+          //   like: true
+          // };
+    //       break;
+    //     default:
     //       data = {
     //         general: {
     //           cid: "SOYELCID",
@@ -693,16 +761,15 @@ export function updateConversation(data) {
     //           token: null,
     //           location: null
     //         },
-    //         msg: ["Hola soy una respuesta con me gusta"],
-    //         like: true
+    //         msg: ["Soy una respuesta", "Puedes seguir hablándome"]
     //       };
-    //       break;
+    //     break;
     //   }
 
-    //   data.send = "from";
-    //   data.enabled = true;
+      // data.send = "from";
+      // data.enabled = true;
 
-    //   messageResponse(dispatch, data);
+      // messageResponse(dispatch, data);
     // }, 500);
   };
 }
@@ -711,16 +778,20 @@ function messageResponse(dispatch, data) {
     //Si trae para levantar modales
     switch (data.liftUp) {
       case "valoracion":
-        if (data.general !== undefined) dispatch(setGeneral(data.general));
-        if (data.general.integracion !== undefined)
-          dispatch(setIntegracion(data.general.integracion));
+        if (data.general !== undefined) {
+          dispatch(setGeneral(data.general));
+          if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+        }
         dispatch({ type: "ENABLED_VALORACION" });
+        disabledHelp();
+        disabledInput();
         dispatch(pushConversation(data));
         break;
       case "form":
-        if (data.general !== undefined) dispatch(setGeneral(data.general));
-        if (data.general.integracion !== undefined)
-          dispatch(setIntegracion(data.general.integracion));
+        if (data.general !== undefined) {
+          dispatch(setGeneral(data.general));
+          if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+        }
         dispatch({ type: "ENABLED_FORM" });
         dispatch(pushConversation(data));
         break;
@@ -728,11 +799,11 @@ function messageResponse(dispatch, data) {
         break;
     }
   } else {
-    if (data.general !== undefined) dispatch(setGeneral(data.general));
-    if (data.general.region !== undefined)
-      dispatch(setRegion(data.general.region));
-    if (data.general.integracion !== undefined)
-      dispatch(setIntegracion(data.general.integracion));
+    if (data.general !== undefined) {
+      dispatch(setGeneral(data.general));
+      if (data.general.region !== undefined) dispatch(setRegion(data.general.region));
+      if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+    }
     dispatch(pushConversation(data));
   }
 }
@@ -807,7 +878,8 @@ export function updateConversationButton(data) {
             general: data.general,
             send: "from",
             enabled: true,
-            liftUp: "valoracion"
+            liftUp: "valoracion",
+            withStars: false
           };
           messageResponse(dispatch, _data);
         }, 500);
@@ -1094,6 +1166,10 @@ export function updateConversationButton(data) {
         //                   { text: "Curso 1 R1", value: "COD1" },
         //                   { text: "Curso 2 R1", value: "COD2" },
         //                   { text: "Curso 3 R1", value: "COD3" },
+        //                   { text: "Curso 4 R1", value: "COD4" },
+        //                   { text: "Curso 4 R1", value: "COD4" },
+        //                   { text: "Curso 4 R1", value: "COD4" },
+        //                   { text: "Curso 4 R1", value: "COD4" },
         //                   { text: "Curso 4 R1", value: "COD4" }
         //                 ]
         //               },
@@ -1228,17 +1304,17 @@ function attachFileStart() {
     type: "GET_CONVERSATIONS_START"
   };
 }
-function attachFileEnd(data) {
-  return {
-    type: "GET_CONVERSATIONS_END"
-  };
-}
 // function attachFileError(error) {
 //   return {
 //     type: "GET_CONVERSATIONS_ERROR",
 //     error
 //   };
 // }
+function attachFileEnd(data) {
+  return {
+    type: "GET_CONVERSATIONS_END"
+  };
+}
 //VALORACIÓN
 export function setStar(data) {
   return function action(dispatch) {
@@ -1256,6 +1332,11 @@ export function setCommentValoracion(data) {
     dispatch({ type: "SET_COMMENT_VALORACION", data });
   };
 }
+export function setServicioValoracion(data) {
+  return function action(dispatch) {
+    dispatch({ type: "SET_SERVICIO_VALORACION", data });
+  };
+}
 export function setPudoResolverValoracion(data) {
   return function action(dispatch) {
     dispatch({ type: "SET_PUDO_RESOLVER_VALORACION", data });
@@ -1271,7 +1352,7 @@ export function setErrorValoracion(data) {
 }
 export function sendValoracion(data, general) {
   return function action(dispatch) {
-    dispatch({ type: "SEND_VALORACION_START" });
+    dispatch({ type: "GET_CONVERSATIONS_START" });
     const request = axios({
       method: "POST",
       headers: {
@@ -1292,13 +1373,14 @@ export function sendValoracion(data, general) {
           item.enabled = true;
           item.general = general;
           messageResponse(dispatch, item);
-          dispatch({ type: "SEND_VALORACION_END" });
+          dispatch({ type: "GET_CONVERSATIONS_END" });
         } else {
           dispatch(updateConversationError(response.statusText));
         }
       },
       err => {
         dispatch(updateConversationError(err.response.data.msg));
+        dispatch({ type: "GET_CONVERSATIONS_END" });
       }
     );
   };
@@ -1309,9 +1391,11 @@ export function closeValoracion(data) {
     updateConversationButton(data);
   };
 }
+
 //LIKE
 export function sendLike(data, general) {
   return function action(dispatch) {
+    dispatch({ type: "GET_CONVERSATIONS_START" });
     const request = axios({
       method: "POST",
       headers: {
@@ -1335,6 +1419,7 @@ export function sendLike(data, general) {
         } else {
           dispatch(updateConversationError(response.statusText));
         }
+        dispatch({ type: "GET_CONVERSATIONS_END" });
       },
       err => {
         dispatch(
@@ -1342,6 +1427,7 @@ export function sendLike(data, general) {
             "Disculpa, se ha producido un error al valorar. Puedes continuar con la conversación."
           )
         );
+        dispatch({ type: "GET_CONVERSATIONS_END" });
       }
     );
   };
@@ -1479,5 +1565,24 @@ export function sendForm(data, url, general) {
     //   dispatch({ type: "SEND_FORM_END" });
     //   dispatch({ type: "DISABLED_FORM" });
     // }, 500);
+  };
+}
+//RESPONSIVE
+export function responsive(data) {
+  return function action(dispatch) {
+    dispatch({ type: "RESPONSIVE", data });
+  };
+}
+//VOICE
+export function enabledVoice() {
+  
+  return function action(dispatch) {
+    dispatch({ type: "ENABLED_VOICE"});
+  };
+}
+export function disabledVoice() {
+  
+  return function action(dispatch) {
+    dispatch({ type: "DISABLED_VOICE"});
   };
 }

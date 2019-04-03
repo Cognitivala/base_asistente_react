@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "bootstrap-datepicker": "^1.7.1",
-    "browser-sync": "^2.24.7",
+    "browser-sync": "^2.26.3",
     "event-stream": "^4.0.0",
     "gulp": "^3.8.5",
     "gulp-autoprefixer": "^6.0.0",

@@ -4,7 +4,6 @@ import Immutable from "immutable";
 
 export default class FormSearchLink extends Component {
   state = {
-    active: false,
     inputValue: ""
   };
   options = React.createRef();
@@ -18,43 +17,39 @@ export default class FormSearchLink extends Component {
     }
   }
 
-  // shouldComponentUpdate(prevProps, prevStates) {
-  //   return (
-  //     !Immutable.is(prevProps.options, this.props.options) ||
-  //     prevProps.name !== this.props.name ||
-  //     prevProps.validateFunc !== this.props.validateFunc ||
-  //     prevProps.validate !== this.props.validate ||
-  //     prevProps.withError !== this.props.withError ||
-  //     prevProps.selectedChildren !== this.props.selectedChildren ||
-  //     prevProps.selectedParent !== this.props.selectedParent ||
-  //     prevProps.setSelectedChildren !== this.props.setSelectedChildren ||
-  //     prevProps.setSelectedParent !== this.props.setSelectedParent ||
-  //     prevProps.typeLink !== this.props.typeLink ||
-  //     prevProps.disabled !== this.props.disabled ||
-  //     prevStates.active !== this.state.active ||
-  //     prevStates.inputValue !== this.state.inputValue
-  //   );
-  // }
+  shouldComponentUpdate(nextProps, nextStates) {
+    return (
+      !Immutable.is(nextProps.options, this.props.options) ||
+      nextProps.name !== this.props.name ||
+      nextProps.validateFunc !== this.props.validateFunc ||
+      nextProps.validate !== this.props.validate ||
+      nextProps.withError !== this.props.withError ||
+      nextProps.selectedChildren !== this.props.selectedChildren ||
+      nextProps.selectedParent !== this.props.selectedParent ||
+      nextProps.setSelectedChildren !== this.props.setSelectedChildren ||
+      nextProps.setSelectedParent !== this.props.setSelectedParent ||
+      nextProps.typeLink !== this.props.typeLink ||
+      nextProps.disabled !== this.props.disabled ||
+      nextProps.active !== this.props.active ||
+      nextStates.inputValue !== this.state.inputValue
+    );
+  }
 
   setSelected(e) {
-    const { options } = this.props;
+    const { options,typeLink } = this.props;
     let selected = e.currentTarget.dataset.value;
     this.input.current.dataset.valor = selected;
     let selectedText = options
       .filter(fil => fil.get("value") === selected)
       .get(0)
       .get("text");
+    
     this.setState(
       {
-        active: false,
         inputValue: selectedText
       },
       () => {
-        if (this.props.typeLink !== "children") {
-          this.props.setSelectedParent(selected);
-        } else {
-          this.props.setSelectedChildren(selected);
-        }
+        this.props.setActive(true,selected,typeLink);
       }
     );
   }
@@ -94,12 +89,12 @@ export default class FormSearchLink extends Component {
   }
 
   content() {
-    const { options, withError, disabled, name } = this.props;
-    let cssClass = this.state.active ? " active" : "",
-      cssClassError = withError ? " error" : "";
-    if (this.state.active) {
+    const { options, withError, disabled, name, mainCss, typeLink } = this.props;
+    let cssClass = this.props.active ? ` ${mainCss.Active}` : "",
+      cssClassError = withError ? ` ${mainCss.Error}` : "";
+    if (this.props.active) {
       return (
-        <div className="select-search">
+        <div className={mainCss.SelectSearch}>
           <div>
             <input
               name={name}
@@ -107,21 +102,21 @@ export default class FormSearchLink extends Component {
               disabled={disabled === undefined ? false : true}
               type="text"
               tabIndex={-1}
-              className={"select " + cssClass}
+              className={`${mainCss.Select} ${cssClass}`}
               onChange={() => {
                 this.setInputValue();
               }}
               value={this.state.inputValue}
             />
             <div
-              className="close-select"
+              className={mainCss.CloseSelect}
               onClick={() => {
-                this.setState({ active: false });
+                this.props.setActive(false,null,typeLink)
               }}
             />
           </div>
           <div
-            className={"options" + cssClass + cssClassError}
+            className={`${mainCss.Options} ${cssClass} ${cssClassError}`}
             ref={this.options}
           >
             {this.fillOptionsShow(options)}
@@ -141,15 +136,16 @@ export default class FormSearchLink extends Component {
               .get(0)
               .get("text");
       return (
-        <div className="select-search">
+        <div className={mainCss.SelectSearch}>
           <input
             name={name}
             data-valor={valueSelected}
             type="text"
             ref={this.input}
-            className={"select " + cssClass}
+            className={`${mainCss.Select} ${cssClass}`}
             onFocus={() => {
-              this.setState({ active: true, inputValue: "" });
+              this.props.setActive(false,null,typeLink);
+              this.setState({ inputValue: "" });
             }}
             disabled={disabled}
             value={textSelected}
@@ -169,7 +165,7 @@ export default class FormSearchLink extends Component {
 
 FormSearchLink.propTypes = {
   name: PropTypes.string.isRequired,
-  options: PropTypes.any.isRequired,
+  options: PropTypes.any,
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
   withError: PropTypes.bool,

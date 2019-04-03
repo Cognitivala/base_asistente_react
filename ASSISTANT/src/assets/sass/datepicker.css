@@ -1,0 +1,19 @@
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  width: 2.2rem;
+  line-height: 2.2rem;
+  font-size: 1.2rem;
+}
+.react-datepicker__current-month, .react-datepicker-time__header{
+        font-size: 1.2rem;
+}
+.react-datepicker__navigation{
+    border: 0.6rem solid transparent;
+}
+.react-datepicker__navigation--previous{
+    border-right-color: #ccc;
+}
+.react-datepicker__navigation--next{
+       border-left-color: #ccc; 
+}

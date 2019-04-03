@@ -5,6 +5,10 @@ import ValoracionHeader from "./valoracion-header";
 import RatingStars from "./rating-stars";
 import ValoracionThanThree from "./valoracion-than-three";
 import ValoracionError from "./valoracion-error";
+import logo from "../../assets/images/icono-cognitiva-2.svg";
+import ValoracionInquietud from "./valoracion-inquietud";
+import ValoracionServicio from "./valoracion-servicio";
+import ValoracionComments from "./valoracion-comments";
 
 export default class Valoracion extends Component {
   constructor(props) {
@@ -16,23 +20,37 @@ export default class Valoracion extends Component {
     this.setComment = this.setComment.bind(this);
     this.valorar = this.valorar.bind(this);
     this.closeValoracion = this.closeValoracion.bind(this);
+    this.setServicio = this.setServicio.bind(this);
+  }
+
+  componentWillMount(){
+    this.props.disabledHelp();
+    this.props.disabledInput();
   }
 
   clickStar(e) {
     e.preventDefault();
     const _this = e.target.tagName === "I" ? e.target.closest("a") : e.target;
-    const star = parseInt(_this.tagName==="SPAN"?_this.innerText:_this.getElementsByTagName("span")[0].innerText);
+    const star = parseInt(
+      _this.tagName === "SPAN"
+        ? _this.innerText
+        : _this.getElementsByTagName("span")[0].innerText
+    );
     this.props.setStar(star);
   }
 
-  overStar(e){
+  overStar(e) {
     e.preventDefault();
     const _this = e.target.tagName === "I" ? e.target.closest("a") : e.target;
-    const star = parseInt(_this.tagName==="SPAN"?_this.innerText:_this.getElementsByTagName("span")[0].innerText);
+    const star = parseInt(
+      _this.tagName === "SPAN"
+        ? _this.innerText
+        : _this.getElementsByTagName("span")[0].innerText
+    );
     this.props.setOverStar(star);
   }
 
-  overStarDefault(e){
+  overStarDefault(e) {
     e.preventDefault();
     this.props.setOverStar(0);
   }
@@ -40,14 +58,21 @@ export default class Valoracion extends Component {
   requestValue() {
     const { valoracionStates, generalStates, conversationsStates } = this.props,
       general = generalStates.toJS(),
-      comentario = valoracionStates.get("comment"),
-      pudo_resolver = valoracionStates.get("pudoResolver") ? "Si" : "No",
+      comentario = valoracionStates.get("comment");
+    const pudo_resolver = valoracionStates.get("pudoResolver") ? "Si" : "No",
       valoracion = valoracionStates.get("stars"),
-      conversaciones = conversationsStates.get('conversations'),
-      sizeConv = conversationsStates.get("conversations").size,
-      input = conversaciones.get(sizeConv-4).get("msg").get(0),
-      output =conversaciones.get(sizeConv-3).get("msg").get(0),
-      args = {
+      conversaciones = conversationsStates.get("conversations"),
+      sizeConv = conversationsStates.get("conversations").size;
+
+    const input = conversaciones
+        .get(sizeConv - 4)
+        .get("msg")
+        .get(0);
+    const output = conversaciones
+        .get(sizeConv - 3)
+        .get("msg")
+        .get(0);
+    const args = {
         valoracion,
         comentario,
         origen: general.origen,
@@ -75,106 +100,161 @@ export default class Valoracion extends Component {
   }
 
   valorar(e) {
+    debugger
     const { valoracionStates } = this.props,
-      // stars = valoracionStates.get("stars"),
-      // pudoResolver = valoracionStates.get("pudoResolver"),
-      comment = valoracionStates.get("comment");
-    let pudoResolverError = false,
-      commentError = false;
+      comment = valoracionStates.get("comment"),
+      pudoResolver = valoracionStates.get("pudoResolver");
+    // let pudoResolverError = false,
+    //   commentError = false;
 
-    if (!comment) {
-      commentError = true;
-    }
-    // if (stars <= 3) {
-    //   if (!pudoResolver) {
-    //     pudoResolverError = true;
-    //   }
+    // if (!comment) {
+    //   commentError = true;
     // }
-    // if (commentError || pudoResolverError) {
-    if (commentError) {
-      const data = {
-        error: true,
-        commentError,
-        pudoResolverError
-      };
-      this.props.setErrorValoracion(data);
-    } else {
+    // if (commentError) {
+    //   const data = {
+    //     error: true,
+    //     commentError,
+    //     pudoResolverError
+    //   };
+    //   this.props.setErrorValoracion(data);
+    // } else {
       this.requestValue();
-    }
+    // }
   }
 
   setPudoResolver(e) {
-    debugger
-    this.props.setPudoResolverValoracion(e.target.value==="si"?true:false);
+    this.props.setPudoResolverValoracion(
+      e.target.value === "si" ? true : false
+    );
+  }
+
+  setServicio(e) {
+    this.props.setServicioValoracion(e.target.value === "bueno" ? true : false);
   }
 
   setComment(e) {
     this.props.setCommentValoracion(e.target.value);
   }
 
-  button(button, colorHeader) {
+  button() {
+    
+    const { withStars, valoracionStates, mainCss } = this.props,
+      stars = valoracionStates.get("stars"),
+      pudoResolver = valoracionStates.get("pudoResolver"),
+      servicio = valoracionStates.get("servicio");
+      // comment = valoracionStates.get("comment");
+    //Si tiene estrellas
+    // debugger
+    if(withStars){
+      if(stars!==0 && pudoResolver !== null){
+        return (
+          <fieldset>
+            <button className={mainCss.Btn} type="button" data-msg="Sí" onClick={this.valorar}>
+              Valorar
+            </button>
+          </fieldset>
+        );
+      }else{
+        return (
+          <fieldset>
+            <button type="button" data-msg="Sí" disabled>
+              Valorar
+            </button>
+          </fieldset>
+        );
+      }
+    }else{
+      if(servicio!==null && pudoResolver !== null){
+        return (
+          <fieldset>
+            <button type="button" className={mainCss.Btn} data-msg="Sí" onClick={this.valorar}>
+              Valorar
+            </button>
+          </fieldset>
+        );
+      }else{
+        return (
+          <fieldset>
+            <button type="button" data-msg="Sí" disabled>
+              Valorar
+            </button>
+          </fieldset>
+        );
+      }
+    }
+  }
 
-    if (button) {
+  fillStars() {
+    // debugger;
+    const { withStars, valoracionStates, mainCss } = this.props,
+    stars = valoracionStates.get("stars"),
+    over = valoracionStates.get("overStar"),
+    servicio = valoracionStates.get("servicio"),
+    pudoResolverError = valoracionStates.get("pudoResolverError");
+    if (withStars) {
       return (
-        <button type="button" data-msg="Sí" onClick={this.valorar} style={{backgroundColor:colorHeader}}>
-          Valorar
-        </button>
+        <RatingStars
+          clickStar={this.clickStar}
+          stars={stars}
+          over={over}
+          mainCss={mainCss}
+          overStar={this.overStar}
+          overStarDefault={this.overStarDefault}
+        />
       );
     } else {
       return (
-        <button type="button" data-msg="Sí" disabled>
-          Valorar
-        </button>
+        <ValoracionServicio
+          mainCss={mainCss}
+          setServicio={this.setServicio}
+          servicio={servicio}
+          pudoResolverError={pudoResolverError}
+        />
       );
     }
   }
 
   content() {
-    const { valoracionStates, customParamsStates } = this.props,
-      stars = valoracionStates.get("stars"),
-      over = valoracionStates.get("overStar"),
-      button = valoracionStates.get("button"),
-      error = valoracionStates.get("error"),
-      pudoResolver = valoracionStates.get('pudoResolver'),
-      colorHeader = customParamsStates.getIn(["customParams","colorHeader"]),
-      commentError = valoracionStates.get("commentError"),
-      pudoResolverError = valoracionStates.get("pudoResolverError");
+    const { valoracionStates, mainCss } = this.props,
+      pudoResolver = valoracionStates.get("pudoResolver");
+    // debugger
     return (
-      <div id="modal-valoracion" className="mymodal show">
-        <div className="overflow">
-          <div className="myflex">
-            <div id="valoracion" className="container-form">
-              <form name="form2" id="form-valoracion" autoComplete="off">
-                <ValoracionHeader closeValoracion={this.closeValoracion} colorHeader={colorHeader}/>
-                <RatingStars clickStar={this.clickStar} stars={stars} over={over} colorHeader={colorHeader} overStar={this.overStar} overStarDefault={this.overStarDefault}/>
-                <ValoracionThanThree
-                  stars={stars}
-                  commentError={commentError}
-                  pudoResolverError={pudoResolverError}
-                  setPudoResolver={this.setPudoResolver}
-                  setComment={this.setComment}
-                  pudoResolver={pudoResolver}
-                  colorHeader={colorHeader}
-                />
-                {this.button(button,colorHeader)}
-              </form>
-            </div>
-          </div>
+      <div className={mainCss.ConversationBubbleForm + " " + mainCss.Send}>
+        <img className={mainCss.RoundedImg} src={logo} alt="" />
+
+        <div
+          className={mainCss.ContainerForm + " " + mainCss.ContainerValoracion}
+        >
+          <form autoComplete="off">
+            <ValoracionHeader
+              closeValoracion={this.closeValoracion}
+              mainCss={mainCss}
+            />
+            
+            <ValoracionInquietud
+              mainCss={mainCss}
+              setPudoResolver={this.setPudoResolver}
+              pudoResolver={pudoResolver}
+            />
+            {this.fillStars()}
+            <ValoracionComments
+              mainCss={mainCss}
+              setComment={this.setComment}
+            />
+            {this.button()}
+          </form>
         </div>
-        <ValoracionError error={error} />
-        <div className="overlay" />
       </div>
     );
   }
 
   render() {
-    const { valoracionStates, customParamsStates } = this.props,
-    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
+    const { valoracionStates, mainCss } = this.props;
     return (
       <IsFetching
         isFetching={valoracionStates.get("isFetching")}
         showChildren={true}
-        colorHeader={colorHeader}
+        mainCss={mainCss}
       >
         {this.content()}
       </IsFetching>
@@ -188,10 +268,10 @@ Valoracion.propTypes = {
   sendValoracion: PropTypes.func.isRequired,
   valoracionStates: PropTypes.any.isRequired,
   setStar: PropTypes.func.isRequired,
+  setServicioValoracion: PropTypes.func.isRequired,
   setOverStar: PropTypes.func.isRequired,
   setCommentValoracion: PropTypes.func.isRequired,
   setPudoResolverValoracion: PropTypes.func.isRequired,
   updateConversationButton: PropTypes.func.isRequired,
-  customParamsStates: PropTypes.any.isRequired,
   conversationsStates: PropTypes.any.isRequired
 };

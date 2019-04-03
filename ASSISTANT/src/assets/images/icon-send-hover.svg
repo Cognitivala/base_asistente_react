@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.588 19.133">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: none;
+        stroke: #9a9a9a;
+        fill-rule: evenodd;
+      }
+
+      .cls-1 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g id="icon-send" transform="translate(-0.818 -0.627)">
+    <g id="ASSISTANT" transform="translate(-385 -743)">
+      <g id="input" transform="translate(50 723)">
+        <g id="Group-7" transform="translate(336 21)">
+          <path id="Stroke-1" class="cls-1" d="M22.907.127.318,5.988,11.651,18.259Z"/>
+          <path id="Stroke-3" class="cls-2" d="M4.774,10.835,22.906.127"/>
+          <path id="Stroke-5" class="cls-1" d="M7.939,14.235,4.813,17.126V10.794"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

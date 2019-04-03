@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import * as Immutable from "immutable";
 import IsFetching from "../modules/is-fetching";
 import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
@@ -10,23 +11,48 @@ import ConversationCalendar from "./conversation-calendar";
 import ConversationFiles from "./conversation-files";
 import ConversationAttach from "./conversation-attach";
 import ConversationLikes from "./conversation-likes";
-import AES from 'crypto-js/aes';
+import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
 
 export default class Conversations extends Component {
   constructor(props) {
     super(props);
     this.test = React.createRef();
+    this.handleScroll = this.handleScroll.bind(this);
   }
 
-  componentDidUpdate() {
-    this.scrollToBottom();
-    this.setHistory();
-    this.toggleEnabled();
+  componentDidUpdate(nextProps) {
+    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)){
+      this.scrollToBottom();
+      this.setHistory();
+      this.toggleEnabled();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)){
+      this.handleScroll();
+    }
   }
 
   componentDidMount() {
+    this.handleScroll();
     this.scrollToBottom();
+    // this.setState({
+    //   conversations: this.props.conversationsStates.get("conversations")
+    // });
+  }
+
+  handleScroll(event) {
+    const { conversationsStates, toggleHeaderMore, moreHeader } = this.props,
+      sizeConv = conversationsStates.get("conversations").size;
+    if (sizeConv > 1) {
+      toggleHeaderMore(false);
+    } else if(sizeConv===1) {
+      toggleHeaderMore(true)
+    } else if(moreHeader) {
+      toggleHeaderMore(true);
+    }
   }
 
   toggleEnabled() {
@@ -53,14 +79,14 @@ export default class Conversations extends Component {
         liftUp !== undefined ||
         multibuttons !== undefined ||
         datepicker !== undefined ||
-        attach !== undefined || 
+        attach !== undefined ||
         (like !== undefined && like)
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
-        if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
+        if ((help && ayudaStates.get("enabled"))) this.props.disabledHelp();
         if (inputStates.get("enabled")) this.props.disabledInput();
       } else {
-        if (help && !ayudaStates.get("enabled")) this.props.enabledHelp();
+        if ((help && !ayudaStates.get("enabled"))) this.props.enabledHelp();
         if (!inputStates.get("enabled")) this.props.enabledInput();
       }
     }
@@ -93,6 +119,7 @@ export default class Conversations extends Component {
         files = conversation.get("files"),
         attach = conversation.get("attach"),
         like = conversation.get("like"),
+        withStars = conversation.get("withStars"),
         map = {
           buttons: buttons !== undefined ? buttons.toJS() : buttons,
           selects: selects !== undefined ? selects.toJS() : selects,
@@ -106,19 +133,20 @@ export default class Conversations extends Component {
           datepicker: datepicker !== undefined ? datepicker : datepicker,
           files: files !== undefined ? files : files,
           attach: attach !== undefined ? attach.toJS() : attach,
-          like: like !== undefined ? like : like
+          like: like !== undefined ? like : like,
+          withStars: withStars !== undefined ? withStars : withStars
         };
       if (largo === i) map.general = conversation.get("general").toJS();
       hc.push(map);
       });
-      let str_md5v = AES.encrypt(JSON.stringify(hc),KEY_ENCRYPT).toString();
+      let str_md5v = AES.encrypt(JSON.stringify(hc), KEY_ENCRYPT).toString();
       localStorage.setItem("hc", str_md5v);
     }
   }
 
   scrollToBottom() {
     if (!this.props.ayudaStates.get("open")) {
-      this.scrollTo(this.test.current, this.test.current.scrollHeight, 300);
+      this.scrollTo(this.test.current, this.test.current.scrollHeight, 600);
     }
   }
 
@@ -154,7 +182,8 @@ export default class Conversations extends Component {
         updateConversationButton,
         conversationsStates,
         customParamsStates,
-        generalStates
+        generalStates,
+        mainCss
       } = this.props,
       sizeConversation = conversationsStates.get("conversations").size,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
@@ -177,10 +206,11 @@ export default class Conversations extends Component {
           attach = conversation.get("attach"),
           like = conversation.get("like"),
           last = j + 1 === sizeConversation ? true : false,
-          animation = last ? "animated-av fadeInUp-av " : "bloqued "; //Si es la última conversa
-
+          withStars = conversation.get("withStars"),
+          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" "; //Si es la última conversa
         if (msg !== undefined) {
           const { sendLike } = this.props;
+          
           retorno.push(
             <ConversationMsg
               key={j}
@@ -189,10 +219,10 @@ export default class Conversations extends Component {
               animation={animation}
               send={send}
               userImg={userImg}
-              colorHeader={colorHeader}
               like={like}
               last={last}
               sendLike={sendLike}
+              mainCss={mainCss}
             />
           );
         }
@@ -204,9 +234,9 @@ export default class Conversations extends Component {
               buttons={buttons}
               animation={animation}
               send={send}
-              colorHeader={colorHeader}
               updateConversationButton={updateConversationButton}
               generalStates={generalStates}
+              mainCss={mainCss}
             />
           );
         }
@@ -220,6 +250,7 @@ export default class Conversations extends Component {
               send={send}
               generalStates={generalStates}
               updateConversation={updateConversation}
+              mainCss={mainCss}
             />
           );
         }
@@ -231,9 +262,9 @@ export default class Conversations extends Component {
               buttons={multibuttons}
               animation={animation}
               send={send}
-              colorHeader={colorHeader}
               updateConversationButton={updateConversationButton}
               generalStates={generalStates}
+              mainCss={mainCss}
             />
           );
         }
@@ -251,6 +282,7 @@ export default class Conversations extends Component {
               datepicker={datepicker}
               generalStates={generalStates}
               last={last}
+              mainCss={mainCss}
             />
           );
         }
@@ -266,6 +298,7 @@ export default class Conversations extends Component {
               send={send}
               colorHeader={colorHeader}
               generalStates={generalStates}
+              mainCss={mainCss}
             />
           );
         }
@@ -277,8 +310,8 @@ export default class Conversations extends Component {
               files={files}
               animation={animation}
               send={send}
-              colorHeader={colorHeader}
               generalStates={generalStates}
+              mainCss={mainCss}
             />
           );
         }
@@ -298,10 +331,13 @@ export default class Conversations extends Component {
                     sendValoracion,
                     setCommentValoracion,
                     setErrorValoracion,
+                    setServicioValoracion,
                     updateConversationButton,
                     generalStates,
-                    customParamsStates
+                    disabledHelp,
+                    disabledInput
                   } = this.props;
+                  // debugger
                   retorno.push(
                     <Valoracion
                       key={j}
@@ -312,9 +348,13 @@ export default class Conversations extends Component {
                       setStar={setStar}
                       setOverStar={setOverStar}
                       setCommentValoracion={setCommentValoracion}
+                      setServicioValoracion={setServicioValoracion}
                       setPudoResolverValoracion={setPudoResolverValoracion}
                       updateConversationButton={updateConversationButton}
-                      customParamsStates={customParamsStates}
+                      mainCss={mainCss}
+                      withStars={withStars}
+                      disabledHelp={disabledHelp}
+                      disabledInput={disabledInput}
                       conversationsStates={conversationsStates}
                     />
                   );
@@ -346,6 +386,8 @@ export default class Conversations extends Component {
                       attachFileForm={attachFileForm}
                       deleteFileForm={deleteFileForm}
                       customParamsStates={customParamsStates}
+                      mainCss={mainCss}
+                      animation={animation}
                     />
                   );
                 }
@@ -362,6 +404,7 @@ export default class Conversations extends Component {
                 sendLike={sendLike}
                 colorHeader={colorHeader}
                 generalStates={generalStates}
+                mainCss={mainCss}
               />
             );
           }
@@ -376,7 +419,8 @@ export default class Conversations extends Component {
         ayudaStates,
         inputStates,
         conversationsStates,
-        customParamsStates
+        customParamsStates,
+        mainCss
       } = this.props,
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "",
@@ -386,13 +430,17 @@ export default class Conversations extends Component {
         isFetching={conversationsStates.get("isFetching")}
         showChildren={true}
         colorHeader={colorHeader}
+        mainCss={mainCss}
       >
         <section
-          className={"conversation-holder box-wrapp" + css + cssHolder}
+          // onScroll={this.handleScroll}
+          className={
+            mainCss.ConversationHolder + " " + css + cssHolder
+          }
           data-conversation=""
           ref={this.test}
         >
-          <div>{this.fillConversation()}</div>
+          {this.fillConversation()}
         </section>
       </IsFetching>
     );

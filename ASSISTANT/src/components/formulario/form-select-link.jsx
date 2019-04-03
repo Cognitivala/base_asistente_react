@@ -5,28 +5,24 @@ import Immutable from "immutable";
 export default class FormSelectLink extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      active: false
-    };
     this.options = React.createRef();
-    this.activeSelect = this.activeSelect.bind(this);
     this.setSelected = this.setSelected.bind(this);
   }
 
-    shouldComponentUpdate = (prevProps, prevStates) => {
+    shouldComponentUpdate = (nextProps, nextStates) => {
       return (
-        prevProps.name !== this.props.name ||
-        prevProps.validateFunc !== this.props.validateFunc ||
-        prevProps.validate !== this.props.validate ||
-        prevProps.withError !== this.props.withError ||
-        prevProps.disabled !== this.props.disabled ||
-        !Immutable.is(prevProps.options, this.props.options) ||
-        prevProps.setSelectedParent !== this.props.setSelectedParent ||
-        prevProps.setSelectedChildren !== this.props.setSelectedChildren ||
-        prevProps.selectedParent !== this.props.selectedParent ||
-        prevProps.selectedChildren !== this.props.selectedChildren ||
-        prevProps.typeLink !== this.props.typeLink ||
-        prevStates.active !== this.state.active
+        nextProps.name !== this.props.name ||
+        nextProps.validateFunc !== this.props.validateFunc ||
+        nextProps.validate !== this.props.validate ||
+        nextProps.withError !== this.props.withError ||
+        nextProps.disabled !== this.props.disabled ||
+        !Immutable.is(nextProps.options, this.props.options) ||
+        nextProps.setSelectedParent !== this.props.setSelectedParent ||
+        nextProps.setSelectedChildren !== this.props.setSelectedChildren ||
+        nextProps.selectedParent !== this.props.selectedParent ||
+        nextProps.selectedChildren !== this.props.selectedChildren ||
+        nextProps.typeLink !== this.props.typeLink ||
+        nextProps.active !== this.props.active
       );
     };
 
@@ -36,32 +32,16 @@ export default class FormSelectLink extends Component {
     });
   }
 
-  activeSelect() {
-    this.setState({
-      active: !this.state.active
-    });
-  }
-
   setSelected(validate, name, validateFunc, e) {
+    // const { mainCss } = this.props;
     let selected = e.target.dataset.valor;
     this.options.current.dataset.valor = selected;
-    validateFunc(validate, name, this.options.current.closest(".options"));
-    this.setState(
-      {
-        active: false
-      },
-      () => {
-        if (this.props.typeLink !== "children") {
-          this.props.setSelectedParent(selected);
-        } else {
-          this.props.setSelectedChildren(selected);
-        }
-      }
-    );
+    validateFunc(validate, name, this.options.current);
+    this.props.setActive(true,selected,this.props.typeLink);
   }
 
   fillOptionsShow(options) {
-    const { validateFunc, validate, name, typeLink } = this.props;
+    const { validateFunc, validate, name, typeLink, mainCss } = this.props;
     const selected =
       typeLink === "parent"
         ? this.props.selectedParent
@@ -77,7 +57,7 @@ export default class FormSelectLink extends Component {
             <div
               key={i}
               data-valor={map.get("value")}
-              onClick={this.activeSelect}
+              onClick={()=>{this.props.setActive(false,null,this.props.typeLink)}}
             >
               {map.get("text")}
             </div>
@@ -93,7 +73,7 @@ export default class FormSelectLink extends Component {
             <div
               data-valor={map.get("value")}
               key={i + map.get("text")}
-              className="disabled"
+              className={mainCss.Disabled}
             >
               {map.get("text")}
             </div>
@@ -123,7 +103,7 @@ export default class FormSelectLink extends Component {
             <div
               data-valor={map.get("value")}
               key={i + map.get("text")}
-              className="disabled"
+              className={mainCss.Disabled}
             >
               {map.get("text")}
             </div>
@@ -153,13 +133,13 @@ export default class FormSelectLink extends Component {
   }
 
   content() {
-    const { options, withError, disabled, name } = this.props;
-    let cssClass = this.state.active ? " active" : "",
-      cssClassError = withError ? " error" : "";
+    const { options, withError, disabled, name, mainCss } = this.props;
+    let cssClass = this.props.active ? ` ${mainCss.Active}` : "",
+      cssClassError = withError ? ` ${mainCss.Error}` : "";
     return (
-      <div className="select" name={name} disabled={disabled === undefined ? false : true}>
+      <div className={mainCss.Select} name={name} disabled={disabled === undefined ? false : true}>
         <div
-          className={"options" + cssClass + cssClassError}
+          className={mainCss.Options + cssClass + cssClassError}
           ref={this.options}
         >
           {this.fillOptionsShow(options)}

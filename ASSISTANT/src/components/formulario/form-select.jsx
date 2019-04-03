@@ -14,19 +14,6 @@ export default class FormSelect extends Component {
     this.setSelected = this.setSelected.bind(this);
   }
 
-  shouldComponentUpdate = (prevProps, prevStates) => {
-    return (
-      prevProps.name !== this.props.name ||
-      prevProps.validateFunc !== this.props.validateFunc ||
-      prevProps.validate !== this.props.validate ||
-      prevProps.withError !== this.props.withError ||
-      prevProps.disabled !== this.props.disabled ||
-      !Immutable.is(prevProps.options, this.props.options) ||
-      prevStates.selected !== this.state.selected ||
-      prevStates.active !== this.state.active
-    );
-  };
-
   fillOptions(options) {
     return options.map((map, i) => {
       return <option value={map.get("value")}>{map.get("text")}</option>;
@@ -39,129 +26,73 @@ export default class FormSelect extends Component {
     });
   }
 
-  setSelected(validate, name, validateFunc, e) {
-    
+  setSelected(validate, name, validateFunc, mainCss, e){
     let selected = e.target.dataset.value;
     this.options.current.dataset.valor = selected;
-    validateFunc(validate, name, e.target.closest(".options"));
-    this.setState(
-      {
-        selected,
-        active: false
-      },
-      () => {
-        if (this.props.setSelectedParent !== undefined) {
-          this.props.setSelectedParent(this.state.selected);
-        }
-      }
-    );
+    validateFunc(validate, name, e.target.closest("."+mainCss.Options));
+    this.setState({
+      selected,
+      active:false
+    })
+
   }
 
   fillOptionsShow(options) {
-    const { validateFunc, validate, name, selectedChange } = this.props,
-     {selected} = this.state;
+    const { validateFunc, validate, name, mainCss } = this.props,
+      required = validate.get('types').filter(item => item === "required"),
+      seleccionado = this.state.selected;
     let retorno = [];
-    const required = validate.get("types").filter(item => item === "required");
-    if(!selectedChange){
-      retorno.push(
-        options
-          .filter(filter => filter.get("value") === selected)
-          .map((map, i) => {
-            // if (selected === map.get("value")) {
-            return (
-              <div
-                key={i}
-                data-value={map.get("value")}
-                onClick={this.activeSelect}
-              >
-                {map.get("text")}
-              </div>
-            );
-            // }
-          })
-      );
-    }
-    options.forEach((map, i) => {
-      if (required.size === 0) {
-        //NO REQUERIDO
-        if (selected === map.get("value")) {
-          // si esta seleccionado y no es el seleccione
+    options.forEach((map,i) => {      
+      if (seleccionado == map.get("value")) {//SELECCIONADO
+        retorno.push(
+          <div
+            key={i}
+            data-value={map.get("value")}
+            onClick={this.activeSelect}
+          >
+            {map.get("text")}
+          </div>
+        );
+      }
+    });
+    options.forEach((map,i) => {      
+      if(required.size === 0){//NO REQUERIDO
+        if (seleccionado == map.get("value")) {// si esta seleccionado y no es el seleccione
           retorno.push(
-            <div
-              data-value={map.get("value")}
-              key={i + map.get("text")}
-              className="disabled"
-            >
-              {map.get("text")}
-            </div>
+            <div data-value={map.get("value")} key={i + map.get('text')} onclick={this.activeSelect} className={mainCss.Disabled}>{map.get("text")}</div>
           );
         } else {
           // si es otro
           retorno.push(
-            <div
-              data-value={map.get("value")}
-              key={i + map.get("text")}
-              onClick={this.setSelected.bind(
-                this,
-                validate,
-                name,
-                validateFunc
-              )}
-            >
-              {map.get("text")}
-            </div>
+            <div data-value={map.get("value")} key={i + map.get('text')} onClick={this.setSelected.bind(this, validate, name, validateFunc,mainCss)}>{map.get("text")}</div>
           );
         }
-      } else {
-        //SI ES REQUERIDO
-        if (
-          selected === map.get("value") &&
-          map.get("value") !== -1
-        ) {
-          // si esta seleccionado y no es el seleccione
+      }else{//SI ES REQUERIDO
+        if (seleccionado == map.get("value") && map.get('value') !== -1) {// si esta seleccionado y no es el seleccione
           retorno.push(
-            <div
-              data-value={map.get("value")}
-              key={i + map.get("text")}
-              className="disabled"
-            >
-              {map.get("text")}
-            </div>
+            <div data-value={map.get("value")} key={i + map.get('text')} onclick={this.activeSelect} className={mainCss.Disabled}>{map.get("text")}</div>
           );
         } else if (map.get("value") === -1) {
           return null;
         } else {
           // si es otro
           retorno.push(
-            <div
-              data-value={map.get("value")}
-              key={i + map.get("text")}
-              onClick={this.setSelected.bind(
-                this,
-                validate,
-                name,
-                validateFunc
-              )}
-            >
-              {map.get("text")}
-            </div>
+            <div data-value={map.get("value")} key={i + map.get('text')} onClick={this.setSelected.bind(this, validate, name, validateFunc,mainCss)}>{map.get("text")}</div>
           );
         }
       }
     });
+
     return retorno;
   }
 
   content() {
-    const { options, withError, disabled } = this.props;
-    let cssClass = this.state.active ? " active" : "",
-      cssClassError = withError ? " error" : "";
+    const { options, withError, mainCss } = this.props;
+    let cssClass = this.state.active ? " "+mainCss.Active : "",
+      cssClassError = withError ? " "+mainCss.Error : "";
     return (
-      <div className="select" disabled={disabled===undefined?false:true}>
-        <div
-          className={"options" + cssClass + cssClassError}
-          ref={this.options}
-        >
+      <div className={mainCss.Select}>
+        <div className={mainCss.Options + cssClass + cssClassError} ref={this.options}>
           {this.fillOptionsShow(options)}
         </div>
       </div>
@@ -179,7 +110,5 @@ FormSelect.propTypes = {
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
   withError: PropTypes.bool,
-  selectedParent: PropTypes.any,
-  disabled: PropTypes.bool,
-  selectedChildren: PropTypes.bool,
+  mainCss: PropTypes.object.isRequired,
 };

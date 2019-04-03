@@ -17,7 +17,7 @@ export default class ConversationMultiButtons extends Component {
       general = generalStates.toJS(),
       conversation = {
         general,
-        msg: [this.state.selectButtons],
+        msg: this.state.selectButtons,
         send: "to",
         enabled: false
       };
@@ -42,28 +42,26 @@ export default class ConversationMultiButtons extends Component {
   }
 
   render() {
-    const { buttons, animation, send, colorHeader } = this.props,
-      style = { backgroundColor: colorHeader },
-      cssClass = this.state.selectButtons.length>0?"":" disabled",
+    const { buttons, animation, send, mainCss } = this.props,
+      cssClass = this.state.selectButtons.length>0?"":" "+mainCss.Disabled,
       botones = buttons.map((map, i) => {
         return (
           <ConversationMultiButtonsButton
             key={i}
             button={map}
             toggleSelectButton={this.toggleSelectButton}
-            colorHeader={colorHeader}
+            mainCss={mainCss}
           />
         );
       });
 
     return (
-      <div className={"conversation-bubble align-center buttons " + animation + send}>
+      <div className={mainCss.ConversationBubble+" "+ mainCss.AlignCenter + " " + mainCss.Buttons +" " + animation + send}>
         {botones}
-        <div className="multi-buttons">
+        <div className={mainCss.MultiButtons}>
           <button
-            className={"btn btn-big"+cssClass}
+            className={mainCss.Btn+" "+mainCss.BtnBig+" "+cssClass}
             onClick={this.sendButtonresponse}
-            style={style}
           >
             Enviar
             <i className="fas fa-paper-plane" />
@@ -78,7 +76,7 @@ ConversationMultiButtons.propTypes = {
   buttons: PropTypes.any.isRequired,
   animation: PropTypes.string.isRequired,
   send: PropTypes.string.isRequired,
-  colorHeader: PropTypes.string.isRequired,
   updateConversationButton: PropTypes.func.isRequired,
-  generalStates: PropTypes.any.isRequired
+  generalStates: PropTypes.any.isRequired,
+  mainCss: PropTypes.any.isRequired
 };

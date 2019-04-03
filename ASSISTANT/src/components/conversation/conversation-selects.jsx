@@ -14,9 +14,10 @@ export default class FormSelect extends Component {
   }
 
   componentDidUpdate(){
+    const { mainCss } = this.props;
     if(this.state.active){
-      const scrollHeight = document.getElementsByClassName('conversation-holder')[0].scrollHeight;
-      document.getElementsByClassName('conversation-holder')[0].scrollTop = scrollHeight;
+      const scrollHeight = document.getElementsByClassName(mainCss.ConversationHolder)[0].scrollHeight;
+      document.getElementsByClassName(mainCss.ConversationHolder)[0].scrollTop = scrollHeight;
     }
   }
 
@@ -57,9 +58,11 @@ export default class FormSelect extends Component {
   }
 
   fillOptionsShow(options) {
+    const {mainCss} = this.props;
     let retorno = [];
-    options.forEach((map,i) => {
-      if (this.state.selected === map.get("value")) {
+    //Llena options, dejando el seleccionado po encima
+    options.forEach((map, i) => {
+      if (this.state.selected == map.get("value")) {
         retorno.push(
           <div
             key={i}
@@ -71,19 +74,18 @@ export default class FormSelect extends Component {
         );
       }
     });
-    options.forEach((map,i) => {
-      if (this.state.selected === map.get("value") && map.get("value") !== -1) {
-        // si esta seleccionado y no es el seleccione
+    options.forEach((map, i) => {
+      if (this.state.selected == map.get("value") && map.get("value") != -1) { // si esta seleccionado y no es el seleccione
         retorno.push(
           <div
             data-value={map.get("value")}
             key={i + map.get("text")}
-            className="disabled"
+            className={mainCss.Disabled}
           >
             {map.get("text")}
           </div>
         );
-      } else if (map.get("value") === -1) {
+      } else if (map.get("value") == -1) {
         return null;
       } else {
         // si es otro
@@ -102,14 +104,14 @@ export default class FormSelect extends Component {
   }
 
   content() {
-    const { options, withError, animation, send } = this.props;
-    let cssClass = this.state.active ? " active" : "",
-      cssClassError = withError ? " error" : "";
+    const { options, withError, animation, send, mainCss } = this.props;
+    let cssClass = this.state.active ? " " + mainCss.Active : "",
+      cssClassError = withError ? " " + mainCss.Error : "";
     return (
-      <div className={"conversation-bubble " + animation + send}>
-        <div className="select">
+      <div className={mainCss.ConversationBubble + " " + animation + send}>
+        <div className={mainCss.Select}>
           <div
-            className={"options" + cssClass + cssClassError}
+            className={mainCss.Options + " " + cssClass + cssClassError}
             ref={this.options}
           >
             {this.fillOptionsShow(options)}
@@ -129,5 +131,6 @@ FormSelect.ConversationSelects = {
   animation: PropTypes.string.isRequired,
   send: PropTypes.string.isRequired,
   updateConversation: PropTypes.func.isRequired,
-  generalStates: PropTypes.any.isRequired
+  generalStates: PropTypes.any.isRequired,
+  mainCss: PropTypes.any.isRequired
 };

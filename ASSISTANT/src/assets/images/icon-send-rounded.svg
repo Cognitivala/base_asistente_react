@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.279 25.279">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2, .cls-3 {
+        fill: none;
+        stroke: #fff;
+        fill-rule: evenodd;
+      }
+
+      .cls-2 {
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    </style>
+  </defs>
+  <g id="icon-emoji" transform="translate(0.105 0)">
+    <g id="Group_2" data-name="Group 2" transform="translate(-0.105 0)">
+      <g id="Group_1" data-name="Group 1">
+        <path id="Path_7" data-name="Path 7" class="cls-1" d="M12.557,0A12.64,12.64,0,1,0,25.174,12.64,12.64,12.64,0,0,0,12.557,0Zm0,24.194A11.555,11.555,0,1,1,24.091,12.64,11.555,11.555,0,0,1,12.557,24.194Z" transform="translate(0.105 0)"/>
+      </g>
+    </g>
+    <g id="icon-send-hover" transform="translate(5.281 3.546)">
+      <g id="ASSISTANT" transform="translate(1.318 1.127)">
+        <g id="input" transform="translate(0 0)">
+          <g id="Group-7" transform="translate(0 2.456)">
+            <path id="Stroke-1" class="cls-2" d="M13.073.127.318,3.219l6.4,6.473Z" transform="translate(-0.318 -0.127)"/>
+            <path id="Stroke-3" class="cls-3" d="M4.774,6.554,14.4.127" transform="translate(-1.649 -0.127)"/>
+            <path id="Stroke-5" class="cls-2" d="M6.574,13.168,4.813,15.163V10.794" transform="translate(-1.688 -4.367)"/>
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

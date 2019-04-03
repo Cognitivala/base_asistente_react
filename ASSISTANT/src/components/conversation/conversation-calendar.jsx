@@ -5,6 +5,7 @@ import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
 import ConversationCalendarInitial from "./conversation-calendar-initial";
 import ConversationCalendarEnd from "./conversation-calendar-end";
+import "../../assets/sass/datepicker.css";
 
 export default class ConversationCalendar extends Component {
   constructor(props) {
@@ -76,12 +77,11 @@ export default class ConversationCalendar extends Component {
   }
 
   render() {
-    const { animation, send, colorHeader, last, datepicker } = this.props,
-      style = { backgroundColor: colorHeader },
-      cssClassDisabled = !this.state.enabledButton ? " disabled" : "",
+    const { animation, send, last, datepicker, mainCss } = this.props,
+      cssClassDisabled = !this.state.enabledButton ? " "+mainCss.Disabled : "",
       dateInitial = datepicker.get(0),
       dateEnd = datepicker.get(1),
-      cssClass = dateEnd !== undefined ? " double-date" : " single-date";
+      cssClass = dateEnd !== undefined ? " " + mainCss.DoubleDate : " " + mainCss.SingleDate;
     let calendars = [];
     if (!last) {
       calendars.push(
@@ -89,7 +89,7 @@ export default class ConversationCalendar extends Component {
           <DatePicker
             dateFormat="DD/MM/YYYY"
             selected={moment(dateInitial.get("value"), "DD/MM/YYYY")}
-            className="datepicker-cognitive"
+            className={mainCss.DatepickerCognitive}
             name={dateInitial.get("name")}
             disabled={true}
           />
@@ -101,7 +101,7 @@ export default class ConversationCalendar extends Component {
             <DatePicker
               dateFormat="DD/MM/YYYY"
               selected={moment(dateEnd.get("value"), "DD/MM/YYYY")}
-              className="datepicker-cognitive"
+              className={mainCss.DatepickerCognitive}
               name={dateEnd.get("name")}
               disabled={true}
             />
@@ -117,6 +117,7 @@ export default class ConversationCalendar extends Component {
             name={dateInitial.get("name")}
             date={dateInitial.get("value")}
             toggleButton={this.toggleButton}
+            mainCss={mainCss}
           />
         </div>
       );
@@ -128,6 +129,7 @@ export default class ConversationCalendar extends Component {
               last={last}
               name={dateEnd.get("name")}
               date={dateEnd.get("value")}
+              mainCss={mainCss}
               toggleButton={this.toggleButton}
             />
           </div>
@@ -135,11 +137,10 @@ export default class ConversationCalendar extends Component {
       }
     }
     calendars.push(
-      <div className="multi-buttons" key={'multi-buttons'}>
+      <div className={mainCss.MultiButtons} key={'multi-buttons'}>
         <button
-          className={"btn btn-big"+cssClassDisabled}
+          className={mainCss.Btn+" "+mainCss.BtnBig+" "+cssClassDisabled}
           onClick={this.sendButtonresponse}
-          style={style}
         >
           Enviar
           <i className="fas fa-paper-plane" />
@@ -149,7 +150,7 @@ export default class ConversationCalendar extends Component {
     return (
       <div
         ref={this.divInputs}
-        className={"conversation-bubble datepickers " + animation + send}
+        className={mainCss.ConversationBubble+" "+mainCss.Datepickers+" " + animation + send}
       >
         {calendars}
       </div>
@@ -165,5 +166,6 @@ ConversationCalendar.propTypes = {
   updateConversationCalendar: PropTypes.func.isRequired,
   datepicker: PropTypes.any.isRequired,
   generalStates: PropTypes.any.isRequired,
-  last: PropTypes.bool.isRequired
+  last: PropTypes.bool.isRequired,
+  mainCss: PropTypes.any.isRequired
 };
