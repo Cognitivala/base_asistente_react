@@ -208,7 +208,7 @@ export default class Assistant extends Component {
       this.notificationCDN();
     } else {
       this.openAssitantCDN();
-      this.focus();
+      // this.focus();
     }
     toggleMinimizedAssistant(!minimized);
   }
