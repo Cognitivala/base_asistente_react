@@ -53,22 +53,22 @@ export default class Launcher extends Component {
     );
   }
 
-  focus() {
-    console.log("focus in launcher.jsx")
-    setTimeout(() => {
-      const { mainCss } = this.props,
-        hrefLocal = window.location.origin,
-        input = document.documentElement.getElementsByClassName(mainCss.InputUser)[0];
-      if(hrefLocal!=="http://localhost:3000"){
-        const href = window.top.location.href,
-          hrefLast = href.substring(href.length - 13, href.length);
-      if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
-        if(input !== undefined  ) input.focus();
-      }else{
-        if(input !== undefined) input.focus();
-      }
-    }, 300);
-  }
+  // focus() {
+  //   console.log("focus in launcher.jsx")
+  //   setTimeout(() => {
+  //     const { mainCss } = this.props,
+  //       hrefLocal = window.location.origin,
+  //       input = document.documentElement.getElementsByClassName(mainCss.InputUser)[0];
+  //     if(hrefLocal!=="http://localhost:3000"){
+  //       const href = window.top.location.href,
+  //         hrefLast = href.substring(href.length - 13, href.length);
+  //     if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
+  //       if(input !== undefined  ) input.focus();
+  //     }else{
+  //       if(input !== undefined) input.focus();
+  //     }
+  //   }, 300);
+  // }
   
   notificationCDN() {
     window.top.postMessage(
@@ -89,7 +89,7 @@ export default class Launcher extends Component {
     this.openAssitantCDN();
     openAssistant();
     if (ayudaStates.get("open")) closeHelp();
-    this.focus();
+    // this.focus();
     if(localStorage.getItem("hcm")) localStorage.removeItem("hcm");
   }
 
