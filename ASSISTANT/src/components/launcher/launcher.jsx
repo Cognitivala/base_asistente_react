@@ -54,6 +54,7 @@ export default class Launcher extends Component {
   }
 
   focus() {
+    console.log("focus in launcher.jsx")
     setTimeout(() => {
       const { mainCss } = this.props,
         hrefLocal = window.location.origin,

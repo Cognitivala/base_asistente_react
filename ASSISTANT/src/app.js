@@ -90,7 +90,6 @@ export class App extends Component {
     const avatar = customParamsStates.getIn(["customParams", "avatar"]),
       estado = customParamsStates.getIn(["customParams", "estado"]);
     if (avatar && estado !== 0) {
-      console.log('postMessage responsiveFunc in ASSISTANT');
       window.top.postMessage({ responsiveFunc: true },"*");
       return (
         <div>

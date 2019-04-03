@@ -113,7 +113,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function styleIframeMessage() {
         var iframe = document.getElementById("ifrm-assitant");
         var contentWindow = iframe ? iframe.contentWindow : null;
-        console.log("styleIframeMessage", contentWindow);
 
         if (contentWindow) {
           contentWindow.postMessage({

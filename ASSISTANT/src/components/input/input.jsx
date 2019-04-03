@@ -28,6 +28,7 @@ export default class Input extends Component {
   }
 
   focus() {
+    console.log("focus in input.jsx")
     setTimeout(() => {
       const hrefLocal = window.location.origin;
       if (hrefLocal !== "http://localhost:3000") {
