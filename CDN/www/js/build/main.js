@@ -111,6 +111,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       key: "styleIframeMessage",
       value: function styleIframeMessage() {
+        var _this2 = this;
+
         var iframe = document.getElementById("ifrm-assitant");
         var contentWindow = iframe ? iframe.contentWindow : null;
 
@@ -119,7 +121,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
             responsive: this.responsive
           }, "*");
         } else {
-          this.styleIframeMessage();
+          setTimeout(function () {
+            _this2.styleIframeMessage();
+          }, 600);
         }
       }
     }, {
