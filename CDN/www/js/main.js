@@ -101,7 +101,9 @@
       if (contentWindow) {
           contentWindow.postMessage({ responsive: this.responsive }, "*");
       } else {
+        setTimeout(() => {
           this.styleIframeMessage();
+        }, 600);
       }
     }
 

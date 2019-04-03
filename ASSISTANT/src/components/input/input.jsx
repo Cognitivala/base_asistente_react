@@ -29,16 +29,16 @@ export default class Input extends Component {
 
   focus() {
     setTimeout(() => {
-      const hrefLocal = window.location.origin;
-      if (hrefLocal !== "http://localhost:3000") {
-        const href = window.top.location.href,
-          hrefLast = href.substring(href.length - 13, href.length),
-          input = this.input.current;
-        if (hrefLast !== "personalizar/" && hrefLast !== "/personalizar")
-          if (input !== null) input.focus();
-      } else {
+      // const hrefLocal = window.location.origin;
+      // if (hrefLocal !== "http://localhost:3000") {
+      //   const href = window.top.location.href,
+      //     hrefLast = href.substring(href.length - 13, href.length),
+      //     input = this.input.current;
+      //   if (hrefLast !== "personalizar/" && hrefLast !== "/personalizar")
+      //     if (input !== null) input.focus();
+      // } else {
         if (this.input.current !== null) this.input.current.focus();
-      }
+      // }
     }, 300);
   }
 
@@ -144,6 +144,7 @@ export default class Input extends Component {
         return null;
       }
     } else {
+<<<<<<< HEAD
       return (
         <button
           className={
@@ -173,6 +174,37 @@ export default class Input extends Component {
     } = this.props;
     if (positionHelp === "bottom") {
       return (
+=======
+      return (
+        <button
+          className={
+            mainCss.InputUserBtn +
+            " " +
+            mainCss.Btn +
+            " " +
+            mainCss.BtnTransparent
+          }
+          onClick={this.submitMessage}
+          id="buttonInputMessage"
+        >
+          <i className={mainCss.IconPlane} />
+        </button>
+      );
+    }
+  }
+
+  fillHelp(positionHelp) {
+    const {
+      mainCss,
+      ayudaStates,
+      openHelp,
+      closeHelp,
+      showWarningHelp,
+      hideWarningHelp
+    } = this.props;
+    if (positionHelp === "bottom") {
+      return (
+>>>>>>> master
         <InputHelp
           ayudaStates={ayudaStates}
           openHelp={openHelp}

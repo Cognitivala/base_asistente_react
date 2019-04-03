@@ -123,6 +123,7 @@ export default class Assistant extends Component {
   //END ORIGEN
 
   focus() {
+    console.log("focus in assistant.jsx")
     setTimeout(() => {
       const hrefLocal = window.location.origin;
       if(hrefLocal!=="http://localhost:3000"){
@@ -207,7 +208,7 @@ export default class Assistant extends Component {
       this.notificationCDN();
     } else {
       this.openAssitantCDN();
-      this.focus();
+      // this.focus();
     }
     toggleMinimizedAssistant(!minimized);
   }
