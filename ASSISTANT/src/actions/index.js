@@ -361,7 +361,7 @@ export function getAyuda() {
     });
     return request.then(
       response => {
-        console.log(response);
+        // console.log(response);
         if (response.data.estado.codigoEstado === 200) {
           dispatch(getAyudaEnd(response.data.respuesta));
         } else {
