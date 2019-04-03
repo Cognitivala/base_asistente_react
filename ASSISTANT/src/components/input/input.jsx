@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import * as Immutable from "immutable";
 import ConversationLoader from "../conversation/conversation-loader";
 import IsFetching from "../modules/is-fetching";
 import InputAttach from "./input-attach";
 import InputEmoji from "./input-emoji";
+import InputHelp from "./input-help";
+import InputVoice from "./input-voice";
 
 export default class Input extends Component {
   constructor(props) {
@@ -15,25 +18,32 @@ export default class Input extends Component {
     this.submitMessage = this.submitMessage.bind(this);
     this.updateMsg = this.updateMsg.bind(this);
     this.updatePosition = this.updatePosition.bind(this);
+    this.sendMsg = this.sendMsg.bind(this);
   }
 
-  componentWillReceiveProps() {
-    this.focus();
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.inputStates.get('enabled')){
+      this.focus();
+    }
   }
 
   focus() {
     setTimeout(() => {
       const hrefLocal = window.location.origin;
-      if(hrefLocal!=="http://localhost:3000"){
+      if (hrefLocal !== "http://localhost:3000") {
         const href = window.top.location.href,
           hrefLast = href.substring(href.length - 13, href.length),
           input = this.input.current;
-      if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
-        if(input !== null) input.focus();
-      }else{
-        if(this.input.current !== null) this.input.current.focus();
+        if (hrefLast !== "personalizar/" && hrefLast !== "/personalizar")
+          if (input !== null) input.focus();
+      } else {
+        if (this.input.current !== null) this.input.current.focus();
       }
     }, 300);
+  }
+
+  sendMsg(event){
+    if(event.keyCode === 13) this.submitMessage(event);
   }
 
   updateMsg(event) {
@@ -86,65 +96,139 @@ export default class Input extends Component {
   }
 
   fillEmoji() {
-    const { customParamsStates } = this.props,
+    const { customParamsStates, mainCss, responsiveStates, disabledHelp, enabledHelp, moreHeader, toggleHeaderMore } = this.props,
       emoji = customParamsStates.getIn(["customParams", "settings", "emoji"]);
     if (emoji) {
-      return <InputEmoji start={this.state.start} end={this.state.end} />;
+      return (
+        <InputEmoji
+          start={this.state.start}
+          end={this.state.end}
+          mainCss={mainCss}
+          responsiveStates={responsiveStates}
+          disabledHelp={disabledHelp}
+          enabledHelp={enabledHelp}
+          moreHeader={moreHeader}
+          toggleHeaderMore={toggleHeaderMore} 
+        />
+      );
     } else {
       return null;
     }
   }
 
-  render() {
-    if (this.props.conversationsStates.get("loading")) {
+  fillSend() {
+    const { customParamsStates, mainCss } = this.props,
+      voice = customParamsStates.getIn(["customParams", "settings", "voice"]);
+    if (voice) {
+      // Si tiene voice
+      if (this.input.current !== null && this.input.current.value.length > 0) {
+        // Si tiene texto
+        return (
+          <button
+            className={
+              mainCss.InputUserBtn +
+              " " +
+              mainCss.Btn +
+              " " +
+              mainCss.BtnTransparent
+            }
+            onClick={this.submitMessage}
+            id="buttonInputMessage"
+          >
+            <i className={mainCss.IconPlane} />
+          </button>
+        );
+      } else {
+        const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+        if(isChrome) return <InputVoice {...this.props} />;
+        return null;
+      }
+    } else {
       return (
-        <ConversationLoader
-          active={true}
-          backgroundColor={this.props.customParamsStates.getIn([
-            "customParams",
-            "colorHeader"
-          ])}
+        <button
+          className={
+            mainCss.InputUserBtn +
+            " " +
+            mainCss.Btn +
+            " " +
+            mainCss.BtnTransparent
+          }
+          onClick={this.submitMessage}
+          id="buttonInputMessage"
+        >
+          <i className={mainCss.IconPlane} />
+        </button>
+      );
+    }
+  }
+
+  fillHelp(positionHelp) {
+    const {
+      mainCss,
+      ayudaStates,
+      openHelp,
+      closeHelp,
+      showWarningHelp,
+      hideWarningHelp
+    } = this.props;
+    if (positionHelp === "bottom") {
+      return (
+        <InputHelp
+          ayudaStates={ayudaStates}
+          openHelp={openHelp}
+          closeHelp={closeHelp}
+          showWarningHelp={showWarningHelp}
+          hideWarningHelp={hideWarningHelp}
+          mainCss={mainCss}
         />
       );
+    }
+  }
+
+  render() {
+    const { mainCss } = this.props;
+    if (this.props.conversationsStates.get("loading")) {
+      return <ConversationLoader active={true} mainCss={mainCss} />;
     } else if (!this.props.inputStates.get("enabled")) {
       return (
-        <form className="input-user-holder" noValidate="">
-          <div className="form-wrapp inactive" />
-        </form>
+        <form
+          className={mainCss.InputUserHolder + " " + mainCss.Inactive}
+          noValidate=""
+        />
       );
     } else {
-      const { customParamsStates } = this.props,
-        colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
+      const { customParamsStates, mainCss } = this.props,
+        colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
+        positionHelp = customParamsStates.getIn([
+          "customParams",
+          "settings",
+          "positionHelp"
+        ]);
       return (
         <IsFetching
           isFetching={this.props.inputStates.get("isFetching")}
           showChildren={true}
           colorHeader={colorHeader}
+          mainCss={mainCss}
         >
-          <form className="input-user-holder" noValidate="">
-            <div className="form-wrapp">
-              <input
-                className="input-user"
-                placeholder="Ingresa tu consulta..."
-                name="message"
-                onChange={this.updateMsg}
-                onClickCapture={this.updatePosition}
-                ref={this.input}
-                tabIndex="0"
-                autoComplete="off"
-              />
-              {this.fillAttach()}
-              {this.fillEmoji()}
-              <button
-                id="button-send-msg"
-                className="btn btn-rounded input-user-btn"
-                aria-label="Enviar mensaje"
-                onClick={this.submitMessage}
-              >
-                <i className="fas fa-paper-plane" />
-              </button>
-            </div>
-          </form>
+          <div className={mainCss.InputUserHolder} noValidate="">
+            {this.fillEmoji()}
+            <input
+              className={mainCss.InputUser}
+              placeholder="Escribe tu consulta"
+              name="message"
+              onChange={this.updateMsg}
+              onClickCapture={this.updatePosition}
+              onKeyUp={this.sendMsg}
+              ref={this.input}
+              tabIndex="0"
+              autoComplete="off"
+              id="inputMessage"
+            />
+            {this.fillAttach()}
+            {this.fillHelp(positionHelp)}
+            {this.fillSend()}
+          </div>
         </IsFetching>
       );
     }

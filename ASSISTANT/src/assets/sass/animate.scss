@@ -1,0 +1,55 @@
+@keyframes cognitive-assistant-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+@keyframes spinner {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+@keyframes pulso {
+  0% {
+    width: 0;
+    height: 0;
+  }
+  50% {
+    width: 2rem;
+    height: 2rem;
+    margin: -1rem 0 0 -1rem;
+    opacity: 1;
+  }
+  100% {
+    width: 3.2rem;
+    height: 3.2rem;
+    margin: -1.6rem 0 0 -1.6rem;
+    opacity: 0;
+  }
+}
+@keyframes in {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes inAssistant{
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: .5;
+  }
+  100% {
+    opacity: 1;
+  }
+}

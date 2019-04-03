@@ -1,0 +1,29 @@
+<svg id="happy" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 58.115 58.219">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #9a9a9a;
+      }
+    </style>
+  </defs>
+  <g id="Group_2" data-name="Group 2">
+    <g id="Group_1" data-name="Group 1">
+      <path id="Path_7" data-name="Path 7" class="cls-1" d="M29.057,0A29.11,29.11,0,1,0,58.115,29.11,29.086,29.086,0,0,0,29.057,0Zm0,55.72A26.611,26.611,0,1,1,55.62,29.11,26.6,26.6,0,0,1,29.057,55.72Z"/>
+    </g>
+  </g>
+  <g id="Group_4" data-name="Group 4" transform="translate(11.056 16.826)">
+    <g id="Group_3" data-name="Group 3">
+      <path id="Path_8" data-name="Path 8" class="cls-1" d="M78.483,104.848A6.625,6.625,0,0,0,72.023,99.6a6.505,6.505,0,0,0-6.459,5.383,1.341,1.341,0,0,0,1.009,1.48h.2a1.224,1.224,0,0,0,1.211-1.009,4.112,4.112,0,0,1,8.074-.067,1.241,1.241,0,1,0,2.422-.538Z" transform="translate(-65.557 -99.6)"/>
+    </g>
+  </g>
+  <g id="Group_6" data-name="Group 6" transform="translate(33.788 16.826)">
+    <g id="Group_5" data-name="Group 5">
+      <path id="Path_9" data-name="Path 9" class="cls-1" d="M213.283,104.848a6.625,6.625,0,0,0-6.459-5.248,6.505,6.505,0,0,0-6.459,5.383,1.341,1.341,0,0,0,1.009,1.48h.2a1.224,1.224,0,0,0,1.211-1.009,4.112,4.112,0,0,1,8.074-.067,1.241,1.241,0,1,0,2.422-.538Z" transform="translate(-200.357 -99.6)"/>
+    </g>
+  </g>
+  <g id="Group_8" data-name="Group 8" transform="translate(10.506 31.665)">
+    <g id="Group_7" data-name="Group 7">
+      <path id="Path_10" data-name="Path 10" class="cls-1" d="M98.031,187.368a1.457,1.457,0,0,0-1.749,1.009c-1.48,5.517-8.074,9.555-15.677,9.555s-14.2-4.037-15.677-9.555a1.428,1.428,0,1,0-2.759.74c1.817,6.729,9.555,11.64,18.369,11.64,8.882,0,16.619-4.912,18.369-11.64A1.285,1.285,0,0,0,98.031,187.368Z" transform="translate(-62.121 -187.321)"/>
+    </g>
+  </g>
+</svg>

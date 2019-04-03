@@ -12,14 +12,23 @@ import {isMobile} from 'react-device-detect';
 export default class Assistant extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      moreHeader: true
+    }
+    this.divAssistant = React.createRef();
     this.closeAssistant = this.closeAssistant.bind(this);
     this.closeEscape = this.closeEscape.bind(this);
     this.minimizedAssistant = this.minimizedAssistant.bind(this);
+    this.toggleHeaderMore = this.toggleHeaderMore.bind(this);
   }
 
   componentDidMount() {
     this.setGeneralStates();
     this.getBehaviors();
+  }
+
+  toggleHeaderMore(more){
+    this.setState({moreHeader:more})
   }
 
   setGeneralStates() {
@@ -40,7 +49,8 @@ export default class Assistant extends Component {
         toggleMinimizedAssistant,
         openAssistant,
         setHistory,
-        closeLauncher
+        closeLauncher,
+        getSaludoEnd,
       } = this.props,
       keep_conversation = customParamsStates.getIn([
         "customParams",
@@ -53,9 +63,14 @@ export default class Assistant extends Component {
     //Lo abrirá y luego si tiene minimizado lo minimizará
     if (keep_conversation && hcAES) {
       const bytes = AES.decrypt(hcAES, KEY_ENCRYPT),
+        greetingAES = localStorage.getItem("gr"),
+        greetingBytes = AES.decrypt(greetingAES, KEY_ENCRYPT),
+        greetingDecrypt = greetingBytes.toString(CryptoJS.enc.Utf8),
         hcDecrypt = bytes.toString(CryptoJS.enc.Utf8),
         hc = JSON.parse(hcDecrypt),
-        hcm = JSON.parse(localStorage.getItem("hcm"));
+        hcm = JSON.parse(localStorage.getItem("hcm")),
+        greeting = JSON.parse(greetingDecrypt);
+      getSaludoEnd(greeting);
       setHistory(hc);
       openAssistant();
       this.openAssitantCDN();
@@ -104,6 +119,7 @@ export default class Assistant extends Component {
       navigator.userAgent.indexOf("IEMobile") !== -1
     );
   }
+  
   //END ORIGEN
 
   focus() {
@@ -187,11 +203,11 @@ export default class Assistant extends Component {
       localStorage.setItem("hcm", !minimized);
     }
     if (!minimized) {
-      this.minimizedCDN();
+      // this.minimizedCDN();
+      this.notificationCDN();
     } else {
       this.openAssitantCDN();
       this.focus();
-
     }
     toggleMinimizedAssistant(!minimized);
   }
@@ -209,51 +225,30 @@ export default class Assistant extends Component {
     }
   }
 
-  content(assistantStates, conversationsStates) {
+  content(assistantStates, conversationsStates, responsiveStates) {
     if (
       assistantStates.get("active") &&
       conversationsStates.get("conversations").size > 0
     ) {
-      const { customParamsStates } = this.props,
-        ayuda = customParamsStates
-          .get("customParams")
-          .get("settings")
-          .get("help"),
-        minimized = assistantStates.get("minimized");
-      
+      const { customParamsStates, mainCss, saludoStates } = this.props,
+      ayuda = customParamsStates
+      .get("customParams")
+      .get("settings")
+      .get("help"),
+      minimized = assistantStates.get("minimized"),
+      cssClass = responsiveStates.get("responsive") === "mobile" ? mainCss.Mobile : "",
+      cssClass2 = this.state.moreHeader?mainCss.HeaderMore:"",
+      positionHelp = customParamsStates.getIn(["customParams","settings","positionHelp"]);
       if (minimized) {
         return (
-          <div
-            className="main-cognitive-assistant-container"
-            onKeyUp={this.closeEscape}
-            //tabIndex="1"
-          >
-            <Header
-              logo={customParamsStates.get("customParams").get("logo")}
-              titulo={customParamsStates.get("customParams").get("titulo")}
-              subtitulo={customParamsStates
-                .get("customParams")
-                .get("subtitulo")}
-              closeAssistant={this.closeAssistant}
-              ayuda={ayuda}
-              colorHeader={customParamsStates
-                .get("customParams")
-                .get("colorHeader")}
-              ayudaStates={this.props.ayudaStates}
-              openHelp={this.props.openHelp}
-              closeHelp={this.props.closeHelp}
-              showWarningHelp={this.props.showWarningHelp}
-              hideWarningHelp={this.props.hideWarningHelp}
-              minimizedAssistant={this.minimizedAssistant}
-              minimized={minimized}
-            />
-          </div>
+          <React.Fragment/>
         );
       } else {
         return (
           <div
-            className="main-cognitive-assistant-container"
+            className={mainCss.MainAssistant + " " + cssClass + " " + cssClass2 + " " + mainCss.Show}
             onKeyUp={this.closeEscape}
+            ref={this.divAssistant}
             //tabIndex="1"
           >
             <Header
@@ -274,10 +269,21 @@ export default class Assistant extends Component {
               hideWarningHelp={this.props.hideWarningHelp}
               minimizedAssistant={this.minimizedAssistant}
               minimized={minimized}
+              mainCss={mainCss}
+              responsive={responsiveStates.get("responsive")}
+              imgBackHeader={customParamsStates
+                .get("customParams")
+                .get("imgBackHeader")}  
+              positionHelp={positionHelp}
+              toggleHeaderMore={this.toggleHeaderMore}
+              moreHeader={this.state.moreHeader}
+              saludo={saludoStates.getIn(['saludo','msg'])}
             />
             {this.fillHelp(ayuda)}
-            <Conversations {...this.props} />
-            <Input {...this.props} />
+            <Conversations {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
+            <Input {...this.props} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
+            <a href="https://www.cognitiva.la/" target="_blank" rel="noopener noreferrer" className={mainCss.LogoCognitiva}>
+            </a>
           </div>
         );
       }
@@ -287,15 +293,16 @@ export default class Assistant extends Component {
   }
 
   render() {
-    const { assistantStates, conversationsStates,customParamsStates } = this.props,
+    const { assistantStates, conversationsStates ,customParamsStates, responsiveStates, mainCss } = this.props,
     colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
     return (
       <IsFetching
         colorHeader={colorHeader}
         isFetching={assistantStates.get("isFetching")}
         showChildren={true}
+        mainCss={mainCss}
       >
-        {this.content(assistantStates, conversationsStates)}
+        {this.content(assistantStates, conversationsStates, responsiveStates)}
       </IsFetching>
     );
   }

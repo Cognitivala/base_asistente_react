@@ -15,13 +15,15 @@ export function customParamsStates(
       userImg: null,
       estado: null,
       script: null,
+      imgBackHeader: null,
       settings: {
         keep_conversation: false,
         geolocalization: false,
         help: false,
         attach: false,
         emoji: false,
-        voice: false
+        voice: false,
+        positionHelp: "bottom",
       }
     }
   }),
@@ -35,7 +37,7 @@ export function customParamsStates(
         map
           .set("isFetching", false)
           .set("error", false)
-          .set("customParams", Immutable.fromJS(action.data));
+          .mergeIn(['customParams'], state.get('customParams').concat(Immutable.fromJS(action.data)));
       });
     case "GET_CUSTOM_PARAMS_ERROR":
       return state.withMutations(map => {

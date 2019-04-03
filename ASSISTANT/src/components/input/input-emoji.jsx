@@ -15,15 +15,25 @@ export default class InputEmoji extends Component {
   }
 
   toggleEmoji() {
+    const { disabledHelp, enabledHelp } = this.props;
+
+    if(!this.state.enableEmoji){
+      disabledHelp();
+    }else if(this.state.enableEmoji) {
+      enabledHelp();
+    }
+    if (this.props.moreHeader) {
+      this.props.toggleHeaderMore(false);
+    }
     this.setState({
       enableEmoji: !this.state.enableEmoji
     });
   }
 
   selectEmoji(emoji) {
-    const { start, end } = this.props,
+    const { start, end, mainCss } = this.props,
       emojiIcon = emoji.native,
-      input = document.getElementsByClassName("input-user")[0],
+      input = document.getElementsByClassName(mainCss.InputUser)[0],
       value = input.value,
       startStr = value.substring(0, start),
       endStr = value.substring(start, value.length);
@@ -45,14 +55,15 @@ export default class InputEmoji extends Component {
   }
 
   render() {
+    const { mainCss, responsiveStates } = this.props;
     if (!this.state.enableEmoji) {
       return (
         <button
-          className="btn btn-rounded input-user-btn"
+          className={mainCss.InputUserBtn + " " + mainCss.Btn+ " " + mainCss.BtnTransparent+ " " + mainCss.Emoji}
           type="button"
           onClick={this.toggleEmoji}
         >
-          <i className="far fa-smile" />
+          <i className={mainCss.IconEmoji} />
         </button>
       );
     } else {
@@ -73,30 +84,35 @@ export default class InputEmoji extends Component {
           flags: "Banderas",
           custom: "Personalizado"
         }
+      },
+      responsive = responsiveStates.get("responsive"),
+      style = {
+        position: "absolute",
+        bottom: responsive==="mobile"?"5.6rem":"13.6rem",
+        left: "0px",
+        width: "90%",
+        marginLeft: "5%",
+        animationName: mainCss.inAssistant,
+        animationDuration:"0.3s",
+        animationTimingFunction: "linear"
       };
       return (
-        <div>
+        <React.Fragment>
           <Picker
             onSelect={this.selectEmoji}
-            style={{
-              position: "absolute",
-              bottom: "50px",
-              left: "0px",
-              width: "90%",
-              marginLeft: "5%"
-            }}
+            style={style}
             showPreview={false}
             showSkinTones={false}
             i18n={i18n}
           />
           <button
-            className="btn btn-rounded input-user-btn active emoji"
+            className={mainCss.InputUserBtn + " " + mainCss.Btn+ " " + mainCss.BtnTransparent + " " + mainCss.Active+ " " + mainCss.Emoji}
             type="button"
             onClick={this.toggleEmoji}
           >
-            <i className="far fa-smile" />
+            <i className={mainCss.IconEmoji} />
           </button>
-        </div>
+        </React.Fragment>
       );
     }
   }

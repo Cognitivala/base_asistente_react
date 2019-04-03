@@ -22,16 +22,14 @@ export default class ConversationButtons extends Component {
   }
 
   render() {
-    const { buttons, animation, send, colorHeader } = this.props,
-      style = { backgroundColor: colorHeader },
+    const { buttons, animation, send, mainCss } = this.props,
       botones = buttons.map((map, i) => {
         return (
           <button
             key={i}
-            className="btn btn-big"
+            className={mainCss.Btn + " " + mainCss.BtnBig}
             data-msg={map.get("value")}
             onClick={this.sendButtonresponse}
-            style={style}
           >
             {map.get("title")}
           </button>
@@ -39,7 +37,7 @@ export default class ConversationButtons extends Component {
       });
 
     return (
-      <div className={"conversation-bubble buttons " + animation + send}>
+      <div className={mainCss.ConversationBubble+" "+mainCss.Buttons + " " + animation + send}>
         {botones}
       </div>
     );
@@ -50,7 +48,7 @@ ConversationButtons.propTypes = {
   buttons: PropTypes.any.isRequired,
   animation: PropTypes.string.isRequired,
   send: PropTypes.string.isRequired,
-  colorHeader: PropTypes.string.isRequired,
   updateConversationButton: PropTypes.func.isRequired,
-  generalStates: PropTypes.any.isRequired
+  generalStates: PropTypes.any.isRequired,
+  mainCss: PropTypes.any.isRequired
 };

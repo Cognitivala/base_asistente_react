@@ -1,0 +1,32 @@
+:root {
+    --first: #2979ff;
+    --launcher: #2979ff;
+    --bg-back: #fff;
+    --border-color: #E2E2E2;
+    --titles: #333;
+    --gray: #666;
+    --gray-light: #ddd;
+    --gray-dark: #999;
+    --error: #dd2c00;
+    --bubble-bg: #f5f5f5;
+    --bubble-bg-message: #0078c7;
+    --bubble-bg-message-text: #9a9a9f;
+    --bubble-bg-message-text-send: #FFFFFF;
+    --white-gray: #f8f8f8;
+    --success: #86c546;
+    // --img-header: "../images/nodos.svg";
+    --gradient-medium: #0052dc;
+    --gradient-dark: #2061d1;
+}
+
+$first: #2979ff;
+$first-hover: #0052dc;
+$bg-back: var(--bg-back);
+$border-color: var(--border-color);
+$titles: var(--titles);
+$gray: var(--gray);
+$error: #dd2c00;
+$success: #86c546;
+/*----Breakpoints----*/
+
+$breakpoints: ( xlarge: "(min-width : 1300px)", large: "(min-width: 1024px) and (max-width : 1300px)", medium: "(min-width: 768px) and (max-width:1024px)", small: "(max-width : 767px)");

@@ -4,22 +4,21 @@ import PropTypes from "prop-types";
 export default class ConversationBubble extends Component {
 
   render() {
-    const { msg, colorHeader, send } = this.props,
-      style = { backgroundColor: colorHeader };
+    const { msg, send, mainCss } = this.props;
     if (send === "to") {
       return (
-        <div className="bubble" style={style}>
+        <div className={mainCss.Bubble}>
           <span
-            className="bubble-text"
+            className={mainCss.BubbleText}
             dangerouslySetInnerHTML={{ __html: msg }}
           />
         </div>
       );
     } else {
       return (
-        <div className="bubble">
+        <div className={mainCss.Bubble}>
           <span
-            className="bubble-text"
+            className={mainCss.BubbleText}
             dangerouslySetInnerHTML={{ __html: msg }}
           />
         </div>
@@ -30,6 +29,6 @@ export default class ConversationBubble extends Component {
 
 ConversationBubble.propTypes = {
   msg: PropTypes.any.isRequired,
-  colorHeader: PropTypes.string.isRequired,
-  send: PropTypes.any
+  send: PropTypes.any,
+  mainCss: PropTypes.any.isRequired
 };

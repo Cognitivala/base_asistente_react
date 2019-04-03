@@ -8,14 +8,20 @@ export default class ConversationLikes extends Component {
   }
 
   sendLikeHandled(event) {
-    const { sendLike, generalStates, conversationsStates  } = this.props,
-      like = event.currentTarget.dataset.like,
-      general = generalStates.toJS(),
-      conversaciones = conversationsStates.get('conversations'),
-      sizeConv = conversationsStates.get("conversations").size,
-      input = conversaciones.get(sizeConv-2).get("msg").get(0),
-      output =conversaciones.get(sizeConv-1).get("msg").get(0),
-      args = {
+    const { sendLike, generalStates, conversationsStates } = this.props;
+      const like = event.currentTarget.dataset.like;
+      const general = generalStates.toJS();
+      const conversaciones = conversationsStates.get("conversations");
+      const sizeConv = conversationsStates.get("conversations").size;
+      const input = conversaciones
+        .get(sizeConv - 2)
+        .get("msg")
+        .get(0);
+      const output = conversaciones
+        .get(sizeConv - 2)
+        .get("msg")
+        .get(0);
+      const args = {
         origen: general.origen,
         cid: general.cid,
         nodo_id: general.nodo_id,
@@ -26,36 +32,40 @@ export default class ConversationLikes extends Component {
         comentario: "",
         pudo_resolver: ""
       };
-    sendLike(args,general);
+    sendLike(args, general);
   }
 
   render() {
+    const { mainCss } = this.props;
     return (
-      <div className="likes">
-        <button
-          className="btn"
-          onClick={this.sendLikeHandled}
-          data-like={0}
-        >
-          No
-          <i className="fas fa-thumbs-down" />
-        </button>
-        <button
-          className="btn"
-          onClick={this.sendLikeHandled}
-          data-like={1}
-        >
-        Si
-          <i className="fas fa-thumbs-up" />
-        </button>
+      <div className={mainCss.Likes}>
+        <p>¿Te sirvió esta respuesta?</p>
+        <div className={mainCss.LikeDiv}>
+          <button
+            className={mainCss.Btn}
+            onClick={this.sendLikeHandled}
+            data-like={0}
+          >
+            No
+            <i className="fas fa-thumbs-down" />
+          </button>
+          <button
+            className={mainCss.Btn}
+            onClick={this.sendLikeHandled}
+            data-like={1}
+          >
+            Si
+            <i className="fas fa-thumbs-up" />
+          </button>
+        </div>
       </div>
     );
   }
 }
 
 ConversationLikes.propTypes = {
-  colorHeader: PropTypes.string.isRequired,
   sendLike: PropTypes.func.isRequired,
   generalStates: PropTypes.any.isRequired,
-  conversationsStates: PropTypes.any.isRequired
+  conversationsStates: PropTypes.any.isRequired,
+  mainCss: PropTypes.any.isRequired
 };

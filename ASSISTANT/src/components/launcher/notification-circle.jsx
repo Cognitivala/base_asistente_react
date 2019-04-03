@@ -1,7 +1,7 @@
 import React from "react";
 
-const NotificationCircle = () => (
-  <span className="bubble-cognitive-assistant">1</span>
+const NotificationCircle = (props) => (
+  <span className={props.mainCss.BubbleLauncher}>1</span>
 );
 
-export default NotificationCircle
+export default NotificationCircle;

@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import moment from "moment";
 import "react-datepicker/dist/react-datepicker.css";
+import "../../assets/sass/datepicker.css";
 
 export default class ConversationCalendarEnd extends Component {
   constructor(props) {
@@ -28,13 +29,13 @@ export default class ConversationCalendarEnd extends Component {
   }
 
   render() {
-    const { last, name } = this.props;
+    const { last, name, mainCss } = this.props;
     return (
       <DatePicker
         dateFormat="DD/MM/YYYY"
         selected={this.state.startDate}
         onChange={this.handleChange.bind(this)}
-        className="datepicker-cognitive"
+        className={mainCss.DatepickerCognitive}
         name={name}
         ref={this.date}
         disabled={!last}
@@ -56,5 +57,6 @@ export default class ConversationCalendarEnd extends Component {
 ConversationCalendarEnd.propTypes = {
   last: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  toggleButton: PropTypes.func.isRequired
+  toggleButton: PropTypes.func.isRequired,
+  mainCss: PropTypes.any.isRequired
 };

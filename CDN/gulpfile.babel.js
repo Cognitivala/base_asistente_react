@@ -1,101 +1,137 @@
-'use strict';
+"use strict";
 
-const gulp = require('gulp');
-// const gulp = 'gulp';
-const browserSync = require('browser-sync');
-const gulpLoadPlugins = require('gulp-load-plugins');
-const babel = require('gulp-babel');
-const fileInclude = require('gulp-file-include');
+const gulp = require("gulp");
+const cleanCSS = require("gulp-clean-css");
+const sass = require("gulp-sass");
+const browserSync = require("browser-sync");
+const babel = require("gulp-babel");
+const $ = require("gulp-load-plugins")();
+var sourcemaps = require("gulp-sourcemaps");
+const basePath = "www/";
+const distPath = "dist/";
 
-const $ = gulpLoadPlugins();
-const reload = browserSync.reload;
+//SASS
+gulp.task("sass", () => {
+  const AUTOPREFIXER_BROWSERS = [
+    "ie >= 10",
+    "ie_mob >= 10",
+    "ff >= 30",
+    "chrome >= 34",
+    "safari >= 7",
+    "opera >= 23",
+    "ios >= 7",
+    "android >= 4.4",
+    "bb >= 10"
+  ];
 
-const basePath = 'www/';
-const distPath = 'dist/'; 
+  return gulp
+    .src([basePath + "sass/main.scss"])
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
+    .pipe(sourcemaps.write("./"))
+    .pipe(gulp.dest(basePath + "css"));
+});
 
-gulp.task('fileinclude', function() {
-  gulp.src(basePath +'**/*.html')
-    .pipe(fileInclude({
-      prefix: '@@',
-      basepath: '@file'
-    }))
-    .pipe(gulp.dest(basePath));
+// CSS DIST
+gulp.task("css-dist", function() {
+  return gulp.src([basePath + "css/**"]).pipe(gulp.dest(distPath + "css"));
+});
+
+// INCLUDES
+gulp.task("includes", function() {
+  return gulp.src("templates/includes/*.pug");
 });
 
 
-gulp.task('lint', () => {
-  gulp.src([basePath +'js/**/*.js'])
-    .pipe($.eslint())
-    .pipe($.eslint.format())
-    .pipe($.if(!browserSync.active, $.eslint.failAfterError()))
+// JAVASCRIPT
+gulp.task("javascript", () => {
+  return gulp
+    .src([basePath + "js/main.js"])
+    .pipe(sourcemaps.init())
+    .pipe(
+      babel({
+        presets: ["@babel/preset-env"]
+      })
+    )
+    .pipe($.concat("main.js"))
+    .pipe($.size({ title: "scripts" }))
+    .pipe(sourcemaps.write("."))
+    .pipe(gulp.dest(basePath + "js/build"));
 });
 
-gulp.task('scripts', () => {
-  gulp.src([
-    // basePath + 'js/libs/jquery.js',
-    basePath +'js/main.js'
-  ])
-  .pipe($.sourcemaps.init())
-  .pipe(babel({
-      presets: ['es2015']
-  }))
-  .pipe($.sourcemaps.write())
-  .pipe(gulp.dest('.tmp/scripts'))
-  .pipe($.concat('main.js'))
-  .pipe($.size({title: 'scripts'}))
-  .pipe($.sourcemaps.write('.'))
-  .pipe(gulp.dest(basePath +'js/build'))
-  .pipe(gulp.dest('.tmp/scripts'));
-
+// JAVASCRIPT DIST
+gulp.task("javascript-dist", () => {
+  return gulp
+    .src([basePath + "js/build/main.js"])
+    .pipe(gulp.dest(distPath + "js/build"));
 });
 
-gulp.task('default', ['scripts', 'fileinclude'], () => {
-  browserSync({
-    notify: false,
-    logPrefix: 'WSK',
-    scrollElementMapping: ['main', '.mdl-layout'],
-    server: ['.tmp', basePath],
-    port: 3000
-  });
-
-  gulp.watch([basePath +'**/*.html'], ['scripts', reload]);
-  gulp.watch([basePath +'js/main.js'], ['scripts', reload]);
+// FONTS
+gulp.task("fonts", () => {
+  return gulp.src("css/fonts/*.*").pipe(gulp.dest(basePath + "fonts"));
 });
 
-gulp.task('html', () => {
-  return gulp.src(basePath +'**/*.html')
-          .pipe($.if('*.html', $.htmlmin({
-            removeComments: true,
-            collapseWhitespace: true,
-            collapseBooleanAttributes: true,
-            removeAttributeQuotes: true,
-            removeRedundantAttributes: true,
-            removeEmptyAttributes: true,
-            removeScriptTypeAttributes: true,
-            removeStyleLinkTypeAttributes: true,
-            removeOptionalTags: true
-          })))
-          .pipe($.if('*.html', $.size({title: 'html', showFiles: true})))
-          .pipe(gulp.dest(distPath));
+// IMAGES
+gulp.task("images", function() {
+  return gulp
+    .src(basePath + "images/*")
+    .pipe(
+      $.cache(
+        $.imagemin({
+          progressive: true,
+          interlaced: true
+        })
+      )
+    )
+    .pipe(gulp.dest(distPath + "images"))
+    .pipe($.size({ title: "img" }));
 });
 
-
-gulp.task('copy', () => {
-  gulp.src([
-    basePath + '*',
-    '!'+ basePath +'/*.html'
-  ], {
-    dot: true
-  }).pipe(gulp.dest(distPath))
-    .pipe($.size({title: 'copy'}))
+// HTML TO DIST
+gulp.task("html", function() {
+  return gulp
+    .src(basePath + "**/*.html")
+    .pipe(
+      $.if(
+        "*.html",
+        $.htmlmin({
+          removeComments: true,
+          collapseWhitespace: true,
+          collapseBooleanAttributes: true,
+          removeAttributeQuotes: true,
+          removeRedundantAttributes: true,
+          removeEmptyAttributes: true,
+          removeScriptTypeAttributes: true,
+          removeStyleLinkTypeAttributes: true,
+          removeOptionalTags: true
+        })
+      )
+    )
+    .pipe(gulp.dest(distPath));
 });
 
-gulp.task('build', ['html'],() => {
-  //Scripts
-  gulp.src([
-    basePath +'js/build/main.js'
-  ])
-  .pipe($.uglify())
-  .pipe(gulp.dest(distPath +'js/build'));
+// WATCH
+gulp.task(
+  "default",
+  gulp.series( "javascript", "fonts", function() {
+    // default task code here
+    browserSync({
+      notify: true,
+      server: "www"
+    });
+    gulp.watch([basePath + "sass/*.scss"], gulp.series("sass"));
+    gulp.watch([basePath + "js/main.js"], gulp.series("javascript"));
+    gulp.watch([basePath + "fonts/*/*.*"], gulp.series("fonts"));
+    gulp.watch(basePath + "**/*.html").on("change", browserSync.reload);
+    gulp.watch(basePath + "js/main.js").on("change", browserSync.reload);
+    gulp.watch(basePath + "sass/*.scss").on("change", browserSync.reload);
+  })
+);
 
-});
+// BUILD
+gulp.task(
+  "build",
+  gulp.series("html", "images", "javascript-dist"),
+  () => {}
+);

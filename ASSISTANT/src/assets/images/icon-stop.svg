@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.279 25.279">
+  <defs>
+    <style>
+      .cls-1, .cls-2 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        stroke: #fff;
+      }
+
+      .cls-3 {
+        stroke: none;
+      }
+
+      .cls-4 {
+        fill: none;
+      }
+    </style>
+  </defs>
+  <g id="icon-emoji" transform="translate(0.105 0)">
+    <g id="Group_2" data-name="Group 2" transform="translate(-0.105 0)">
+      <g id="Group_1" data-name="Group 1">
+        <path id="Path_7" data-name="Path 7" class="cls-1" d="M12.557,0A12.64,12.64,0,1,0,25.174,12.64,12.64,12.64,0,0,0,12.557,0Zm0,24.194A11.555,11.555,0,1,1,24.091,12.64,11.555,11.555,0,0,1,12.557,24.194Z" transform="translate(0.105 0)"/>
+      </g>
+    </g>
+    <g id="Rectangle_1" data-name="Rectangle 1" class="cls-2" transform="translate(7.18 6.774)">
+      <rect class="cls-3" width="11" height="11"/>
+      <rect class="cls-4" x="0.5" y="0.5" width="10" height="10"/>
+    </g>
+  </g>
+</svg>

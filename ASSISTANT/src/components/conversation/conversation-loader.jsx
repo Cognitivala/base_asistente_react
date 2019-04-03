@@ -2,12 +2,11 @@ import React from "react";
 
 const ConversationLoader = props => {
   if (props.active) {
-    const style = {backgroundColor:props.backgroundColor}
     return (
-      <div className="loader">
-        <span className="dot" style={style}/>
-        <span className="dot" style={style}/>
-        <span className="dot" style={style}/>
+      <div className={props.mainCss.Loader}>
+        <span className={props.mainCss.Dot}/>
+        <span className={props.mainCss.Dot}/>
+        <span className={props.mainCss.Dot}/>
       </div>
     );
   } else {

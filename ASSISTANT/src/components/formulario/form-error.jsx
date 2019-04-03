@@ -2,10 +2,10 @@ import React, { Component } from "react";
 
 export default class FormError extends Component {
   render() {
-    const { error } = this.props;
+    const { error, mainCss } = this.props;
     if (error) {
       return (
-        <div class="error-msg">
+        <div class={mainCss.ErrorMsg}>
           <p>
             <strong>Ups! Tenemos un problema</strong>
           </p>
@@ -13,7 +13,7 @@ export default class FormError extends Component {
         </div>
       );
     } else {
-      return <div />;
+      return <React.Fragment />;
     }
   }
 }

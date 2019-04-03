@@ -17,7 +17,6 @@ export default class ConversationAttach extends Component {
   }
 
   attachFile() {
-    debugger
     const size = this.attach.current.files[0].size,
       { attachFile, generalStates, attach } = this.props;
     if (size > 0 && size <= attach.get('maxSize')) {
@@ -49,28 +48,27 @@ export default class ConversationAttach extends Component {
   }
 
   fillError() {
-      if(this.state.error!==null){
-        return <p className="error">{this.state.error}</p>
-      }
+    const { mainCss } = this.props;
+    if(this.state.error!==null){
+      return <p className={mainCss.Error}>{this.state.error}</p>
+    }
   }
 
   render() {
-    const { animation, send, colorHeader } = this.props,
-      style = { backgroundColor: colorHeader };
+    const { animation, send, mainCss } = this.props;
     return (
-      <div className={"conversation-bubble attach " + animation + send}>
+      <div className={mainCss.ConversationBubble + " " + mainCss.Attach+" " + animation + send}>
         <button
-          className="btn btn-attach"
+          className={mainCss.Btn + " " + mainCss.BtnAttach}
           type="button"
           onClick={this.attachIconClick}
-          style={style}
         >
         Adjuntar
           <i className="fas fa-paperclip" />
           <input
             type="file"
             ref={this.attach}
-            className="hide"
+            className={mainCss.Hide}
             onChange={this.attachFile}
           />
         </button>
@@ -86,5 +84,6 @@ ConversationAttach.propTypes = {
   animation: PropTypes.string.isRequired,
   send: PropTypes.string.isRequired,
   colorHeader: PropTypes.string.isRequired,
-  generalStates: PropTypes.any.isRequired
+  generalStates: PropTypes.any.isRequired,
+  mainCss: PropTypes.any.isRequired
 };

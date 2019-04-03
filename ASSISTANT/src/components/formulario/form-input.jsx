@@ -13,8 +13,8 @@ export default class FormInput extends Component {
   }
 
   content() {
-    const { type, name, placeholder, autocomplete, withError, value } = this.props;
-    let cssClass = withError?" error":"";
+    const { type, name, placeholder, autocomplete, withError, mainCss, value } = this.props;
+    let cssClass = withError?" "+mainCss.Error:"";
     return (
       <input
         type={type}
@@ -41,5 +41,6 @@ FormInput.propTypes = {
   validateFunc: PropTypes.func.isRequired,
   validate: PropTypes.object,
   withError: PropTypes.bool,
+  mainCss: PropTypes.object.isRequired,
   value: PropTypes.value
 };

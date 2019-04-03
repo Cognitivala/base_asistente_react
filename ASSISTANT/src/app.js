@@ -12,6 +12,7 @@ export class App extends Component {
     this.onMessageFunc = this.onMessageFunc.bind(this);
   }
   componentWillMount() {
+    this.onMessageFunc();
     moment.updateLocale("en", {
       months: [
         "Enero",
@@ -41,7 +42,6 @@ export class App extends Component {
     });
     this.integracion();
     this.customParams();
-    this.onMessageFunc();
   }
 
   integracion(){
@@ -55,33 +55,11 @@ export class App extends Component {
         integracion[secondSplit[0]] = secondSplit[1];
       }
     });
-    // debugger
     this.props.setIntegracion(integracion);
   }
 
   customParams() {
-    // const customParams = localStorage.getItem("customParams");
-    // if (customParams) {
-    //   this.props.setCustomParams(customParams);
-    // } else {
     this.props.getCustomParams();
-    this.setScript();
-    // }
-  }
-
-  setScript(){
-    // if(this.props.customParamsStates.getIn(["customParams","avatar"])!==null){
-    //   debugger
-    //   const script = this.props.customParamsStates.getIn(["customParams","script"]);
-    //   if(script!==null){
-    //     const a = "<script>alert('hola');</script>";
-    //     document.head.appendChild(a);
-    //   }
-    // }else{
-    //   setTimeout(() => {
-    //     this.setScript();
-    //   }, 150);
-    // }
   }
 
   onMessageFunc() {
@@ -101,6 +79,8 @@ export class App extends Component {
         _this.props.updateCustomLogo(e.data.logo);
       } else if (e.data.saludo !== undefined) {
         _this.props.updateSaludo(e.data.saludo);
+      } else if (e.data.responsive !== undefined) {
+        _this.props.responsive(e.data.responsive);
       }
     };
   }
@@ -109,6 +89,7 @@ export class App extends Component {
     const avatar = customParamsStates.getIn(["customParams", "avatar"]),
       estado = customParamsStates.getIn(["customParams", "estado"]);
     if (avatar && estado !== 0) {
+      window.top.postMessage({ responsiveFunc: true },"*");
       return (
         <div>
           <Launcher {...this.props} />

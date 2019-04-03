@@ -13,20 +13,20 @@ export default class FormSearch extends Component {
     this.setSelected = this.setSelected.bind(this);
   }
 
-  shouldComponentUpdate(prevProps, prevStates) {
+  shouldComponentUpdate(nextProps, nextStates) {
     return (
-      prevProps.name !== this.props.name ||
-      prevProps.options !== this.props.options ||
-      prevProps.validateFunc !== this.props.validateFunc ||
-      prevProps.validate !== this.props.validate ||
-      prevProps.withError !== this.props.withError ||
-      prevProps.disabled !== this.props.disabled ||
-      prevProps.selectedChange !== this.props.selectedChange ||
-      prevProps.selectedParent !== this.props.selectedParent ||
-      prevStates.selected !== this.state.selected ||
-      prevStates.active !== this.state.active ||
-      prevStates.select !== this.state.select ||
-      prevStates.inputValue !== this.state.inputValue
+      nextProps.name !== this.props.name ||
+      nextProps.options !== this.props.options ||
+      nextProps.validateFunc !== this.props.validateFunc ||
+      nextProps.validate !== this.props.validate ||
+      nextProps.withError !== this.props.withError ||
+      nextProps.disabled !== this.props.disabled ||
+      nextProps.selectedChange !== this.props.selectedChange ||
+      nextProps.selectedParent !== this.props.selectedParent ||
+      nextStates.selected !== this.state.selected ||
+      nextStates.active !== this.state.active ||
+      nextStates.select !== this.state.select ||
+      nextStates.inputValue !== this.state.inputValue
     );
   }
 
@@ -75,19 +75,19 @@ export default class FormSearch extends Component {
   }
 
   content() {
-    const { options, withError, disabled } = this.props;
-    let cssClass = this.state.active ? " active" : "",
-      cssClassError = withError ? " error" : "";
+    const { options, withError, disabled, mainCss } = this.props;
+    let cssClass = this.state.active ? ` ${mainCss.Active}` : "",
+      cssClassError = withError ? ` ${mainCss.Error}` : "";
     if (this.state.active) {
       return (
-        <div className="select-search" >
+        <div className={mainCss.SelectSearch} >
           <div>
             <input
               ref={this.input}
               disabled={disabled===undefined?false:true}
               type="text"
               tabIndex={-1}
-              className={"select " + cssClass}
+              className={`${mainCss.SelectSearch} ${cssClass}`}
               onChange={() => {
                 this.setState({ inputValue: this.input.current.value });
               }}
@@ -96,12 +96,12 @@ export default class FormSearch extends Component {
               }}
               value={this.state.inputValue}
             />
-            <div className="close-select" onClick={()=>{
+            <div className={mainCss.CloseSelect} onClick={()=>{
               this.setState({ active: false });
             }}></div>
           </div>
           <div
-            className={"options" + cssClass + cssClassError}
+            className={`${mainCss.Options} ${cssClass} ${cssClassError}`}
             ref={this.options}
           >
             {this.fillOptionsShow(options)}
@@ -109,12 +109,11 @@ export default class FormSearch extends Component {
         </div>
       );
     } else {
-      debugger
       return (
-        <div className="select-search">
+        <div className={mainCss.SelectSearch}>
           <input
             type="text"
-            className={"select " + cssClass}
+            className={`${mainCss.Select} ${cssClass}`}
             onFocus={() => {
               this.setState({ active: true });
             }}

@@ -23,22 +23,22 @@ export default class HelpBoxChild extends Component {
     this.props.updateConversation(conversation);
   }
 
-  content(ayuda, colorHeader) {
+  content(ayuda, mainCss) {
     return (
-      <div className="li-child" onClick={this.sendHelp}>
-        <a href style={{color:colorHeader}} className="cur-pointer">{ayuda.get("title")}</a>
+      <div className={mainCss.LiChild} onClick={this.sendHelp}>
+        <a className="cur-pointer" href="#!">{ayuda.get("title")}</a>
       </div>
     );
   }
 
   render() {
-    const { ayuda, colorHeader } = this.props;
-    return this.content(ayuda, colorHeader);
+    const { ayuda, mainCss } = this.props;
+    return this.content(ayuda, mainCss);
   }
 }
 
 HelpBoxChild.propTypes = {
   ayuda: PropTypes.object.isRequired,
   generalStates: PropTypes.any.isRequired,
-  colorHeader: PropTypes.string.isRequired
+  mainCss: PropTypes.any.isRequired,
 };

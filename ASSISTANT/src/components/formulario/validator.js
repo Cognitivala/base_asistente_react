@@ -10,7 +10,8 @@ export function required(input, validates, required) {
         return input.value.length !== 0;
       }
     case "DIV"://Select
-      if(input.classList.contains("options")){
+      const opt = input.classList[0];
+      if(opt.includes("Options")){
         return select(input, validates, required);
       }else{
         break;
@@ -90,6 +91,28 @@ export function text(input, validator, required) {
       max = validator.getIn(["rules", "max"]);
     let validate = false;
     if (input.value.length >= min && input.value.length <= max) validate = true;
+    return validate;
+  }
+  return true;
+}
+
+export function num(input, validator, required) {
+  // debugger
+  //Replace not numbers
+  input.value = input.value.replace(/\D+/g, "");
+  if (required) {
+    if (input.value === "") return false;
+    const min = validator.getIn(["rules", "min"]),
+      max = validator.getIn(["rules", "max"]);
+    let validate = false;
+    if (input.value >= min && input.value <= max) validate = true;
+    return validate;
+  } else if (input.value.length > 0) {
+    if (input.value === "") return false;
+    const min = validator.getIn(["rules", "min"]),
+      max = validator.getIn(["rules", "max"]);
+    let validate = false;
+    if (input.value >= min && input.value <= max) validate = true;
     return validate;
   }
   return true;

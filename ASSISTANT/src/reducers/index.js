@@ -10,6 +10,8 @@ import { inputStates } from "./input";
 import { valoracionStates } from "./valoracion";
 import { generalStates } from "./general";
 import { formularioStates } from "./formulario";
+import { responsiveStates } from "./responsive";
+import { voiceStates } from "./voice"; 
 
 export const reducers = combineReducers({
   generalStates,
@@ -22,5 +24,7 @@ export const reducers = combineReducers({
   conversationsStates,
   inputStates,
   valoracionStates,
-  formularioStates
+  formularioStates,
+  responsiveStates,
+  voiceStates,
 });

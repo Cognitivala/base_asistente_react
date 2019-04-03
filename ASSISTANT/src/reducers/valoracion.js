@@ -6,12 +6,9 @@ export function valoracionStates(
     enabled: false,
     stars: 0,
     comment: null,
-    pudoResolver: true,
-    error: false,
-    button: false,
-    commentError: false,
-    pudoResolverError: false,
-    overStar: 0
+    pudoResolver: null,
+    overStar: 0,
+    servicio: null
   }),
   action
 ) {
@@ -39,15 +36,6 @@ export function valoracionStates(
       return state.set("pudoResolver", action.data);
     case "SET_COMMENT_VALORACION":
       return state.set("comment", action.data);
-    case "SET_BUTTON_VALORACION":
-      return state.set("button", action.data);
-    case "SET_ERROR_VALORACION":
-      return state.withMutations(map => {
-        map
-          .set("error", action.data.error)
-          .set("pudoResolverError", action.data.pudoResolverError)
-          .set("commentError", action.data.commentError);
-      });
     case "SEND_VALORACION_START":
       return state.set("isFetching", true);
     case "SEND_VALORACION_END":
@@ -63,6 +51,8 @@ export function valoracionStates(
           .set("commentError", false)
           .set("button", false);
       });
+    case "SET_SERVICIO_VALORACION":
+      return state.set("servicio", action.data);
     default:
       return state;
   }

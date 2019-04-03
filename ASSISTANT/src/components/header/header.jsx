@@ -1,11 +1,25 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import BtnHelp from "../help/btn-help";
+import logo from "../../assets/images/logoH.svg";
 
 export default class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.showMore = this.showMore.bind(this);
+    this.div = React.createRef();
+  }
 
-  fillHelp(ayuda, minimized) {
-    if (ayuda && !minimized) {
+  showMore() {
+    if (this.props.moreHeader) {
+      this.props.toggleHeaderMore(false);
+    }else {
+      this.props.toggleHeaderMore(true);
+    }
+  }
+
+  fillHelp(ayuda, minimized, positionHelp) {
+    if (ayuda && positionHelp === "top" && !minimized) {
       return (
         <BtnHelp
           ayudaStates={this.props.ayudaStates}
@@ -14,37 +28,117 @@ export default class Header extends Component {
           showWarningHelp={this.props.showWarningHelp}
           hideWarningHelp={this.props.hideWarningHelp}
           colorHeader={this.props.colorHeader}
+          mainCss={this.props.mainCss}
         />
       );
     }
   }
 
-  render() {
-    const style = {
-      backgroundColor: this.props.colorHeader
-    };
-    let cssClass = this.props.minimized?" iframe-cognitive-assistant-container-minimized":"";
-    return (
-      <div
-        className={"iframe-cognitive-assistant-container-header" + cssClass}
-        style={style}
-      >
-        <img
-          className="iframe-cognitive-assistant-container-header-image"
-          src={this.props.logo}
-          alt={"Logo"}
+  fillCloseButton(mainCss, responsive) {
+    if (responsive === "mobile") {
+      return (
+        <button
+          onClick={this.props.closeAssistant}
+          className={
+            mainCss.CloseButton +
+            " " +
+            mainCss.Btn +
+            " " +
+            mainCss.BtnTransparent
+          }
         />
-        <div className="iframe-cognitive-container-header-image-text-holder">
-          <h3>{this.props.titulo}</h3>
-          <p>{this.props.subtitulo}</p>
+      );
+    }
+  }
+
+  content(mainCss, responsive, positionHelp) {
+    let cssClass = this.props.minimized ? mainCss.AssistantMinimized : "";
+    if (this.props.moreHeader) {
+      return (
+        <div
+          ref={this.div}
+          className={
+            positionHelp === "top"
+              ? mainCss.Header + " " + mainCss.HeaderMore + " " + mainCss.HeaderHelpUp
+              : mainCss.HeaderHelpDown +
+                " " +
+                cssClass +
+                " " +
+                mainCss.HeaderMore
+          }
+        >
+          <div/>
+            <img
+              className={mainCss.HeaderImage}
+              src={this.props.logo}
+              // src={logo}
+              alt={"Logo"}
+            />
+            <button
+              className={mainCss.Btn + " " + mainCss.BtnTransparent}
+              onClick={this.props.minimizedAssistant}
+            >
+              <i
+                className={mainCss.IconMinimized}
+                onClick={this.props.minimizedAssistant}
+              />
+            </button>
+            {this.fillCloseButton(mainCss, responsive)}
+            <div className={mainCss.HeaderText} onClick={this.showMore}>
+              <h3>¡Hola!</h3>
+              <p dangerouslySetInnerHTML={{ __html: this.props.saludo }}>
+  
+              {/* Hola soy el Asistente Digital de DUOC Educación Continua y estoy aquí para ayudarte a dar respuestas a tus preguntas sobre: Cursos, Cursos/SAP o Diplomados. */}
+                </p>
+            </div>
         </div>
-        <i className="iframe-cognitive-minimize" onClick={this.props.minimizedAssistant}></i>
-        <button onClick={this.props.closeAssistant} className="close-button">
-          <i className="fas fa-times" />
-        </button>
-        {this.fillHelp(this.props.ayuda, this.props.minimized)}
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div
+          ref={this.div}
+          className={
+            positionHelp === "top"
+              ? mainCss.Header + " " + mainCss.HeaderHelpUp
+              : mainCss.HeaderHelpDown + " " + cssClass
+          }
+          // style={style}
+        >
+          <img
+            className={mainCss.HeaderImage}
+            src={this.props.logo}
+            // src={logo}
+            alt={"Logo"}
+          />
+          <div className={mainCss.HeaderText} onClick={this.showMore}>
+            <h3>{this.props.titulo}</h3>
+            <p>{this.props.subtitulo}</p>
+          </div>
+          {this.fillHelp(this.props.ayuda, this.props.minimized, positionHelp)}
+          <button
+            className={mainCss.Btn + " " + mainCss.BtnTransparent}
+            onClick={this.props.minimizedAssistant}
+          >
+            <i
+              className={mainCss.IconMinimized}
+              onClick={this.props.minimizedAssistant}
+            />
+          </button>
+          {this.fillCloseButton(mainCss, responsive)}
+        </div>
+      );
+    }
+  }
+
+  render() {
+    const { mainCss, responsive, positionHelp } = this.props;
+      // style = {
+      //   backgroundImage: "url(" + imgBackHeader + ")",
+      //   background:
+      //     "linear-gradient(45deg, #004ecb 2%, #0957d6 61%, #2979ff 97%)",
+      //   backgroundColor: this.props.colorHeader
+      // };
+    return this.content(mainCss, responsive, positionHelp);
   }
 }
 
@@ -61,5 +155,9 @@ Header.propTypes = {
   showWarningHelp: PropTypes.func.isRequired,
   hideWarningHelp: PropTypes.func.isRequired,
   minimizedAssistant: PropTypes.func.isRequired,
-  minimized: PropTypes.bool.isRequired
+  minimized: PropTypes.bool.isRequired,
+  mainCss: PropTypes.any.isRequired,
+  responsive: PropTypes.string,
+  imgBackHeader: PropTypes.string.isRequired,
+  positionHelp: PropTypes.string.isRequired
 };

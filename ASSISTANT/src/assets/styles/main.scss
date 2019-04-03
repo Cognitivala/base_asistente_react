@@ -1406,7 +1406,7 @@ select {
                     cursor: pointer;
                     display: none;
                 }
-                .select {
+                .Select {
                     &:before {
                         content: "";
                         position: absolute;
@@ -1419,7 +1419,7 @@ select {
                         border-top: 10px solid #333;
                         z-index: 13;
                     }
-                    .options {
+                    .Options {
                         margin: 0;
                         height: 36px;
                         background: transparent;
@@ -1429,14 +1429,14 @@ select {
                         overflow: hidden;
                         display: flex;
                         flex-flow: column;
-                        &.active {
+                        &.Active {
                             overflow: initial;
                             div {
                                 &:first-child {
                                     border-radius: 18px 18px 0px 0px;
                                 }
                             }
-                            &.error {
+                            &.Error {
                                 div {
                                     &:first-child {
                                         border-radius: 18px 18px 0px 0px;
@@ -1444,7 +1444,7 @@ select {
                                 }
                             }
                         }
-                        &.error {
+                        &.Error {
                             div {
                                 &:first-child {
                                     border-radius: 18px;
@@ -1475,21 +1475,21 @@ select {
                                 border-radius: 0px 0px 18px 18px;
                                 margin-bottom: 20px;
                             }
-                            &.disabled {
+                            &.Disabled {
                                 background: #d0d0d0;
                                 opacity: 1;
                             }
                         }
                     }
                 }
-                .select-search {
-                    .select{
+                .SelectSearch {
+                    .Select{
                         padding-right: 2.3rem !important;
-                        &.active{
+                        &.Active{
                             border-radius: 18px 18px 0px 0px;
                         }
                     }
-                    .close-select{
+                    .CloseSelect{
                         &:before {
                             content: "";
                             position: absolute;
@@ -1516,7 +1516,7 @@ select {
                         border-top: 10px solid #333;
                         z-index: 11;
                     }
-                    .options {
+                    .Options {
                         margin: 0;
                         height: 36px;
                         background: transparent;
@@ -1526,7 +1526,7 @@ select {
                         overflow: hidden;
                         display: flex;
                         flex-flow: column;
-                        &.active {
+                        &.Active {
                             max-height: 200px;
                             height: 100%;
                             border-radius: initial;
@@ -1542,7 +1542,7 @@ select {
                                 background: transparent;
                             }
                         }
-                        &.error {
+                        &.Error {
                             div {
                                 &:first-child {
                                     border-radius: 18px;
@@ -1573,7 +1573,7 @@ select {
                             //     border-radius: 0px 0px 18px 18px;
                             //     margin-bottom: 20px;
                             // }
-                            &.disabled {
+                            &.Disabled {
                                 background: #d0d0d0;
                                 opacity: 1;
                             }
@@ -1586,7 +1586,7 @@ select {
                     height: auto;
                     background: #fff;
                 }
-                &.radios {
+                &.Radios {
                     label {
                         width: 49%;
                         padding: 0 16px;

@@ -30,6 +30,7 @@ FormCheckbox.propTypes = {
     name: PropTypes.string.isRequired,
     validateFunc: PropTypes.func.isRequired,
     validate: PropTypes.object,
-    withError: PropTypes.bool
+    withError: PropTypes.bool,
+    mainCss: PropTypes.object.isRequired,
 }
 

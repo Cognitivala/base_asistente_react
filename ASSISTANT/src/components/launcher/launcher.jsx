@@ -8,7 +8,9 @@ export default class Launcher extends Component {
   constructor(props) {
     super(props);
     this.closeLauncher = this.closeLauncher.bind(this);
+    this.closeAssistant = this.closeAssistant.bind(this);
     this.callAsyncData();
+    this.launcher = React.createRef();
   }
   callAsyncData() {
     this.saludar();
@@ -29,6 +31,15 @@ export default class Launcher extends Component {
     }
   }
 
+  closeAssistant() {
+    const { closeAssistant } = this.props;
+    this.notificationCDN();
+    localStorage.removeItem("hcm");
+    localStorage.removeItem("hc");
+
+    closeAssistant();
+  }
+
   openAssitantCDN() {
     window.top.postMessage(
       {
@@ -44,76 +55,127 @@ export default class Launcher extends Component {
 
   focus() {
     setTimeout(() => {
-      const hrefLocal = window.location.origin;
+      const { mainCss } = this.props,
+        hrefLocal = window.location.origin,
+        input = document.documentElement.getElementsByClassName(mainCss.InputUser)[0];
       if(hrefLocal!=="http://localhost:3000"){
         const href = window.top.location.href,
-          hrefLast = href.substring(href.length - 13, href.length),
-          input = document.documentElement.getElementsByClassName('input-user')[0];
+          hrefLast = href.substring(href.length - 13, href.length);
       if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
-        if(input !== null) input.focus();
+        if(input !== undefined  ) input.focus();
       }else{
-        if(document.documentElement.getElementsByClassName('input-user')[0] !== null) document.documentElement.getElementsByClassName('input-user')[0].focus();
+        if(input !== undefined) input.focus();
       }
     }, 300);
   }
+  
+  notificationCDN() {
+    window.top.postMessage(
+      {
+        test: [
+          {
+            msg: "notification"
+          }
+        ]
+      },
+      "*"
+    );
+  }
 
   closeLauncher() {
-    const { closeLauncher, closeHelp,openAssistant, ayudaStates } = this.props;
+    const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
     closeLauncher();
     this.openAssitantCDN();
     openAssistant();
     if (ayudaStates.get("open")) closeHelp();
     this.focus();
+    if(localStorage.getItem("hcm")) localStorage.removeItem("hcm");
   }
 
-  notification(saludoStates, launcherStates) {
+  notification(saludoStates, launcherStates, mainCss) {
     if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
-      return <Notification saludo={saludoStates.get("saludo").get("msg")} />;
+      return (
+        <Notification
+          saludo={saludoStates.get("saludo").get("msg")}
+          mainCss={mainCss}
+        />
+      );
     } else if (launcherStates.get("circle")) {
-      return <NotificationCircle />;
+      return <NotificationCircle mainCss={mainCss} />;
     } else {
       return null;
     }
   }
 
-  content(customParamsStates, saludoStates, launcherStates, conversationsStates) {
+  content(
+    customParamsStates,
+    saludoStates,
+    launcherStates,
+    conversationsStates,
+    mainCss,
+    responsiveStates
+  ) {
     if (
-      launcherStates.get("active") &&
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
     ) {
-      return (
-        <div id="main-cognitive-assistant-container">
-          <button
-            className="launcher-button"
-            onClick={this.closeLauncher}
-            style={{
-              backgroundColor: customParamsStates
-                .get("customParams")
-                .get("colorBtn")
-            }}
-          >
-            <i className="fas fa-comments" />
-          </button>
-          {this.notification(saludoStates, launcherStates)}
-        </div>
-      );
-    } else {
-      return null;
+      if (launcherStates.get("active")) {
+        return (
+          <div className={mainCss.MainLauncher}>
+            <button
+              ref={this.launcher}
+              className={mainCss.LauncherButton}
+              onClick={this.closeLauncher}
+            >
+              <i className={mainCss.IconLauncher}/>
+            </button>
+            {this.notification(saludoStates, launcherStates, mainCss)}
+          </div>
+        );
+      } else if (responsiveStates.get("responsive") === "desktop") {
+        return (
+          <div className={mainCss.MainLauncher}>
+            <button
+              ref={this.launcher}
+              className={mainCss.LauncherButton + " " + mainCss.Close}
+              onClick={this.closeAssistant}
+            >
+              <i className={mainCss.IconClose} />
+            </button>
+          </div>
+        );
+      }
     }
+    return null;
+
   }
 
   render() {
-    const { customParamsStates, saludoStates, launcherStates, conversationsStates } = this.props,
-    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
+    const {
+        customParamsStates,
+        saludoStates,
+        launcherStates,
+        conversationsStates,
+        mainCss,
+        responsiveStates
+      } = this.props,
+      colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
 
     return (
       <IsFetching
         isFetching={customParamsStates.get("isFetching")}
         showChildren={true}
         colorHeader={colorHeader}
+        mainCss={mainCss}
       >
-        {this.content(customParamsStates, saludoStates, launcherStates, conversationsStates)}
+        {this.content(
+          customParamsStates,
+          saludoStates,
+          launcherStates,
+          conversationsStates,
+          mainCss,
+          responsiveStates
+        )}
       </IsFetching>
     );
   }
