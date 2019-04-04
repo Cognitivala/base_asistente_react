@@ -4,7 +4,7 @@ export function launcherStates(
   state = Immutable.fromJS({
     isFetching: false,
     error: "",
-    notification: true,
+    notification: null,
     active: true,
     circle: true
   }),
@@ -12,10 +12,10 @@ export function launcherStates(
 ) {
   switch (action.type) {
     case "SET_NOTIFICATION":
-      return state.set("circle", action.data);
+      return state.set("notification", action.data);
     case "CLOSE_LAUNCHER":
       return state.withMutations(map => {
-        map.set("notification", false).set("active", false);
+        map.set("notification", null).set("active", false).set("circle",false)
       });
     case "OPEN_LAUNCHER":
       return state.set("active", true);

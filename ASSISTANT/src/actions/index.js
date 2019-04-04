@@ -104,15 +104,20 @@ export function setRegion(data) {
     dispatch({ type: "SET_REGION", data });
   };
 }
-
 //LAUNCHER
 export function closeLauncher() {
   return function action(dispatch) {
     dispatch({ type: "CLOSE_LAUNCHER" });
-    dispatch({ type: "SET_NOTIFICATION", data: false });
     dispatch({ type: "TOGGLE_MINIMIZED", data: false });
   };
 }
+export function sendNotification(data) {
+  return {
+    type: "SET_NOTIFICATION",
+    data
+  };
+}
+
 //CUSTOM PARAMS
 export function getCustomParams() {
   return function action(dispatch) {
@@ -268,7 +273,10 @@ export function getSaludo() {
           let str_md5v = AES.encrypt(JSON.stringify(item),KEY_ENCRYPT).toString();
           localStorage.setItem("gr", str_md5v);
           dispatch(getSaludoEnd(item));
-
+          //Si tiene notificación, la envía
+          if(response.data.notification){
+            dispatch(sendNotification(response.data.notification));
+          }
           //PRIMER MENSAJE
           const msg_inicial = response.data.msg_inicial;
           msg_inicial?item = msg_inicial : item.msg = ["¿Qué puedo hacer por ti?"];
@@ -328,7 +336,7 @@ export function closeAssistant() {
   return function action(dispatch) {
     dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
-    dispatch({ type: "SET_NOTIFICATION", data: false });
+    dispatch({ type: "SET_NOTIFICATION", data: null });
     dispatch({ type: "ENABLED_INPUT" });
     dispatch({ type: "ENABLED_HELP" });
     dispatch({ type: "TOGGLE_MINIMIZED", data: false });

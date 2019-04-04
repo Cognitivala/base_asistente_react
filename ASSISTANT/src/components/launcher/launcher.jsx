@@ -52,36 +52,6 @@ export default class Launcher extends Component {
       "*"
     );
   }
-
-  // focus() {
-  //   console.log("focus in launcher.jsx")
-  //   setTimeout(() => {
-  //     const { mainCss } = this.props,
-  //       hrefLocal = window.location.origin,
-  //       input = document.documentElement.getElementsByClassName(mainCss.InputUser)[0];
-  //     if(hrefLocal!=="http://localhost:3000"){
-  //       const href = window.top.location.href,
-  //         hrefLast = href.substring(href.length - 13, href.length);
-  //     if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
-  //       if(input !== undefined  ) input.focus();
-  //     }else{
-  //       if(input !== undefined) input.focus();
-  //     }
-  //   }, 300);
-  // }
-  
-  notificationCDN() {
-    window.top.postMessage(
-      {
-        test: [
-          {
-            msg: "notification"
-          }
-        ]
-      },
-      "*"
-    );
-  }
   
   notificationCDN() {
     window.top.postMessage(
@@ -102,15 +72,14 @@ export default class Launcher extends Component {
     this.openAssitantCDN();
     openAssistant();
     if (ayudaStates.get("open")) closeHelp();
-    // this.focus();
     if(localStorage.getItem("hcm")) localStorage.removeItem("hcm");
   }
 
-  notification(saludoStates, launcherStates, mainCss) {
+  notification(launcherStates, mainCss) {
     if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
       return (
         <Notification
-          saludo={saludoStates.get("saludo").get("msg")}
+          saludo={launcherStates.get("notification")}
           mainCss={mainCss}
         />
       );
@@ -123,7 +92,6 @@ export default class Launcher extends Component {
 
   content(
     customParamsStates,
-    saludoStates,
     launcherStates,
     conversationsStates,
     mainCss,
@@ -143,7 +111,7 @@ export default class Launcher extends Component {
             >
               <i className={mainCss.IconLauncher}/>
             </button>
-            {this.notification(saludoStates, launcherStates, mainCss)}
+            {this.notification( launcherStates, mainCss)}
           </div>
         );
       } else if (responsiveStates.get("responsive") === "desktop") {
