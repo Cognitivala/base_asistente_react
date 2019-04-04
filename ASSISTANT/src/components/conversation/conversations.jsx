@@ -38,9 +38,24 @@ export default class Conversations extends Component {
   componentDidMount() {
     this.handleScroll();
     this.scrollToBottom();
-    // this.setState({
-    //   conversations: this.props.conversationsStates.get("conversations")
-    // });
+  }
+
+  componentWillMount(){
+    
+    const { conversationsStates, disabledInput } = this.props,
+      conversations = conversationsStates.get('conversations'),
+      conversation = conversations.get(-1),
+      buttons = conversation.get("buttons"),
+      selects = conversation.get("selects"),
+      multibuttons = conversation.get("multibuttons"),
+      datepicker = conversation.get("datepicker"),
+      files = conversation.get("files"),
+      attach = conversation.get("attach"),
+      like = conversation.get("like"),
+      withStars = conversation.get("withStars");
+      if(buttons || selects || multibuttons || datepicker || files || attach || like || withStars){
+        disabledInput();
+      }
   }
 
   handleScroll(event) {

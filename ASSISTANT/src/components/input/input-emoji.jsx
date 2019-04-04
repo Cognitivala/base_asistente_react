@@ -7,31 +7,25 @@ import { Picker } from "emoji-mart";
 export default class InputEmoji extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      enableEmoji: false
-    };
     this.toggleEmoji = this.toggleEmoji.bind(this);
     this.selectEmoji = this.selectEmoji.bind(this);
   }
 
   toggleEmoji() {
-    const { disabledHelp, enabledHelp } = this.props;
-
-    if(!this.state.enableEmoji){
-      disabledHelp();
-    }else if(this.state.enableEmoji) {
-      enabledHelp();
-    }
+    const { openEmoji , closeEmoji, inputStates} = this.props;
     if (this.props.moreHeader) {
       this.props.toggleHeaderMore(false);
     }
-    this.setState({
-      enableEmoji: !this.state.enableEmoji
-    });
+    if(inputStates.get("openEmoji")){
+      closeEmoji();
+    }else{
+      openEmoji();
+    }
+
   }
 
   selectEmoji(emoji) {
-    const { start, end, mainCss } = this.props,
+    const { start, end, mainCss, inputStates, openEmoji,closeEmoji } = this.props,
       emojiIcon = emoji.native,
       input = document.getElementsByClassName(mainCss.InputUser)[0],
       value = input.value,
@@ -43,9 +37,11 @@ export default class InputEmoji extends Component {
       const endStrB = value.substring(end, value.length);
       input.value = startStr + emojiIcon + endStrB;
     }
-    this.setState({
-      enableEmoji: !this.state.enableEmoji
-    });
+    if(!inputStates.get("openEmoji")){
+      closeEmoji();
+    }else {
+      openEmoji();
+    }
     setTimeout(() => {
       if(input !== null){
         input.click();
@@ -55,11 +51,12 @@ export default class InputEmoji extends Component {
   }
 
   render() {
-    const { mainCss, responsiveStates } = this.props;
-    if (!this.state.enableEmoji) {
+    const { mainCss, responsiveStates, inputStates } = this.props,
+    enabled = inputStates.get("enabledEmoji");
+    if (!inputStates.get("openEmoji")) {
       return (
         <button
-          className={mainCss.InputUserBtn + " " + mainCss.Btn+ " " + mainCss.BtnTransparent+ " " + mainCss.Emoji}
+          className={`${mainCss.InputUserBtn} ${mainCss.Btn} ${mainCss.BtnTransparent} ${mainCss.Emoji} ${enabled?'':mainCss.Disabled}`}
           type="button"
           onClick={this.toggleEmoji}
         >

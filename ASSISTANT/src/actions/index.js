@@ -1315,6 +1315,26 @@ function attachFileEnd(data) {
     type: "GET_CONVERSATIONS_END"
   };
 }
+export function openEmoji(){
+  return function action(dispatch){
+    dispatch({type:"OPEN_EMOJI"})
+  }
+}
+export function closeEmoji(){
+  return function action(dispatch){
+    dispatch({type:"CLOSE_EMOJI"})
+  }
+}
+export function openVoice(){
+  return function action(dispatch){
+    dispatch({type:"OPEN_VOICE"})
+  }
+}
+export function closeVoice(){
+  return function action(dispatch){
+    dispatch({type:"CLOSE_VOICE"})
+  }
+}
 //VALORACIÓN
 export function setStar(data) {
   return function action(dispatch) {

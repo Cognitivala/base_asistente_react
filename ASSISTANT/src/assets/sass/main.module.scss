@@ -1586,6 +1586,7 @@ textarea {
       padding: 0;
       letter-spacing: 0.05rem;
       margin-left: 1rem;
+      width: 100%;
       &::placeholder {
         color: var(--border-color);
       }
@@ -1643,6 +1644,7 @@ textarea {
       }
       .IconHelp {
         background-image: url("../images/icon-help-grey.svg");
+        width: 2.6rem;
       }
       &.Active {
         &:before {

@@ -22,7 +22,7 @@ export default class Input extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.inputStates.get('enabled')){
+    if (nextProps.inputStates.get("enabled")) {
       this.focus();
     }
   }
@@ -37,13 +37,13 @@ export default class Input extends Component {
       //   if (hrefLast !== "personalizar/" && hrefLast !== "/personalizar")
       //     if (input !== null) input.focus();
       // } else {
-        if (this.input.current !== null) this.input.current.focus();
+      if (this.input.current !== null) this.input.current.focus();
       // }
     }, 300);
   }
 
-  sendMsg(event){
-    if(event.keyCode === 13) this.submitMessage(event);
+  sendMsg(event) {
+    if (event.keyCode === 13) this.submitMessage(event);
   }
 
   updateMsg(event) {
@@ -66,7 +66,10 @@ export default class Input extends Component {
 
   submitMessage(event) {
     event.preventDefault();
-    const inputValue = this.input.current.value.toString().replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    const inputValue = this.input.current.value
+      .toString()
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
     if (inputValue.length > 0) {
       const { generalStates } = this.props,
         general = generalStates.toJS(),
@@ -84,9 +87,10 @@ export default class Input extends Component {
 
   fillAttach() {
     // Se comenta por que no se usará en el input
-    const { customParamsStates, attachFile, generalStates } = this.props,
+    const { customParamsStates, attachFile, generalStates, inputStates } = this.props,
+    enabled = inputStates.get("attachEnabled"),
       attach = customParamsStates.getIn(["customParams", "settings", "attach"]);
-    if (attach) {
+    if (attach && enabled) {
       return (
         <InputAttach attachFile={attachFile} generalStates={generalStates} />
       );
@@ -96,7 +100,18 @@ export default class Input extends Component {
   }
 
   fillEmoji() {
-    const { customParamsStates, mainCss, responsiveStates, disabledHelp, enabledHelp, moreHeader, toggleHeaderMore } = this.props,
+    const {
+        customParamsStates,
+        mainCss,
+        responsiveStates,
+        disabledHelp,
+        enabledHelp,
+        moreHeader,
+        toggleHeaderMore,
+        inputStates,
+        openEmoji,
+        closeEmoji
+      } = this.props,
       emoji = customParamsStates.getIn(["customParams", "settings", "emoji"]);
     if (emoji) {
       return (
@@ -108,7 +123,10 @@ export default class Input extends Component {
           disabledHelp={disabledHelp}
           enabledHelp={enabledHelp}
           moreHeader={moreHeader}
-          toggleHeaderMore={toggleHeaderMore} 
+          toggleHeaderMore={toggleHeaderMore}
+          inputStates={inputStates}
+          openEmoji={openEmoji}
+          closeEmoji={closeEmoji}
         />
       );
     } else {
@@ -117,7 +135,8 @@ export default class Input extends Component {
   }
 
   fillSend() {
-    const { customParamsStates, mainCss } = this.props,
+    const { customParamsStates, mainCss, inputStates } = this.props,
+      enabledInput = inputStates.get("enabledInput"),
       voice = customParamsStates.getIn(["customParams", "settings", "voice"]);
     if (voice) {
       // Si tiene voice
@@ -139,27 +158,32 @@ export default class Input extends Component {
           </button>
         );
       } else {
-        const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
-        if(isChrome) return <InputVoice {...this.props} />;
+        const isChrome =
+          /Chrome/.test(navigator.userAgent) &&
+          /Google Inc/.test(navigator.vendor);
+        if (isChrome) return <InputVoice {...this.props} />;
         return null;
       }
     } else {
-<<<<<<< HEAD
-      return (
-        <button
-          className={
-            mainCss.InputUserBtn +
-            " " +
-            mainCss.Btn +
-            " " +
-            mainCss.BtnTransparent
-          }
-          onClick={this.submitMessage}
-          id="buttonInputMessage"
-        >
-          <i className={mainCss.IconPlane} />
-        </button>
-      );
+      if(enabledInput){
+        return (
+          <button
+            className={
+              mainCss.InputUserBtn +
+              " " +
+              mainCss.Btn +
+              " " +
+              mainCss.BtnTransparent
+            }
+            onClick={this.submitMessage}
+            id="buttonInputMessage"
+          >
+            <i className={mainCss.IconPlane} />
+          </button>
+        );
+      }else{
+        return null;
+      }
     }
   }
 
@@ -170,41 +194,11 @@ export default class Input extends Component {
       openHelp,
       closeHelp,
       showWarningHelp,
-      hideWarningHelp
+      hideWarningHelp,
+      inputStates
     } = this.props;
     if (positionHelp === "bottom") {
       return (
-=======
-      return (
-        <button
-          className={
-            mainCss.InputUserBtn +
-            " " +
-            mainCss.Btn +
-            " " +
-            mainCss.BtnTransparent
-          }
-          onClick={this.submitMessage}
-          id="buttonInputMessage"
-        >
-          <i className={mainCss.IconPlane} />
-        </button>
-      );
-    }
-  }
-
-  fillHelp(positionHelp) {
-    const {
-      mainCss,
-      ayudaStates,
-      openHelp,
-      closeHelp,
-      showWarningHelp,
-      hideWarningHelp
-    } = this.props;
-    if (positionHelp === "bottom") {
-      return (
->>>>>>> master
         <InputHelp
           ayudaStates={ayudaStates}
           openHelp={openHelp}
@@ -212,6 +206,33 @@ export default class Input extends Component {
           showWarningHelp={showWarningHelp}
           hideWarningHelp={hideWarningHelp}
           mainCss={mainCss}
+          inputStates={inputStates}
+        />
+      );
+    }
+  }
+
+  fillInput() {
+    const { mainCss, inputStates } = this.props;
+    if(inputStates.get("enabledInput")){
+      return (
+        <input
+          className={mainCss.InputUser}
+          placeholder="Escribe tu consulta"
+          name="message"
+          onChange={this.updateMsg}
+          onClickCapture={this.updatePosition}
+          onKeyUp={this.sendMsg}
+          ref={this.input}
+          tabIndex="0"
+          autoComplete="off"
+          id="inputMessage"
+        />
+      );
+    }else{
+      return (
+        <div
+          className={mainCss.InputUser+" "+mainCss.Inactive}
         />
       );
     }
@@ -245,18 +266,7 @@ export default class Input extends Component {
         >
           <div className={mainCss.InputUserHolder} noValidate="">
             {this.fillEmoji()}
-            <input
-              className={mainCss.InputUser}
-              placeholder="Escribe tu consulta"
-              name="message"
-              onChange={this.updateMsg}
-              onClickCapture={this.updatePosition}
-              onKeyUp={this.sendMsg}
-              ref={this.input}
-              tabIndex="0"
-              autoComplete="off"
-              id="inputMessage"
-            />
+            {this.fillInput()}
             {this.fillAttach()}
             {this.fillHelp(positionHelp)}
             {this.fillSend()}

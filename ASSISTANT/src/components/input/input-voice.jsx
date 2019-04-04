@@ -33,19 +33,22 @@ export default class InputVoice extends Component {
   }
 
   disabled(){
-    const {mainCss} = this.props,
-      buttonHelp = document.getElementsByClassName(mainCss.ButtonHelp)[0],
-      iconEmoji = document.getElementsByClassName(mainCss.IconEmoji)[0];
-    if(buttonHelp !== undefined) buttonHelp.classList.add(mainCss.Disabled);
-    if(iconEmoji !== undefined) iconEmoji.parentElement.classList.add(mainCss.Disabled);
+    const {closeVoice} = this.props;
+    closeVoice();
+    //   buttonHelp = document.getElementsByClassName(mainCss.ButtonHelp)[0],
+    //   iconEmoji = document.getElementsByClassName(mainCss.IconEmoji)[0];
+    // if(buttonHelp !== undefined) buttonHelp.classList.add(mainCss.Disabled);
+    // if(iconEmoji !== undefined) iconEmoji.parentElement.classList.add(mainCss.Disabled);
   }
 
   enabled(){
-    const {mainCss} = this.props,
-      buttonHelp = document.getElementsByClassName(mainCss.ButtonHelp)[0],
-      iconEmoji = document.getElementsByClassName(mainCss.IconEmoji)[0];
-    if(buttonHelp !== undefined) buttonHelp.classList.remove(mainCss.Disabled);
-    if(iconEmoji !== undefined) iconEmoji.parentElement.classList.remove(mainCss.Disabled);
+    const {openVoice} = this.props;
+    openVoice();
+    // const {mainCss} = this.props,
+    //   buttonHelp = document.getElementsByClassName(mainCss.ButtonHelp)[0],
+    //   iconEmoji = document.getElementsByClassName(mainCss.IconEmoji)[0];
+    // if(buttonHelp !== undefined) buttonHelp.classList.remove(mainCss.Disabled);
+    // if(iconEmoji !== undefined) iconEmoji.parentElement.classList.remove(mainCss.Disabled);
   }
 
   componentWillUnmount() {
@@ -56,9 +59,11 @@ export default class InputVoice extends Component {
 
   toggleListen() {
     if(!this.state.listening){
-      this.disabled();
-    }else{
+      // this.disabled();
       this.enabled();
+    }else{
+      // this.enabled();
+      this.disabled();
     }
     this.setState(
       {
@@ -84,7 +89,8 @@ export default class InputVoice extends Component {
 
   sendListening() {
     // debugger
-    this.enabled()
+    // this.enabled()
+    this.disabled()
     this.setState(
       {
         listening: false
@@ -189,7 +195,8 @@ export default class InputVoice extends Component {
   }
 
   render() {
-    const { mainCss } = this.props,
+    const { mainCss, inputStates } = this.props,
+      enabled = inputStates.get("enabledVoice"),
       { listening } = this.state;
     // debugger
     if (listening) {
@@ -199,11 +206,7 @@ export default class InputVoice extends Component {
         <button
           type="button"
           className={
-            mainCss.InputUserBtn +
-            " " +
-            mainCss.Btn +
-            " " +
-            mainCss.BtnTransparent
+            `${mainCss.InputUserBtn} ${mainCss.Btn} ${mainCss.BtnTransparent} ${enabled?'':mainCss.Disabled}`
           }
           onClick={this.toggleListen}
           ref={this.button}

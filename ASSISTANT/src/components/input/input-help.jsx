@@ -48,17 +48,18 @@ export default class InputHelp extends Component {
     }
   }
   render() {
-      const {mainCss} = this.props;
-    return (
-      <button
-      type="button"
-      className={mainCss.InputUserBtn + " " + mainCss.Btn+ " " + mainCss.BtnTransparent}
-      onClick={this.toggleHelper}
-      ref={this.button}
-    >
-      <i className={mainCss.IconHelp}/>
-    </button>
-    );
+      const {mainCss, inputStates} = this.props,
+      enabled = inputStates.get("enabledHelp");
+      return (
+        <button
+        type="button"
+        className={`${mainCss.InputUserBtn} ${mainCss.Btn} ${mainCss.BtnTransparent} ${enabled?'':mainCss.Disabled}`}
+        onClick={this.toggleHelper}
+        ref={this.button}
+      >
+        <i className={mainCss.IconHelp}/>
+      </button>
+      );
   }
 }
 
@@ -69,4 +70,5 @@ InputHelp.propTypes = {
   showWarningHelp: PropTypes.func.isRequired,
   hideWarningHelp: PropTypes.func.isRequired,
   mainCss: PropTypes.any.isRequired,
+  inputStates: PropTypes.object.isRequired
 };
