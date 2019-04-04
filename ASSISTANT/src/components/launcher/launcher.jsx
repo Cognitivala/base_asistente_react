@@ -97,6 +97,7 @@ export default class Launcher extends Component {
     mainCss,
     responsiveStates
   ) {
+    debugger
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
@@ -135,7 +136,6 @@ export default class Launcher extends Component {
   render() {
     const {
         customParamsStates,
-        saludoStates,
         launcherStates,
         conversationsStates,
         mainCss,
@@ -152,7 +152,6 @@ export default class Launcher extends Component {
       >
         {this.content(
           customParamsStates,
-          saludoStates,
           launcherStates,
           conversationsStates,
           mainCss,
