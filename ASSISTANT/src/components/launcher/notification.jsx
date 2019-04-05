@@ -9,9 +9,7 @@ export default class Notification extends Component {
       <React.Fragment>
         <NotificationCircle mainCss={mainCss} />
         <div className={mainCss.Notification}>
-          <div>
-            <span dangerouslySetInnerHTML={{ __html: saludo }} />
-          </div>
+          <span dangerouslySetInnerHTML={{ __html: saludo }} />
         </div>
       </React.Fragment>
     );
