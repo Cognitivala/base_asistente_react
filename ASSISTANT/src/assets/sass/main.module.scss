@@ -195,6 +195,7 @@ textarea {
     bottom: 7.5rem;
     right: 0;
     max-width: 28rem;
+    width: 28rem;
     padding: 1.6rem;
     padding-right: 4.2rem;
     box-shadow: 0 0 3rem 0 rgba(0, 0, 0, 0.1);
@@ -204,7 +205,7 @@ textarea {
     animation-fill-mode: both;
     border-radius: 2.4rem 2.4rem 0 2.4rem;
     line-height: 1.8rem;
-    p {
+    span {
       color: #6b6a6f;
       font-size: 12px;
     }
