@@ -97,7 +97,6 @@ export default class Launcher extends Component {
     mainCss,
     responsiveStates
   ) {
-    debugger
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
