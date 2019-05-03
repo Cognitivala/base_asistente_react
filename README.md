@@ -18,6 +18,12 @@ Proyecto que contiene 4 carpetas **"ASSISTANT", "CDN", "FRONT" y "REACT_CHART"**
 ## CDN
 El CDN es un proyecto hecho con VanillaJS y GULP. Con el cual se pinta el iframe en la página que se necesite el asistente, además de tener varios métodos **postMessage** que cambian los estilos del iframe.
 
+## FRONT
+Es el proyecto del mantenedor del asistente, es igual a todos, pero con mejoras. Desarrollado con pug, Jquery, javascript y sass. Toma los gráficos del proyecto **REACT_CHART**
+
+## REACT_CHART
+Tiene sólo los gráficos del mantenedor. Está desarrollado con ReactJS.
+
 ## ASISTENTE
 El ASISTENTE es un proyecto desarrollado con ReactJS, Redux, Sass. Es el asistente para cualquier nuevo proyecto, está hecho de forma modular para que sirva en todos los clientes. Tiene muchas funcionalidades, las cuales describiré a continuación:
 
