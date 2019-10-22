@@ -255,7 +255,14 @@ export function setColors(colorHeader){
 export function getSaludo() {
   return function action(dispatch) {
     dispatch(getSaludoStart());
-    const data = { general: { cid: null, id_cliente: "1" }, msg: null },
+    const data = { 
+      general: { 
+        cid: null,
+        id_cliente: "1",
+      }, 
+      msg: null,
+      origen: getUrlParams(),
+    },
       request = axios({
         method: "POST",
         headers: {
@@ -523,7 +530,10 @@ export function updateConversation(data) {
         "Content-Type": "application/json"
       },
       url: APIURL + "/message",
-      data: data
+      data: {
+        ...data,
+        origen: getUrlParams(),
+      },
     });
     return request
       .then(response => {
@@ -1237,7 +1247,10 @@ export function updateConversationButton(data) {
             "Content-Type": "application/json"
           },
           url: APIURL + "/message",
-          data: data
+          data: {
+            ...data,
+            origen: getUrlParams(),
+          },
         });
         return request.then(
           response => {
@@ -1472,7 +1485,10 @@ export function closeForm(data) {
         "Content-Type": "application/json"
       },
       url: APIURL + "/message",
-      data: data
+      data: {
+        ...data,
+        origen: getUrlParams(),
+      },
     });
     return request.then(
       response => {
@@ -1529,7 +1545,10 @@ export function sendForm(data, url, general) {
               "Content-Type": "application/json"
             },
             url: APIURL + "/message",
-            data: item
+            data: {
+              ...item,
+              origen: getUrlParams(),
+            },
           });
           return request
             .then(response => {
@@ -1613,4 +1632,13 @@ export function disabledVoice() {
   return function action(dispatch) {
     dispatch({ type: "DISABLED_VOICE"});
   };
+}
+
+// HELPERS
+
+const getUrlParams = () => {
+  var url_string = window.location.href;
+  var url = new URL(url_string);
+  var origen = url.searchParams.get("origen");
+  return origen;
 }
