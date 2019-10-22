@@ -11,7 +11,7 @@
   "dependencies": {
     "browser-sync": "^2.26.3",
     "event-stream": "^4.0.1",
-    "gulp": "3.8.0",
+    "gulp": "4.0.0",
     "gulp-autoprefixer": "^6.0.0",
     "gulp-babel": "^8.0.0",
     "gulp-cache": "^1.1.1",
