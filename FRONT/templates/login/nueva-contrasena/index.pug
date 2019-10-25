@@ -64,7 +64,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           beforeSend: function (xhr) {
             xhr.setRequestHeader ("Authorization", "Bearer " + myTknUrl);
           },
-          url: getPath + 'mad/vd-tkn'
+          url: getPath + 'mant/vd-tkn'
         }).done(function(response){
           if(response.estado.codigoEstado == 200){
             $(function () {
