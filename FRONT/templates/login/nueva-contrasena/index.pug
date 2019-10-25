@@ -69,7 +69,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           if(response.estado.codigoEstado == 200){
             $(function () {
               $(document).ajaxSend(function(e, xhr, options) {
-                xhr.setRequestHeader ("Authorization", "Bearer " + myTknUrl);
+                //- xhr.setRequestHeader ("Authorization", "Bearer " + myTknUrl);
+                changePass(myTknUrl);
               });
             });
           }else{
