@@ -68,12 +68,6 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }).done(function(response){
           if(response.estado.codigoEstado == 200){
             changePass(myTknUrl);
-            console.log("changePass");
-            //- $(function () {
-            //-   $(document).ajaxSend(function(e, xhr, options) {
-            //-     //- xhr.setRequestHeader ("Authorization", "Bearer " + myTknUrl);
-            //-   });
-            //- });
           }else{
             OpenModal('URL expirada', 'La URL ha expirado, debe volver a hacer su petición para crear su nueva contraseña');
           }
@@ -85,7 +79,6 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       }
 
       function changePass(getTkn) {
-        console.log("changepass2");
         var passVal  = pass.value;
 
         if(passVal !== repeatPass.value || passVal === '' || repeatPass.value === ''){
