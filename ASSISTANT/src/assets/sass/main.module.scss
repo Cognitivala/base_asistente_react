@@ -1843,3 +1843,15 @@ textarea {
     animation: spinner 0.6s infinite linear;
   }
 }
+
+.closeFormContainer {
+  display: flex;
+  margin-top: 2rem !important;
+  width: 100%;
+  flex-direction: row-reverse;
+  margin-right: 3rem !important;
+}
+
+.closeFormButton {
+  margin: 0 !important;
+}

@@ -83,6 +83,7 @@ export default class Valoracion extends Component {
         pudo_resolver,
         enabled: false
       };
+    
     this.props.sendValoracion(args, general);
   }
 
@@ -100,7 +101,6 @@ export default class Valoracion extends Component {
   }
 
   valorar(e) {
-    debugger
     const { valoracionStates } = this.props,
       comment = valoracionStates.get("comment"),
       pudoResolver = valoracionStates.get("pudoResolver");
