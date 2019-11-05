@@ -54,8 +54,8 @@ export default class Valoracion extends Component {
     e.preventDefault();
     this.props.setOverStar(0);
   }
-
-  requestValue() {
+  
+  requestValue = async () => {
     const { valoracionStates, generalStates, conversationsStates } = this.props,
       general = generalStates.toJS(),
       comentario = valoracionStates.get("comment");
@@ -63,7 +63,7 @@ export default class Valoracion extends Component {
       valoracion = valoracionStates.get("stars"),
       conversaciones = conversationsStates.get("conversations"),
       sizeConv = conversationsStates.get("conversations").size;
-
+      console.log("sddds", generalStates);
     const input = conversaciones
         .get(sizeConv - 4)
         .get("msg")
@@ -84,7 +84,9 @@ export default class Valoracion extends Component {
         enabled: false
       };
     
-    this.props.sendValoracion(args, general);
+    await this.props.sendValoracion(args, general);
+    await this.props.setServicioValoracion(null);
+    await this.props.setPudoResolverValoracion(null);
   }
 
   closeValoracion(e) {
@@ -98,6 +100,7 @@ export default class Valoracion extends Component {
         enabled: false
       };
     this.props.updateConversationButton(conversation);
+    console.log("sdssdsdsd aquii");
   }
 
   valorar(e) {
@@ -119,6 +122,7 @@ export default class Valoracion extends Component {
     //   this.props.setErrorValoracion(data);
     // } else {
       this.requestValue();
+      console.log("ai dice gratis");
     // }
   }
 
