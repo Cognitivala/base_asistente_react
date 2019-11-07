@@ -83,7 +83,7 @@ export default class Formulario extends Component {
     const { generalStates: general, closeForm } = this.props,
       conversation = {
         general,
-        msg: ["No"],
+        msg: ["noContacto"],
         send: "to",
         enabled: false
       };

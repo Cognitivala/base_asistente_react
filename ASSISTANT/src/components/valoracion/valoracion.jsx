@@ -122,7 +122,6 @@ export default class Valoracion extends Component {
     //   this.props.setErrorValoracion(data);
     // } else {
       this.requestValue();
-      console.log("ai dice gratis");
     // }
   }
 
