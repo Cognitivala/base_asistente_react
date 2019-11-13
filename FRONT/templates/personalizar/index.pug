@@ -701,6 +701,14 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
       function changeImg(el) {
         var getImg = $(el).val();
+        var permitted_extentions = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
+
+        if(!permitted_extentions.includes(ext(getImg))){
+          openModal('#myModal', 'Lo sentimos', 'Los formatos permitidos son png/jpg/jpeg', 'error');
+          el.value = '';
+          return;
+        }
+
         var _URL = window.URL || window.webkitURL;
 
         if(el.id == 'img-logotipo'){
@@ -739,6 +747,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           }
           img.src = _URL.createObjectURL(el.files[0]);
         }
+      }
+
+      //esta funcion obtiene la extensión del archivo
+      function ext(url) {
+        return (url = url.substr(1 + url.lastIndexOf("/")).split('?')[0]).split('#')[0].substr(url.lastIndexOf("."))
       }
 
       function openModal(modal, title, body, theclass) {
