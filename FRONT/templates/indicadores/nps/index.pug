@@ -222,6 +222,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           createCSV(response.csv, 'nps');
           
           if (response.respuesta.promotores > 0 && response.respuesta.detractores > 0 && response.respuesta.neutros > 0){
+            console.log("ola ke ase");
             var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
             var totalISN = ((response.respuesta.promotores - response.respuesta.detractores) / totalAssessment) * 100;
             var getPromoters = (100 * response.respuesta.promotores) / totalAssessment;
@@ -235,6 +236,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             $('.col-1').empty().text(getDetractors.toFixed(1)+'%');
             $('.promedio-isn').empty().append(totalISN.toFixed(1)+'<span class="percentage">%</span>');
           }else{
+            console.log("ola ke no ase");
             var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
             var totalISN = 0;
             var getPromoters = 0;
