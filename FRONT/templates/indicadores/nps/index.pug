@@ -226,9 +226,15 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           $('.col-5').css('height', getPromoters.toFixed(1)+'%');
           $('.col-5').empty().text(getPromoters.toFixed(1)+'%');
           var getNeutral = (100 * response.respuesta.neutros) / totalAssessment;
+          console.log("getNeutral: ", getNeutral)
           $('.col-3').css('height', getNeutral.toFixed(1)+'%');
           $('.col-3').empty().text(getNeutral.toFixed(1)+'%');
           var getDetractors = (100 * response.respuesta.detractores) / totalAssessment;
+          console.log("getDetractors: ", getDetractors);
+          if (totalAssessment < 1 && totalISN < 1 && getPromoters < 1){
+            getNeutral = 0;
+            getDetractors = 0;
+          }
           $('.col-1').css('height', getDetractors.toFixed(1)+'%');
           $('.col-1').empty().text(getDetractors.toFixed(1)+'%');
           $('.promedio-isn').empty().append(totalISN.toFixed(1)+'<span class="percentage">%</span>');
