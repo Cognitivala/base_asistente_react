@@ -322,7 +322,7 @@
           }
           createCSV(response.csv, 'nps');
           
-          if (response.respuesta.promotores > 0 && response.respuesta.detractores > 0 && response.respuesta.neutros > 0){
+          if (response.respuesta.promotores > 0 || response.respuesta.detractores > 0 || response.respuesta.neutros > 0){
             console.log("ola ke ase");
             var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
             var totalISN = ((response.respuesta.promotores - response.respuesta.detractores) / totalAssessment) * 100;
