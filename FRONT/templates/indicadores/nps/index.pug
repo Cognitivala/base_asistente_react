@@ -220,9 +220,9 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             return false;
           }
           createCSV(response.csv, 'nps');
-          var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
           
           if (response.respuesta.promotores > 0 && response.respuesta.detractores > 0 && response.respuesta.neutros > 0){
+            var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
             var totalISN = ((response.respuesta.promotores - response.respuesta.detractores) / totalAssessment) * 100;
             var getPromoters = (100 * response.respuesta.promotores) / totalAssessment;
             $('.col-5').css('height', getPromoters.toFixed(1)+'%');
@@ -235,13 +235,15 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             $('.col-1').empty().text(getDetractors.toFixed(1)+'%');
             $('.promedio-isn').empty().append(totalISN.toFixed(1)+'<span class="percentage">%</span>');
           }else{
+            var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
+            var totalISN = 0;
             var getPromoters = 0;
             $('.col-5').css('height', getPromoters+'%');
             $('.col-5').empty().text(getPromoters+'%');
-            getNeutral = 0;
+            var getNeutral = 0;
             $('.col-3').css('height', getNeutral+'%');
             $('.col-3').empty().text(getNeutral+'%');
-            getDetractors = 0;
+            var getDetractors = 0;
             $('.col-1').css('height', getDetractors+'%');
             $('.col-1').empty().text(getDetractors+'%');
             $('.promedio-isn').empty().append(totalISN+'<span class="percentage">%</span>');
