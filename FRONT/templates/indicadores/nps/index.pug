@@ -231,7 +231,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           $('.col-3').empty().text(getNeutral.toFixed(1)+'%');
           var getDetractors = (100 * response.respuesta.detractores) / totalAssessment;
           console.log("getDetractors: ", getDetractors);
-          if (totalAssessment < 1 && totalISN < 1 && getPromoters < 1){
+          if (response.respuesta.promotores < 1 && response.respuesta.detractores < 1 && response.respuesta.neutros < 1){
             getNeutral = 0;
             getDetractors = 0;
           }
