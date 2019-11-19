@@ -680,12 +680,9 @@
         $exampleIntents = $form.find('.example-intent'),
         exampleList = [],
         intentName = $form.find('#name-intent-edit').val();
-      if(intentName !== ""){
-        console.log("gfds");
-        $.each($exampleIntents, function(index, element) {
-          exampleList.push({text: $(element).val()});
-        });
-      }
+      $.each($exampleIntents, function(index, element) {
+        exampleList.push({text: $(element).val()});
+      });
       $form.append('<div class="spinner"><div class="loader"></div></div>');
       var promise = $.ajax({
         type: 'POST',
