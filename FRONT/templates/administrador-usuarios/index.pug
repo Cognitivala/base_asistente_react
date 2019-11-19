@@ -159,7 +159,10 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           //- };
 
         }
-
+        function validateUserName(name){
+          var regex = /^[0-9a-zA-Z\_]+$/;
+          return regex.test(name) ? true : false;
+        }
         function validateEmail(email) {
           var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
           return regex.test(email) ? true : false;
@@ -199,6 +202,10 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             getSelect = true;
           } else {
             getSelect = false;
+          }
+          if(!validateUserName(getNameVal)){
+            var usernameField = document.getElementById('user-name');
+            usernameField.setCustomValidity("No se permiten caracteres especiales");
           }
           if(!validateEmail(getEmailVal)){
             var emailfield  = document.getElementById('user-mail');
