@@ -143,6 +143,8 @@
           //Input vacío
           if((tagName == 'input' || tagName == 'textarea') && elementValue == ""){
               setToFalse($element);
+              alert("Campos en blanco o vacíos no permitidos");
+
           }else if((tagName == 'input' || tagName == 'textarea') && elementValue != "" && $element.attr('type') != 'radio'){
               setToTrue($element);
           }
