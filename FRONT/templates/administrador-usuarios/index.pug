@@ -205,7 +205,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           }
           if(!validateUserName(getNameVal)){
             var usernameField = document.getElementById('user-name');
-            usernameField.addClass('invalid-input');
+            //- usernameField.addClass('invalid-input');
             var span = $('<span />').attr({'class':'error-span' }).html('No se permiten caracteres especiales');
             $('#user-name').html(span);
           }
