@@ -832,8 +832,7 @@
           if (response.status == '200') {
             var examples = response.examples,
               htmlInner = '';
-            
-            console.log("ejemplos", examples);
+          
             for(var i = 0; i < examples.length; i++){
               htmlInner += '<li>';
               htmlInner += '<label>';
