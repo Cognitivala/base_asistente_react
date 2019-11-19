@@ -329,7 +329,9 @@
           }
           if(!validateUserName(getNameVal)){
             var usernameField = document.getElementById('user-name');
-            usernameField.setCustomValidity("No se permiten caracteres especiales");
+            $usernameField.addClass('invalid-input').removeClass('valid-input');
+            var span = $('<span />').attr({'class':'error-span' }).html('No se permiten caracteres especiales');
+            $('#user-name').html(span);
           }
           if(!validateEmail(getEmailVal)){
             var emailfield  = document.getElementById('user-mail');
