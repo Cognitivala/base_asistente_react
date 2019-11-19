@@ -828,9 +828,10 @@
         });
         promise.done((function(response){
           if (response.status == '200') {
-            var examples = response.examples;
+            var examples = response.examples,
+              htmlInner = '';
+            
             console.log("ejemplos", examples);
-                htmlInner = '';
             for(var i = 0; i < examples.length; i++){
               htmlInner += '<li>';
               htmlInner += '<label>';
