@@ -237,7 +237,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             $('.promedio-isn').empty().append(totalISN.toFixed(1)+'<span class="percentage">%</span>');
           }else{
             console.log("ola ke no ase");
-            var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
+            var totalAssessment = 0;
             var totalISN = 0;
             var getPromoters = 0;
             $('.col-5').css('height', getPromoters+'%');
