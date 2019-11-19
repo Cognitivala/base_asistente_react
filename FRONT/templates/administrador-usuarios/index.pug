@@ -161,7 +161,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }
         function validateUserName(name){
           var regex = /^[0-9a-zA-Z\_]+$/;
-          return regex.test(name) ? true : false;
+          return regex.test(name) ? false : true;
         }
         function validateEmail(email) {
           var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
