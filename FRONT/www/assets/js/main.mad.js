@@ -681,6 +681,7 @@
         exampleList = [],
         intentName = $form.find('#name-intent-edit').val();
       if(intentName !== ""){
+        console.log("gfds");
         $.each($exampleIntents, function(index, element) {
           exampleList.push({text: $(element).val()});
         });
