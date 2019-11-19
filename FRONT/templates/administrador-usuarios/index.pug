@@ -161,7 +161,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         }
         function validateUserName(name){
           var regex = /^[0-9a-zA-Z\_]+$/;
-          return regex.test(name) ? false : true;
+          return regex.test(name) ? true : false;
         }
         function validateEmail(email) {
           var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -233,7 +233,11 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 craeteTrUser += '  </td>';
                 craeteTrUser += '</tr>';
             if($('.table tbody tr').hasClass('action')){
-
+              if(!validateUserName(getNameVal)){
+              var usernameField = document.getElementById('user-name');
+              //- usernameField.addClass('invalid-input');
+              var span = $('<span />').attr({'class':'error-span' }).html('No se permiten caracteres especiales');
+              $('#user-name').html(span);
               var args = {
                 nombre: getNameVal,
                 email: getEmailVal,

@@ -137,11 +137,11 @@
               </fieldset>
               <fieldset>
                 <label>Nombre</label>
-                <input id="user-name" type="text" name="user-name" placeholder="Nombre usuario"/>
+                <input class="user-name" id="user-name" type="text" name="user-name" placeholder="Nombre usuario"/>
               </fieldset>
               <fieldset>
                 <label>Email</label>
-                <input id="user-mail" type="email" name="user-mail" maxlength="128"/>
+                <input class="user-email" id="user-mail" type="email" name="user-mail" maxlength="128"/>
               </fieldset>
             </div>
             <div class="modal-footer">
@@ -285,7 +285,7 @@
         }
         function validateUserName(name){
           var regex = /^[0-9a-zA-Z\_]+$/;
-          return regex.test(name) ? false : true;
+          return regex.test(name) ? true : false;
         }
         function validateEmail(email) {
           var regex = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -357,7 +357,11 @@
                 craeteTrUser += '  </td>';
                 craeteTrUser += '</tr>';
             if($('.table tbody tr').hasClass('action')){
-      
+              if(!validateUserName(getNameVal)){
+              var usernameField = document.getElementById('user-name');
+              //- usernameField.addClass('invalid-input');
+              var span = $('<span />').attr({'class':'error-span' }).html('No se permiten caracteres especiales');
+              $('#user-name').html(span);
               var args = {
                 nombre: getNameVal,
                 email: getEmailVal,

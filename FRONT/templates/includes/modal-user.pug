@@ -13,10 +13,10 @@
               option(value="2") Lector
           fieldset
             label Nombre
-            input#user-name(type="text", name="user-name", placeholder="Nombre usuario")
+            input.user-name#user-name(type="text", name="user-name", placeholder="Nombre usuario")
           fieldset
             label Email
-            input#user-mail(type="email", name="user-mail", maxlength="128")
+            input.user-email#user-mail(type="email", name="user-mail", maxlength="128")
 
         .modal-footer
           button.pull-left#validate(type="submit" button onclick="saveUser()") Guardar
