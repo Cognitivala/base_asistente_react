@@ -133,7 +133,12 @@
                             <input class="colors" id="color-header" type="text" value="#1c75bc" onchange="getChangeColor(this)" style="background-color: #1c75bc;"/>
                           </fieldset>
                         </div>
-                        <div class="col-sm-6"></div>
+                        <div class="col-sm-6">
+                          <fieldset>
+                            <label>Fondo botón asistente</label>
+                            <input class="colors" id="color-buttons" type="text" value="#009dc3" onchange="getChangeColor(this)" style="background-color: #009dc3;"/>
+                          </fieldset>
+                        </div>
                       </div>
                     </div>
                     <button id="save-custom" button="button" onclick="saveCustomParams()">Guardar</button>
@@ -1019,11 +1024,11 @@
         var getTitle       = document.getElementById('title-assistant').value;
         var getSubTitle    = document.getElementById('subtitle-assistant').value;
         var colorHeader    = document.getElementById('color-header').value;
-        //- var colorButtons   = document.getElementById('color-buttons').value;
+        var colorButtons   = document.getElementById('color-buttons').value;
         var imgLogo        = $('#logotipo img').attr('src');
         var imgAvatar      = $('#avatar img').attr('src');
         var saludo         = document.getElementById('saludo-assistant').value;
-        if(getTitle == '' || getSubTitle == '' || colorHeader == '' ||  saludo == '') {
+        if(getTitle == '' || getSubTitle == '' || colorHeader == '' || colorButtons == '' || saludo == '') {
           openModal('#myModal', 'Lo sentimos', 'Debes completar todos los campos', 'error');
         } else {
           var args = {
@@ -1031,6 +1036,7 @@
             subtitulo: getSubTitle,
             color_fondo: colorHeader,
             color_fondo_chat: "",
+            color_btn: colorButtons,
             id_empresa: getId,
             logo: imgLogo,
             avatar: imgAvatar,
