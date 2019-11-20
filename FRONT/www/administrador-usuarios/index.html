@@ -319,7 +319,7 @@
         function saveUser() {
           var getNameVal    = document.getElementById('user-name').value,
               getEmailVal   = document.getElementById('user-mail').value,
-              getProfileVal = document.getElementById('user-profile').value,
+              getProfileVal = document.getElementById('user-profile').value, 
               addValProfile = '',
               getSelect     = false;
           if(getProfileVal.length > 0){
@@ -329,9 +329,10 @@
           }
           if(!validateUserName(getNameVal)){
             var usernameField = document.getElementById('user-name');
+            alert("No se permiten caracteres especiales");
             //- usernameField.addClass('invalid-input');
-            var span = $('<span />').attr({'class':'error-span' }).html('No se permiten caracteres especiales');
-            $('#user-name').html(span);
+            //- var span = $('<span />').attr({'class':'error-span' }).html('No se permiten caracteres especiales');
+            //- $('#user-name').html(span);
           }
           console.log("ola ke no ase");
           if(!validateEmail(getEmailVal)){
