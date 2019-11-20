@@ -329,7 +329,7 @@
           }
           if(getNameVal.trim() != '' && !validateUserName(getNameVal)){
             var usernameField = document.getElementById('user-name');
-            alert("No se permiten caracteres especiales");
+            alert("No se permiten nombres con caracteres especiales");
             return;
           }
           if(!validateEmail(getEmailVal)){
@@ -356,12 +356,6 @@
                 craeteTrUser += '  </td>';
                 craeteTrUser += '</tr>';
             if($('.table tbody tr').hasClass('action')){
-              if(!validateUserName(getNameVal)){
-              var usernameField = document.getElementById('user-name');
-              //- usernameField.addClass('invalid-input');
-              var span = $('<span />').attr({'class':'error-span' }).html('No se permiten caracteres especiales');
-              $('#user-name').html(span);
-              }
               var args = {
                 nombre: getNameVal,
                 email: getEmailVal,
