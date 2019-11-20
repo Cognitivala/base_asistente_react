@@ -311,6 +311,7 @@
           }
           $(modal + ' #user-name').val(getNameTd);
           $(modal + ' #user-mail').val(getEmailTd);
+          $(modal + ' #user-mail').prop('disabled', true);
           $(modal + ' #user-profile').val(setValProfile);
         }
         
@@ -386,6 +387,7 @@
                   openCustomModal('#myModal', 'Ups!', 'No se ha podido editar el usuario', 'error');
                 }
               })
+              $('#myModalUser #user-mail').prop('disabled', false);
               $('#myModalUser').modal('hide');
               removeData();
             } else {
@@ -424,6 +426,7 @@
         function removeData() {
           $('#myModalUser #user-name').val('');
           $('#myModalUser #user-mail').val('');
+          $('#myModalUser #user-mail').prop('disabled', false);
           $('#myModalUser #user-profile').val('');
           $('.table tbody tr').removeClass('action');
           $('.table tbody tr').removeClass('to-delete');
