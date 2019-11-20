@@ -327,15 +327,11 @@
           } else {
             getSelect = false;
           }
-          if(!validateUserName(getNameVal)){
+          if(getNameVal.trim() != '' && !validateUserName(getNameVal)){
             var usernameField = document.getElementById('user-name');
             alert("No se permiten caracteres especiales");
-            //- usernameField.addClass('invalid-input');
-            //- var span = $('<span />').attr({'class':'error-span' }).html('No se permiten caracteres especiales');
-            //- $('#user-name').html(span);
             return;
           }
-          console.log("ola ke no ase");
           if(!validateEmail(getEmailVal)){
             var emailfield  = document.getElementById('user-mail');
             emailfield.setCustomValidity("Complete el campo correspondiente");
@@ -360,7 +356,6 @@
                 craeteTrUser += '  </td>';
                 craeteTrUser += '</tr>';
             if($('.table tbody tr').hasClass('action')){
-              console.log("ola ke ase");
               if(!validateUserName(getNameVal)){
               var usernameField = document.getElementById('user-name');
               //- usernameField.addClass('invalid-input');
