@@ -253,7 +253,7 @@ export function setColors(colorHeader){
 }
 //SALUDO
 export function getSaludo() {
-  return function action(dispatch) {
+  return function action(dispatch, getState) {
     dispatch(getSaludoStart());
     const data = { 
       general: { 
@@ -261,7 +261,7 @@ export function getSaludo() {
         id_cliente: "1",
       }, 
       msg: null,
-      origen: getUrlParams(),
+      origen: getUrlParams(getState),
     },
       request = axios({
         method: "POST",
@@ -521,7 +521,7 @@ function updateConversationError(data) {
   return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
-  return function action(dispatch) {
+  return function action(dispatch, getState) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
     const request = axios({
@@ -532,7 +532,7 @@ export function updateConversation(data) {
       url: APIURL + "/message",
       data: {
         ...data,
-        origen: getUrlParams(),
+        origen: getUrlParams(getState),
       },
     });
     return request
@@ -1238,7 +1238,7 @@ export function updateConversationButton(data) {
         // }, 500);
       };
     default:
-      return function action(dispatch) {
+      return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
@@ -1249,7 +1249,7 @@ export function updateConversationButton(data) {
           url: APIURL + "/message",
           data: {
             ...data,
-            origen: getUrlParams(),
+            origen: getUrlParams(getState),
           },
         });
         return request.then(
@@ -1475,7 +1475,7 @@ export function sendLike(data, general) {
 }
 //FORM
 export function closeForm(data) {
-  return function action(dispatch) {
+  return function action(dispatch, getState) {
     dispatch({ type: "DISABLED_FORM" });
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
@@ -1487,7 +1487,7 @@ export function closeForm(data) {
       url: APIURL + "/message",
       data: {
         ...data,
-        origen: getUrlParams(),
+        origen: getUrlParams(getState),
       },
     });
     return request.then(
@@ -1513,7 +1513,7 @@ export function closeForm(data) {
 }
 export function sendForm(data, url, general) {
   data.general = general;
-  return function action(dispatch) {
+  return function action(dispatch, getState) {
     dispatch({ type: "SEND_FORM_START" });
     const request = axios({
       method: "POST",
@@ -1547,7 +1547,7 @@ export function sendForm(data, url, general) {
             url: APIURL + "/message",
             data: {
               ...item,
-              origen: getUrlParams(),
+              origen: getUrlParams(getState),
             },
           });
           return request
@@ -1636,9 +1636,6 @@ export function disabledVoice() {
 
 // HELPERS
 
-const getUrlParams = () => {
-  var url_string = window.location.href;
-  var url = new URL(url_string);
-  var origen = url.searchParams.get("origen");
-  return origen;
+const getUrlParams = (getState) => {
+  return getState().generalStates.getIn(["integracion", "origen"]);
 }

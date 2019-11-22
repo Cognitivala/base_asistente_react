@@ -3,8 +3,9 @@
   class mainHandlers {
     constructor() {}
 
-    init(src) {
+    init(src, origin) {
       this.src = src;
+      this.origin = origin;
       this.responsive = "";
       this.createIframe();
     }
@@ -20,6 +21,7 @@
       ifrm.setAttribute("allow", "geolocation *;");
       ifrm.setAttribute("allow", "microphone *;");
       ifrm.setAttribute("src", this.src);
+      ifrm.setAttribute("data-origin", this.origin);
       div.appendChild(ifrm);
       document.body.appendChild(div);
       this.basicStylesSetUp();
