@@ -1637,5 +1637,7 @@ export function disabledVoice() {
 // HELPERS
 
 const getUrlParams = (getState) => {
-  return getState().generalStates.getIn(["integracion", "origen"]);
+  const origen = getState().generalStates.getIn(["integracion", "origen"]);
+  if(origen === "null") return null;
+  return origen;
 }
