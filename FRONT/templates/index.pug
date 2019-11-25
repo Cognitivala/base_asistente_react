@@ -19,13 +19,13 @@ html(lang="es-CL" dir="ltr" heightfull)
             .col-md-12
               .container-tabs
                 ul#tabs.nav.nav-tabs(role="tablist")
-                  li.active(role="intents")
-                    a(href="#", data-func="toggleTabs", data-index="0", data-name="intents")
-                      span Intenciones
+                  //- li.active(role="intents")
+                  //-   a(href="#", data-func="toggleTabs", data-index="0", data-name="intents")
+                  //-     span Intenciones
                   //- li(role="presentation")
                     a(href="#", data-func="toggleTabs", data-index="1")
                       span Entidades
-                  li(role="dialogs")
+                  li.active(role="dialogs")
                     a(href="#", data-func="toggleTabs", data-index="1", data-name="dialogs")
                       span Diálogo
                   li(role="url")
@@ -644,45 +644,45 @@ html(lang="es-CL" dir="ltr" heightfull)
         }
       }
 
-      function getAllIntents(){
-        var args = {
-          id_cliente: getSession
-        }
-        var promise = $.ajax({
-          type: 'POST',
-          url: getPath + 'mant/list_intents',
-          "headers": {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer "+getTkn
-          },
-          data: JSON.stringify(args),
-          dataType: 'json',
-          contentType: 'application/json; charset=utf-8'
-        }).done(function(response){
-          if(response.status == '200'){
-            var makeListIntent = '';
-            var funcRemoveItem = "'delete_intent'";
-            for(var i = 0; i < response.intents.length; i++) {
-              var theIntent = "'"+response.intents[i].intent+"'";
-              makeListIntent = '<li>';
-              makeListIntent += '<div>';
-              makeListIntent += '<a href="#;" onclick="getIntentExamples(this,'+theIntent+')">';
-              makeListIntent += '<i class="fa fa-angle-right" aria-hidden="true"></i>';
-              makeListIntent += '<h5>#'+response.intents[i].intent+'</h5>';
-              makeListIntent += '</a>';
-              //- makeListIntent += '<a href="#;" onclick="removeItem(this,'+funcRemoveItem+')"><i class="fa fa-trash"></i></a>';
-              makeListIntent += '<a href="#;" onclick="deleteIntent(event)"><i class="fa fa-trash"></i></a>';
-              makeListIntent += '</div>';
-              makeListIntent += '</li>';
-              $('#list-intents').append(makeListIntent);
-            }
-            spinnerOut('#intents', false);
-          } else {
-            spinnerOut('#intents', false);
-            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
-          }
-        })
-      }
+      //- function getAllIntents(){
+      //-   var args = {
+      //-     id_cliente: getSession
+      //-   }
+      //-   var promise = $.ajax({
+      //-     type: 'POST',
+      //-     url: getPath + 'mant/list_intents',
+      //-     "headers": {
+      //-       "Content-Type": "application/json",
+      //-       "Authorization": "Bearer "+getTkn
+      //-     },
+      //-     data: JSON.stringify(args),
+      //-     dataType: 'json',
+      //-     contentType: 'application/json; charset=utf-8'
+      //-   }).done(function(response){
+      //-     if(response.status == '200'){
+      //-       var makeListIntent = '';
+      //-       var funcRemoveItem = "'delete_intent'";
+      //-       for(var i = 0; i < response.intents.length; i++) {
+      //-         var theIntent = "'"+response.intents[i].intent+"'";
+      //-         makeListIntent = '<li>';
+      //-         makeListIntent += '<div>';
+      //-         makeListIntent += '<a href="#;" onclick="getIntentExamples(this,'+theIntent+')">';
+      //-         makeListIntent += '<i class="fa fa-angle-right" aria-hidden="true"></i>';
+      //-         makeListIntent += '<h5>#'+response.intents[i].intent+'</h5>';
+      //-         makeListIntent += '</a>';
+      //-         //- makeListIntent += '<a href="#;" onclick="removeItem(this,'+funcRemoveItem+')"><i class="fa fa-trash"></i></a>';
+      //-         makeListIntent += '<a href="#;" onclick="deleteIntent(event)"><i class="fa fa-trash"></i></a>';
+      //-         makeListIntent += '</div>';
+      //-         makeListIntent += '</li>';
+      //-         $('#list-intents').append(makeListIntent);
+      //-       }
+      //-       spinnerOut('#intents', false);
+      //-     } else {
+      //-       spinnerOut('#intents', false);
+      //-       openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+      //-     }
+      //-   })
+      //- }
 
       function deleteIntent(event){
         event.preventDefault();
