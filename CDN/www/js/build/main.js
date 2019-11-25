@@ -20,8 +20,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "init",
       value: function init(src, origin) {
         this.src = src;
-        this.origin = origin; // console.log('init: ', this.origen)
-
+        this.origin = origin;
         this.responsive = "";
         this.createIframe();
       }
