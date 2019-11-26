@@ -160,7 +160,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
 
         }
         function validateUserName(name){
-          var regex = /[^A-Za-z0-9\-]/;
+          var regex = /^[a-zA-Z0-9_ ]*$/;
           return regex.test(name) ? true : false;
         }
         function validateEmail(email) {
