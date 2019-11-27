@@ -63,13 +63,12 @@ export default class Valoracion extends Component {
       valoracion = valoracionStates.get("stars"),
       conversaciones = conversationsStates.get("conversations"),
       sizeConv = conversationsStates.get("conversations").size;
-      console.log("sddds", generalStates);
     const input = conversaciones
-        .get(sizeConv - 4)
+        .get(sizeConv - 7)
         .get("msg")
         .get(0);
     const output = conversaciones
-        .get(sizeConv - 3)
+        .get(sizeConv - 6)
         .get("msg")
         .get(0);
     const args = {
@@ -100,7 +99,6 @@ export default class Valoracion extends Component {
         enabled: false
       };
     this.props.updateConversationButton(conversation);
-    console.log("sdssdsdsd aquii");
   }
 
   valorar(e) {
