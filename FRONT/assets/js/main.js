@@ -129,8 +129,7 @@ function filterUser() {
   // 2 = Lector
   switch (user.prf) {
     case "1":
-      if(pathName === "/administrador-usuarios/") window.location.href = getPath;
-      if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
+      console.log("1");
       break;
     case "2":
       if(pathName !== "/indicadores/") window.location.href = getPath + "indicadores/";
