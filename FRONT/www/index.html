@@ -79,39 +79,6 @@
                   <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="4" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
                 </ul>
                 <div class="tab-content">
-                  <div class="tab-pane fade in active" id="intents" role="tabpanel" data-tab-target="0">
-                    <ul class="list-intents" id="list-intents"></ul>
-                    <div class="container-modal" id="modal-intent">
-                      <div class="container-form">
-                        <div class="form" data-validate="async" data-func-validate="saveIntent" novalidate="novalidate">
-                          <fieldset class="hash" id="fieldset-intent">
-                            <label>Nombre de intención</label><span>#</span>
-                            <input id="name-intent" type="text" placeholder="Escribe el nombre de la intención" required="required"/><a class="button-add add-intent" href="#;" onclick="addFieldset(this, 'Ejemplo de intención', 'Escribe el ejemplo de la intención')">Añadir ejemplo <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                          </fieldset>
-                          <div class="buttons">
-                            <button class="pull-left" id="save-intent" button="button">Guardar</button>
-                            <button class="pull-right" button="button" close="close" onclick="closeCustomModal('#modal-intent'); clearIntent('#name-intent', '#modal-intent')">Cerrar</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="backdrop-modal"></div>
-                    </div>
-                    <div class="container-modal" id="modal-intent-edit">
-                      <div class="container-form">
-                        <form data-validate="async" data-func-validate="editIntent" novalidate="novalidate">
-                          <fieldset class="hash" id="fieldset-intent-edit">
-                            <label>Nombre de intención</label><span>#</span>
-                            <input id="name-intent-edit" type="text" placeholder="Escribe el nombre de la intención" required="required" readOnly="readOnly"/><a class="button-add add-intent" href="#;" onclick="addFieldset(this, 'Ejemplo de intención', 'Escribe el ejemplo de la intención')">Añadir ejemplo <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                          </fieldset>
-                          <div class="buttons">
-                            <button class="pull-left" id="save-intent" button="button" type="submit">Guardar</button>
-                            <button class="pull-right" button="button" close="close" onclick="closeCustomModal('#modal-intent-edit'); clearIntent('#name-intent', '#modal-intent-edit')" type="button">Cerrar</button>
-                          </div>
-                        </form>
-                      </div>
-                      <div class="backdrop-modal"></div>
-                    </div>
-                  </div>
                   <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="1">
                     <ul class="list-dialogs scroll" id="list-dialogs">       </ul>
                     <div class="container-modal" id="modal-dialog">
