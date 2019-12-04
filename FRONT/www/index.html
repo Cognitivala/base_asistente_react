@@ -73,46 +73,13 @@
             <div class="col-md-12">
               <div class="container-tabs">
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
-                  <li class="active" role="dialogs"><a href="#" data-func="toggleTabs" data-index="1" data-name="dialogs"><span>Diálogo</span></a></li>
-                  <li role="url"><a href="#" data-func="toggleTabs" data-index="2" data-name="url"><span>URL</span></a></li>
-                  <li role="killswitch"><a href="#" data-func="toggleTabs" data-index="3" data-name="killswitch"><span>Switch</span></a></li>
-                  <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="4" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
+                  <li class="active" role="dialogs"><a href="#" data-func="toggleTabs" data-index="0" data-name="dialogs"><span>Diálogo</span></a></li>
+                  <li role="url"><a href="#" data-func="toggleTabs" data-index="1" data-name="url"><span>URL</span></a></li>
+                  <li role="killswitch"><a href="#" data-func="toggleTabs" data-index="2" data-name="killswitch"><span>Switch</span></a></li>
+                  <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="3" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
                 </ul>
                 <div class="tab-content">
-                  <div class="tab-pane fade in active" id="intents" role="tabpanel" data-tab-target="0">
-                    <ul class="list-intents" id="list-intents"></ul>
-                    <div class="container-modal" id="modal-intent">
-                      <div class="container-form">
-                        <div class="form" data-validate="async" data-func-validate="saveIntent" novalidate="novalidate">
-                          <fieldset class="hash" id="fieldset-intent">
-                            <label>Nombre de intención</label><span>#</span>
-                            <input id="name-intent" type="text" placeholder="Escribe el nombre de la intención" required="required"/><a class="button-add add-intent" href="#;" onclick="addFieldset(this, 'Ejemplo de intención', 'Escribe el ejemplo de la intención')">Añadir ejemplo <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                          </fieldset>
-                          <div class="buttons">
-                            <button class="pull-left" id="save-intent" button="button">Guardar</button>
-                            <button class="pull-right" button="button" close="close" onclick="closeCustomModal('#modal-intent'); clearIntent('#name-intent', '#modal-intent')">Cerrar</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="backdrop-modal"></div>
-                    </div>
-                    <div class="container-modal" id="modal-intent-edit">
-                      <div class="container-form">
-                        <form data-validate="async" data-func-validate="editIntent" novalidate="novalidate">
-                          <fieldset class="hash" id="fieldset-intent-edit">
-                            <label>Nombre de intención</label><span>#</span>
-                            <input id="name-intent-edit" type="text" placeholder="Escribe el nombre de la intención" required="required" readOnly="readOnly"/><a class="button-add add-intent" href="#;" onclick="addFieldset(this, 'Ejemplo de intención', 'Escribe el ejemplo de la intención')">Añadir ejemplo <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                          </fieldset>
-                          <div class="buttons">
-                            <button class="pull-left" id="save-intent" button="button" type="submit">Guardar</button>
-                            <button class="pull-right" button="button" close="close" onclick="closeCustomModal('#modal-intent-edit'); clearIntent('#name-intent', '#modal-intent-edit')" type="button">Cerrar</button>
-                          </div>
-                        </form>
-                      </div>
-                      <div class="backdrop-modal"></div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="1">
+                  <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="0">
                     <ul class="list-dialogs scroll" id="list-dialogs">       </ul>
                     <div class="container-modal" id="modal-dialog">
                       <div class="container-form">
@@ -167,7 +134,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="url" role="tabpanel" data-tab-target="2">
+                  <div class="tab-pane fade" id="url" role="tabpanel" data-tab-target="1">
                     <div class="form" id="form-url" autocomplete="off">
                       <fieldset>
                         <label>Ingresa la url del sitio en donde estará el asistente</label>
@@ -176,7 +143,7 @@
                       <button id="save-url" button="button" onclick="saveUrl()">Guardar</button>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="killswitch" role="tabpanel" data-tab-target="3">
+                  <div class="tab-pane fade" id="killswitch" role="tabpanel" data-tab-target="2">
                     <div class="form" id="form-switch" autocomplete="off">
                       <fieldset>
                         <label class="title">Activa o desactiva el asistente virtual que se encuentra en tu sitio web.</label>
@@ -188,7 +155,7 @@
                       <button id="save-switch" button="button" data-func="saveSwitch">Guardar</button>
                     </div>
                   </div>
-                  <div class="tab-pane fade" id="upload-file" role="tabpanel" data-tab-target="4">
+                  <div class="tab-pane fade" id="upload-file" role="tabpanel" data-tab-target="3">
                     <div class="header">
                       <p>para cargar nuevos cursos/diplomados/carreras, debe seleccionar el tipo de archivo que desea subir, a continuación use el botón "CARGAR" para subir su archivo</p>
                     </div>
@@ -949,67 +916,67 @@
       //-   })
       //- }
       
-      function deleteIntent(event){
-        event.preventDefault();
-        var $item = $(event.currentTarget);
-        $('[data-todelete]').removeAttr('data-todelete');
-        $item.parent().parent().attr('data-todelete', '1');
-        openModal('#myModalChoice', 'Advertencia', '¿Estás seguro que deseas remover este item?', '');
-      }
+      //- function deleteIntent(event){
+      //-   event.preventDefault();
+      //-   var $item = $(event.currentTarget);
+      //-   $('[data-todelete]').removeAttr('data-todelete');
+      //-   $item.parent().parent().attr('data-todelete', '1');
+      //-   openModal('#myModalChoice', 'Advertencia', '¿Estás seguro que deseas remover este item?', '');
+      //- }
       
-      function getIntentExamples(el, intent){
-        if(!el.classList.contains('examples')){
-          var makeListIntent, getMakeListIntent = '';
-          var funcGetIntent = "getIntent(this, '#modal-intent', '#name-intent', 'fieldset-intent')";
-          var funcOpenModal = "openCustomModal(this,'#modal-intent', true, 'edit_intent')";
-          var getService = 'edit_intent';
-          var args = {
-            id_cliente: getSession,
-            intent: intent.toString()
-          }
-          var promise = $.ajax({
-            type: 'POST',
-            url: getPath + 'mant/list_examples',
-            "headers": {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer "+getTkn
-            },
-            data: JSON.stringify(args),
-            dataType: 'json',
-            contentType: 'application/json; charset=utf-8'
-          }).done(function(response){
-            if(response.status == '200'){
-              if(response.examples.length > 0){
-                for(var i = 0; i < response.examples.length; i++){
-                  getMakeListIntent += '<li>';
-                  getMakeListIntent += '<label>';
-                  getMakeListIntent += '<div class="checkbox"><input type="checkbox"/><span></span></div>';
-                  getMakeListIntent += '<span>'+response.examples[i].text+'</span>';
-                  getMakeListIntent += '</label>';
-                  getMakeListIntent += '</li>';
-                }
-                makeListIntent = '<ul>';
-                makeListIntent += '<li class="options">';
-                makeListIntent += '<button button="button" button-mini="button-mini" secondary="secondary" onclick="'+funcGetIntent+'; '+funcOpenModal+'">Editar / Añadir ejemplo<i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
-                makeListIntent += '<a href="#;" onclick="deleteExamples(this,';
-                makeListIntent += "'"+getService+"'";
-                makeListIntent += ')"><i class="fa fa-trash"></i></a>';
-                makeListIntent += '</li>';
-                makeListIntent += getMakeListIntent;
-                makeListIntent += '</ul>';
-                el.parentElement.parentElement.insertAdjacentHTML( 'beforeend', makeListIntent );
-                el.classList.add('examples');
-              }
+      //- function getIntentExamples(el, intent){
+      //-   if(!el.classList.contains('examples')){
+      //-     var makeListIntent, getMakeListIntent = '';
+      //-     var funcGetIntent = "getIntent(this, '#modal-intent', '#name-intent', 'fieldset-intent')";
+      //-     var funcOpenModal = "openCustomModal(this,'#modal-intent', true, 'edit_intent')";
+      //-     var getService = 'edit_intent';
+      //-     var args = {
+      //-       id_cliente: getSession,
+      //-       intent: intent.toString()
+      //-     }
+      //-     var promise = $.ajax({
+      //-       type: 'POST',
+      //-       url: getPath + 'mant/list_examples',
+      //-       "headers": {
+      //-         "Content-Type": "application/json",
+      //-         "Authorization": "Bearer "+getTkn
+      //-       },
+      //-       data: JSON.stringify(args),
+      //-       dataType: 'json',
+      //-       contentType: 'application/json; charset=utf-8'
+      //-     }).done(function(response){
+      //-       if(response.status == '200'){
+      //-         if(response.examples.length > 0){
+      //-           for(var i = 0; i < response.examples.length; i++){
+      //-             getMakeListIntent += '<li>';
+      //-             getMakeListIntent += '<label>';
+      //-             getMakeListIntent += '<div class="checkbox"><input type="checkbox"/><span></span></div>';
+      //-             getMakeListIntent += '<span>'+response.examples[i].text+'</span>';
+      //-             getMakeListIntent += '</label>';
+      //-             getMakeListIntent += '</li>';
+      //-           }
+      //-           makeListIntent = '<ul>';
+      //-           makeListIntent += '<li class="options">';
+      //-           makeListIntent += '<button button="button" button-mini="button-mini" secondary="secondary" onclick="'+funcGetIntent+'; '+funcOpenModal+'">Editar / Añadir ejemplo<i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
+      //-           makeListIntent += '<a href="#;" onclick="deleteExamples(this,';
+      //-           makeListIntent += "'"+getService+"'";
+      //-           makeListIntent += ')"><i class="fa fa-trash"></i></a>';
+      //-           makeListIntent += '</li>';
+      //-           makeListIntent += getMakeListIntent;
+      //-           makeListIntent += '</ul>';
+      //-           el.parentElement.parentElement.insertAdjacentHTML( 'beforeend', makeListIntent );
+      //-           el.classList.add('examples');
+      //-         }
       
-            } else {
-              spinnerOut('#intents', false);
-              openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
-            }
-          })
-        }
-        myClick(el);
-        getExamplesNum();
-      }
+      //-       } else {
+      //-         spinnerOut('#intents', false);
+      //-         openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+      //-       }
+      //-     })
+      //-   }
+      //-   myClick(el);
+      //-   getExamplesNum();
+      //- }
       
       function getAllEntities(){
         getService = 'edit_entity';
@@ -1106,36 +1073,36 @@
         $(this).parent().parent().parent().parent().delay(500).removeClass('error, success');
       });
       
-      function getIntent(el, modal, input, fieldset) {
-        var arrList = [];
-        var getH5 = el.parentElement.parentElement.parentElement.children[0].children[0].children[1].textContent.substring(1);
-        //- el.parentElement.parentElement.parentElement.children["0"].children["0"].children[1]
-        var getLengthExamples = el.parentElement.parentElement.children.length;
-        for(var i = 0; i < getLengthExamples; i++){
-          if(i != 0){
-            var getVal = el.parentElement.parentElement.children[i].children[0].innerText;
-            arrList.push(getVal);
-          }
-        }
+      //- function getIntent(el, modal, input, fieldset) {
+      //-   var arrList = [];
+      //-   var getH5 = el.parentElement.parentElement.parentElement.children[0].children[0].children[1].textContent.substring(1);
+      //-   //- el.parentElement.parentElement.parentElement.children["0"].children["0"].children[1]
+      //-   var getLengthExamples = el.parentElement.parentElement.children.length;
+      //-   for(var i = 0; i < getLengthExamples; i++){
+      //-     if(i != 0){
+      //-       var getVal = el.parentElement.parentElement.children[i].children[0].innerText;
+      //-       arrList.push(getVal);
+      //-     }
+      //-   }
         
-        $(modal).find(input).val(getH5);
-        $(modal).find('form').attr('data-type', 'edit');
+      //-   $(modal).find(input).val(getH5);
+      //-   $(modal).find('form').attr('data-type', 'edit');
       
-        var getTest = document.getElementById(fieldset);
-        var getLabelText = document.getElementById(fieldset).children[3].children[0].innerHTML;
-        var getPlaceholder = document.getElementById(fieldset).children[2].attributes[2].textContent;
-        for(var i = 0; i < arrList.length; i++){
-          var where = document.getElementById(fieldset);        
-          var subfieldset = '<fieldset class="wrapper-intent">';
-              subfieldset += '<label>'+getLabelText+'</label>';
-              subfieldset += '<input class="example-intent" type="text" value="'+arrList[i]+'" placeholder="'+getPlaceholder+'" required="required"/>';
-              subfieldset += '<a class="add-intent delete" href="#;" onclick="removeFieldset(this)">';
-              subfieldset += '<i class="fa fa-times-circle" aria-hidden="true"></i>';
-              subfieldset += '</a>';
-              subfieldset += '</fieldset>';
-          where.insertAdjacentHTML('beforeend', subfieldset);
-        }
-      }
+      //-   var getTest = document.getElementById(fieldset);
+      //-   var getLabelText = document.getElementById(fieldset).children[3].children[0].innerHTML;
+      //-   var getPlaceholder = document.getElementById(fieldset).children[2].attributes[2].textContent;
+      //-   for(var i = 0; i < arrList.length; i++){
+      //-     var where = document.getElementById(fieldset);        
+      //-     var subfieldset = '<fieldset class="wrapper-intent">';
+      //-         subfieldset += '<label>'+getLabelText+'</label>';
+      //-         subfieldset += '<input class="example-intent" type="text" value="'+arrList[i]+'" placeholder="'+getPlaceholder+'" required="required"/>';
+      //-         subfieldset += '<a class="add-intent delete" href="#;" onclick="removeFieldset(this)">';
+      //-         subfieldset += '<i class="fa fa-times-circle" aria-hidden="true"></i>';
+      //-         subfieldset += '</a>';
+      //-         subfieldset += '</fieldset>';
+      //-     where.insertAdjacentHTML('beforeend', subfieldset);
+      //-   }
+      //- }
       
       function getExamplesNum(){
         $('ul.list-intents > li').each(function(){
