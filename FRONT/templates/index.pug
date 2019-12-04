@@ -40,16 +40,16 @@ html(lang="es-CL" dir="ltr" heightfull)
 
                 .tab-content
 
-                  #intents.tab-pane.fade.in.active(role="tabpanel" data-tab-target="0")
+                  //- #intents.tab-pane.fade.in.active(role="tabpanel" data-tab-target="0")
 
                     //- button#new-intent(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-intent', false, 'create_intent')")
                       | Añadir intención 
                       i.fa.fa-plus-circle( aria-hidden="true")
 
-                    ul#list-intents.list-intents
+                    //- ul#list-intents.list-intents
 
-                    include includes/modal-intents.pug
-                    include includes/modal-intents-edit.pug
+                    //- include includes/modal-intents.pug
+                    //- include includes/modal-intents-edit.pug
 
                   //- #entities.tab-pane.fade(role="tabpanel" data-tab-target="1")
 
@@ -62,7 +62,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                     include includes/modal-entities.pug
                     include includes/modal-entities-edit.pug
 
-                  #dialog.tab-pane.fade(role="tabpanel" data-tab-target="1")
+                  #dialog.tab-pane.fade.in.active(role="tabpanel" data-tab-target="1")
 
                     //- button#new-dialog(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-dialog', false, 'create_dialog')")
                       | Añadir diálogo 
@@ -692,59 +692,59 @@ html(lang="es-CL" dir="ltr" heightfull)
         openModal('#myModalChoice', 'Advertencia', '¿Estás seguro que deseas remover este item?', '');
       }
 
-      //- function getIntentExamples(el, intent){
-      //-   if(!el.classList.contains('examples')){
-      //-     var makeListIntent, getMakeListIntent = '';
-      //-     var funcGetIntent = "getIntent(this, '#modal-intent', '#name-intent', 'fieldset-intent')";
-      //-     var funcOpenModal = "openCustomModal(this,'#modal-intent', true, 'edit_intent')";
-      //-     var getService = 'edit_intent';
-      //-     var args = {
-      //-       id_cliente: getSession,
-      //-       intent: intent.toString()
-      //-     }
-      //-     var promise = $.ajax({
-      //-       type: 'POST',
-      //-       url: getPath + 'mant/list_examples',
-      //-       "headers": {
-      //-         "Content-Type": "application/json",
-      //-         "Authorization": "Bearer "+getTkn
-      //-       },
-      //-       data: JSON.stringify(args),
-      //-       dataType: 'json',
-      //-       contentType: 'application/json; charset=utf-8'
-      //-     }).done(function(response){
-      //-       if(response.status == '200'){
-      //-         if(response.examples.length > 0){
-      //-           for(var i = 0; i < response.examples.length; i++){
-      //-             getMakeListIntent += '<li>';
-      //-             getMakeListIntent += '<label>';
-      //-             getMakeListIntent += '<div class="checkbox"><input type="checkbox"/><span></span></div>';
-      //-             getMakeListIntent += '<span>'+response.examples[i].text+'</span>';
-      //-             getMakeListIntent += '</label>';
-      //-             getMakeListIntent += '</li>';
-      //-           }
-      //-           makeListIntent = '<ul>';
-      //-           makeListIntent += '<li class="options">';
-      //-           makeListIntent += '<button button="button" button-mini="button-mini" secondary="secondary" onclick="'+funcGetIntent+'; '+funcOpenModal+'">Editar / Añadir ejemplo<i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
-      //-           makeListIntent += '<a href="#;" onclick="deleteExamples(this,';
-      //-           makeListIntent += "'"+getService+"'";
-      //-           makeListIntent += ')"><i class="fa fa-trash"></i></a>';
-      //-           makeListIntent += '</li>';
-      //-           makeListIntent += getMakeListIntent;
-      //-           makeListIntent += '</ul>';
-      //-           el.parentElement.parentElement.insertAdjacentHTML( 'beforeend', makeListIntent );
-      //-           el.classList.add('examples');
-      //-         }
+      function getIntentExamples(el, intent){
+        if(!el.classList.contains('examples')){
+          var makeListIntent, getMakeListIntent = '';
+          var funcGetIntent = "getIntent(this, '#modal-intent', '#name-intent', 'fieldset-intent')";
+          var funcOpenModal = "openCustomModal(this,'#modal-intent', true, 'edit_intent')";
+          var getService = 'edit_intent';
+          var args = {
+            id_cliente: getSession,
+            intent: intent.toString()
+          }
+          var promise = $.ajax({
+            type: 'POST',
+            url: getPath + 'mant/list_examples',
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer "+getTkn
+            },
+            data: JSON.stringify(args),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function(response){
+            if(response.status == '200'){
+              if(response.examples.length > 0){
+                for(var i = 0; i < response.examples.length; i++){
+                  getMakeListIntent += '<li>';
+                  getMakeListIntent += '<label>';
+                  getMakeListIntent += '<div class="checkbox"><input type="checkbox"/><span></span></div>';
+                  getMakeListIntent += '<span>'+response.examples[i].text+'</span>';
+                  getMakeListIntent += '</label>';
+                  getMakeListIntent += '</li>';
+                }
+                makeListIntent = '<ul>';
+                makeListIntent += '<li class="options">';
+                makeListIntent += '<button button="button" button-mini="button-mini" secondary="secondary" onclick="'+funcGetIntent+'; '+funcOpenModal+'">Editar / Añadir ejemplo<i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
+                makeListIntent += '<a href="#;" onclick="deleteExamples(this,';
+                makeListIntent += "'"+getService+"'";
+                makeListIntent += ')"><i class="fa fa-trash"></i></a>';
+                makeListIntent += '</li>';
+                makeListIntent += getMakeListIntent;
+                makeListIntent += '</ul>';
+                el.parentElement.parentElement.insertAdjacentHTML( 'beforeend', makeListIntent );
+                el.classList.add('examples');
+              }
 
-      //-       } else {
-      //-         spinnerOut('#intents', false);
-      //-         openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
-      //-       }
-      //-     })
-      //-   }
-      //-   myClick(el);
-      //-   getExamplesNum();
-      //- }
+            } else {
+              spinnerOut('#intents', false);
+              openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+            }
+          })
+        }
+        myClick(el);
+        getExamplesNum();
+      }
 
       function getAllEntities(){
         getService = 'edit_entity';

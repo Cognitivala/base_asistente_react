@@ -79,40 +79,7 @@
                   <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="4" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
                 </ul>
                 <div class="tab-content">
-                  <div class="tab-pane fade in active" id="intents" role="tabpanel" data-tab-target="0">
-                    <ul class="list-intents" id="list-intents"></ul>
-                    <div class="container-modal" id="modal-intent">
-                      <div class="container-form">
-                        <div class="form" data-validate="async" data-func-validate="saveIntent" novalidate="novalidate">
-                          <fieldset class="hash" id="fieldset-intent">
-                            <label>Nombre de intención</label><span>#</span>
-                            <input id="name-intent" type="text" placeholder="Escribe el nombre de la intención" required="required"/><a class="button-add add-intent" href="#;" onclick="addFieldset(this, 'Ejemplo de intención', 'Escribe el ejemplo de la intención')">Añadir ejemplo <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                          </fieldset>
-                          <div class="buttons">
-                            <button class="pull-left" id="save-intent" button="button">Guardar</button>
-                            <button class="pull-right" button="button" close="close" onclick="closeCustomModal('#modal-intent'); clearIntent('#name-intent', '#modal-intent')">Cerrar</button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="backdrop-modal"></div>
-                    </div>
-                    <div class="container-modal" id="modal-intent-edit">
-                      <div class="container-form">
-                        <form data-validate="async" data-func-validate="editIntent" novalidate="novalidate">
-                          <fieldset class="hash" id="fieldset-intent-edit">
-                            <label>Nombre de intención</label><span>#</span>
-                            <input id="name-intent-edit" type="text" placeholder="Escribe el nombre de la intención" required="required" readOnly="readOnly"/><a class="button-add add-intent" href="#;" onclick="addFieldset(this, 'Ejemplo de intención', 'Escribe el ejemplo de la intención')">Añadir ejemplo <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
-                          </fieldset>
-                          <div class="buttons">
-                            <button class="pull-left" id="save-intent" button="button" type="submit">Guardar</button>
-                            <button class="pull-right" button="button" close="close" onclick="closeCustomModal('#modal-intent-edit'); clearIntent('#name-intent', '#modal-intent-edit')" type="button">Cerrar</button>
-                          </div>
-                        </form>
-                      </div>
-                      <div class="backdrop-modal"></div>
-                    </div>
-                  </div>
-                  <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="1">
+                  <div class="tab-pane fade in active" id="dialog" role="tabpanel" data-tab-target="1">
                     <ul class="list-dialogs scroll" id="list-dialogs">       </ul>
                     <div class="container-modal" id="modal-dialog">
                       <div class="container-form">
@@ -957,59 +924,59 @@
         openModal('#myModalChoice', 'Advertencia', '¿Estás seguro que deseas remover este item?', '');
       }
       
-      //- function getIntentExamples(el, intent){
-      //-   if(!el.classList.contains('examples')){
-      //-     var makeListIntent, getMakeListIntent = '';
-      //-     var funcGetIntent = "getIntent(this, '#modal-intent', '#name-intent', 'fieldset-intent')";
-      //-     var funcOpenModal = "openCustomModal(this,'#modal-intent', true, 'edit_intent')";
-      //-     var getService = 'edit_intent';
-      //-     var args = {
-      //-       id_cliente: getSession,
-      //-       intent: intent.toString()
-      //-     }
-      //-     var promise = $.ajax({
-      //-       type: 'POST',
-      //-       url: getPath + 'mant/list_examples',
-      //-       "headers": {
-      //-         "Content-Type": "application/json",
-      //-         "Authorization": "Bearer "+getTkn
-      //-       },
-      //-       data: JSON.stringify(args),
-      //-       dataType: 'json',
-      //-       contentType: 'application/json; charset=utf-8'
-      //-     }).done(function(response){
-      //-       if(response.status == '200'){
-      //-         if(response.examples.length > 0){
-      //-           for(var i = 0; i < response.examples.length; i++){
-      //-             getMakeListIntent += '<li>';
-      //-             getMakeListIntent += '<label>';
-      //-             getMakeListIntent += '<div class="checkbox"><input type="checkbox"/><span></span></div>';
-      //-             getMakeListIntent += '<span>'+response.examples[i].text+'</span>';
-      //-             getMakeListIntent += '</label>';
-      //-             getMakeListIntent += '</li>';
-      //-           }
-      //-           makeListIntent = '<ul>';
-      //-           makeListIntent += '<li class="options">';
-      //-           makeListIntent += '<button button="button" button-mini="button-mini" secondary="secondary" onclick="'+funcGetIntent+'; '+funcOpenModal+'">Editar / Añadir ejemplo<i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
-      //-           makeListIntent += '<a href="#;" onclick="deleteExamples(this,';
-      //-           makeListIntent += "'"+getService+"'";
-      //-           makeListIntent += ')"><i class="fa fa-trash"></i></a>';
-      //-           makeListIntent += '</li>';
-      //-           makeListIntent += getMakeListIntent;
-      //-           makeListIntent += '</ul>';
-      //-           el.parentElement.parentElement.insertAdjacentHTML( 'beforeend', makeListIntent );
-      //-           el.classList.add('examples');
-      //-         }
+      function getIntentExamples(el, intent){
+        if(!el.classList.contains('examples')){
+          var makeListIntent, getMakeListIntent = '';
+          var funcGetIntent = "getIntent(this, '#modal-intent', '#name-intent', 'fieldset-intent')";
+          var funcOpenModal = "openCustomModal(this,'#modal-intent', true, 'edit_intent')";
+          var getService = 'edit_intent';
+          var args = {
+            id_cliente: getSession,
+            intent: intent.toString()
+          }
+          var promise = $.ajax({
+            type: 'POST',
+            url: getPath + 'mant/list_examples',
+            "headers": {
+              "Content-Type": "application/json",
+              "Authorization": "Bearer "+getTkn
+            },
+            data: JSON.stringify(args),
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8'
+          }).done(function(response){
+            if(response.status == '200'){
+              if(response.examples.length > 0){
+                for(var i = 0; i < response.examples.length; i++){
+                  getMakeListIntent += '<li>';
+                  getMakeListIntent += '<label>';
+                  getMakeListIntent += '<div class="checkbox"><input type="checkbox"/><span></span></div>';
+                  getMakeListIntent += '<span>'+response.examples[i].text+'</span>';
+                  getMakeListIntent += '</label>';
+                  getMakeListIntent += '</li>';
+                }
+                makeListIntent = '<ul>';
+                makeListIntent += '<li class="options">';
+                makeListIntent += '<button button="button" button-mini="button-mini" secondary="secondary" onclick="'+funcGetIntent+'; '+funcOpenModal+'">Editar / Añadir ejemplo<i class="fa fa-plus-circle" aria-hidden="true"></i></button>';
+                makeListIntent += '<a href="#;" onclick="deleteExamples(this,';
+                makeListIntent += "'"+getService+"'";
+                makeListIntent += ')"><i class="fa fa-trash"></i></a>';
+                makeListIntent += '</li>';
+                makeListIntent += getMakeListIntent;
+                makeListIntent += '</ul>';
+                el.parentElement.parentElement.insertAdjacentHTML( 'beforeend', makeListIntent );
+                el.classList.add('examples');
+              }
       
-      //-       } else {
-      //-         spinnerOut('#intents', false);
-      //-         openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
-      //-       }
-      //-     })
-      //-   }
-      //-   myClick(el);
-      //-   getExamplesNum();
-      //- }
+            } else {
+              spinnerOut('#intents', false);
+              openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+            }
+          })
+        }
+        myClick(el);
+        getExamplesNum();
+      }
       
       function getAllEntities(){
         getService = 'edit_entity';
