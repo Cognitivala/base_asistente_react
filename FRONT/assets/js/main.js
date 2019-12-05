@@ -143,7 +143,7 @@ function filterUser() {
       //   "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
       // ).remove();
       // if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
-      $('.editorOnly', '#admin-users-btn').remove();
+      $('.editorOnly, #admin-users-btn, #get-code-btn').remove();
       $('.editorOnlyDisabled').prop('disabled', true);
       break;
     default:
