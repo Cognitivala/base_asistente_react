@@ -337,13 +337,13 @@
           buttonReplace = '',
           $container = '';
       
-        buttonAddDialog = '<li class="response">';
+        buttonAddDialog = '<li class="response editorOnly">';
         buttonAddDialog += '  <button class="editorOnly" button="button" button-mini="button-mini" secondary="secondary" data-func="newDialogW">Añadir respuesta <i class="fa fa-plus"></i></button>';
         buttonAddDialog += '</li>';
       
       for (var i = 0; i < data.length; i++){
 
-        // console.log(data[i]);
+        console.log("ola ke ase");
 
         if (data[i].output != null) {
           if (data[i].output.hasOwnProperty('text')) {
