@@ -239,7 +239,7 @@ export default class Assistant extends Component {
       minimized = assistantStates.get("minimized"),
       cssClass = responsiveStates.get("responsive") === "mobile" ? mainCss.Mobile : "",
       cssClass2 = this.state.moreHeader?mainCss.HeaderMore:"",
-      positionHelp = customParamsStates.getIn(["customParams","settings","positionHelp"]);
+      positionHelp = customParamsStates.getIn(["customParams","settings","position_help"]);
       if (minimized) {
         return (
           <React.Fragment/>
