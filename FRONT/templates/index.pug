@@ -86,20 +86,20 @@ html(lang="es-CL" dir="ltr" heightfull)
                       fieldset
                         label.title Activa o desactiva el asistente virtual que se encuentra en tu sitio web.
                         label
-                          input(type="checkbox")
+                          input.editorOnlyDisabled(type="checkbox")
                           .my-switch
-                      button#save-switch(button data-func="saveSwitch") Guardar
+                      button.editorOnly#save-switch(button data-func="saveSwitch") Guardar
 
                   #upload-file.tab-pane.fade(role="tabpanel", data-tab-target="4")
                     .header
                       p para cargar nuevos cursos/diplomados/carreras, debe seleccionar el tipo de archivo que desea subir, a continuación use el botón "CARGAR" para subir su archivo
                     form.upload(name="uploadExcel" enctype="multipart/form-data" method="post")
-                      label.select
+                      label.select.editorOnlyDisabled
                         select(name="selectUploadExcel")
                           option(value="0", selected="true") Cursos
                           option(value="1") Diplomados
                           option(value="2") Carreras
-                      a.download-csv(pull-right,onClick="this.nextElementSibling.click()")
+                      a.download-csv.editorOnly(pull-right,onClick="this.nextElementSibling.click()")
                         | Cargar
                         i.fa.fa-upload(aria-hidden="true")
                       input.btn.hide.download-csv(type="file", accept=".xls, .xlsx", onchange="changeExcel(this)", name="file")

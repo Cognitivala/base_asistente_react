@@ -337,7 +337,7 @@
           buttonReplace = '',
           $container = '';
       
-        buttonAddDialog = '<li class="response">';
+        buttonAddDialog = '<li class="response editorOnly">';
         buttonAddDialog += '  <button button="button" button-mini="button-mini" secondary="secondary" data-func="newDialogW">Añadir respuesta <i class="fa fa-plus"></i></button>';
         buttonAddDialog += '</li>';
       
