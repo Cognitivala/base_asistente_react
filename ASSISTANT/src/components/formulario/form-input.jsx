@@ -42,6 +42,10 @@ FormInput.propTypes = {
   validate: PropTypes.object,
   withError: PropTypes.bool,
   mainCss: PropTypes.object.isRequired,
+<<<<<<< HEAD
   value: PropTypes.value
   
+=======
+  value: PropTypes.string
+>>>>>>> master
 };
