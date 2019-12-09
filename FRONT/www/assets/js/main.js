@@ -144,7 +144,7 @@ function filterUser() {
       // ).remove();
       // if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
       $('.editorOnly, #admin-users-btn, #get-code-btn, #save-url, .dialog-content>ul>li>.editorOnly').remove();
-      $('.editorOnlyDisabled, #get-url').prop('disabled', true);
+      $('.editorOnlyDisabled, #get-url, .editorOnly').prop('disabled', true);
       break;
     default:
       break;
