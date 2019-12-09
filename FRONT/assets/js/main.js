@@ -143,7 +143,7 @@ function filterUser() {
         "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
         "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
       ).remove();
-    }else if(pathName !== "/indicadores/interacciones"){
+    }else if(pathName === "/indicadores/interacciones"){
       window.location.href = getPath + "indicadores/interacciones";
     }
     if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
