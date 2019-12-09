@@ -62,7 +62,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                     include includes/modal-entities.pug
                     include includes/modal-entities-edit.pug
 
-                  #dialog.tab-pane.fade.in.active(role="tabpanel" data-tab-target="1")
+                  #dialog.tab-pane.fade(role="tabpanel" data-tab-target="1")
 
                     //- button#new-dialog(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-dialog', false, 'create_dialog')")
                       | Añadir diálogo 
@@ -643,7 +643,7 @@ html(lang="es-CL" dir="ltr" heightfull)
           $(parent+' .spinner').fadeOut(300);
         }
       }
-      
+
       function getAllIntents(){
         var args = {
           id_cliente: getSession
