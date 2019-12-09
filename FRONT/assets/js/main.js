@@ -138,9 +138,6 @@ function filterUser() {
       break;
     case "2":
     if(pathName !== "/indicadores/") window.location.href = getPath + "indicadores/";
-    if(pathName !== "/indicadores/interacciones") window.location.href = getPath + "indicadores/interacciones";
-    if(pathName !== "/indicadores/origen") window.location.href = getPath + "indicadores/origen";
-    if(pathName !== "/indicadores/valoraciones") window.location.href = getPath + "indicadores/valoraciones";
     $(
       "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
       "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
