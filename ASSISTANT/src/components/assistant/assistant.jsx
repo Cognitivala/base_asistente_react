@@ -239,7 +239,7 @@ export default class Assistant extends Component {
       minimized = assistantStates.get("minimized"),
       cssClass = responsiveStates.get("responsive") === "mobile" ? mainCss.Mobile : "",
       cssClass2 = this.state.moreHeader?mainCss.HeaderMore:"",
-      positionHelp = customParamsStates.getIn(["customParams","settings","positionHelp"]);
+      positionHelp = customParamsStates.getIn(["customParams","settings","position_help"]);
       if (minimized) {
         return (
           <React.Fragment/>
@@ -262,7 +262,7 @@ export default class Assistant extends Component {
               ayuda={ayuda}
               colorHeader={customParamsStates
                 .get("customParams")
-                .get("colorHeader")}
+                .get("color_header")}
               ayudaStates={this.props.ayudaStates}
               openHelp={this.props.openHelp}
               closeHelp={this.props.closeHelp}
@@ -295,7 +295,7 @@ export default class Assistant extends Component {
 
   render() {
     const { assistantStates, conversationsStates ,customParamsStates, responsiveStates, mainCss } = this.props,
-    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
+    colorHeader = customParamsStates.getIn(["customParams","color_header"]);
     return (
       <IsFetching
         colorHeader={colorHeader}
