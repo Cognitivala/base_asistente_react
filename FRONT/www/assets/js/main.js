@@ -143,8 +143,8 @@ function filterUser() {
       //   "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
       // ).remove();
       // if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
-      $('.editorOnly, #admin-users-btn, #get-code-btn, #save-url, .dialog-content>ul>li>.editorOnly').remove();
-      $('.editorOnlyDisabled, #get-url').prop('disabled', true);
+      $('.editorOnly, #admin-users-btn, #get-code-btn, #save-url, .like-img, #save-custom').remove();
+      $('.editorOnlyDisabled, #get-url, #title-assistant, #subtitle-assistant, #saludo-assistant, #color-header, #color-buttons').prop('disabled', true);
       break;
     default:
       break;
