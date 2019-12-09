@@ -19,9 +19,9 @@ html(lang="es-CL" dir="ltr" heightfull)
             .col-md-12
               .container-tabs
                 ul#tabs.nav.nav-tabs(role="tablist")
-                  //- li.active(role="intents")
-                  //-   a(href="#", data-func="toggleTabs", data-index="0", data-name="intents")
-                  //-     span Intenciones
+                  li.active(role="intents")
+                    a(href="#", data-func="toggleTabs", data-index="0", data-name="intents")
+                      span Intenciones
                   //- li(role="presentation")
                     a(href="#", data-func="toggleTabs", data-index="1")
                       span Entidades
@@ -40,16 +40,16 @@ html(lang="es-CL" dir="ltr" heightfull)
 
                 .tab-content
 
-                  //- #intents.tab-pane.fade.in.active(role="tabpanel" data-tab-target="0")
+                  #intents.tab-pane.fade.in.active(role="tabpanel" data-tab-target="0")
 
                     //- button#new-intent(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-intent', false, 'create_intent')")
                       | Añadir intención 
                       i.fa.fa-plus-circle( aria-hidden="true")
 
-                    //- ul#list-intents.list-intents
+                    ul#list-intents.list-intents
 
-                    //- include includes/modal-intents.pug
-                    //- include includes/modal-intents-edit.pug
+                    include includes/modal-intents.pug
+                    include includes/modal-intents-edit.pug
 
                   //- #entities.tab-pane.fade(role="tabpanel" data-tab-target="1")
 
@@ -62,7 +62,7 @@ html(lang="es-CL" dir="ltr" heightfull)
                     include includes/modal-entities.pug
                     include includes/modal-entities-edit.pug
 
-                  #dialog.tab-pane.fade.in.active(role="tabpanel" data-tab-target="1")
+                  #dialog.tab-pane.fade(role="tabpanel" data-tab-target="1")
 
                     //- button#new-dialog(button button-mini margin-bottom onclick="openCustomModal(this, '#modal-dialog', false, 'create_dialog')")
                       | Añadir diálogo 
@@ -643,46 +643,46 @@ html(lang="es-CL" dir="ltr" heightfull)
           $(parent+' .spinner').fadeOut(300);
         }
       }
-      // uncomment to getting intents tab
-      //- function getAllIntents(){
-      //-   var args = {
-      //-     id_cliente: getSession
-      //-   }
-      //-   var promise = $.ajax({
-      //-     type: 'POST',
-      //-     url: getPath + 'mant/list_intents',
-      //-     "headers": {
-      //-       "Content-Type": "application/json",
-      //-       "Authorization": "Bearer "+getTkn
-      //-     },
-      //-     data: JSON.stringify(args),
-      //-     dataType: 'json',
-      //-     contentType: 'application/json; charset=utf-8'
-      //-   }).done(function(response){
-      //-     if(response.status == '200'){
-      //-       var makeListIntent = '';
-      //-       var funcRemoveItem = "'delete_intent'";
-      //-       for(var i = 0; i < response.intents.length; i++) {
-      //-         var theIntent = "'"+response.intents[i].intent+"'";
-      //-         makeListIntent = '<li>';
-      //-         makeListIntent += '<div>';
-      //-         makeListIntent += '<a href="#;" onclick="getIntentExamples(this,'+theIntent+')">';
-      //-         makeListIntent += '<i class="fa fa-angle-right" aria-hidden="true"></i>';
-      //-         makeListIntent += '<h5>#'+response.intents[i].intent+'</h5>';
-      //-         makeListIntent += '</a>';
-      //-         //- makeListIntent += '<a href="#;" onclick="removeItem(this,'+funcRemoveItem+')"><i class="fa fa-trash"></i></a>';
-      //-         makeListIntent += '<a href="#;" onclick="deleteIntent(event)"><i class="fa fa-trash"></i></a>';
-      //-         makeListIntent += '</div>';
-      //-         makeListIntent += '</li>';
-      //-         $('#list-intents').append(makeListIntent);
-      //-       }
-      //-       spinnerOut('#intents', false);
-      //-     } else {
-      //-       spinnerOut('#intents', false);
-      //-       openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
-      //-     }
-      //-   })
-      //- }
+
+      function getAllIntents(){
+        var args = {
+          id_cliente: getSession
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath + 'mant/list_intents',
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200'){
+            var makeListIntent = '';
+            var funcRemoveItem = "'delete_intent'";
+            for(var i = 0; i < response.intents.length; i++) {
+              var theIntent = "'"+response.intents[i].intent+"'";
+              makeListIntent = '<li>';
+              makeListIntent += '<div>';
+              makeListIntent += '<a href="#;" onclick="getIntentExamples(this,'+theIntent+')">';
+              makeListIntent += '<i class="fa fa-angle-right" aria-hidden="true"></i>';
+              makeListIntent += '<h5>#'+response.intents[i].intent+'</h5>';
+              makeListIntent += '</a>';
+              //- makeListIntent += '<a href="#;" onclick="removeItem(this,'+funcRemoveItem+')"><i class="fa fa-trash"></i></a>';
+              makeListIntent += '<a href="#;" onclick="deleteIntent(event)"><i class="fa fa-trash"></i></a>';
+              makeListIntent += '</div>';
+              makeListIntent += '</li>';
+              $('#list-intents').append(makeListIntent);
+            }
+            spinnerOut('#intents', false);
+          } else {
+            spinnerOut('#intents', false);
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+        })
+      }
 
       function deleteIntent(event){
         event.preventDefault();

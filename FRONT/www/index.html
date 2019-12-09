@@ -73,13 +73,47 @@
             <div class="col-md-12">
               <div class="container-tabs">
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
+                  <li class="active" role="intents"><a href="#" data-func="toggleTabs" data-index="0" data-name="intents"><span>Intenciones</span></a></li>
                   <li class="active" role="dialogs"><a href="#" data-func="toggleTabs" data-index="1" data-name="dialogs"><span>Diálogo</span></a></li>
                   <li role="url"><a href="#" data-func="toggleTabs" data-index="2" data-name="url"><span>URL</span></a></li>
                   <li role="killswitch"><a href="#" data-func="toggleTabs" data-index="3" data-name="killswitch"><span>Switch</span></a></li>
                   <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="4" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
                 </ul>
                 <div class="tab-content">
-                  <div class="tab-pane fade in active" id="dialog" role="tabpanel" data-tab-target="1">
+                  <div class="tab-pane fade in active" id="intents" role="tabpanel" data-tab-target="0">
+                    <ul class="list-intents" id="list-intents"></ul>
+                    <div class="container-modal" id="modal-intent">
+                      <div class="container-form">
+                        <div class="form" data-validate="async" data-func-validate="saveIntent" novalidate="novalidate">
+                          <fieldset class="hash" id="fieldset-intent">
+                            <label>Nombre de intención</label><span>#</span>
+                            <input id="name-intent" type="text" placeholder="Escribe el nombre de la intención" required="required"/><a class="button-add add-intent" href="#;" onclick="addFieldset(this, 'Ejemplo de intención', 'Escribe el ejemplo de la intención')">Añadir ejemplo <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                          </fieldset>
+                          <div class="buttons">
+                            <button class="pull-left" id="save-intent" button="button">Guardar</button>
+                            <button class="pull-right" button="button" close="close" onclick="closeCustomModal('#modal-intent'); clearIntent('#name-intent', '#modal-intent')">Cerrar</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="backdrop-modal"></div>
+                    </div>
+                    <div class="container-modal" id="modal-intent-edit">
+                      <div class="container-form">
+                        <form data-validate="async" data-func-validate="editIntent" novalidate="novalidate">
+                          <fieldset class="hash" id="fieldset-intent-edit">
+                            <label>Nombre de intención</label><span>#</span>
+                            <input id="name-intent-edit" type="text" placeholder="Escribe el nombre de la intención" required="required" readOnly="readOnly"/><a class="button-add add-intent" href="#;" onclick="addFieldset(this, 'Ejemplo de intención', 'Escribe el ejemplo de la intención')">Añadir ejemplo <i class="fa fa-plus-circle" aria-hidden="true"></i></a>
+                          </fieldset>
+                          <div class="buttons">
+                            <button class="pull-left" id="save-intent" button="button" type="submit">Guardar</button>
+                            <button class="pull-right" button="button" close="close" onclick="closeCustomModal('#modal-intent-edit'); clearIntent('#name-intent', '#modal-intent-edit')" type="button">Cerrar</button>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="backdrop-modal"></div>
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="dialog" role="tabpanel" data-tab-target="1">
                     <ul class="list-dialogs scroll" id="list-dialogs">       </ul>
                     <div class="container-modal" id="modal-dialog">
                       <div class="container-form">
@@ -875,46 +909,46 @@
           $(parent+' .spinner').fadeOut(300);
         }
       }
-      // uncomment to getting intents tab
-      //- function getAllIntents(){
-      //-   var args = {
-      //-     id_cliente: getSession
-      //-   }
-      //-   var promise = $.ajax({
-      //-     type: 'POST',
-      //-     url: getPath + 'mant/list_intents',
-      //-     "headers": {
-      //-       "Content-Type": "application/json",
-      //-       "Authorization": "Bearer "+getTkn
-      //-     },
-      //-     data: JSON.stringify(args),
-      //-     dataType: 'json',
-      //-     contentType: 'application/json; charset=utf-8'
-      //-   }).done(function(response){
-      //-     if(response.status == '200'){
-      //-       var makeListIntent = '';
-      //-       var funcRemoveItem = "'delete_intent'";
-      //-       for(var i = 0; i < response.intents.length; i++) {
-      //-         var theIntent = "'"+response.intents[i].intent+"'";
-      //-         makeListIntent = '<li>';
-      //-         makeListIntent += '<div>';
-      //-         makeListIntent += '<a href="#;" onclick="getIntentExamples(this,'+theIntent+')">';
-      //-         makeListIntent += '<i class="fa fa-angle-right" aria-hidden="true"></i>';
-      //-         makeListIntent += '<h5>#'+response.intents[i].intent+'</h5>';
-      //-         makeListIntent += '</a>';
-      //-         //- makeListIntent += '<a href="#;" onclick="removeItem(this,'+funcRemoveItem+')"><i class="fa fa-trash"></i></a>';
-      //-         makeListIntent += '<a href="#;" onclick="deleteIntent(event)"><i class="fa fa-trash"></i></a>';
-      //-         makeListIntent += '</div>';
-      //-         makeListIntent += '</li>';
-      //-         $('#list-intents').append(makeListIntent);
-      //-       }
-      //-       spinnerOut('#intents', false);
-      //-     } else {
-      //-       spinnerOut('#intents', false);
-      //-       openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
-      //-     }
-      //-   })
-      //- }
+      
+      function getAllIntents(){
+        var args = {
+          id_cliente: getSession
+        }
+        var promise = $.ajax({
+          type: 'POST',
+          url: getPath + 'mant/list_intents',
+          "headers": {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer "+getTkn
+          },
+          data: JSON.stringify(args),
+          dataType: 'json',
+          contentType: 'application/json; charset=utf-8'
+        }).done(function(response){
+          if(response.status == '200'){
+            var makeListIntent = '';
+            var funcRemoveItem = "'delete_intent'";
+            for(var i = 0; i < response.intents.length; i++) {
+              var theIntent = "'"+response.intents[i].intent+"'";
+              makeListIntent = '<li>';
+              makeListIntent += '<div>';
+              makeListIntent += '<a href="#;" onclick="getIntentExamples(this,'+theIntent+')">';
+              makeListIntent += '<i class="fa fa-angle-right" aria-hidden="true"></i>';
+              makeListIntent += '<h5>#'+response.intents[i].intent+'</h5>';
+              makeListIntent += '</a>';
+              //- makeListIntent += '<a href="#;" onclick="removeItem(this,'+funcRemoveItem+')"><i class="fa fa-trash"></i></a>';
+              makeListIntent += '<a href="#;" onclick="deleteIntent(event)"><i class="fa fa-trash"></i></a>';
+              makeListIntent += '</div>';
+              makeListIntent += '</li>';
+              $('#list-intents').append(makeListIntent);
+            }
+            spinnerOut('#intents', false);
+          } else {
+            spinnerOut('#intents', false);
+            openModal('#myModal', 'Auch!', 'Tenemos un problema, favor intenta nuevamente', 'error');
+          }
+        })
+      }
       
       function deleteIntent(event){
         event.preventDefault();
