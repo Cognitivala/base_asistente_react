@@ -129,22 +129,20 @@ function filterUser() {
   // 2 = Lector
   switch (user.prf) {
     case "1":
-      // if(pathName === "/administrador-usuarios/") window.location.href = getPath;
-      // $(
-      //   "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete,#get-code-btn, [role='killswitch'], "+
-      //   "#intents, #dialog, #url, #killswitch, [data-name='intents'], [data-name='dialogs'],[data-name='url'],[data-name='killswitch'] "
-      // ).remove();
-      // if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
+      if(pathName === "/administrador-usuarios/") window.location.href = getPath;
+      $(
+        "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete,#get-code-btn, [role='killswitch'], "+
+        "#intents, #dialog, #url, #killswitch, [data-name='intents'], [data-name='dialogs'],[data-name='url'],[data-name='killswitch'] "
+      ).remove();
+      if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
       break;
     case "2":
-      // if(pathName !== "/indicadores/") window.location.href = getPath;
-      // $(
-      //   "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
-      //   "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
-      // ).remove();
-      // if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
-      $('.editorOnly, #admin-users-btn, #get-code-btn, #save-url, .like-img, #save-custom').remove();
-      $('.editorOnlyDisabled, #get-url, #title-assistant, #subtitle-assistant, #saludo-assistant, #color-header, #color-buttons').prop('disabled', true);
+    if(pathName !== "/indicadores/") window.location.href = getPath;
+    $(
+      "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
+      "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
+    ).remove();
+    if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
       break;
     default:
       break;
