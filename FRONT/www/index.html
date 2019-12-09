@@ -74,7 +74,7 @@
               <div class="container-tabs">
                 <ul class="nav nav-tabs" id="tabs" role="tablist">
                   <li class="active" role="intents"><a href="#" data-func="toggleTabs" data-index="0" data-name="intents"><span>Intenciones</span></a></li>
-                  <li class="active" role="dialogs"><a href="#" data-func="toggleTabs" data-index="1" data-name="dialogs"><span>Diálogo</span></a></li>
+                  <li role="dialogs"><a href="#" data-func="toggleTabs" data-index="1" data-name="dialogs"><span>Diálogo</span></a></li>
                   <li role="url"><a href="#" data-func="toggleTabs" data-index="2" data-name="url"><span>URL</span></a></li>
                   <li role="killswitch"><a href="#" data-func="toggleTabs" data-index="3" data-name="killswitch"><span>Switch</span></a></li>
                   <li role="uploadfiles"><a href="#" data-func="toggleTabs" data-index="4" data-name="uploadfiles"><span>Subir Archivos</span></a></li>
@@ -182,25 +182,24 @@
                       <fieldset>
                         <label class="title">Activa o desactiva el asistente virtual que se encuentra en tu sitio web.</label>
                         <label>
-                          <input class="editorOnlyDisabled" type="checkbox"/>
+                          <input type="checkbox"/>
                           <div class="my-switch"></div>
                         </label>
                       </fieldset>
-                      <button class="editorOnly" id="save-switch" button="button" data-func="saveSwitch">Guardar</button>
+                      <button id="save-switch" button="button" data-func="saveSwitch">Guardar</button>
                     </div>
                   </div>
                   <div class="tab-pane fade" id="upload-file" role="tabpanel" data-tab-target="4">
                     <div class="header">
-                      <p>para cargar nuevos cursos/diplomados/carreras, debe seleccionar el tipo de archivo que desea subir, a continuación use el botón "CARGAR" para subir su archivo</p>
+                      <p>para cargar nuevos cursos/diplomados, debe seleccionar el tipo de archivo que desea subir, a continuación use el botón "CARGAR" para subir su archivo</p>
                     </div>
                     <form class="upload" name="uploadExcel" enctype="multipart/form-data" method="post">
-                      <label class="select editorOnlyDisabled">
+                      <label class="select">
                         <select name="selectUploadExcel">
                           <option value="0" selected="true">Cursos</option>
                           <option value="1">Diplomados</option>
-                          <option value="2">Carreras</option>
                         </select>
-                      </label><a class="download-csv editorOnly" pull-right="pull-right" onClick="this.nextElementSibling.click()">Cargar<i class="fa fa-upload" aria-hidden="true"></i></a>
+                      </label><a class="download-csv" pull-right="pull-right" onClick="this.nextElementSibling.click()">Cargar<i class="fa fa-upload" aria-hidden="true"></i></a>
                       <input class="btn hide download-csv" type="file" accept=".xls, .xlsx" onchange="changeExcel(this)" name="file"/>
                       <button class="hide" onclick="uploadExcel(this)" type="button"></button>
                     </form>
