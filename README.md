@@ -2,9 +2,9 @@
 Proyecto que contiene 4 carpetas **"ASSISTANT", "CDN", "FRONT" y "REACT_CHART"**
 
 ## URLS
-- ASISTENTE : https://asistente-react.mycognitiva.io/asistente/
-- MANTENEDOR : https://asistente-react.mycognitiva.io/
-- CDN : https://asistente-react.mycognitiva.io/cdn/
+- ASISTENTE : https://asistentedev-duoc.mycognitiva.io/asistente/
+- MANTENEDOR : https://asistentedev-duoc.mycognitiva.io/
+- CDN : https://asistentedev-duoc.mycognitiva.io/cdn/
 
 ## JENKINS 
 - ASISTENTE_REACT

@@ -262,7 +262,7 @@ export default class Assistant extends Component {
               ayuda={ayuda}
               colorHeader={customParamsStates
                 .get("customParams")
-                .get("color_header")}
+                .get("colorHeader")}
               ayudaStates={this.props.ayudaStates}
               openHelp={this.props.openHelp}
               closeHelp={this.props.closeHelp}
@@ -295,7 +295,7 @@ export default class Assistant extends Component {
 
   render() {
     const { assistantStates, conversationsStates ,customParamsStates, responsiveStates, mainCss } = this.props,
-    colorHeader = customParamsStates.getIn(["customParams","color_header"]);
+    colorHeader = customParamsStates.getIn(["customParams","colorHeader"]);
     return (
       <IsFetching
         colorHeader={colorHeader}
