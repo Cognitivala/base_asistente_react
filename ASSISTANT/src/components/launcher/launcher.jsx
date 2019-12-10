@@ -1,8 +1,10 @@
-import React, { Component } from "react";
+import React, { Fragment, Component } from "react";
 import IsFetching from "../modules/is-fetching";
 import Notification from "./notification";
 import NotificationCircle from "./notification-circle";
 import PropTypes from "prop-types";
+
+import "./Launcher.scss";
 
 export default class Launcher extends Component {
   constructor(props) {
@@ -52,7 +54,7 @@ export default class Launcher extends Component {
       "*"
     );
   }
-  
+
   notificationCDN() {
     window.top.postMessage(
       {
@@ -72,7 +74,7 @@ export default class Launcher extends Component {
     this.openAssitantCDN();
     openAssistant();
     if (ayudaStates.get("open")) closeHelp();
-    if(localStorage.getItem("hcm")) localStorage.removeItem("hcm");
+    if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
   }
 
   notification(launcherStates, mainCss) {
@@ -102,34 +104,48 @@ export default class Launcher extends Component {
       conversationsStates.get("conversations").size > 0
     ) {
       if (launcherStates.get("active")) {
+        const bubble_logo = customParamsStates.getIn([
+          "customParams",
+          "bubble_logo"
+        ]);
         return (
-          <div className={mainCss.MainLauncher}>
-            <button
-              ref={this.launcher}
-              className={mainCss.LauncherButton}
-              onClick={this.closeLauncher}
-            >
-              <i className={mainCss.IconLauncher}/>
-            </button>
-            {this.notification( launcherStates, mainCss)}
-          </div>
+          <Fragment>
+            <div className={mainCss.MainLauncher}>
+            {this.notification(launcherStates, mainCss)}
+
+              {bubble_logo !== null ? (
+                <div className="boxBubbleLogo">
+                  <img
+                    className="imgBubbleLogo"
+                    onClick={this.closeLauncher}
+                    src={`${bubble_logo}`}
+                    alt="Avatar Img"
+                  />
+                </div>
+              ) : (
+                <button
+                  ref={this.launcher}
+                  className={mainCss.LauncherButton}
+                  onClick={this.closeLauncher}
+                >
+                  <i className={mainCss.IconLauncher} />
+                </button>
+              )}
+              
+            </div>
+          </Fragment>
         );
       } else if (responsiveStates.get("responsive") === "desktop") {
         return (
-          <div className={mainCss.MainLauncher}>
-            <button
-              ref={this.launcher}
-              className={mainCss.LauncherButton + " " + mainCss.Close}
-              onClick={this.closeAssistant}
-            >
-              <i className={mainCss.IconClose} />
-            </button>
-          </div>
+            <div className={mainCss.MainLauncher}>
+              <button ref={this.launcher} className={mainCss.LauncherButton + " " + mainCss.Close} onClick={this.closeAssistant}>
+                <i className={mainCss.IconClose} />
+              </button>
+            </div>
         );
       }
     }
     return null;
-
   }
 
   render() {

@@ -19,6 +19,7 @@ export default class Header extends Component {
   }
 
   fillHelp(ayuda, minimized, positionHelp) {
+    console.log('AYUDA!:: ', ayuda);
     if (ayuda && positionHelp === "top" && !minimized) {
       return (
         <BtnHelp
@@ -37,15 +38,8 @@ export default class Header extends Component {
   fillCloseButton(mainCss, responsive) {
     if (responsive === "mobile") {
       return (
-        <button
-          onClick={this.props.closeAssistant}
-          className={
-            mainCss.CloseButton +
-            " " +
-            mainCss.Btn +
-            " " +
-            mainCss.BtnTransparent
-          }
+        <button onClick={this.props.closeAssistant}
+          className={ mainCss.CloseButton + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
         />
       );
     }
@@ -60,11 +54,7 @@ export default class Header extends Component {
           className={
             positionHelp === "top"
               ? mainCss.Header + " " + mainCss.HeaderMore + " " + mainCss.HeaderHelpUp
-              : mainCss.HeaderHelpDown +
-                " " +
-                cssClass +
-                " " +
-                mainCss.HeaderMore
+              : mainCss.HeaderHelpDown + " " + cssClass + " " + mainCss.HeaderMore
           }
         >
           <div/>
@@ -95,8 +85,7 @@ export default class Header extends Component {
       );
     } else {
       return (
-        <div
-          ref={this.div}
+        <div ref={this.div}
           className={
             positionHelp === "top"
               ? mainCss.Header + " " + mainCss.HeaderHelpUp
@@ -158,6 +147,6 @@ Header.propTypes = {
   minimized: PropTypes.bool.isRequired,
   mainCss: PropTypes.any.isRequired,
   responsive: PropTypes.string,
-  imgBackHeader: PropTypes.string.isRequired,
+  // imgBackHeader: PropTypes.string.isRequired,
   positionHelp: PropTypes.string.isRequired
 };

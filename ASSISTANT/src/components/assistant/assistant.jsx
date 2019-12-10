@@ -235,11 +235,13 @@ export default class Assistant extends Component {
       ayuda = customParamsStates
       .get("customParams")
       .get("settings")
-      .get("help"),
-      minimized = assistantStates.get("minimized"),
+      .get("help");
+
+      const minimized = assistantStates.get("minimized"),
       cssClass = responsiveStates.get("responsive") === "mobile" ? mainCss.Mobile : "",
       cssClass2 = this.state.moreHeader?mainCss.HeaderMore:"",
       positionHelp = customParamsStates.getIn(["customParams","settings","position_help"]);
+
       if (minimized) {
         return (
           <React.Fragment/>
@@ -272,9 +274,9 @@ export default class Assistant extends Component {
               minimized={minimized}
               mainCss={mainCss}
               responsive={responsiveStates.get("responsive")}
-              imgBackHeader={customParamsStates
-                .get("customParams")
-                .get("imgBackHeader")}  
+              // imgBackHeader={customParamsStates
+              //   .get("customParams")
+              //   .get("imgBackHeader")}  
               positionHelp={positionHelp}
               toggleHeaderMore={this.toggleHeaderMore}
               moreHeader={this.state.moreHeader}
