@@ -79,9 +79,9 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 } else {
                   addProfile = 'Lector';
                 }
-                var editUser = "editUser(this, '#myModalUser'); openModal('Editar usuario', '#myModalUser')";
+                var editUser = "editUser(this, '#myModalUser', "+i+"); openModal('Editar usuario', '#myModalUser')";
                 var deleUser = "deleteUser(this); openModal('¿Está seguros de eliminar a este usuario?', '#myModalDeleteUser')";
-                var craeteTrUser = '<tr>';
+                var craeteTrUser = '<tr id='+user+'-'+i+'>'
                     craeteTrUser += '  <td>'+response.descripcion[i].nombre+'</td>';
                     craeteTrUser += '  <td>'+response.descripcion[i].email+'</td>';
                     craeteTrUser += '  <td>'+addProfile+'</td>';
@@ -173,7 +173,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           $(modal).modal('show');
         }
         
-        function editUser(el, modal) {
+        function editUser(el, modal, index) {
           var getTtr        = el.parentElement.parentElement.parentElement.parentElement,
               getNameTd     = getTtr.children[0].textContent,
               getEmailTd    = getTtr.children[1].textContent,
@@ -187,8 +187,9 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           }
           $(modal + ' #user-name').val(getNameTd);
           $(modal + ' #user-mail').val(getEmailTd);
-          //- $(modal + ' #user-mail').prop('disabled', true);
+          $(modal + ' #user-mail').prop('disabled', true);
           $(modal + ' #user-profile').val(setValProfile);
+          $(modal + ' #user-index').val(index);
         }
         
         var mailBool      = false;
@@ -197,6 +198,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           var getNameVal    = document.getElementById('user-name').value,
               getEmailVal   = document.getElementById('user-mail').value,
               getProfileVal = document.getElementById('user-profile').value, 
+              userIndex = document.getElementById('user-index').value,
               addValProfile = '',
               getSelect     = false;
           if(getProfileVal.length > 0){
@@ -250,7 +252,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 contentType: 'application/json; charset=utf-8'
               }).done(function(response){
                 if(response.status  == '200' && response.estado == undefined){
-                  //- console.log(response);
+                  console.log("userIndex: ", userIndex);
                   openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
                   var table = document.getElementById('users-list').getElementsByTagName('TABLE')[0],
                     rows = table.getElementsByTagName('TBODY')[0].getElementsByTagName('TR'),
@@ -301,7 +303,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
         function removeData() {
           $('#myModalUser #user-name').val('');
           $('#myModalUser #user-mail').val('');
-          //- $('#myModalUser #user-mail').prop('disabled', false);
+          $('#myModalUser #user-mail').prop('disabled', false);
           $('#myModalUser #user-profile').val('');
           $('.table tbody tr').removeClass('action');
           $('.table tbody tr').removeClass('to-delete');
