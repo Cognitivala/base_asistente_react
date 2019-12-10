@@ -256,7 +256,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                   openCustomModal('#myModal', 'Genial!', 'El usuario se ha editado con éxito', 'success');
                   var table = document.getElementById('users-list').getElementsByTagName('TABLE')[0],
                     rows = table.getElementsByTagName('TBODY')[0].getElementsByTagName('TR'),
-                    lastRow = rows[rows.length - 1],
+                    lastRow = rows[userIndex],
                     columnas = lastRow.getElementsByTagName('TD');
                   columnas[0].innerText = getNameVal;
                   columnas[1].innerText = getEmailVal;
