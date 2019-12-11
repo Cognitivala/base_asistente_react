@@ -273,8 +273,8 @@ export function getSaludo() {
             id_cliente: "1" 
           }, 
           msg: null,
+          cod_producto: getUrlParams(getState, "cod_producto"),
           origen: getUrlParams(getState, "origen"),
-          cod_producto: getUrlParams(getState, "cod_producto")
         },
           request = axios({
               method: "POST",
@@ -551,8 +551,8 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data:{
               ...data,
+              cod_producto: getUrlParams(getState, "cod_producto"),
               origen: getUrlParams(getState, "origen"),
-              cod_producto: getUrlParams(getState, "cod_producto")
             },
         });
         return request
@@ -1271,8 +1271,8 @@ export function updateConversationButton(data) {
                     url: APIURL + "/message",
                     data: {
                       ...data,
+                      cod_producto: getUrlParams(getState, "cod_producto"),
                       origen: getUrlParams(getState, "origen"),
-                      cod_producto: getUrlParams(getState, "cod_producto")
                     },
                 });
                 return request.then(
@@ -1510,8 +1510,8 @@ export function closeForm(data) {
             url: APIURL + "/message",
             data: {
               ...data,
+              cod_producto: getUrlParams(getState, "cod_producto"),
               origen: getUrlParams(getState, "origen"),
-              cod_producto: getUrlParams(getState, "cod_producto")
             },
         });
         return request.then(
@@ -1571,8 +1571,8 @@ export function sendForm(data, url, general) {
                         url: APIURL + "/message",
                         data: {
                           ...item,
+                          cod_producto: getUrlParams(getState, "cod_producto"),
                           origen: getUrlParams(getState, "origen"),
-                          cod_producto: getUrlParams(getState, "cod_producto")
                         },
                     });
                     return request
