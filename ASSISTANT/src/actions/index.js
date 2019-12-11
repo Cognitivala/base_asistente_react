@@ -273,7 +273,8 @@ export function getSaludo() {
             id_cliente: "1" 
           }, 
           msg: null,
-          origen: getUrlParams(getState),
+          origen: getUrlParams(getState, "origen"),
+          cod_producto: getUrlParams(getState, "cod_producto")
         },
           request = axios({
               method: "POST",
@@ -550,7 +551,8 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data:{
               ...data,
-              origen: getUrlParams(getState),
+              origen: getUrlParams(getState, "origen"),
+              cod_producto: getUrlParams(getState, "cod_producto")
             },
         });
         return request
@@ -1269,7 +1271,8 @@ export function updateConversationButton(data) {
                     url: APIURL + "/message",
                     data: {
                       ...data,
-                      origen: getUrlParams(),
+                      origen: getUrlParams(getState, "origen"),
+                      cod_producto: getUrlParams(getState, "cod_producto")
                     },
                 });
                 return request.then(
@@ -1507,7 +1510,8 @@ export function closeForm(data) {
             url: APIURL + "/message",
             data: {
               ...data,
-              origen: getUrlParams(getState),
+              origen: getUrlParams(getState, "origen"),
+              cod_producto: getUrlParams(getState, "cod_producto")
             },
         });
         return request.then(
@@ -1567,7 +1571,8 @@ export function sendForm(data, url, general) {
                         url: APIURL + "/message",
                         data: {
                           ...item,
-                          origen: getUrlParams(getState),
+                          origen: getUrlParams(getState, "origen"),
+                          cod_producto: getUrlParams(getState, "cod_producto")
                         },
                     });
                     return request
@@ -1653,8 +1658,7 @@ export function disabledVoice() {
         dispatch({ type: "DISABLED_VOICE" });
     };
 }
-const getUrlParams = (getState) => {
-  const origen = getState().generalStates.getIn(["integracion", "origen"]);
-  if(origen === "null") return null;
-  return origen;
+const getUrlParams = (getState, urlParam) => {
+  const paramValue = getState().generalStates.getIn(["integration", urlParam]);
+  return paramValue;
 }
