@@ -72,7 +72,7 @@ export class App extends Component {
             } else if (e.data.subtitle !== undefined) {
                 _this.props.updateCustomSubtitle(e.data.subtitle);
             } else if (e.data.colorHeader !== undefined) {
-                _this.props.updateCustomcolor_header(e.data.color_header);
+                _this.props.updateCustomcolorHeader(e.data.colorHeader);
             } else if (e.data.avatar !== undefined) {
                 _this.props.updateCustomAvatar(e.data.avatar);
             } else if (e.data.logo !== undefined) {
