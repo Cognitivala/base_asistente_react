@@ -19,7 +19,6 @@ export default class Header extends Component {
   }
 
   fillHelp(ayuda, minimized, positionHelp) {
-    console.log('AYUDA!:: ', ayuda);
     if (ayuda && positionHelp === "top" && !minimized) {
       return (
         <BtnHelp

@@ -123,7 +123,6 @@ export default class Assistant extends Component {
   //END ORIGEN
 
   focus() {
-    console.log("focus in assistant.jsx")
     setTimeout(() => {
       const hrefLocal = window.location.origin;
       if(hrefLocal!=="http://localhost:3000"){

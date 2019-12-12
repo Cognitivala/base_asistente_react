@@ -19,17 +19,20 @@ export default class Launcher extends Component {
   }
 
   saludar() {
-    const { customParamsStates } = this.props,
-      keep_conversation = customParamsStates.getIn([
-        "customParams",
-        "settings",
-        "keep_conversation"
-      ]),
-      hc = localStorage.getItem("hc");
+    const { customParamsStates } = this.props;
+    const keep_conversation = customParamsStates.getIn([
+      "customParams",
+      "settings",
+      "keep_conversation"
+    ]);
+    const hc = localStorage.getItem("hc");
+    
     if (!keep_conversation) {
       this.props.getSaludo();
     } else {
-      if (!hc) this.props.getSaludo();
+      if (!hc) {
+        this.props.getSaludo();
+      }
     }
   }
 
@@ -136,6 +139,7 @@ export default class Launcher extends Component {
           </Fragment>
         );
       } else if (responsiveStates.get("responsive") === "desktop") {
+        // console.log(responsiveStates.get("responsive"));
         return (
             <div className={mainCss.MainLauncher}>
               <button ref={this.launcher} className={mainCss.LauncherButton + " " + mainCss.Close} onClick={this.closeAssistant}>
