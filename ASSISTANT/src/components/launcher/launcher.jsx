@@ -80,43 +80,34 @@ export default class Launcher extends Component {
     if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
   }
 
-  notification(launcherStates, mainCss) {
+  notification(launcherStates, mainCss, bubble_logo) {
     if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
       return (
         <Notification
           saludo={launcherStates.get("notification")}
-          mainCss={mainCss}
+          mainCss={mainCss} bubbleLogo={bubble_logo}
         />
       );
     } else if (launcherStates.get("circle")) {
-      return <NotificationCircle mainCss={mainCss} />;
+      return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
     } else {
       return null;
     }
   }
 
-  content(
-    customParamsStates,
-    launcherStates,
-    conversationsStates,
-    mainCss,
-    responsiveStates
-  ) {
+  content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
     ) {
       if (launcherStates.get("active")) {
-        const bubble_logo = customParamsStates.getIn([
-          "customParams",
-          "bubble_logo"
-        ]);
+        const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
-            {this.notification(launcherStates, mainCss)}
+            {this.notification(launcherStates, mainCss, bubble_logo)}
 
-              {bubble_logo !== null ? (
+              { bubble_logo !== '' ? (
                 <div className="boxBubbleLogo">
                   <img
                     className="imgBubbleLogo"
@@ -126,11 +117,7 @@ export default class Launcher extends Component {
                   />
                 </div>
               ) : (
-                <button
-                  ref={this.launcher}
-                  className={mainCss.LauncherButton}
-                  onClick={this.closeLauncher}
-                >
+                <button ref={this.launcher} className={mainCss.LauncherButton} onClick={this.closeLauncher}>
                   <i className={mainCss.IconLauncher} />
                 </button>
               )}
