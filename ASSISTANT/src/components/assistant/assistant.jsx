@@ -90,7 +90,8 @@ export default class Assistant extends Component {
     if (isMobile) {
       this.props.setOrigen("mobile");
     } else {
-      this.props.setOrigen("desktop");
+      // this.props.setOrigen("desktop");
+      this.props.setOrigen(1);
     }
 
     // const token = false;
