@@ -16,7 +16,7 @@
     <script>
         window.addEventListener('load', function() {
             var origen = null
-            window.CognitiveAssistantMain.init('https://dev-sura-api.mycognitiva.io/asistente/?origen=' + origen);
+            window.CognitiveAssistantMain.init('https://dev-sura.mycognitiva.io/asistente/?origen=' + origen);
             // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
         });
     </script>
@@ -25,5 +25,30 @@
 <body class="no-scroll aui" heightfull="heightfull">
     <iframe id="demo" src="http://www.aminerals.cl/" frameborder="0"></iframe>
 </body>
+
+<script>
+    const getUrl = async() => {
+        let urlApi = 'https://dev-sura-api.mycognitiva.io/mad/customize_param';
+        let data = {
+            id_cliente: "1"
+        };
+        await fetch(urlApi, data {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+            .then(response => {
+                console.log('DATA::', response)
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    getUrl();
+
+
+
+    // var urlAsistente = getUrlParameter('header');
+    // document.getElementById('header').innerHTML = urlAsistente;
+</script>
 
 </html>
