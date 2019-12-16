@@ -28,27 +28,27 @@
 
 <script>
     const getUrl = async() => {
-        let urlApi = 'https://dev-sura.mycognitiva.io/mad/customize_param';
-        let data = {
+        const data = {
             id_cliente: "1"
         };
-        await fetch(urlApi, data, {
+        const apiUrl = "https://dev-sura.mycognitiva.io/mad/customize_param";
+        await fetch(apiUrl, {
                 method: 'POST',
+                body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            }).then(res => res.json())
-            .then(response => {
-                console.log('DATA::', response)
             })
-            .catch(error => console.error('Error:', error));
+            .then(res => res.json())
+            .then(response => {
+                console.log('URL:: ', response.url);
+                document.getElementById('demo').src = response.url;
+            })
+            .catch(error => {
+                console.log('Error:', error.message);
+            });
     }
     getUrl();
-
-
-
-    // var urlAsistente = getUrlParameter('header');
-    // document.getElementById('header').innerHTML = urlAsistente;
 </script>
 
 </html>
