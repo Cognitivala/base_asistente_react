@@ -919,7 +919,7 @@ export function updateConversationButton(data) {
                         send: "from",
                         enabled: true,
                         liftUp: "valoracion",
-                        withStars: false
+                        withStars: true
                     };
                     messageResponse(dispatch, _data);
                 }, 500);
