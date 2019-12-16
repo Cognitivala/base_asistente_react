@@ -102,12 +102,13 @@ export default class Launcher extends Component {
     ) {
       if (launcherStates.get("active")) {
         const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
+
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
             {this.notification(launcherStates, mainCss, bubble_logo)}
 
-              { bubble_logo !== '' ? (
+              { bubble_logo > 0 ? (
                 <div className="boxBubbleLogo">
                   <img
                     className="imgBubbleLogo"
