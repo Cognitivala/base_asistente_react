@@ -108,7 +108,7 @@ export default class Launcher extends Component {
             <div className={mainCss.MainLauncher}>
             {this.notification(launcherStates, mainCss, bubble_logo)}
 
-              { bubble_logo > 0 ? (
+              { bubble_logo.length > 0 ? (
                 <div className="boxBubbleLogo">
                   <img
                     className="imgBubbleLogo"
