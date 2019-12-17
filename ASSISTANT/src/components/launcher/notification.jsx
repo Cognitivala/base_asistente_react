@@ -4,10 +4,10 @@ import NotificationCircle from "./notification-circle";
 
 export default class Notification extends Component {
   render() {
-    const { saludo, mainCss } = this.props;
+    const { saludo, mainCss, bubbleLogo } = this.props;
     return (
       <React.Fragment>
-        <NotificationCircle mainCss={mainCss} />
+        <NotificationCircle mainCss={mainCss} bubbleLogo={bubbleLogo} />
         <div className={mainCss.Notification}>
           <span dangerouslySetInnerHTML={{ __html: saludo }} />
         </div>

@@ -3,6 +3,7 @@ import Geocode from "react-geocode";
 import { APIURL } from "./constans";
 import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "./key-encrypt";
+import { isMobile } from 'react-device-detect';
 
 //GENERAL
 function defaultGeneral() {
@@ -267,7 +268,18 @@ export function setColors(colorHeader) {
 export function getSaludo() {
     return function action(dispatch) {
         dispatch(getSaludoStart());
-        const data = { general: { cid: null, id_cliente: "1" }, msg: null },
+
+        let origen = null;
+
+        if (isMobile) {
+            origen = 5;
+            // console.log('SOY MOBILE');
+        } else {
+            origen = 1;
+            // console.log('SOY DESKTOP');
+        }
+
+        const data = { general: { cid: null, id_cliente: "1", origen: origen }, msg: null },
             request = axios({
                 method: "POST",
                 headers: {
@@ -278,7 +290,8 @@ export function getSaludo() {
             });
         return request.then(
             response => {
-
+                // console.log('RESPONSE MENSAJE::', response.data);
+                // console.log('RESPONSE MENSAJE ORIGEN::', response.data.msg);
                 if (response.status === 200) {
                     let item = {};
                     item.msg = response.data.msg;
