@@ -80,7 +80,10 @@ export default class Launcher extends Component {
     if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
   }
 
-  notification(launcherStates, mainCss, bubble_logo) {
+  notification(launcherStates, mainCss, bubble_logo, bubble) {
+
+    if (bubble){
+
     if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
       return (
         <Notification
@@ -93,6 +96,9 @@ export default class Launcher extends Component {
     } else {
       return null;
     }
+    } else {
+      return null;
+    }
   }
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
@@ -102,11 +108,12 @@ export default class Launcher extends Component {
     ) {
       if (launcherStates.get("active")) {
         const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
+        const bubble = customParamsStates.getIn([ "customParams", "settings", "bubble" ]);
 
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
-            {this.notification(launcherStates, mainCss, bubble_logo)}
+            {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
 
               { bubble_logo.length > 0 ? (
                 <div className="boxBubbleLogo">
