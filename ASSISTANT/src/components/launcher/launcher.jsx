@@ -108,22 +108,11 @@ export default class Launcher extends Component {
     ) {
       if (launcherStates.get("active")) {
         const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
-<<<<<<< HEAD
-        const bubble = customParamsStates.getIn([ "customParams", "settings", 'bubble' ]);
-
-        // console.log(customParamsStates.getIn([ "customParams"]) );
-        // console.log('bubble:: ', bubble);
-=======
         const bubble = customParamsStates.getIn([ "customParams", "settings", "bubble" ]);
->>>>>>> dev
 
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
-<<<<<<< HEAD
-            
-=======
->>>>>>> dev
             {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
 
               { bubble_logo.length > 0 ? (
