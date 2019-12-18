@@ -80,19 +80,28 @@ export default class Launcher extends Component {
     if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
   }
 
-  notification(launcherStates, mainCss, bubble_logo) {
-    if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
-      return (
-        <Notification
-          saludo={launcherStates.get("notification")}
-          mainCss={mainCss} bubbleLogo={bubble_logo}
-        />
-      );
-    } else if (launcherStates.get("circle")) {
-      return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
+  notification(launcherStates, mainCss, bubble_logo, bubble) {
+
+    console.log('notification:: ', bubble);
+
+    if (bubble) {
+      if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
+        return (
+          <Notification
+            saludo={launcherStates.get("notification")}
+            mainCss={mainCss} bubbleLogo={bubble_logo}
+          />
+        );
+      } else if (launcherStates.get("circle")) {
+        return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
+      } else {
+        return null;
+      }
     } else {
-      return null;
+      return null
     }
+
+    
   }
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
@@ -102,11 +111,16 @@ export default class Launcher extends Component {
     ) {
       if (launcherStates.get("active")) {
         const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
+        const bubble = customParamsStates.getIn([ "customParams", "settings", 'bubble' ]);
+
+        // console.log(customParamsStates.getIn([ "customParams"]) );
+        // console.log('bubble:: ', bubble);
 
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
-            {this.notification(launcherStates, mainCss, bubble_logo)}
+            
+            {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
 
               { bubble_logo.length > 0 ? (
                 <div className="boxBubbleLogo">

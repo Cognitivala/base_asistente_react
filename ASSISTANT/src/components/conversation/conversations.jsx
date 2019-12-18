@@ -4,8 +4,11 @@ import IsFetching from "../modules/is-fetching";
 import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
 import ConversationSelects from "./conversation-selects";
+
 import Valoracion from "../valoracion/valoracion";
 import Formulario from "../formulario/formulario";
+import FormValoracion from "../formValoracion/FormValoracion";
+
 import ConversationMultiButtons from "./conversation-multi-buttons";
 import ConversationCalendar from "./conversation-calendar";
 import ConversationFiles from "./conversation-files";
@@ -413,14 +416,15 @@ export default class Conversations extends Component {
           } else if (like !== undefined && like) {
             const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
-              <ConversationLikes
-                key={j * 33}
-                conversationsStates={conversationsStates}
-                sendLike={sendLike}
-                colorHeader={colorHeader}
-                generalStates={generalStates}
-                mainCss={mainCss}
-              />
+              // <ConversationLikes
+              //   key={j * 33}
+              //   conversationsStates={conversationsStates}
+              //   sendLike={sendLike}
+              //   colorHeader={colorHeader}
+              //   generalStates={generalStates}
+              //   mainCss={mainCss}
+              // />
+              <FormValoracion  key={`${j}+1`} mainCss={mainCss} />
             );
           }
         }
