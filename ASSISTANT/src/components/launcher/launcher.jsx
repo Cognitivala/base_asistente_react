@@ -82,23 +82,6 @@ export default class Launcher extends Component {
 
   notification(launcherStates, mainCss, bubble_logo, bubble) {
 
-<<<<<<< HEAD
-    console.log('notification:: ', bubble);
-
-    if (bubble) {
-      if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
-        return (
-          <Notification
-            saludo={launcherStates.get("notification")}
-            mainCss={mainCss} bubbleLogo={bubble_logo}
-          />
-        );
-      } else if (launcherStates.get("circle")) {
-        return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
-      } else {
-        return null;
-      }
-=======
     if (bubble){
 
     if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
@@ -110,18 +93,12 @@ export default class Launcher extends Component {
       );
     } else if (launcherStates.get("circle")) {
       return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
->>>>>>> dev
     } else {
       return null
     }
-<<<<<<< HEAD
-
-    
-=======
     } else {
       return null;
     }
->>>>>>> dev
   }
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
