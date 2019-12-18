@@ -82,6 +82,7 @@ export default class Launcher extends Component {
 
   notification(launcherStates, mainCss, bubble_logo, bubble) {
 
+<<<<<<< HEAD
     console.log('notification:: ', bubble);
 
     if (bubble) {
@@ -97,11 +98,30 @@ export default class Launcher extends Component {
       } else {
         return null;
       }
+=======
+    if (bubble){
+
+    if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
+      return (
+        <Notification
+          saludo={launcherStates.get("notification")}
+          mainCss={mainCss} bubbleLogo={bubble_logo}
+        />
+      );
+    } else if (launcherStates.get("circle")) {
+      return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
+>>>>>>> dev
     } else {
       return null
     }
+<<<<<<< HEAD
 
     
+=======
+    } else {
+      return null;
+    }
+>>>>>>> dev
   }
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
@@ -111,15 +131,22 @@ export default class Launcher extends Component {
     ) {
       if (launcherStates.get("active")) {
         const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
+<<<<<<< HEAD
         const bubble = customParamsStates.getIn([ "customParams", "settings", 'bubble' ]);
 
         // console.log(customParamsStates.getIn([ "customParams"]) );
         // console.log('bubble:: ', bubble);
+=======
+        const bubble = customParamsStates.getIn([ "customParams", "settings", "bubble" ]);
+>>>>>>> dev
 
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
+<<<<<<< HEAD
             
+=======
+>>>>>>> dev
             {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
 
               { bubble_logo.length > 0 ? (
