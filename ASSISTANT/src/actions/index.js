@@ -1455,6 +1455,7 @@ export function closeValoracion(data) {
 
 //LIKE
 export function sendLike(data, general) {
+    console.log(data);
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
@@ -1467,6 +1468,9 @@ export function sendLike(data, general) {
         });
         return request.then(
             response => {
+
+                console.log(response);
+
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200

@@ -416,15 +416,15 @@ export default class Conversations extends Component {
           } else if (like !== undefined && like) {
             const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
-              // <ConversationLikes
-              //   key={j * 33}
-              //   conversationsStates={conversationsStates}
-              //   sendLike={sendLike}
-              //   colorHeader={colorHeader}
-              //   generalStates={generalStates}
-              //   mainCss={mainCss}
-              // />
-              <FormValoracion  key={`${j}+1`} mainCss={mainCss} />
+              <ConversationLikes
+                key={j * 33}
+                conversationsStates={conversationsStates}
+                sendLike={sendLike}
+                colorHeader={colorHeader}
+                generalStates={generalStates}
+                mainCss={mainCss}
+              />
+              // <FormValoracion  key={`${j}+1`} mainCss={mainCss} />
             );
           }
         }
