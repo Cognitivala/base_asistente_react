@@ -4,21 +4,23 @@ export function conversationsStates(
     state = Immutable.fromJS({
         isFetching: false,
         error: "",
-        conversations: [{
-            general: {
-                cid: null,
-                origen: null,
-                nodo_id: null,
-                intent: null,
-                auth: null,
-                token: null,
-                location: null
-            },
-            msg: null,
-            buttons: null,
-            send: null,
-            enabled: false
-        }],
+        conversations: [
+            // {
+            //   general:{
+            //     cid: null,
+            //     origen: null,
+            //     nodo_id: null,
+            //     intent: null,
+            //     auth: null,
+            //     token: null,
+            //     location: null
+            //   },
+            //   msg:null,
+            //   buttons:null,
+            //   send:null,
+            //   enabled: false
+            // }
+        ],
         loading: false
     }),
     action
