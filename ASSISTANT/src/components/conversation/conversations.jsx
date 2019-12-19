@@ -432,7 +432,7 @@ export default class Conversations extends Component {
             );
           } 
           
-          else if (rating !== undefined || !rating) {
+          else if ( rating ) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
               <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
