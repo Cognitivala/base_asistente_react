@@ -1,21 +1,20 @@
 import React, {useState} from "react";
 import {connect} from 'react-redux';
 
-import {sendLike} from '../../actions/index';
-
-// import StarRating from './Rating';
+import {sendValoracion} from '../../actions/index';
 import Star from './Star';
 
 import './FormValoracion.scss';
 
-const FormValoracion = ({ mainCss, generalStates, sendLike}) => {
+const FormValoracion = ({ generalStates, sendValoracion}) => {
 
     const [respuesta, setRespuesta] = useState(null);
     const [starsSelected, selectStar] = useState(0);
     const [mensajeAdicional, setMensajeAdicional] = useState('');
     const [active, setActive] = useState(false);
 
-    console.log('generalStates:: ', generalStates);
+    const general = generalStates.toJS();
+
 
     const style = {
         boxStar: {
@@ -27,8 +26,7 @@ const FormValoracion = ({ mainCss, generalStates, sendLike}) => {
         }
     }
 
-    const totalStars = 5;
-
+    
     const handleOptionChange = (e) => {
         console.log(e.target.value);
         if (e.target.value) {
@@ -37,7 +35,8 @@ const FormValoracion = ({ mainCss, generalStates, sendLike}) => {
             setRespuesta(e.target.value)
         }
     };
-
+    
+    const totalStars = 5;
     const enviarValoracion = (e) =>{
         console.log('Llegué a enviarValoracion:: ');
         e.preventDefault();
@@ -54,7 +53,7 @@ const FormValoracion = ({ mainCss, generalStates, sendLike}) => {
         const data = {
             input: "in",
             output: "out",
-            cid: "cid",
+            cid: general.cid,
             id_data_canal: 123,
             id_canal: 1,
             resolvio: resolvio,
@@ -63,7 +62,7 @@ const FormValoracion = ({ mainCss, generalStates, sendLike}) => {
         }
         console.log('DATA VALORACIÓN:: ', data);
         // sendLike(data, general);
-        sendLike(data, null);
+        sendValoracion(data, general);
     }
 
 
@@ -136,4 +135,5 @@ const FormValoracion = ({ mainCss, generalStates, sendLike}) => {
   );
 };
 
-export default connect(null, {sendLike})(FormValoracion);
+// export default connect(null, {sendValoracion})(FormValoracion);
+export default FormValoracion;
