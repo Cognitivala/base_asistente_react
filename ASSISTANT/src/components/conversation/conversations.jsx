@@ -228,7 +228,7 @@ export default class Conversations extends Component {
           withStars = conversation.get("withStars"),
           animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" "; //Si es la última conversa
         if (msg !== undefined) {
-          const { sendLike, sendValoracion } = this.props;
+          const { sendLike } = this.props;
           
           retorno.push(
             <ConversationMsg
@@ -414,7 +414,7 @@ export default class Conversations extends Component {
           //     default:
           //       break;
           //   }
-          // } else 
+          // } 
           
           if (like !== undefined && like) {
 
@@ -430,7 +430,9 @@ export default class Conversations extends Component {
                 mainCss={mainCss}
               />
             );
-          } else if (rating !== undefined && rating) {
+          } 
+          
+          else if (rating !== undefined || !rating) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
               <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />

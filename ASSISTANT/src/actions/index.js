@@ -558,6 +558,7 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
+                console.log('response:: ', response);
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1412,6 +1413,10 @@ export function setErrorValoracion(data) {
     };
 }
 export function sendValoracion(data, general) {
+
+    console.log('DATA:: ', data);
+    console.log('general:: ', general);
+
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
