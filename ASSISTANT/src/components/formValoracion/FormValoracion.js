@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {connect} from 'react-redux';
 
-import {sendValoracion} from '../../actions/index';
+// import {sendValoracion} from '../../actions/index';
 import Star from './Star';
 
 import './FormValoracion.scss';
@@ -135,5 +135,5 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
   );
 };
 
-export default connect(null, {sendValoracion})(FormValoracion);
-// export default FormValoracion;
+// export default connect(null, {sendValoracion})(FormValoracion);
+export default FormValoracion;
