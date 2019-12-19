@@ -135,5 +135,5 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
   );
 };
 
-// export default connect(null, {sendValoracion})(FormValoracion);
-export default FormValoracion;
+export default connect(null, {sendValoracion})(FormValoracion);
+// export default FormValoracion;

@@ -155,9 +155,6 @@
     border-radius: 50%;
 }
 
-// RAITING
-.star-rating p {}
-
 // TEXTAREA
 .containerForm form fieldset textarea {
     margin: 0;
@@ -204,7 +201,7 @@
 .star-rating {
     display: flex;
     flex-direction: column;
-    width: 50%;
+    width: 60%;
     // flex-wrap: wrap;
     // justify-content: space-around;
 }
@@ -223,7 +220,7 @@
     background-color: #2979ff;
 }
 
-.star-rating p {
-    // flex-basis: 100%;
-    // text-align: center;
-}
+// .star-rating p {
+//     // flex-basis: 100%;
+//     // text-align: center;
+// }

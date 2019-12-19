@@ -1424,6 +1424,7 @@ export function sendValoracion(data, general) {
         });
         return request.then(
             response => {
+
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
