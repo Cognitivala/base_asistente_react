@@ -17,14 +17,14 @@ const FormularioValoracion = () => {
         }
     }
 
-    // const handleOptionChange = (e) => {
-    //     console.log(e.target.value);
-    //     if (e.target.value) {
-    //         setRespuesta(e.target.value);
-    //     } else {
-    //         setRespuesta(e.target.value)
-    //     }
-    // };
+    const handleOptionChange = (e) => {
+        console.log(e.target.value);
+        if (e.target.value) {
+            // setRespuesta(e.target.value);
+        } else {
+            // setRespuesta(e.target.value)
+        }
+    };
 
     return ( 
         <div className='conversationBubbleForm Send'>
@@ -46,8 +46,8 @@ const FormularioValoracion = () => {
                     <input type="radio" name="desicion" value='si' 
                     checked={respuesta === 'si'} onChange={handleOptionChange} />
                 </div>
-            </label>
-            <label>
+            </label> */}
+            {/* <label>
                 <div className="round">
                     <div className={respuesta === 'no' ?  "active circle" : " circle"}></div>No
                     <input type="radio" name="desicion" value='no' 
