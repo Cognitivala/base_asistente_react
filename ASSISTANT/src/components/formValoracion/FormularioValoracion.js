@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import './FormValoracion.scss';
 
+const [respuesta, setRespuesta] = useState('si');
+
 const FormularioValoracion = () => {
 
-    const [respuesta, setRespuesta] = useState('si');
     // const [starsSelected, selectStar] = useState(0);
     // const [mensajeAdicional, setMensajeAdicional] = useState('');
 
