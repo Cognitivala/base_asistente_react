@@ -446,22 +446,14 @@ export default class Conversations extends Component {
   }
 
   render() {
-    const {
-        ayudaStates,
-        inputStates,
-        conversationsStates,
-        customParamsStates,
-        mainCss
-      } = this.props,
-      colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
+    const { ayudaStates, inputStates, conversationsStates, customParamsStates, mainCss } = this.props;
+    const colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "",
       cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
       <IsFetching
         isFetching={conversationsStates.get("isFetching")}
-        showChildren={true}
-        colorHeader={colorHeader}
-        mainCss={mainCss}
+        showChildren={true} colorHeader={colorHeader} mainCss={mainCss}
       >
         <section
           // onScroll={this.handleScroll}
