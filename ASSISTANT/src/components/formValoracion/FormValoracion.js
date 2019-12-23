@@ -103,9 +103,9 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
 
             <div className="star-rating">
                 <div  style={style.boxStar}>
-                    {/* {[...Array(totalStars)].map((n, i) => (
+                    {[...Array(totalStars)].map((n, i) => (
                         <Star key={i} selected={i < starsSelected} onClick={() => selectStar(i + 1)} />
-                    ))} */}
+                    ))}
                 </div>
         
                 <div>
