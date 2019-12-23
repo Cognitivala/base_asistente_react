@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import Star from './Star';
+
+import './FormValoracion.scss';
 
 const style = {
     boxStar: {
@@ -9,6 +12,8 @@ const style = {
         marginBottom: '10px',
     }
 }
+
+const totalStars = 5;
 
 class FormularioValoracion extends Component {
   state = {
@@ -33,6 +38,36 @@ class FormularioValoracion extends Component {
         });
     }
 };
+
+    
+    enviarValoracion = (e) =>{
+        console.log('Llegué a enviarValoracion:: ');
+        e.preventDefault();
+        if(this.state.respuesta === null || this.state.starsSelected === 0 || this.state.mensajeAdicional === '') {
+            return false;
+        }
+
+        let resolvio = null;
+        if (this.state.respuesta === 'si') {
+            resolvio = 1;
+        } else {
+            resolvio = 0;
+        }
+        const data = {
+            input: "in",
+            output: "out",
+            // cid: general.cid,
+            id_data_canal: 123,
+            id_canal: 1,
+            resolvio: resolvio,
+            valoracion: this.state.starsSelected,
+            comentario: this.state.mensajeAdicional,
+        }
+        console.log('DATA VALORACIÓN:: ', data);
+        // sendLike(data, general);
+        debugger;
+        // sendValoracion(data, general);
+    }
 
   render() {
     return (
@@ -85,20 +120,20 @@ class FormularioValoracion extends Component {
             <fieldset>
               {/* <StarRating totalStars={5} /> */}
 
-              {/* <div className="star-rating">
+              <div className="star-rating">
                 <div style={style.boxStar}>
                   {[...Array(totalStars)].map((n, i) => (
                     <Star
                       key={i}
-                      selected={i < starsSelected}
-                      onClick={() => selectStar(i + 1)}
+                      selected={i < this.state.starsSelected}
+                      onClick={() => this.setState({starsSelected: i + 1})}
                     />
                   ))}
                 </div>
 
                 <div>
-                  {starsSelected === 0 && <p>Seleccione su valoración</p>}
-                  {starsSelected === 1 && (
+                  {this.state.starsSelected === 0 && <p>Seleccione su valoración</p>}
+                  {this.state.starsSelected === 1 && (
                     <p>
                       Muy insatisfecho{" "}
                       <span role="img" aria-label="">
@@ -106,7 +141,7 @@ class FormularioValoracion extends Component {
                       </span>
                     </p>
                   )}
-                  {starsSelected === 2 && (
+                  {this.state.starsSelected === 2 && (
                     <p>
                       No fue de mucha ayuda{" "}
                       <span role="img" aria-label="">
@@ -114,7 +149,7 @@ class FormularioValoracion extends Component {
                       </span>
                     </p>
                   )}
-                  {starsSelected === 3 && (
+                  {this.state.starsSelected === 3 && (
                     <p>
                       Me ayudó, pero necesita mejorar{" "}
                       <span role="img" aria-label="">
@@ -122,7 +157,7 @@ class FormularioValoracion extends Component {
                       </span>
                     </p>
                   )}
-                  {starsSelected === 4 && (
+                  {this.state.starsSelected === 4 && (
                     <p>
                       ¡Buen servicio!{" "}
                       <span role="img" aria-label="">
@@ -130,7 +165,7 @@ class FormularioValoracion extends Component {
                       </span>
                     </p>
                   )}
-                  {starsSelected === 5 && (
+                  {this.state.starsSelected === 5 && (
                     <p>
                       ¡Excelente servicio!{" "}
                       <span role="img" aria-label="">
@@ -139,7 +174,7 @@ class FormularioValoracion extends Component {
                     </p>
                   )}
                 </div>
-              </div> */}
+              </div>
             </fieldset>
 
             <fieldset>
