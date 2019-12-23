@@ -437,7 +437,7 @@ export default class Conversations extends Component {
             const { sendValoracion, generalStates } = this.props;
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
-              <FormularioValoracion key={`${j}+1`} />
+              <FormularioValoracion />
             );
           }
         }
