@@ -22,8 +22,6 @@ class FormularioValoracion extends Component {
     mensajeAdicional: ""
   };
 
-  
-
   handleOptionChange = (e) => {
     console.log(e.target.value);
     if (e.target.value) {
@@ -40,12 +38,14 @@ class FormularioValoracion extends Component {
 };
 
     
-    enviarValoracion = (e) =>{
-        console.log('Llegué a enviarValoracion:: ');
+    enviarValoracion = (e) => {
         e.preventDefault();
         if(this.state.respuesta === null || this.state.starsSelected === 0 || this.state.mensajeAdicional === '') {
             return false;
         }
+
+        const {generalStates, sendValoracion} = this.props;
+        const general = generalStates.toJS();
 
         let resolvio = null;
         if (this.state.respuesta === 'si') {
@@ -53,10 +53,11 @@ class FormularioValoracion extends Component {
         } else {
             resolvio = 0;
         }
+
         const data = {
             input: "in",
             output: "out",
-            // cid: general.cid,
+            cid: general.cid,
             id_data_canal: 123,
             id_canal: 1,
             resolvio: resolvio,
@@ -65,17 +66,19 @@ class FormularioValoracion extends Component {
         }
         console.log('DATA VALORACIÓN:: ', data);
         // sendLike(data, general);
-        debugger;
-        // sendValoracion(data, general);
+       sendValoracion(data, general);
     }
 
   render() {
+
+    
+
     return (
       <div className="conversationBubbleForm Send">
         {/* <img className={mainCss.RoundedImg} src={} alt="" /> */}
 
         <div className="containerForm">
-          <form autoComplete="off" >
+          <form autoComplete="off" onSubmit={this.enviarValoracion}>
             <div className="headerForm">
               <p>
                 Gracias por utilizar nuestro chat. No dude en dejarnos cualquier
@@ -183,7 +186,7 @@ class FormularioValoracion extends Component {
                 dejar un mensaje adicional en el espacio siguiente
               </legend>
               <textarea
-                name="por-que"
+                name="mensajeAdicional"
                 rows="2"
                 onChange={e => this.setState({...this.state, mensajeAdicional: e.target.value})}
               ></textarea>
