@@ -11,7 +11,6 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
     const [respuesta, setRespuesta] = useState(null);
     const [starsSelected, selectStar] = useState(0);
     const [mensajeAdicional, setMensajeAdicional] = useState('');
-    const [active, setActive] = useState(false);
 
     const general = generalStates.toJS();
 
@@ -62,6 +61,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
         }
         console.log('DATA VALORACIÓN:: ', data);
         // sendLike(data, general);
+        debugger;
         sendValoracion(data, general);
     }
 
@@ -103,9 +103,9 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
 
             <div className="star-rating">
                 <div  style={style.boxStar}>
-                    {[...Array(totalStars)].map((n, i) => (
+                    {/* {[...Array(totalStars)].map((n, i) => (
                         <Star key={i} selected={i < starsSelected} onClick={() => selectStar(i + 1)} />
-                    ))}
+                    ))} */}
                 </div>
         
                 <div>
