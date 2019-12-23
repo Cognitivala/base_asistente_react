@@ -40,7 +40,7 @@ const FormularioValoracion = () => {
         
         <fieldset className="radios">
             <legend>¿Su caso o inquietud fueron resueltas?</legend>
-            <label>
+            {/* <label>
                 <div className="round">
                     <div className={respuesta === 'si' ?  "active circle" : " circle"}></div>Sí
                     <input type="radio" name="desicion" value='si' 
@@ -53,7 +53,7 @@ const FormularioValoracion = () => {
                     <input type="radio" name="desicion" value='no' 
                     checked={ respuesta === 'no' } onChange={handleOptionChange} />
                 </div>
-            </label>
+            </label> */}
         </fieldset>
 
         <fieldset>
