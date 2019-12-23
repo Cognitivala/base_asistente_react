@@ -3,7 +3,7 @@ import './FormValoracion.scss';
 
 const FormularioValoracion = () => {
 
-    const [respuesta, setRespuesta] = useState(null);
+    const [respuesta, setRespuesta] = useState('');
     // const [starsSelected, selectStar] = useState(0);
     // const [mensajeAdicional, setMensajeAdicional] = useState('');
 
