@@ -3,7 +3,7 @@ import './FormValoracion.scss';
 
 const FormularioValoracion = () => {
 
-    // const [respuesta, setRespuesta] = useState('');
+    const [respuesta, setRespuesta] = useState('si');
     // const [starsSelected, selectStar] = useState(0);
     // const [mensajeAdicional, setMensajeAdicional] = useState('');
 
@@ -40,13 +40,13 @@ const FormularioValoracion = () => {
         
         <fieldset className="radios">
             <legend>¿Su caso o inquietud fueron resueltas?</legend>
-            {/* <label>
+            <label>
                 <div className="round">
                     <div className={respuesta === 'si' ?  "active circle" : " circle"}></div>Sí
                     <input type="radio" name="desicion" value='si' 
                     checked={respuesta === 'si'} onChange={handleOptionChange} />
                 </div>
-            </label> */}
+            </label>
             {/* <label>
                 <div className="round">
                     <div className={respuesta === 'no' ?  "active circle" : " circle"}></div>No
