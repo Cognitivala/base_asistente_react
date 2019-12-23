@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const Formulario = () => {
+
+    const [respuesta, setRespuesta] = useState(null);
+    // const [starsSelected, selectStar] = useState(0);
+    // const [mensajeAdicional, setMensajeAdicional] = useState('');
 
     const style = {
         boxStar: {
@@ -11,6 +15,15 @@ const Formulario = () => {
             marginBottom: '10px',
         }
     }
+
+    const handleOptionChange = (e) => {
+        console.log(e.target.value);
+        if (e.target.value) {
+            setRespuesta(e.target.value);
+        } else {
+            setRespuesta(e.target.value)
+        }
+    };
 
     return ( 
         <div className='conversationBubbleForm Send'>
@@ -27,11 +40,11 @@ const Formulario = () => {
         <fieldset className="radios">
             <legend>¿Su caso o inquietud fueron resueltas?</legend>
             <label>
-                {/* <div className="round">
+                <div className="round">
                     <div className={respuesta === 'si' ?  "active circle" : " circle"}></div>Sí
                     <input type="radio" name="desicion" value='si' 
                     checked={respuesta === 'si'} onChange={handleOptionChange} />
-                </div> */}
+                </div>
             </label>
             <label>
                 {/* <div className="round">
