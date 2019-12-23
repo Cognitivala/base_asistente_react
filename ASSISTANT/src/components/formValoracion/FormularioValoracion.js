@@ -48,11 +48,11 @@ const FormularioValoracion = () => {
                 </div>
             </label>
             <label>
-                {/* <div className="round">
+                <div className="round">
                     <div className={respuesta === 'no' ?  "active circle" : " circle"}></div>No
                     <input type="radio" name="desicion" value='no' 
                     checked={ respuesta === 'no' } onChange={handleOptionChange} />
-                </div> */}
+                </div>
             </label>
         </fieldset>
 

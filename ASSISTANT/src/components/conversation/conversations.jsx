@@ -8,7 +8,6 @@ import ConversationSelects from "./conversation-selects";
 import Valoracion from "../valoracion/valoracion";
 import Formulario from "../formulario/formulario";
 import FormValoracion from "../formValoracion/FormValoracion";
-import FormularioValoracion from "../formValoracion/FormularioValoracion";
 
 import ConversationMultiButtons from "./conversation-multi-buttons";
 import ConversationCalendar from "./conversation-calendar";
@@ -17,6 +16,7 @@ import ConversationAttach from "./conversation-attach";
 import ConversationLikes from "./conversation-likes";
 import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
+import FormularioValoracion from "../formValoracion/FormularioValoracion";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -435,10 +435,9 @@ export default class Conversations extends Component {
           
           else if ( rating ) {
             const { sendValoracion, generalStates } = this.props;
-            // <FormValoracion  key={`${j}+1`} generalStates={generalStates} sendValoracion={sendValoracion} />
-            // <FormValoracion  key={`${j}+1`} />
+            // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
-              <FormularioValoracion key={`${j} + 1`} />
+              <FormularioValoracion key={`${j}+1`} />
             );
           }
         }
