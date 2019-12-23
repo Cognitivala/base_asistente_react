@@ -419,7 +419,6 @@ export default class Conversations extends Component {
           
           if (like !== undefined && like) {
 
-            console.log('hola!');
             const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
               <ConversationLikes

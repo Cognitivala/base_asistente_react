@@ -3,7 +3,7 @@ import './FormValoracion.scss';
 
 const FormularioValoracion = () => {
 
-    const [respuesta, setRespuesta] = useState('');
+    // const [respuesta, setRespuesta] = useState('');
     // const [starsSelected, selectStar] = useState(0);
     // const [mensajeAdicional, setMensajeAdicional] = useState('');
 
@@ -17,14 +17,14 @@ const FormularioValoracion = () => {
         }
     }
 
-    const handleOptionChange = (e) => {
-        console.log(e.target.value);
-        if (e.target.value) {
-            setRespuesta(e.target.value);
-        } else {
-            setRespuesta(e.target.value)
-        }
-    };
+    // const handleOptionChange = (e) => {
+    //     console.log(e.target.value);
+    //     if (e.target.value) {
+    //         setRespuesta(e.target.value);
+    //     } else {
+    //         setRespuesta(e.target.value)
+    //     }
+    // };
 
     return ( 
         <div className='conversationBubbleForm Send'>

@@ -240,8 +240,6 @@ export default class Input extends Component {
 
   render() {
     const { mainCss } = this.props;
-    console.log('this.props:: ', this.props);
-    console.log(this.props.inputStates.get("enabled"));
     if (this.props.conversationsStates.get("loading")) {
       return <ConversationLoader active={true} mainCss={mainCss} />;
     } else if ( !this.props.inputStates.get("enabled") ) {
