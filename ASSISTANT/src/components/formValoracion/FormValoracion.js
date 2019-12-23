@@ -6,13 +6,14 @@ import Star from './Star';
 
 import './FormValoracion.scss';
 
-const FormValoracion = ({ generalStates, sendValoracion}) => {
+// const FormValoracion = ({ generalStates, sendValoracion}) => {
+const FormValoracion = () => {
 
     const [respuesta, setRespuesta] = useState(null);
     const [starsSelected, selectStar] = useState(0);
     const [mensajeAdicional, setMensajeAdicional] = useState('');
 
-    const general = generalStates.toJS();
+    // const general = generalStates.toJS();
 
 
     const style = {
@@ -52,7 +53,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
         const data = {
             input: "in",
             output: "out",
-            cid: general.cid,
+            cid: 'general.cid',
             id_data_canal: 123,
             id_canal: 1,
             resolvio: resolvio,
@@ -62,7 +63,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
         console.log('DATA VALORACIÓN:: ', data);
         // sendLike(data, general);
         debugger;
-        sendValoracion(data, general);
+        // sendValoracion(data, general);
     }
 
 
