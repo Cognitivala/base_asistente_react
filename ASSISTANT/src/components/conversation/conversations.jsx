@@ -6,9 +6,9 @@ import ConversationButtons from "./conversation-buttons";
 import ConversationSelects from "./conversation-selects";
 
 import Valoracion from "../valoracion/valoracion";
-// import Formulario from "../formulario/formulario";
-import Formulario from "../formValoracion/Formulario";
+import Formulario from "../formulario/formulario";
 import FormValoracion from "../formValoracion/FormValoracion";
+import FormularioValoracion from "../formValoracion/FormularioValoracion";
 
 import ConversationMultiButtons from "./conversation-multi-buttons";
 import ConversationCalendar from "./conversation-calendar";
@@ -438,7 +438,7 @@ export default class Conversations extends Component {
             // <FormValoracion  key={`${j}+1`} generalStates={generalStates} sendValoracion={sendValoracion} />
             // <FormValoracion  key={`${j}+1`} />
             retorno.push(
-              <Formulario key={`${j}+1`} />
+              <FormularioValoracion key={`${j} + 1`} />
             );
           }
         }
