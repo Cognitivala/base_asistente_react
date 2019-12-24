@@ -37,7 +37,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
     
     const totalStars = 5;
     const enviarValoracion = (e) =>{
-        console.log('Llegué a enviarValoracion:: ');
+        // console.log('Llegué a enviarValoracion:: ');
         e.preventDefault();
         if(respuesta === null || starsSelected === 0 || mensajeAdicional === '') {
             return false;
@@ -59,7 +59,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
             valoracion: starsSelected,
             comentario: mensajeAdicional,
         }
-        console.log('DATA VALORACIÓN:: ', data);
+        // console.log('DATA VALORACIÓN:: ', data);
         // sendLike(data, general);
         debugger;
         sendValoracion(data, general);

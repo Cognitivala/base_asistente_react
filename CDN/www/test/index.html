@@ -42,7 +42,7 @@
             })
             .then(res => res.json())
             .then(response => {
-                console.log('URL:: ', response.url);
+                // console.log('URL:: ', response.url);
                 document.getElementById('demo').src = response.url;
             })
             .catch(error => {

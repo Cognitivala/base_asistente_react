@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Star from "./Star";
 
 import "./FormValoracion.scss";
@@ -31,7 +32,7 @@ class FormularioValoracion extends Component {
     }
   };
 
-  enviarValoracion = e => {
+  enviarValoracion = async (e) => {
     e.preventDefault();
     if (
       this.state.respuesta === null ||
@@ -63,7 +64,7 @@ class FormularioValoracion extends Component {
     };
     console.log("DATA VALORACIÓN:: ", data);
     // sendLike(data, general);
-    sendValoracion(data, general);
+    await sendValoracion(data, general);
   };
 
   render() {
@@ -136,5 +137,10 @@ class FormularioValoracion extends Component {
     );
   }
 }
+
+FormularioValoracion.propTypes = {
+    generalStates: PropTypes.any.isRequired,
+    sendValoracion: PropTypes.func.isRequired
+};
 
 export default FormularioValoracion;

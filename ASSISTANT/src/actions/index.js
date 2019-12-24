@@ -396,7 +396,7 @@ export function getAyuda() {
         });
         return request.then(
             response => {
-                // console.log(response);
+                // console.log('RESPONSE MENSAJE 2::');
                 if (response.data.estado.codigoEstado === 200) {
                     dispatch(getAyudaEnd(response.data.respuesta));
                 } else {
@@ -542,9 +542,13 @@ function updateConversationError(data) {
     conv.msg = [data];
     conv.enabled = true;
     conv.from = "from";
+    if (data.exitoFormulario) {
+        conv.exito_formulario = data.exitoFormulario;
+    }
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
+    // console.log('data updateConversation:: ', data);
     return function action(dispatch) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -558,15 +562,21 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                console.log('response:: ', response);
+                // console.log('message updateConversation:: ', response.data);
+                // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
+                    response.data.msg !== undefined &&
+                    response.data.msg !== null &&
                     response.data.estado.codigoEstado === 200
                 ) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                    if (item.exito_formulario) {
+                        item.exito_formulario = 'exito_formulario';
+                    }
+                    // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
                     dispatch(updateConversationError(response.statusText));
@@ -815,6 +825,7 @@ export function updateConversation(data) {
 }
 
 function messageResponse(dispatch, data) {
+    // console.log('messageResponse:: ', data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -840,10 +851,15 @@ function messageResponse(dispatch, data) {
                 break;
         }
     } else {
+        // console.log('data.general ', data)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
-            if (data.general.region !== undefined) dispatch(setRegion(data.general.region));
-            if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+            if (data.general.region !== undefined) {
+                dispatch(setRegion(data.general.region))
+            };
+            if (data.general.integracion !== undefined) {
+                dispatch(setIntegracion(data.general.integracion))
+            };
         }
         dispatch(pushConversation(data));
     }
@@ -1275,6 +1291,7 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
+                        // console.log('RESPONSE MENSAJE 3::');
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
@@ -1414,8 +1431,8 @@ export function setErrorValoracion(data) {
 }
 export function sendValoracion(data, general) {
 
-    console.log('DATA:: ', data);
-    console.log('general:: ', general);
+    // console.log('DATA:: ', data);
+    // console.log('general:: ', general);
 
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
@@ -1430,19 +1447,25 @@ export function sendValoracion(data, general) {
         return request.then(
             response => {
 
+                // console.log('response.statusText:: ', response.statusText);
+
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
                 ) {
                     let item = {};
-                    item.msg = [response.data.respuesta];
+                    // item.msg = [response.data.respuesta];
                     item.send = "from";
                     item.enabled = true;
                     item.general = general;
-                    messageResponse(dispatch, item);
+                    item.exito_formulario = 'exito_formulario';
+                    dispatch(updateConversation(item));
+                    // messageResponse(dispatch, item);
                     dispatch({ type: "GET_CONVERSATIONS_END" });
                 } else {
-                    dispatch(updateConversationError(response.statusText));
+                    // dispatch(updateConversationError(response.statusText));
+                    let errorFormulario = 'error_formulario';
+                    dispatch(updateConversationError(errorFormulario));
                 }
             },
             err => {
@@ -1519,6 +1542,7 @@ export function closeForm(data) {
         });
         return request.then(
             response => {
+                // console.log('RESPONSE MENSAJE 4::');
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1576,6 +1600,7 @@ export function sendForm(data, url, general) {
                     });
                     return request
                         .then(response => {
+                            // console.log('RESPONSE MENSAJE 5::');
                             if (
                                 response.status === 200 &&
                                 response.data.estado.codigoEstado === 200

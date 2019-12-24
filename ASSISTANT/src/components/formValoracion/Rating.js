@@ -4,7 +4,7 @@ import Star from './Star';
   const StarRating = ({ totalStars }) => {
     const [starsSelected, selectStar] = useState(0);
 
-    console.log('star', starsSelected);
+    // console.log('star', starsSelected);
 
     const style = {
         boxStar: {
