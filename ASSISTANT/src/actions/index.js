@@ -557,6 +557,7 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
+                    console.log("response.dataa=== ", response.data);
                     if (item.exito_formulario) {
                         item.exito_formulario = 'exito_formulario';
                     }
@@ -1414,10 +1415,7 @@ export function setErrorValoracion(data) {
     };
 }
 export function sendValoracion(data, general) {
-
-    // console.log('DATA:: ', data);
-    // console.log('general:: ', general);
-
+  console.log("dataa2: ", data)
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
@@ -1430,26 +1428,21 @@ export function sendValoracion(data, general) {
         });
         return request.then(
             response => {
-
-                // console.log('response.statusText:: ', response.statusText);
-
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
                 ) {
                     let item = {};
-                    // item.msg = [response.data.respuesta];
                     item.send = "from";
                     item.enabled = true;
                     item.general = general;
-                    item.exito_formulario = 'exito_formulario';
+                    item.msg = ['exito_formulario'];
                     dispatch(updateConversation(item));
-                    // messageResponse(dispatch, item);
                     dispatch({ type: "GET_CONVERSATIONS_END" });
+                    
                 } else {
-                    // dispatch(updateConversationError(response.statusText));
-                    let errorFormulario = 'error_formulario';
-                    dispatch(updateConversationError(errorFormulario));
+                    let msg = ['error_formulario'];
+                    dispatch(updateConversationError(msg));
                 }
             },
             err => {
@@ -1468,7 +1461,7 @@ export function closeValoracion(data) {
 
 //LIKE
 export function sendLike(data, general) {
-    console.log(data);
+    console.log("dataaa: ", data);
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
@@ -1494,6 +1487,7 @@ export function sendLike(data, general) {
                     item.enabled = true;
                     item.general = general;
                     messageResponse(dispatch, item);
+                    console.log("mensajeeee: ", item.msg)
                 } else {
                     dispatch(updateConversationError(response.statusText));
                 }
