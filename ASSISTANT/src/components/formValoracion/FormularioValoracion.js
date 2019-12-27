@@ -62,7 +62,6 @@ class FormularioValoracion extends Component {
       valoracion: this.state.starsSelected,
       comentario: this.state.mensajeAdicional
     };
-    console.log("DATA VALORACIÓN:: ", data);
     // sendLike(data, general);
     await sendValoracion(data, general);
   };

@@ -169,7 +169,6 @@ export function getCustomParams() {
         return request.then(
             response => {
                 if (response.status === 200) {
-                  console.log(response)
                     //UPDATE COLORS
                     setColors(response.data.color_header);
                     dispatch(getCustomParamsEnd(response.data));
@@ -532,7 +531,6 @@ function updateConversationError(data) {
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
-    // console.log('data updateConversation:: ', data);
     return function action(dispatch) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -557,10 +555,6 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    console.log("response.dataa=== ", response.data);
-                    if (item.exito_formulario) {
-                        item.exito_formulario = 'exito_formulario';
-                    }
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
@@ -1415,7 +1409,6 @@ export function setErrorValoracion(data) {
     };
 }
 export function sendValoracion(data, general) {
-  console.log("dataa2: ", data)
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
@@ -1461,7 +1454,6 @@ export function closeValoracion(data) {
 
 //LIKE
 export function sendLike(data, general) {
-    console.log("dataaa: ", data);
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
@@ -1475,8 +1467,6 @@ export function sendLike(data, general) {
         return request.then(
             response => {
 
-                console.log(response);
-
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1487,7 +1477,6 @@ export function sendLike(data, general) {
                     item.enabled = true;
                     item.general = general;
                     messageResponse(dispatch, item);
-                    console.log("mensajeeee: ", item.msg)
                 } else {
                     dispatch(updateConversationError(response.statusText));
                 }
