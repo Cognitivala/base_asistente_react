@@ -146,6 +146,5 @@ Header.propTypes = {
   minimized: PropTypes.bool.isRequired,
   mainCss: PropTypes.any.isRequired,
   responsive: PropTypes.string,
-  // imgBackHeader: PropTypes.string.isRequired,
   positionHelp: PropTypes.string.isRequired
 };
