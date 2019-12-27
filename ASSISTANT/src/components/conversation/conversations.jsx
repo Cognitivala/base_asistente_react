@@ -338,84 +338,84 @@ export default class Conversations extends Component {
 
         //Sólo si es la última conversación y tiene para levantar modal
         if (last) {
-          // if (liftUp !== undefined) {
-          //   switch (liftUp) {
-          //     case "valoracion":
-          //       const { valoracionStates } = this.props,
-          //         enabledValoracion = valoracionStates.get("enabled");
-          //       if (enabledValoracion) {
-          //         const {
-          //           setStar,
-          //           setOverStar,
-          //           setPudoResolverValoracion,
-          //           sendValoracion,
-          //           setCommentValoracion,
-          //           setErrorValoracion,
-          //           setServicioValoracion,
-          //           updateConversationButton,
-          //           generalStates,
-          //           disabledHelp,
-          //           disabledInput
-          //         } = this.props;
-          //         // debugger
-          //         retorno.push(
-          //           <Valoracion
-          //             key={j}
-          //             generalStates={generalStates}
-          //             setErrorValoracion={setErrorValoracion}
-          //             sendValoracion={sendValoracion}
-          //             valoracionStates={valoracionStates}
-          //             setStar={setStar}
-          //             setOverStar={setOverStar}
-          //             setCommentValoracion={setCommentValoracion}
-          //             setServicioValoracion={setServicioValoracion}
-          //             setPudoResolverValoracion={setPudoResolverValoracion}
-          //             updateConversationButton={updateConversationButton}
-          //             mainCss={mainCss}
-          //             withStars={withStars}
-          //             disabledHelp={disabledHelp}
-          //             disabledInput={disabledInput}
-          //             conversationsStates={conversationsStates}
-          //           />
-          //         );
-          //       }
-          //       break;
-          //     case "form":
-          //       const {
-          //           formularioStates,
-          //           closeForm,
-          //           generalStates,
-          //           attachFileForm,
-          //           sendForm,
-          //           deleteFileForm,
-          //           customParamsStates
-          //         } = this.props,
-          //         enabledFormulario = formularioStates.get("enabled"),
-          //         form = conversation.get("form");
+          if (liftUp !== undefined) {
+            switch (liftUp) {
+              case "valoracion":
+                const { valoracionStates } = this.props,
+                  enabledValoracion = valoracionStates.get("enabled");
+                if (enabledValoracion) {
+                  const {
+                    setStar,
+                    setOverStar,
+                    setPudoResolverValoracion,
+                    sendValoracion,
+                    setCommentValoracion,
+                    setErrorValoracion,
+                    setServicioValoracion,
+                    updateConversationButton,
+                    generalStates,
+                    disabledHelp,
+                    disabledInput
+                  } = this.props;
+                  // debugger
+                  retorno.push(
+                    <Valoracion
+                      key={j}
+                      generalStates={generalStates}
+                      setErrorValoracion={setErrorValoracion}
+                      sendValoracion={sendValoracion}
+                      valoracionStates={valoracionStates}
+                      setStar={setStar}
+                      setOverStar={setOverStar}
+                      setCommentValoracion={setCommentValoracion}
+                      setServicioValoracion={setServicioValoracion}
+                      setPudoResolverValoracion={setPudoResolverValoracion}
+                      updateConversationButton={updateConversationButton}
+                      mainCss={mainCss}
+                      withStars={withStars}
+                      disabledHelp={disabledHelp}
+                      disabledInput={disabledInput}
+                      conversationsStates={conversationsStates}
+                    />
+                  );
+                }
+                break;
+              case "form":
+                const {
+                    formularioStates,
+                    closeForm,
+                    generalStates,
+                    attachFileForm,
+                    sendForm,
+                    deleteFileForm,
+                    customParamsStates
+                  } = this.props,
+                  enabledFormulario = formularioStates.get("enabled"),
+                  form = conversation.get("form");
 
-          //       if (enabledFormulario) {
-          //         retorno.push(
-          //           <Formulario
-          //             key={j}
-          //             formularioStates={formularioStates}
-          //             form={form}
-          //             generalStates={generalStates}
-          //             closeForm={closeForm}
-          //             colorHeader={colorHeader}
-          //             sendForm={sendForm}
-          //             attachFileForm={attachFileForm}
-          //             deleteFileForm={deleteFileForm}
-          //             customParamsStates={customParamsStates}
-          //             mainCss={mainCss}
-          //             animation={animation}
-          //           />
-          //         );
-          //       }
-          //       break;
-          //     default:
-          //       break;
-          //   }
-          // } 
+                if (enabledFormulario) {
+                  retorno.push(
+                    <Formulario
+                      key={j}
+                      formularioStates={formularioStates}
+                      form={form}
+                      generalStates={generalStates}
+                      closeForm={closeForm}
+                      colorHeader={colorHeader}
+                      sendForm={sendForm}
+                      attachFileForm={attachFileForm}
+                      deleteFileForm={deleteFileForm}
+                      customParamsStates={customParamsStates}
+                      mainCss={mainCss}
+                      animation={animation}
+                    />
+                  );
+                }
+                break;
+              default:
+                break;
+            }
+          } 
           
           if (like !== undefined && like) {
 
