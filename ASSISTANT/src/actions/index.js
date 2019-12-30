@@ -126,38 +126,6 @@ export function getCustomParams() {
     return function action(dispatch) {
         dispatch(getCustomParamsStart());
 
-        // const response = {
-        //   avatar:  "/static/media/icono-cognitiva-2.9dc78e8e.svg",
-        //   colorHeader: "#6f4aad",
-        //   colorBtn: "#2979ff",
-        //   estado: "1",
-        //   // logo:
-        //   //   "/static/media/icon-assistant-jose.a0612191.svg",
-        //   logo:
-        //     "/static/media/logoH.8c71aadb.svg",
-        //   status: 200,
-        //   subtitulo: "Asistente virtual",
-        //   titulo: "Cognitiva",
-        //   url: "https://example.com",
-        //   userImg:
-        //     "https://yt3.ggpht.com/a-/ACSszfo",
-        //   imgBackHeader: "/static/media/nodos.772747fe.svg",
-        //   settings: {
-        //     keep_conversation: true,
-        //     geolocalization: false,
-        //     help: true,
-        //     attach: false, // no está desarrollado al 100%
-        //     emoji: false,
-        //     voice: true,
-        //     positionHelp: "bottom"
-        //   }
-        // };
-        // setColors(response.colorHeader);
-        // dispatch(getCustomParamsEnd(response));
-        // let str_md5v = AES.encrypt(JSON.stringify(response),KEY_ENCRYPT).toString();
-        // localStorage.setItem("customParams", str_md5v);
-        // window.top.postMessage({ customParams: response }, "*");
-
         const request = axios({
             method: "POST",
             headers: {
@@ -175,6 +143,11 @@ export function getCustomParams() {
                     let str_md5v = AES.encrypt(JSON.stringify(response.data), KEY_ENCRYPT).toString();
                     localStorage.setItem("customParams", str_md5v);
                     window.top.postMessage({ customParams: response.data }, "*");
+
+                    //Si tiene notificación
+                    if (response.data.settings.bubble === true) {
+                      dispatch(sendNotification(response.data.saludo_burbuja));
+                  }
                 } else {
                     dispatch(getCustomParamsError(response.statusText));
                 }
@@ -273,8 +246,6 @@ export function getSaludo() {
             });
         return request.then(
             response => {
-                // console.log('RESPONSE MENSAJE::', response.data);
-                // console.log('RESPONSE MENSAJE ORIGEN::', response.data.msg);
                 if (response.status === 200) {
                     let item = {};
                     item.msg = response.data.msg;
@@ -283,8 +254,8 @@ export function getSaludo() {
                     dispatch(getSaludoEnd(item));
                     //Si tiene notificación, la envía
                     if (response.data.notification) {
-                        dispatch(sendNotification(response.data.notification));
-                    }
+                      dispatch(sendNotification(response.data.notification));
+                  }
                     //PRIMER MENSAJE
                     const msg_inicial = response.data.msg_inicial;
                     msg_inicial ? item = msg_inicial : item.msg = ["¿Qué puedo hacer por ti?"];
@@ -1509,7 +1480,6 @@ export function closeForm(data) {
         });
         return request.then(
             response => {
-                // console.log('RESPONSE MENSAJE 4::');
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1547,10 +1517,9 @@ export function sendForm(data, url, general) {
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
                 ) {
-                    // console.log('response =>>>> ',response.data);
                     let item = {};
                     //item.msg = [response.data.respuesta];
-                    item.msg = [response.data.msg];
+                    item.msg =  ["exito_formulario"];
                     item.send = "to";
                     item.enabled = false;
                     item.general = general;
