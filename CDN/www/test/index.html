@@ -17,13 +17,16 @@
     ><![endif]-->
     <script type="text/javascript" src="../js/build/main.js"></script>
 
-    <script type="module">
-        import { URL_API_APP } from '../config/url.js'; window.addEventListener('load', function() { window.CognitiveAssistantMain.init(`${URL_API_APP}/asistente/`); });
+    <script>
+        window.addEventListener('load', function() {
+            window.CognitiveAssistantMain.init(
+                'https://dev-sura.mycognitiva.io/asistente/'
+            );
+            // var origen = 1;
+            // window.CognitiveAssistantMain.init('https://dev-sura.mycognitiva.io/asistente/?origen=' + origen);
+            // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
+        });
     </script>
-    <!-- // var origen = 1;
-      // window.CognitiveAssistantMain.init('https://dev-sura.mycognitiva.io/asistente/?origen=' + origen);
-      // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
-     -->
 </head>
 
 <body class="no-scroll aui" heightfull="heightfull">
