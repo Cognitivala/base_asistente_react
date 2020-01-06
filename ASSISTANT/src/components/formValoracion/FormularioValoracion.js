@@ -24,7 +24,7 @@ class FormularioValoracion extends Component {
   };
 
   handleOptionChange = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     if (e.target.value) {
       this.setState({ ...this.state, respuesta: e.target.value });
     } else {

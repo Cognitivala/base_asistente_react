@@ -27,7 +27,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
 
     
     const handleOptionChange = (e) => {
-        console.log(e.target.value);
+        // console.log(e.target.value);
         if (e.target.value) {
             setRespuesta(e.target.value);
         } else {

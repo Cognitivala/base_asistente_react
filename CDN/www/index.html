@@ -26,13 +26,8 @@
             .setAttribute('src', 'js/build/main.js?v=' + f);
         document.getElementById('preJS').remove();
     </script>
-    <script type="text/javascript">
-        window.addEventListener('load', function() {
-            window.CognitiveAssistantMain.init(
-                'https://dev-sura.mycognitiva.io/asistente/'
-            );
-            // window.CognitiveAssistantMain.init('http://localhost:3000/assistant/');
-        });
+    <script type="module">
+        import { URL_API_APP } from './config/url.js'; window.addEventListener('load', function() { window.CognitiveAssistantMain.init(`${URL_API_APP}/asistente/`); }); // window.CognitiveAssistantMain.init('http://localhost:3000/assistant/');
     </script>
 </body>
 
