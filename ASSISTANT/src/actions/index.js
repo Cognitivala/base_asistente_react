@@ -146,8 +146,8 @@ export function getCustomParams() {
 
                     //Si tiene notificación
                     if (response.data.settings.bubble === true) {
-                      dispatch(sendNotification(response.data.saludo_burbuja));
-                  }
+                        dispatch(sendNotification(response.data.saludo_burbuja));
+                    }
                 } else {
                     dispatch(getCustomParamsError(response.statusText));
                 }
@@ -254,8 +254,8 @@ export function getSaludo() {
                     dispatch(getSaludoEnd(item));
                     //Si tiene notificación, la envía
                     if (response.data.notification) {
-                      dispatch(sendNotification(response.data.notification));
-                  }
+                        dispatch(sendNotification(response.data.notification));
+                    }
                     //PRIMER MENSAJE
                     const msg_inicial = response.data.msg_inicial;
                     msg_inicial ? item = msg_inicial : item.msg = ["¿Qué puedo hacer por ti?"];
@@ -1403,7 +1403,7 @@ export function sendValoracion(data, general) {
                     item.msg = ['exito_formulario'];
                     dispatch(updateConversation(item));
                     dispatch({ type: "GET_CONVERSATIONS_END" });
-                    
+
                 } else {
                     let msg = ['error_formulario'];
                     dispatch(updateConversationError(msg));
@@ -1513,13 +1513,10 @@ export function sendForm(data, url, general) {
         });
         return request.then(
             response => {
-                if (
-                    response.status === 200 &&
-                    response.data.estado.codigoEstado === 200
-                ) {
+                if (response.status === 200 && response.data.estado.codigoEstado === 200) {
                     let item = {};
                     //item.msg = [response.data.respuesta];
-                    item.msg =  ["exito_formulario"];
+                    item.msg = ["exito_formulario"];
                     item.send = "to";
                     item.enabled = false;
                     item.general = general;
@@ -1559,7 +1556,7 @@ export function sendForm(data, url, general) {
                             dispatch(updateConversationError(err.response.data.msg));
                         });
                 } else {
-                    dispatch(updateConversationError(response.statusText));
+                    dispatch(updateConversationError(response.statusText = 'error_formulario'));
                     dispatch({ type: "DISABLED_FORM" });
                 }
             },
