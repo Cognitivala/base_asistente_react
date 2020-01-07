@@ -155,94 +155,7 @@
     border-radius: 50%;
 }
 
-// RatingStars
-.containerForm form .ratingStars {
-    display: block;
-    position: relative;
-}
-
-.containerForm form .ratingStars:before {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.containerForm form .ratingStars legend {
-    font-weight: 100;
-    margin-bottom: 1rem;
-}
-
-.containerForm form .ratingStars legend {
-    font-weight: 100;
-    margin-bottom: 1rem;
-}
-
-.containerForm form .ratingStars a {
-    color: #9a9a9a;
-    display: inline-block;
-    font-size: 2rem;
-    font-weight: 400;
-    text-align: center;
-    padding-right: .8rem;
-    transition: all .3s linear;
-}
-
-.containerForm form .ratingStars .starValue {
-    border-top: 2px solid #2979ff;
-    padding: .8rem 0 0;
-    margin-top: 1rem;
-    color: #2979ff;
-    color: var(--first);
-    font-size: 1.2rem;
-}
-
-.hide {
-    display: none;
-}
-
-.containerForm form .ratingStars:after,
-.containerForm form .ratingStars:before {
-    content: "";
-    display: table;
-    clear: both;
-}
-
-.containerForm form .ratingStars legend {
-    font-weight: 100;
-    margin-bottom: 1rem;
-}
-
-.containerForm form .ratingStars a {
-    color: #9a9a9a;
-    display: inline-block;
-    font-size: 2rem;
-    font-weight: 400;
-    text-align: center;
-    padding-right: .8rem;
-    transition: all .3s linear;
-}
-
-.containerForm form .ratingStars a:hover~a {
-    color: #d3d4d3;
-}
-
-.containerForm form .ratingStars a.activeStar {
-    color: #2979ff;
-}
-
-.containerForm form .ratingStars .starValue {
-    border-top: 2px solid #2979ff;
-    padding: .8rem 0 0;
-    margin-top: 1rem;
-    color: #2979ff;
-    font-size: 1.2rem;
-}
-
-.containerForm form .ratingStars .starValue p {
-    -webkit-animation: main_inAssistant__3pO3e .6s linear;
-    animation: main_inAssistant__3pO3e .6s linear;
-}
-
+// TEXTAREA
 .containerForm form fieldset textarea {
     margin: 0;
     height: 3.6rem;
@@ -283,3 +196,31 @@
     color: #fff;
     cursor: pointer;
 }
+
+// RAITING
+.star-rating {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    // flex-wrap: wrap;
+    // justify-content: space-around;
+}
+
+.star {
+    cursor: pointer;
+    width: 2em;
+    height: 2em;
+    background-color: grey;
+    -webkit-clip-path: polygon( 50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+    clip-path: polygon( 50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+    margin-right: 15px;
+}
+
+.star.selected {
+    background-color: #2979ff;
+}
+
+// .star-rating p {
+//     // flex-basis: 100%;
+//     // text-align: center;
+// }

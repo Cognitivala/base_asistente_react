@@ -126,38 +126,6 @@ export function getCustomParams() {
     return function action(dispatch) {
         dispatch(getCustomParamsStart());
 
-        // const response = {
-        //   avatar:  "/static/media/icono-cognitiva-2.9dc78e8e.svg",
-        //   colorHeader: "#6f4aad",
-        //   colorBtn: "#2979ff",
-        //   estado: "1",
-        //   // logo:
-        //   //   "/static/media/icon-assistant-jose.a0612191.svg",
-        //   logo:
-        //     "/static/media/logoH.8c71aadb.svg",
-        //   status: 200,
-        //   subtitulo: "Asistente virtual",
-        //   titulo: "Cognitiva",
-        //   url: "https://example.com",
-        //   userImg:
-        //     "https://yt3.ggpht.com/a-/ACSszfo",
-        //   imgBackHeader: "/static/media/nodos.772747fe.svg",
-        //   settings: {
-        //     keep_conversation: true,
-        //     geolocalization: false,
-        //     help: true,
-        //     attach: false, // no está desarrollado al 100%
-        //     emoji: false,
-        //     voice: true,
-        //     positionHelp: "bottom"
-        //   }
-        // };
-        // setColors(response.colorHeader);
-        // dispatch(getCustomParamsEnd(response));
-        // let str_md5v = AES.encrypt(JSON.stringify(response),KEY_ENCRYPT).toString();
-        // localStorage.setItem("customParams", str_md5v);
-        // window.top.postMessage({ customParams: response }, "*");
-
         const request = axios({
             method: "POST",
             headers: {
@@ -175,6 +143,11 @@ export function getCustomParams() {
                     let str_md5v = AES.encrypt(JSON.stringify(response.data), KEY_ENCRYPT).toString();
                     localStorage.setItem("customParams", str_md5v);
                     window.top.postMessage({ customParams: response.data }, "*");
+
+                    //Si tiene notificación
+                    if (response.data.settings.bubble === true) {
+                        dispatch(sendNotification(response.data.saludo_burbuja));
+                    }
                 } else {
                     dispatch(getCustomParamsError(response.statusText));
                 }
@@ -245,24 +218,9 @@ export function updateCustomAvatar(data) {
         dispatch({ type: "SET_CUSTOM_AVATAR", data });
     };
 }
-// export function blendColors(c0, c1, p) {
-//     var f = parseInt(c0.slice(1), 16),
-//         t = parseInt(c1.slice(1), 16),
-//         R1 = f >> 16,
-//         G1 = f >> 8 & 0x00FF,
-//         B1 = f & 0x0000FF,
-//         R2 = t >> 16,
-//         G2 = t >> 8 & 0x00FF,
-//         B2 = t & 0x0000FF;
-//     return "#" + (0x1000000 + (Math.round((R2 - R1) * p) + R1) * 0x10000 + (Math.round((G2 - G1) * p) + G1) * 0x100 + (Math.round((B2 - B1) * p) + B1)).toString(16).slice(1);
-// }
 export function setColors(colorHeader) {
-    // const gradientMedium = blendColors(colorHeader, "#000000", .2),
-    //     gradientLow = blendColors(colorHeader, "#000000", .3);
     document.documentElement.style.setProperty("--first", colorHeader);
     document.documentElement.style.setProperty("--laucher", colorHeader);
-    // document.documentElement.style.setProperty("--gradient-medium", gradientMedium);
-    // document.documentElement.style.setProperty("--gradient-dark", gradientLow);
 }
 //SALUDO
 export function getSaludo() {
@@ -273,10 +231,8 @@ export function getSaludo() {
 
         if (isMobile) {
             origen = 5;
-            // console.log('SOY MOBILE');
         } else {
             origen = 1;
-            // console.log('SOY DESKTOP');
         }
 
         const data = { general: { cid: null, id_cliente: "1", origen: origen }, msg: null },
@@ -290,8 +246,6 @@ export function getSaludo() {
             });
         return request.then(
             response => {
-                // console.log('RESPONSE MENSAJE::', response.data);
-                // console.log('RESPONSE MENSAJE ORIGEN::', response.data.msg);
                 if (response.status === 200) {
                     let item = {};
                     item.msg = response.data.msg;
@@ -396,7 +350,7 @@ export function getAyuda() {
         });
         return request.then(
             response => {
-                // console.log(response);
+                // console.log('RESPONSE MENSAJE 2::');
                 if (response.data.estado.codigoEstado === 200) {
                     dispatch(getAyudaEnd(response.data.respuesta));
                 } else {
@@ -542,6 +496,9 @@ function updateConversationError(data) {
     conv.msg = [data];
     conv.enabled = true;
     conv.from = "from";
+    if (data.exitoFormulario) {
+        conv.exito_formulario = data.exitoFormulario;
+    }
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
@@ -558,14 +515,18 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
+                // console.log('message updateConversation:: ', response.data);
+                // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
+                    response.data.msg !== undefined &&
+                    response.data.msg !== null &&
                     response.data.estado.codigoEstado === 200
                 ) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                    // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
                     dispatch(updateConversationError(response.statusText));
@@ -814,6 +775,7 @@ export function updateConversation(data) {
 }
 
 function messageResponse(dispatch, data) {
+    // console.log('messageResponse:: ', data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -839,10 +801,15 @@ function messageResponse(dispatch, data) {
                 break;
         }
     } else {
+        // console.log('data.general ', data)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
-            if (data.general.region !== undefined) dispatch(setRegion(data.general.region));
-            if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+            if (data.general.region !== undefined) {
+                dispatch(setRegion(data.general.region))
+            };
+            if (data.general.integracion !== undefined) {
+                dispatch(setIntegracion(data.general.integracion))
+            };
         }
         dispatch(pushConversation(data));
     }
@@ -1274,6 +1241,7 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
+                        // console.log('RESPONSE MENSAJE 3::');
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
@@ -1429,14 +1397,16 @@ export function sendValoracion(data, general) {
                     response.data.estado.codigoEstado === 200
                 ) {
                     let item = {};
-                    item.msg = [response.data.respuesta];
                     item.send = "from";
                     item.enabled = true;
                     item.general = general;
-                    messageResponse(dispatch, item);
+                    item.msg = ['exito_formulario'];
+                    dispatch(updateConversation(item));
                     dispatch({ type: "GET_CONVERSATIONS_END" });
+
                 } else {
-                    dispatch(updateConversationError(response.statusText));
+                    let msg = ['error_formulario'];
+                    dispatch(updateConversationError(msg));
                 }
             },
             err => {
@@ -1467,7 +1437,7 @@ export function sendLike(data, general) {
         });
         return request.then(response => {
 
-                console.log('RESPONSE:: ', response);
+                // console.log('RESPONSE:: ', response);
 
                 if (
                     response.status === 200 &&
@@ -1544,14 +1514,10 @@ export function sendForm(data, url, general) {
         });
         return request.then(
             response => {
-                if (
-                    response.status === 200 &&
-                    response.data.estado.codigoEstado === 200
-                ) {
-                    // console.log('response =>>>> ',response.data);
+                if (response.status === 200 && response.data.estado.codigoEstado === 200) {
                     let item = {};
                     //item.msg = [response.data.respuesta];
-                    item.msg = [response.data.msg];
+                    item.msg = ["exito_formulario"];
                     item.send = "to";
                     item.enabled = false;
                     item.general = general;
@@ -1568,6 +1534,7 @@ export function sendForm(data, url, general) {
                     });
                     return request
                         .then(response => {
+                            // console.log('RESPONSE MENSAJE 5::');
                             if (
                                 response.status === 200 &&
                                 response.data.estado.codigoEstado === 200
@@ -1590,7 +1557,7 @@ export function sendForm(data, url, general) {
                             dispatch(updateConversationError(err.response.data.msg));
                         });
                 } else {
-                    dispatch(updateConversationError(response.statusText));
+                    dispatch(updateConversationError(response.statusText = 'error_formulario'));
                     dispatch({ type: "DISABLED_FORM" });
                 }
             },

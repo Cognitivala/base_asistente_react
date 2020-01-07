@@ -10,11 +10,11 @@ export default class ConversationLikes extends Component {
   sendLikeHandled(event) {
     console.log('sendLikeHandled');
     const { sendLike, generalStates, conversationsStates } = this.props;
-      const like = event.currentTarget.dataset.like;
-      const general = generalStates.toJS();
-      const conversaciones = conversationsStates.get("conversations");
-      const sizeConv = conversationsStates.get("conversations").size;
-      const input = conversaciones
+    const like = event.currentTarget.dataset.like;
+    const general = generalStates.toJS();
+    const conversaciones = conversationsStates.get("conversations");
+    const sizeConv = conversationsStates.get("conversations").size;
+    const input = conversaciones
         .get(sizeConv - 2)
         .get("msg")
         .get(0);

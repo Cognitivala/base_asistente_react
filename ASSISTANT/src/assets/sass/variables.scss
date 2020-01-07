@@ -15,8 +15,8 @@
     --white-gray: #f8f8f8;
     --success: #86c546;
     // --img-header: "../images/nodos.svg";
-    --gradient-medium: #0052dc;
-    --gradient-dark: #2061d1;
+    --gradient-medium: var(--first);
+    --gradient-dark: var(--first);
 }
 
 $first: #2979ff;

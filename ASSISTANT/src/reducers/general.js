@@ -3,7 +3,7 @@ import * as Immutable from "immutable";
 export function generalStates(
     state = Immutable.fromJS({
         cid: null,
-        origen: null,
+        origen: 1,
         nodo_id: null,
         intent: null,
         auth: null,
@@ -37,7 +37,7 @@ export function generalStates(
         case "DEFAULT_GENERAL":
             return state.withMutations(map => {
                 map.set("cid", null)
-                    .set("origen", null)
+                    .set("origen", 1)
                     .set("nodo_id", null)
                     .set("intent", null)
                     .set("auth", null)
@@ -47,7 +47,7 @@ export function generalStates(
             });
         case "SET_GENERAL":
             return state.withMutations(map => {
-                map.set("cid", action.data.cid)
+                map.set("cid", action.data.cid);
             });
         default:
             return state;
