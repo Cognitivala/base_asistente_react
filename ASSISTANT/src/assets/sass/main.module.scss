@@ -255,7 +255,7 @@ textarea {
     grid-template: {
         rows: 6rem calc(100vh - 20.7rem) 5.7rem;
         columns: 6rem auto;
-        areas: "header header" "conversation conversation" "input input";
+        areas: "header header""conversation conversation""input input";
     }
     &.HeaderMore {
         grid-template: {
@@ -334,6 +334,8 @@ textarea {
             width: 100%;
             max-width: 3rem;
             justify-self: center;
+            border-radius: 100%;
+            object-fit: cover;
         }
         .HeaderText {
             color: #fff;
@@ -432,7 +434,7 @@ textarea {
             left: 0%;
             &+.MainAssistant {
                 grid-template: {
-                    areas: "header header" "helper helper" "input input";
+                    areas: "header header""helper helper""input input";
                 }
             }
         }
@@ -521,7 +523,8 @@ textarea {
                 &:last-child,
                 &:first-child {
                     border-radius: 5px;
-                } // &.active{
+                }
+                // &.active{
                 //   a{
                 //     color: #000;
                 //   }
@@ -634,7 +637,8 @@ textarea {
                 ol {
                     margin: 1.6rem;
                 }
-            } // &.From {
+            }
+            // &.From {
             //     .ConversationBubble{
             //         .Bubble{
             //             border-radius: 1.5rem;
@@ -660,6 +664,8 @@ textarea {
                 width: 3rem;
                 border: none;
                 align-self: flex-end;
+                border-radius: 100%;
+                object-fit: cover;
             }
             &.Buttons {
                 justify-content: center;
@@ -683,7 +689,8 @@ textarea {
                     text-decoration: none;
                     font-weight: normal;
                 }
-            } // &.from{
+            }
+            // &.from{
             //   img{
             //     border:2px solid $primary;
             //   }
