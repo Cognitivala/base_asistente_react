@@ -10,7 +10,8 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     
     script.
       window.addEventListener('load', function () {
-        window.CognitiveAssistantMain.init('/asistente/');
+        var origen = null
+        window.CognitiveAssistantMain.init('/asistente/?origen='+origen);
       });
 
     //- script.

@@ -8,7 +8,7 @@ const ValoracionRadios = props => {
     return (
       <fieldset className="radios">
         <legend>¿Pudiste resolver tu inquietud en esta conversación?</legend>
-        {<ValoracionRadio label="Sí" name="desicion" value="si" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}}/>}
+        {<ValoracionRadio label="Sí" name="desicion" value="si" click={setPudoResolver} classCss={pudoResolverCss} styleCss={{}} withStars/>}
         {<ValoracionRadio label="No" name="desicion" value="no" click={setPudoResolver} classCss={pudoResolverCss} styleCss={style}/>}
       </fieldset>
     );

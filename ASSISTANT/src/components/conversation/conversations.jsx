@@ -4,8 +4,11 @@ import IsFetching from "../modules/is-fetching";
 import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
 import ConversationSelects from "./conversation-selects";
+
 import Valoracion from "../valoracion/valoracion";
 import Formulario from "../formulario/formulario";
+import FormValoracion from "../formValoracion/FormValoracion";
+
 import ConversationMultiButtons from "./conversation-multi-buttons";
 import ConversationCalendar from "./conversation-calendar";
 import ConversationFiles from "./conversation-files";
@@ -13,6 +16,7 @@ import ConversationAttach from "./conversation-attach";
 import ConversationLikes from "./conversation-likes";
 import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
+import FormularioValoracion from "../formValoracion/FormularioValoracion";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -220,6 +224,7 @@ export default class Conversations extends Component {
           files = conversation.get("files"),
           attach = conversation.get("attach"),
           like = conversation.get("like"),
+          rating = conversation.get("rating"),
           last = j + 1 === sizeConversation ? true : false,
           withStars = conversation.get("withStars"),
           animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" "; //Si es la última conversa
@@ -410,7 +415,10 @@ export default class Conversations extends Component {
               default:
                 break;
             }
-          } else if (like !== undefined && like) {
+          } 
+          
+          if (like !== undefined && like) {
+
             const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
               <ConversationLikes
@@ -422,6 +430,14 @@ export default class Conversations extends Component {
                 mainCss={mainCss}
               />
             );
+          } 
+          
+          else if ( rating ) {
+            const { sendValoracion, generalStates } = this.props;
+            // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
+            retorno.push(
+              <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
+            );
           }
         }
       }
@@ -430,22 +446,14 @@ export default class Conversations extends Component {
   }
 
   render() {
-    const {
-        ayudaStates,
-        inputStates,
-        conversationsStates,
-        customParamsStates,
-        mainCss
-      } = this.props,
-      colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
+    const { ayudaStates, inputStates, conversationsStates, customParamsStates, mainCss } = this.props;
+    const colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "",
       cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
       <IsFetching
         isFetching={conversationsStates.get("isFetching")}
-        showChildren={true}
-        colorHeader={colorHeader}
-        mainCss={mainCss}
+        showChildren={true} colorHeader={colorHeader} mainCss={mainCss}
       >
         <section
           // onScroll={this.handleScroll}

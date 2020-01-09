@@ -14,9 +14,6 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
                 img(src="../../assets/img/cognitiva-logo.png")
               .form#ingresaCorreo(autocomplete="off")
                 fieldset
-                  label Ingresa la contraseña enviado a tu correo
-                  input#email-pass(type="password", name="email-pass", placeholder="Ingresa la contraseña", autocomplete="off")
-                fieldset
                   label Ingresa tu nueva contraseña
                   input#pass(type="password", name="pass", placeholder="Ingresa tu nueva contraseña", autocomplete="off")
                 fieldset
@@ -34,16 +31,16 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
     script.
 
       var uri = window.location.toString();
-      if (uri.indexOf("?") > 0) {
-        var clean_uri = uri.substring(0, uri.indexOf("?"));
-        window.history.replaceState({}, document.title, clean_uri);
-      }
+      //- if (uri.indexOf("?") > 0) {
+      //-   var clean_uri = uri.substring(0, uri.indexOf("?"));
+      //-   window.history.replaceState({}, document.title, clean_uri);
+      //- }
 
       function $id(id) {
         return document.getElementById(id);
       }
 
-      var emailPass = $id('email-pass');
+      //- var emailPass = $id('email-pass');
       var pass = $id('pass');
       var repeatPass = $id('repeat-pass');
 
@@ -61,46 +58,41 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
       }
 
       function getTkn(){
+        var myTknUrl = window.location.search.substr(1,window.location.search.length);
         var promise = $.ajax({
           type: 'POST',
           beforeSend: function (xhr) {
-            xhr.setRequestHeader ("Authorization", "Basic " + btoa("coopeuch:coop1234.."));
+            xhr.setRequestHeader ("Authorization", "Bearer " + myTknUrl);
           },
-          url: getPath + 'mant/token'
+          url: getPath + 'mant/vd-tkn'
         }).done(function(response){
-          if(response.status == 200){
-            changePass(response.token);
-            //- login($('#user').val(), $('#pass').val(), response.token, response.refresh_token);
-            $(function () {
-              $(document).ajaxSend(function(e, xhr, options) {
-                xhr.setRequestHeader("X-XSRF-TOKEN", response.token);
-              });
-            });
-
+          if(response.estado.codigoEstado == 200){
+            changePass(myTknUrl);
+          }else{
+            OpenModal('URL expirada', 'La URL ha expirado, debe volver a hacer su petición para crear su nueva contraseña');
+          }
+        }).fail((err)=>{
+          if(err.responseJSON.estado.codigoEstado == 400){
+            OpenModal('URL expirada', 'La URL ha expirado, debe volver a hacer su petición para crear su nueva contraseña');
           }
         });
       }
 
       function changePass(getTkn) {
+        var passVal  = pass.value;
 
-        var emailPassVal  = md5(emailPass.value),
-            passVal       = md5(pass.value),
-            repeatPassVal = md5(repeatPass.value);
-
-        if(passVal != repeatPassVal || passVal == '' || repeatPassVal == ''){
+        if(passVal !== repeatPass.value || passVal === '' || repeatPass.value === ''){
           OpenModal('Contraseñas no coindicen', 'Revisa tus nuevas contraseñas');
         } else {
           var args = {
-            email: "null",
-            passant: emailPassVal,
             passnew: passVal
           }
           var promise = $.ajax({
             type: 'POST',
-            url: getPath+'mant/updatePass',
+            url: getPath + 'mant/updatePass',
             "headers": {
               "Content-Type": "application/json",
-              "Authorization": "Bearer "+getTkn
+              "Authorization": "Bearer " + getTkn
             },
             data: JSON.stringify(args),
             dataType: 'json',

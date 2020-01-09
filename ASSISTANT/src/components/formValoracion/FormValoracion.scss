@@ -1,0 +1,226 @@
+.conversationBubbleForm {
+    margin-bottom: .8rem;
+    display: flex;
+    width: 100%;
+    align-items: flex-end;
+    justify-content: flex-start;
+    position: relative;
+    flex-wrap: column;
+    z-index: 0;
+}
+
+.conversationBubbleForm img {
+    width: 3rem;
+    border: none;
+    align-self: flex-end;
+}
+
+.containerForm {
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: .4rem;
+    position: relative;
+    z-index: 2;
+    border-top: .2rem solid #2979ff;
+    box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, .2);
+    margin-left: .8rem;
+    width: 100%;
+    padding-bottom: 1.6rem;
+}
+
+.containerForm form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.containerForm form fieldset {
+    padding: 0 1.6rem .4rem;
+    position: relative;
+    width: 100%;
+}
+
+.containerForm form fieldset {
+    margin-bottom: .8rem;
+}
+
+.containerForm form fieldset legend {
+    color: #9a9a9f;
+    font-weight: 700;
+    text-transform: capitalize;
+    font-size: 1.2rem;
+    transition: all .3s ease;
+}
+
+.containerForm form fieldset legend {
+    text-transform: none;
+}
+
+.containerForm form fieldset input,
+.containerForm form fieldset select,
+.containerForm form fieldset textarea {
+    margin: 0;
+    height: 3.6rem;
+    background: transparent;
+    padding: 0 1.8rem;
+    border: 1px solid #e2e2e2;
+    color: #666;
+    resize: none;
+    font-weight: 300;
+    font-size: 1.2rem;
+    border-radius: .4rem;
+}
+
+.containerForm form fieldset input {
+    transition: all .3s ease;
+}
+
+// HEADER FORM
+.headerForm {
+    padding: 1.6rem 1.6rem .8rem;
+    color: #9a9a9f;
+    // color: var(--bubble-bg-message-text);
+    display: flex;
+}
+
+.headerForm p {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 500;
+}
+
+// RADIO BUTTONS
+.containerForm form fieldset.radios legend {
+    font-size: 1.2rem;
+    font-weight: 100;
+    margin: .8rem 0;
+}
+
+.containerForm form .round {
+    margin-bottom: .8rem;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #9a9a9f;
+    display: flex;
+    align-items: center;
+}
+
+.containerForm form .round .circle {
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    border: .2rem solid #2979ff;
+    transition: all .3s ease;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.containerForm form .round .circle:hover {
+    position: relative;
+}
+
+.containerForm form .round input {
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+    padding: 0;
+}
+
+.containerForm form .round .circle.active {
+    position: relative;
+}
+
+.containerForm form .round .circle.active:before {
+    content: "";
+    width: .6rem;
+    height: .6rem;
+    background: #2979ff;
+    background: var(--first);
+    position: absolute;
+    left: .2rem;
+    top: .2rem;
+    border-radius: 50%;
+}
+
+.containerForm form .round .circle:hover:before {
+    content: "";
+    width: .6rem;
+    height: .6rem;
+    background: #2979ff;
+    position: absolute;
+    left: .2rem;
+    top: .2rem;
+    border-radius: 50%;
+}
+
+// TEXTAREA
+.containerForm form fieldset textarea {
+    margin: 0;
+    height: 3.6rem;
+    background: transparent;
+    padding: 0 1.8rem;
+    border: 1px solid #e2e2e2;
+    color: #666;
+    resize: none;
+    font-weight: 300;
+    font-size: 1.2rem;
+    border-radius: .4rem;
+}
+
+.containerForm form fieldset textarea {
+    padding: .8rem;
+    min-height: 0;
+    height: auto;
+    background: #fff;
+}
+
+.containerForm form button {
+    font-size: 1.4rem;
+    color: #2979ff;
+    height: 3.6rem;
+    border-radius: .4rem;
+    font-weight: 700;
+    border: 1px solid #2979ff;
+    outline: 0;
+    transition: all .3s ease;
+    background: transparent;
+    padding: 0 20px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.containerForm form button:hover {
+    background: #0052dc;
+    color: #fff;
+    cursor: pointer;
+}
+
+// RAITING
+.star-rating {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    // flex-wrap: wrap;
+    // justify-content: space-around;
+}
+
+.star {
+    cursor: pointer;
+    width: 2em;
+    height: 2em;
+    background-color: grey;
+    -webkit-clip-path: polygon( 50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+    clip-path: polygon( 50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+    margin-right: 15px;
+}
+
+.star.selected {
+    background-color: #2979ff;
+}
+
+// .star-rating p {
+//     // flex-basis: 100%;
+//     // text-align: center;
+// }

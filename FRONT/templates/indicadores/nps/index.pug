@@ -220,18 +220,36 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
             return false;
           }
           createCSV(response.csv, 'nps');
-          var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
-          var totalISN = ((response.respuesta.promotores - response.respuesta.detractores) / totalAssessment) * 100;
-          var getPromoters = (100 * response.respuesta.promotores) / totalAssessment;
-          $('.col-5').css('height', getPromoters.toFixed(1)+'%');
-          $('.col-5').empty().text(getPromoters.toFixed(1)+'%');
-          var getNeutral = (100 * response.respuesta.neutros) / totalAssessment;
-          $('.col-3').css('height', getNeutral.toFixed(1)+'%');
-          $('.col-3').empty().text(getNeutral.toFixed(1)+'%');
-          var getDetractors = (100 * response.respuesta.detractores) / totalAssessment;
-          $('.col-1').css('height', getDetractors.toFixed(1)+'%');
-          $('.col-1').empty().text(getDetractors.toFixed(1)+'%');
-          $('.promedio-isn').empty().append(totalISN.toFixed(1)+'<span class="percentage">%</span>');
+          
+          if (response.respuesta.promotores > 0 || response.respuesta.detractores > 0 || response.respuesta.neutros > 0){
+            console.log("ola ke ase");
+            var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
+            var totalISN = ((response.respuesta.promotores - response.respuesta.detractores) / totalAssessment) * 100;
+            var getPromoters = (100 * response.respuesta.promotores) / totalAssessment;
+            $('.col-5').css('height', getPromoters.toFixed(1)+'%');
+            $('.col-5').empty().text(getPromoters.toFixed(1)+'%');
+            var getNeutral = (100 * response.respuesta.neutros) / totalAssessment;
+            $('.col-3').css('height', getNeutral.toFixed(1)+'%');
+            $('.col-3').empty().text(getNeutral.toFixed(1)+'%');
+            var getDetractors = (100 * response.respuesta.detractores) / totalAssessment;
+            $('.col-1').css('height', getDetractors.toFixed(1)+'%');
+            $('.col-1').empty().text(getDetractors.toFixed(1)+'%');
+            $('.promedio-isn').empty().append(totalISN.toFixed(1)+'<span class="percentage">%</span>');
+          }else{
+            console.log("ola ke no ase");
+            var totalAssessment = 0;
+            var totalISN = 0;
+            var getPromoters = 0;
+            $('.col-5').css('height', getPromoters+'%');
+            $('.col-5').empty().text(getPromoters+'%');
+            var getNeutral = 0;
+            $('.col-3').css('height', getNeutral+'%');
+            $('.col-3').empty().text(getNeutral+'%');
+            var getDetractors = 0;
+            $('.col-1').css('height', getDetractors+'%');
+            $('.col-1').empty().text(getDetractors+'%');
+            $('.promedio-isn').empty().append(totalISN+'<span class="percentage">%</span>');
+          }
         });
       }
 
