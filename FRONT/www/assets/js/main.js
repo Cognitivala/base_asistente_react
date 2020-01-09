@@ -8,6 +8,7 @@ var $ = jQuery,
   hasToken = false,
   KEY_ENCRYPT = "711fd53d4faeec31a1e779d2eab9a02b";
 
+  console.log()
 if (userAES !== null) {
   userBytes = CryptoJS.AES.decrypt(userAES, KEY_ENCRYPT);
   user = JSON.parse(userBytes.toString(CryptoJS.enc.Utf8));
@@ -130,18 +131,18 @@ function filterUser() {
     case "1":
       if(pathName === "/administrador-usuarios/") window.location.href = getPath;
       $(
-        "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
+        "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete,#get-code-btn, [role='killswitch'], "+
         "#intents, #dialog, #url, #killswitch, [data-name='intents'], [data-name='dialogs'],[data-name='url'],[data-name='killswitch'] "
       ).remove();
       if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
       break;
     case "2":
-      if(pathName !== "/indicadores/") window.location.href = getPath + "indicadores/";
-      $(
-        "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
-        "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
-      ).remove();
-      if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
+    if(window.location.href === getPath) window.location.href = getPath + "indicadores/";
+    $(
+      "#new-intent, #new-dialog, #save-dialog-btn, #modal-dialog-edit .button-add.edit-button, a.add-intent.delete, #users-list, #admin-users-btn ,#get-code-btn, [role='killswitch'], "+
+      "ul.list-intents>li>ul>li.options, #save-intent, #save-url, #list-dialogs-respond-edit a.delete-dialog, #personalizar-asis-btn, #config-asis-btn"
+    ).remove();
+    if(pathName === "/") {$('[role="uploadfiles"]')[0].classList.add('active'); $('#upload-file').addClass('in').addClass('active') }
       break;
     default:
       break;

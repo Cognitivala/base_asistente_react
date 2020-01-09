@@ -8,7 +8,10 @@ export default class ConversationMsg extends Component {
     const { msgs, animation, send, avatar, mainCss} = this.props,
     to = send==="to"?true:false;
     return msgs.map((map, i) => {
-      if(to){
+      if(msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
+        console.log("valoración");
+      }
+      else if(to){
         return (
           <div
             key={i}

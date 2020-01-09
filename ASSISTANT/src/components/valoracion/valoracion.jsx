@@ -54,8 +54,8 @@ export default class Valoracion extends Component {
     e.preventDefault();
     this.props.setOverStar(0);
   }
-
-  requestValue() {
+  
+  requestValue = async () => {
     const { valoracionStates, generalStates, conversationsStates } = this.props,
       general = generalStates.toJS(),
       comentario = valoracionStates.get("comment");
@@ -63,13 +63,12 @@ export default class Valoracion extends Component {
       valoracion = valoracionStates.get("stars"),
       conversaciones = conversationsStates.get("conversations"),
       sizeConv = conversationsStates.get("conversations").size;
-
     const input = conversaciones
-        .get(sizeConv - 4)
+        .get(sizeConv - 7)
         .get("msg")
         .get(0);
     const output = conversaciones
-        .get(sizeConv - 3)
+        .get(sizeConv - 6)
         .get("msg")
         .get(0);
     const args = {
@@ -83,7 +82,10 @@ export default class Valoracion extends Component {
         pudo_resolver,
         enabled: false
       };
-    this.props.sendValoracion(args, general);
+    
+    await this.props.sendValoracion(args, general);
+    await this.props.setServicioValoracion(null);
+    await this.props.setPudoResolverValoracion(null);
   }
 
   closeValoracion(e) {
@@ -100,7 +102,6 @@ export default class Valoracion extends Component {
   }
 
   valorar(e) {
-    debugger
     const { valoracionStates } = this.props,
       comment = valoracionStates.get("comment"),
       pudoResolver = valoracionStates.get("pudoResolver");

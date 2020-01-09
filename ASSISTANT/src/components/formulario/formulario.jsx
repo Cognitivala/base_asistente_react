@@ -80,10 +80,10 @@ export default class Formulario extends Component {
   }
 
   closeForm() {
-    const { general, closeForm } = this.props,
+    const { generalStates: general, closeForm } = this.props,
       conversation = {
         general,
-        msg: ["No"],
+        msg: ["noContacto"],
         send: "to",
         enabled: false
       };
@@ -289,7 +289,7 @@ export default class Formulario extends Component {
   }
 
   content() {
-    const { formularioStates, form, mainCss, animation } = this.props,
+    const { formularioStates, form, mainCss, animation, disableForm } = this.props,
       header = form.get("header"),
       bajada = form.get("bajada"),
       fields = form.get("fields"),
@@ -304,6 +304,15 @@ export default class Formulario extends Component {
 
         <div className={mainCss.ContainerForm}>
           <form autoComplete="off">
+            <div className={mainCss.closeFormContainer}>
+              <button
+                className={mainCss.closeFormButton}
+                type="button"
+                onClick={() => this.closeForm()}
+              >
+                x
+              </button>
+            </div>
             {this.fillHeader(header)}
             <p className={mainCss.Red}>{bajada}</p>
             {this.fillContent(fields)}

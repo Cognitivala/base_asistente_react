@@ -1,0 +1,34 @@
+.boxBubbleLogo {
+    width: 100%;
+    max-width: 200px;
+    margin-right: 0px;
+    right: 0;
+    /* position: relative; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 0 auto;
+}
+
+.imgBubbleLogo {
+    cursor: pointer;
+    min-width: 60px;
+    max-width: 200px;
+    object-fit: cover;
+    // height: 100%;
+    // width: 100%;
+    // transition: all 200ms linear;
+    animation: inAssistant 0.4s linear;
+}
+
+@keyframes inAssistant {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: .5;
+    }
+    100% {
+        opacity: 1;
+    }
+}

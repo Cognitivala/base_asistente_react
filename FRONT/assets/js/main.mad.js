@@ -143,6 +143,8 @@
           //Input vacío
           if((tagName == 'input' || tagName == 'textarea') && elementValue == ""){
               setToFalse($element);
+              alert("Campos en blanco o vacíos no permitidos");
+
           }else if((tagName == 'input' || tagName == 'textarea') && elementValue != "" && $element.attr('type') != 'radio'){
               setToTrue($element);
           }
@@ -336,7 +338,7 @@
           $container = '';
       
         buttonAddDialog = '<li class="response">';
-        buttonAddDialog += '  <button button="button" button-mini="button-mini" secondary="secondary" data-func="newDialogW">Añadir respuesta <i class="fa fa-plus"></i></button>';
+        buttonAddDialog += '  <button button="button" class="editorOnlyDisabled" button-mini="button-mini" secondary="secondary" data-func="newDialogW">Añadir respuesta <i class="fa fa-plus"></i></button>';
         buttonAddDialog += '</li>';
       
       for (var i = 0; i < data.length; i++){
@@ -677,9 +679,9 @@
     },
     editIntent: function($form){
       var self = this,
-          $exampleIntents = $form.find('.example-intent'),
-          exampleList = [],
-          intentName = $form.find('#name-intent-edit').val();
+        $exampleIntents = $form.find('.example-intent'),
+        exampleList = [],
+        intentName = $form.find('#name-intent-edit').val();
       $.each($exampleIntents, function(index, element) {
         exampleList.push({text: $(element).val()});
       });
@@ -829,7 +831,8 @@
         promise.done((function(response){
           if (response.status == '200') {
             var examples = response.examples,
-                htmlInner = '';
+              htmlInner = '';
+          
             for(var i = 0; i < examples.length; i++){
               htmlInner += '<li>';
               htmlInner += '<label>';

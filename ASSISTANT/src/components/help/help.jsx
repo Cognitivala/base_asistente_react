@@ -38,7 +38,7 @@ export default class Help extends Component {
           <h3>Ayuda</h3>
           <p className={mainCss.Subtittle}>
             Haz <strong>clic</strong> en los siguientes tópicos para{" "}
-            <strong>obtener ayuda</strong> de cómo utilizar la asistencia online
+            <strong>obtener ayuda</strong> de cómo utilizar la asistencia online.
           </p>
           {ayudaStates.get("ayuda").map((map, i) => {
             return <HelpBox  mainCss={mainCss} ayuda={map} key={i} updateConversation={this.props.updateConversation} closeHelp={this.props.closeHelp} generalStates={this.props.generalStates}/>;

@@ -242,12 +242,9 @@ export default class Input extends Component {
     const { mainCss } = this.props;
     if (this.props.conversationsStates.get("loading")) {
       return <ConversationLoader active={true} mainCss={mainCss} />;
-    } else if (!this.props.inputStates.get("enabled")) {
+    } else if ( !this.props.inputStates.get("enabled") ) {
       return (
-        <form
-          className={mainCss.InputUserHolder + " " + mainCss.Inactive}
-          noValidate=""
-        />
+        <form className={mainCss.InputUserHolder + " " + mainCss.Inactive} noValidate="" />
       );
     } else {
       const { customParamsStates, mainCss } = this.props,
