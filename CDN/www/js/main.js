@@ -82,7 +82,7 @@
             css +=
                 ".iframe-cognitive-assistant-container.notification{ height: 83px;width: 83px;max-width: 365px;box-shadow: none;right: 0;bottom: 0; margin: 0 !important; }";
             css +=
-                ".iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%;max-width: 401px;right: 0px;bottom: 0px; }";
+                ".iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%;max-width: 401px;right: 0px;bottom: 0px; margin: 0 !important;}";
             css +=
                 ".iframe-cognitive-assistant-container.minimized{ height: 100px;width: 100%;max-width: 100px;right: 10px;bottom: 0px;}";
             css += ".cognitive-iframe {height: 100%;width: 100%;border: 0 none;}";
