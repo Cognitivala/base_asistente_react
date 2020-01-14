@@ -4,6 +4,8 @@
         constructor() {}
 
         init(src, origin) {
+            console.log('src:: ', src);
+            console.log('origin:: ', origin);
             this.src = src;
             this.origin = origin;
             this.responsive = "";
