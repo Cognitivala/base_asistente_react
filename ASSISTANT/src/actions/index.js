@@ -101,6 +101,13 @@ export function setIntegracion(data) {
         dispatch({ type: "SET_INTEGRACION", data });
     };
 }
+
+export function setUrlParams(data) {
+    return function action(dispatch) {
+        dispatch({ type: "SET_URL_PARAMS", data });
+    };
+}
+
 export function setRegion(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_REGION", data });
@@ -1654,8 +1661,8 @@ export function disabledVoice() {
         dispatch({ type: "DISABLED_VOICE" });
     };
 }
-const getUrlParams = (getState, urlParam) => {
-  const paramValue = getState().generalStates.getIn(["integracion", urlParam]);
-  if(paramValue === "null") return null;
-  return paramValue;
+export function getUrlParams(getState, urlParam){
+    const paramValue = getState().generalStates.getIn(["url_params", urlParam]);
+    if(paramValue === "null") return null;
+    return paramValue;
 }

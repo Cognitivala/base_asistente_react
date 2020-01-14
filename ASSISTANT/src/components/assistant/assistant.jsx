@@ -58,7 +58,6 @@ export default class Assistant extends Component {
         "keep_conversation"
       ]),
       hcAES = localStorage.getItem("hc");
-
     //Si mantiene conversacion y tiene historial guardado
     //Lo abrirá y luego si tiene minimizado lo minimizará
     if (keep_conversation && hcAES) {
@@ -69,7 +68,7 @@ export default class Assistant extends Component {
         hcDecrypt = bytes.toString(CryptoJS.enc.Utf8),
         hc = JSON.parse(hcDecrypt),
         hcm = JSON.parse(localStorage.getItem("hcm")),
-        greeting = JSON.parse(greetingDecrypt);
+        greeting = JSON.parse(greetingDecrypt);  
       getSaludoEnd(greeting);
       setHistory(hc);
       openAssistant();
