@@ -243,12 +243,15 @@ export function getSaludo() {
         }
 
         const data = {
-                general: { cid: null, id_cliente: "1", origen: origen },
+                general: {
+                    cid: null,
+                    id_cliente: "1",
+                    origen: origen,
+                    rut: getUrlParams(getState, 'rut'),
+                    user: getUrlParams(getState, 'user'),
+                    clave: getUrlParams(getState, 'clave')
+                },
                 msg: null,
-                rut: getUrlParams(getState, 'rut'),
-                user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
-
             },
             request = axios({
                 method: "POST",
