@@ -18,10 +18,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     _createClass(mainHandlers, [{
       key: "init",
-      value: function init(src, origin, number) {
+      value: function init(src) {
         this.src = src;
-        this.origin = origin;
-        this.number_code = number;
         this.responsive = "";
         this.createIframe();
       }
@@ -39,8 +37,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         ifrm.setAttribute("allow", "geolocation *;");
         ifrm.setAttribute("allow", "microphone *;");
         ifrm.setAttribute("src", this.src);
-        ifrm.setAttribute("data-origin", this.origin);
-        ifrm.setAttribute("data-number", this.number_code);
         div.appendChild(ifrm);
         document.body.appendChild(div);
         this.basicStylesSetUp();
