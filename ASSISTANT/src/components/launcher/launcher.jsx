@@ -110,6 +110,8 @@ export default class Launcher extends Component {
         const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
         const bubble = customParamsStates.getIn([ "customParams", "settings", "bubble" ]);
 
+        console.log('bubble_logo:: ', bubble_logo);
+
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
