@@ -103,8 +103,8 @@ export default class Launcher extends Component {
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
 
-    console.log('launcherStates:: ', launcherStates);
-    console.log('notification:: ', launcherStates.get('notification'));
+    // console.log('launcherStates:: ', launcherStates);
+    
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
@@ -113,14 +113,17 @@ export default class Launcher extends Component {
         const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
         const bubble = customParamsStates.getIn([ "customParams", "settings", "bubble" ]);
 
-        console.log('bubble_logo:: ', bubble_logo);
+        const notificacion = launcherStates.get('notification');
+
+        // console.log('bubble_logo:: ', bubble_logo);
 
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
             {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
 
-              { bubble_logo.length > 0 ? (
+              {/* { bubble_logo.length > 0 ? ( */}
+                { notificacion !== null ? (
                 <div className="boxBubbleLogo">
                   <img
                     className="imgBubbleLogo"
