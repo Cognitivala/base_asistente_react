@@ -140,7 +140,9 @@ export default class Launcher extends Component {
             </div>
           </Fragment>
         );
-      } else if (responsiveStates.get("responsive") === "desktop") {
+      } 
+      // else if (responsiveStates.get("responsive") === "desktop") {
+      else if (launcherStates.get('notification') === null) {
         console.log('responsiveStates:: ', responsiveStates.get("responsive"));
         return (
             <div className={mainCss.MainLauncher}>
