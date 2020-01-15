@@ -94,7 +94,7 @@ export default class Launcher extends Component {
     } else if (launcherStates.get("circle")) {
       return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
     } else {
-      return null;
+      return null
     }
     } else {
       return null;
@@ -102,9 +102,6 @@ export default class Launcher extends Component {
   }
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
-
-    // console.log('launcherStates:: ', launcherStates);
-    
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
@@ -112,10 +109,6 @@ export default class Launcher extends Component {
       if (launcherStates.get("active")) {
         const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
         const bubble = customParamsStates.getIn([ "customParams", "settings", "bubble" ]);
-
-        const notificacion = launcherStates.get('notification');
-
-        // console.log('bubble_logo:: ', bubble_logo);
 
         return (
           <Fragment>
@@ -140,10 +133,8 @@ export default class Launcher extends Component {
             </div>
           </Fragment>
         );
-      } 
-      // else if (responsiveStates.get("responsive") === "desktop") {
-      else if (launcherStates.get('notification') === null) {
-        console.log('responsiveStates:: ', responsiveStates.get("responsive"));
+      } else if (responsiveStates.get("responsive") === "desktop") {
+        // else if (launcherStates.get('notification') === null) {
         return (
             <div className={mainCss.MainLauncher}>
               <button ref={this.launcher} className={mainCss.LauncherButton + " " + mainCss.Close} onClick={this.closeAssistant}>
