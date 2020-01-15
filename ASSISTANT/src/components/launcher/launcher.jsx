@@ -122,8 +122,7 @@ export default class Launcher extends Component {
             <div className={mainCss.MainLauncher}>
             {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
 
-              {/* { bubble_logo.length > 0 ? ( */}
-                { notificacion !== null ? (
+              { bubble_logo.length > 0 ? (
                 <div className="boxBubbleLogo">
                   <img
                     className="imgBubbleLogo"
@@ -142,7 +141,7 @@ export default class Launcher extends Component {
           </Fragment>
         );
       } else if (responsiveStates.get("responsive") === "desktop") {
-        // console.log(responsiveStates.get("responsive"));
+        console.log('responsiveStates:: ', responsiveStates.get("responsive"));
         return (
             <div className={mainCss.MainLauncher}>
               <button ref={this.launcher} className={mainCss.LauncherButton + " " + mainCss.Close} onClick={this.closeAssistant}>
