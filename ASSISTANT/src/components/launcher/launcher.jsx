@@ -102,6 +102,8 @@ export default class Launcher extends Component {
   }
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
+
+    console.log('launcherStates:: ', launcherStates);
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
