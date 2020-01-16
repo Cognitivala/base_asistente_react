@@ -16,9 +16,11 @@
 
 <body>
     <main>
-        <!-- <h1>Test Asistente</h1> -->
+        <!-- <h1>Asistente</h1> -->
     </main>
+
     <script id="mainJS" type="text/javascript"></script>
+
     <script id="preJS" type="text/javascript">
         var f = Date.now();
         document
@@ -26,6 +28,7 @@
             .setAttribute('src', 'js/build/main.js?v=' + f);
         document.getElementById('preJS').remove();
     </script>
+
     <script>
         window.addEventListener('load', function() {
             window.CognitiveAssistantMain.init(

@@ -122,7 +122,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         if (contentWindow) {
           contentWindow.postMessage({
-            responsive: this.responsive
+            responsive: this.responsive,
+            tokenAuth: sessionStorage.getItem('token')
           }, "*");
         } else {
           setTimeout(function () {

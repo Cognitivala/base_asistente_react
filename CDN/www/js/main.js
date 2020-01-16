@@ -102,8 +102,12 @@
         styleIframeMessage() {
             const iframe = document.getElementById("ifrm-assitant");
             const contentWindow = iframe ? iframe.contentWindow : null;
+
             if (contentWindow) {
-                contentWindow.postMessage({ responsive: this.responsive }, "*");
+                contentWindow.postMessage({
+                    responsive: this.responsive,
+                    tokenAuth: sessionStorage.getItem('token')
+                }, "*");
             } else {
                 setTimeout(() => {
                     this.styleIframeMessage();

@@ -1,7 +1,7 @@
 <html lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmlns:fb="http://ogp.me/ns/fb#" heightfull="heightfull">
 
 <head>
-    <title>Demo. MAD Cognitiva</title>
+    <title>Asistente Cognitiva</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
     <meta charset="UTF-8" />
     <link rel="profile" href="http://gmpg.org/xfn/11" />
@@ -10,6 +10,132 @@
     <link rel="manifest" href="https://asistente-react.mycognitiva.io/assets/img/favicon/manifest.json" />
 
     <link href="https://asistente-react.mycognitiva.io/assets/css/main.css" rel="stylesheet" />
+
+    <style type="text/css">
+        /* Modal (background) */
+        
+        p {
+            font-size: 20px !important;
+        }
+        
+        .modal {
+            display: block;
+            position: fixed;
+            z-index: 1;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            /* Enable scroll if needed */
+            background-color: rgb(0, 0, 0);
+            /* Fallback color */
+            background-color: rgba(0, 0, 0, 0.4);
+            /* Black w/ opacity */
+        }
+        /* Modal Content */
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            height: 60%;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+        /* Close Button */
+        
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            position: relative;
+            top: -65px;
+            right: -48%;
+        }
+        
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* FORM STYLE */
+        
+        .form-style {
+            font: 95% Arial, Helvetica, sans-serif;
+            max-width: 400px;
+            margin: 10px auto;
+            padding: 16px;
+            background: #f7f7f7;
+        }
+        
+        .form-style h1 {
+            background: #e6000f;
+            padding: 20px 0;
+            font-size: 140%;
+            font-weight: 300;
+            text-align: center;
+            color: #fff;
+            margin: -16px -16px 16px -16px;
+        }
+        
+        .form-style input {
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -ms-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            outline: none;
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            width: 100%;
+            background: #fff;
+            margin-bottom: 4%;
+            border: 1px solid #ccc;
+            padding: 3%;
+            color: #555;
+            font: 95% Arial, Helvetica, sans-serif;
+        }
+        
+        .form-style input:focus {
+            box-shadow: 0 0 5px #43d1af;
+            /* padding: 3%; */
+            border: 1px solid #43d1af;
+        }
+        
+        .form-style input[type='submit'],
+        .form-style input[type='button'] {
+            box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            width: 100%;
+            padding: 3%;
+            background: #e6000f;
+            /* border-bottom: 2px solid #30C29E; */
+            border-top-style: none;
+            border-right-style: none;
+            border-left-style: none;
+            color: #fff;
+        }
+        
+        .form-style input[type='submit'],
+        .form-style input[type='button'] {
+            cursor: pointer;
+        }
+        
+        .form-style input[type='submit']:hover,
+        .form-style input[type='button']:hover {
+            background: #2ebc99;
+        }
+    </style>
+
     <script type="text/javascript" src="https://asistente-react.mycognitiva.io/assets/js/constant.js"></script>
     <!--[if lt IE 9
       ]><script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -30,33 +156,120 @@
 </head>
 
 <body class="no-scroll aui" heightfull="heightfull">
-    <iframe id="demo" src="https://www.example.com/" frameborder="0"></iframe>
-</body>
+    <main>
+        <h1>Test Asistente</h1>
+        <button type="button" id="btnAbrir">Abrir Modal</button>
+    </main>
 
-<script>
-    const getUrl = async() => {
-        const data = {
-            id_cliente: '1'
+    <iframe id="demo" src="https://www.example.com/" frameborder="0"></iframe>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <!-- Contenido Modal -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+
+            <div class="form-style">
+                <h1>Generar Token</h1>
+                <form name="formToken" method="POST">
+                    <input type="text" id="rut" name="rut" placeholder="Ingresar RUT" />
+                    <input type="password" id="password" name="password" placeholder="******" />
+                    <input type="button" onclick="submitForm(event)" value="Generar Token" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const getUrl = async() => {
+            const data = {
+                id_cliente: '1'
+            };
+            const apiUrl =
+                'https://dev-coasin-sbk.mycognitiva.io/mad/customize_param';
+            await fetch(apiUrl, {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(res => res.json())
+                .then(response => {
+                    // console.log('URL:: ', response.url);
+                    document.getElementById('demo').src = response.url;
+                })
+                .catch(error => {
+                    console.log('Error:', error.message);
+                });
         };
-        const apiUrl =
-            'https://dev-coasin-sbk.mycognitiva.io/mad/customize_param';
-        await fetch(apiUrl, {
-                method: 'POST',
-                body: JSON.stringify(data),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(response => {
-                // console.log('URL:: ', response.url);
-                document.getElementById('demo').src = response.url;
-            })
-            .catch(error => {
-                console.log('Error:', error.message);
-            });
-    };
-    getUrl();
-</script>
+        getUrl();
+    </script>
+
+    <script type="text/javascript">
+        let modal = document.getElementById('modal');
+        var btn = document.getElementById('btnAbrir');
+        let span = document.getElementsByClassName('close')[0];
+        btn.onclick = function() {
+            modal.style.display = 'block';
+        };
+        span.onclick = function() {
+            modal.style.display = 'none';
+        };
+    </script>
+
+    <script type="text/javascript">
+        const submitForm = event => {
+            event.preventDefault();
+
+            let rut = document.querySelector('#rut').value;
+            let password = document.querySelector('#password').value;
+
+            // console.log(rut);
+            // console.log(password);
+
+            if (rut && password) {
+                generarToken(rut, password);
+                rut = document.querySelector('#rut').value = '';
+                password = document.querySelector('#password').value = '';
+            } else {
+                console.log('Favor debe completar todos los campos.');
+            }
+        };
+
+        const generarToken = async(rut, password) => {
+            // console.log('Enviando...');
+
+            urlEndpoint = 'https://qa-coasin01.mycognitiva.io/mad/cred_token';
+            body = {
+                user: rut,
+                pass: password
+            };
+
+            await fetch(urlEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        Accept: 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    // mode: 'no-cors',
+                    body: JSON.stringify(body)
+                })
+                .then(res => {
+                    return res.json();
+                })
+                .then(resp => {
+                    console.log('resp:: ', resp);
+                    // SE ALMACENA TOKEN
+                    if (resp.status === 200) {
+                        sessionStorage.setItem('token', resp.token);
+                    }
+                })
+                .catch(error => {
+                    console.log('error:: ', error);
+                });
+        };
+    </script>
+</body>
 
 </html>
