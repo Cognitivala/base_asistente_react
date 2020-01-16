@@ -102,6 +102,13 @@ export function setIntegracion(data) {
         dispatch({ type: "SET_INTEGRACION", data });
     };
 }
+
+export function setUrlParams(data) {
+    return function action(dispatch) {
+        dispatch({ type: "SET_URL_PARAMS", data });
+    };
+}
+
 export function setRegion(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_REGION", data });
@@ -224,7 +231,7 @@ export function setColors(colorHeader) {
 }
 //SALUDO
 export function getSaludo() {
-    return function action(dispatch) {
+    return function action(dispatch, getState) {
         dispatch(getSaludoStart());
 
         let origen = null;
@@ -235,14 +242,29 @@ export function getSaludo() {
             origen = 1;
         }
 
-        const data = { general: { cid: null, id_cliente: "1", origen: origen }, msg: null },
+        const data = {
+                general: {
+                    cid: null,
+                    id_cliente: "1",
+                    origen: origen,
+                    rut: getUrlParams(getState, 'rut'),
+                    user: getUrlParams(getState, 'user'),
+                    clave: getUrlParams(getState, 'clave')
+                },
+                msg: null,
+            },
             request = axios({
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 url: APIURL + "/message",
-                data: data
+                data: {
+                    ...data,
+                    rut: getUrlParams(getState, 'rut'),
+                    user: getUrlParams(getState, 'user'),
+                    clave: getUrlParams(getState, 'clave')
+                }
             });
         return request.then(
             response => {
@@ -502,7 +524,7 @@ function updateConversationError(data) {
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
-    return function action(dispatch) {
+    return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
@@ -511,7 +533,12 @@ export function updateConversation(data) {
                 "Content-Type": "application/json"
             },
             url: APIURL + "/message",
-            data: data
+            data: {
+                ...data,
+                rut: getUrlParams(getState, 'rut'),
+                user: getUrlParams(getState, 'user'),
+                clave: getUrlParams(getState, 'clave')
+            }
         });
         return request
             .then(response => {
@@ -1228,7 +1255,7 @@ export function updateConversationButton(data) {
                 // }, 500);
             };
         default:
-            return function action(dispatch) {
+            return function action(dispatch, getState) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
                 const request = axios({
@@ -1237,7 +1264,12 @@ export function updateConversationButton(data) {
                         "Content-Type": "application/json"
                     },
                     url: APIURL + "/message",
-                    data: data
+                    data: {
+                        ...data,
+                        rut: getUrlParams(getState, 'rut'),
+                        user: getUrlParams(getState, 'user'),
+                        clave: getUrlParams(getState, 'clave')
+                    }
                 });
                 return request.then(
                     response => {
@@ -1467,7 +1499,7 @@ export function sendLike(data, general) {
 }
 //FORM
 export function closeForm(data) {
-    return function action(dispatch) {
+    return function action(dispatch, getState) {
         dispatch({ type: "DISABLED_FORM" });
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -1477,7 +1509,12 @@ export function closeForm(data) {
                 "Content-Type": "application/json"
             },
             url: APIURL + "/message",
-            data: data
+            data: {
+                ...data,
+                rut: getUrlParams(getState, 'rut'),
+                user: getUrlParams(getState, 'user'),
+                clave: getUrlParams(getState, 'clave')
+            }
         });
         return request.then(
             response => {
@@ -1502,7 +1539,7 @@ export function closeForm(data) {
 }
 export function sendForm(data, url, general) {
     data.general = general;
-    return function action(dispatch) {
+    return function action(dispatch, getState) {
         dispatch({ type: "SEND_FORM_START" });
         const request = axios({
             method: "POST",
@@ -1530,7 +1567,12 @@ export function sendForm(data, url, general) {
                             "Content-Type": "application/json"
                         },
                         url: APIURL + "/message",
-                        data: item
+                        data: {
+                            ...item,
+                            rut: getUrlParams(getState, 'rut'),
+                            user: getUrlParams(getState, 'user'),
+                            clave: getUrlParams(getState, 'clave')
+                        }
                     });
                     return request
                         .then(response => {
@@ -1615,4 +1657,11 @@ export function disabledVoice() {
     return function action(dispatch) {
         dispatch({ type: "DISABLED_VOICE" });
     };
+}
+
+// getUrlParams
+export function getUrlParams(getState, urlParam) {
+    const paramValue = getState().generalStates.getIn(["url_params", urlParam]);
+    if (paramValue === "null") return null;
+    return paramValue;
 }
