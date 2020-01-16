@@ -22,8 +22,7 @@
             var origen = null;
             window.CognitiveAssistantMain.init(
                 // 'https://dev-sura.mycognitiva.io/asistente/'
-
-                'https://qa-sura.mycognitiva.io/asistente/?rut=16746695&user=PSANTI&clave=1'
+                'https://dev-coasin-sbk.mycognitiva.io/asistente/?rut=16746695&user=PSANTI&clave=1'
             );
             // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
         });
@@ -39,7 +38,8 @@
         const data = {
             id_cliente: '1'
         };
-        const apiUrl = 'https://qa-sura.mycognitiva.io/mad/customize_param';
+        const apiUrl =
+            'https://dev-coasin-sbk.mycognitiva.io/mad/customize_param';
         await fetch(apiUrl, {
                 method: 'POST',
                 body: JSON.stringify(data),
