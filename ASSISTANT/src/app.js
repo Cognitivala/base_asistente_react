@@ -77,6 +77,14 @@ export class App extends Component {
     onMessageFunc() {
         const _this = this;
         window.onmessage = e => {
+
+            if (e.data.tokenAuth) {
+                setToken(e.data.tokenAuth);
+                localStorage.setItem('token', e.data.tokenAuth);
+                console.log('localStorage: ', localStorage.getItem('token'));
+                // _this.props.tokenAuth(e.data.tokenAuth);
+            }
+
             if (e.data.colorBtn !== undefined) {
                 _this.props.updateCustomColorBtn(e.data.colorBtn);
             } else if (e.data.title !== undefined) {
@@ -91,13 +99,7 @@ export class App extends Component {
                 _this.props.updateCustomLogo(e.data.logo);
             } else if (e.data.saludo !== undefined) {
                 _this.props.updateSaludo(e.data.saludo);
-            } 
-            else if (e.data.tokenAuth !== undefined) {
-                setToken(e.data.tokenAuth);
-                localStorage.setItem('token', e.data.tokenAuth);
-                // _this.props.tokenAuth(e.data.tokenAuth);
-            }
-            else if (e.data.responsive !== undefined) {
+            } else if (e.data.responsive !== undefined) {
                 _this.props.responsive(e.data.responsive);
             }
         };
