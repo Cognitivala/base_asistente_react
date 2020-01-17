@@ -559,6 +559,10 @@ export function updateConversation(data) {
             .then(response => {
                 // console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
+                if (response.data.estado.codigoEstado === 400) {
+                    dispatch(updateConversationError(response.data.msg));
+                    return false;
+                }
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -817,7 +821,7 @@ export function updateConversation(data) {
 }
 
 function messageResponse(dispatch, data) {
-    // console.log('messageResponse:: ', data);
+    console.log('messageResponse:: ', data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -1291,6 +1295,11 @@ export function updateConversationButton(data) {
                 return request.then(
                     response => {
                         // console.log('RESPONSE MENSAJE 3::');
+                        if (response.data.estado.codigoEstado === 400) {
+                            dispatch(updateConversationError(response.data.msg));
+                            return false;
+                        }
+
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
@@ -1537,6 +1546,12 @@ export function closeForm(data) {
         });
         return request.then(
             response => {
+
+                if (response.data.estado.codigoEstado === 400) {
+                    dispatch(updateConversationError(response.data.msg));
+                    return false;
+                }
+
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1570,6 +1585,12 @@ export function sendForm(data, url, general) {
         });
         return request.then(
             response => {
+
+                if (response.data.estado.codigoEstado === 400) {
+                    dispatch(updateConversationError(response.statusText = 'error_formulario'));
+                    dispatch({ type: "DISABLED_FORM" });
+                }
+
                 if (response.status === 200 && response.data.estado.codigoEstado === 200) {
                     let item = {};
                     //item.msg = [response.data.respuesta];
@@ -1598,6 +1619,11 @@ export function sendForm(data, url, general) {
                     return request
                         .then(response => {
                             // console.log('RESPONSE MENSAJE 5::');
+                            if (response.data.estado.codigoEstado === 400) {
+                                dispatch(updateConversationError(response.data.msg));
+                                return false;
+                            }
+
                             if (
                                 response.status === 200 &&
                                 response.data.estado.codigoEstado === 200

@@ -253,7 +253,7 @@ export default class Conversations extends Component {
         if (buttons !== undefined) {
           retorno.push(
             <ConversationButtons
-              key={j * 10}
+              key={j * 15}
               buttons={buttons}
               animation={animation}
               send={send}
@@ -281,7 +281,7 @@ export default class Conversations extends Component {
         if (multibuttons !== undefined) {
           retorno.push(
             <ConversationMultiButtons
-              key={j * 30}
+              key={j * 33}
               buttons={multibuttons}
               animation={animation}
               send={send}
