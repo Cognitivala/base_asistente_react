@@ -316,7 +316,7 @@ export default class Conversations extends Component {
             <ConversationAttach
               attach={attach}
               attachFile={attachFile}
-              key={j * 40}
+              key={j * 45}
               animation={animation}
               send={send}
               colorHeader={colorHeader}
@@ -329,7 +329,7 @@ export default class Conversations extends Component {
         if (files !== undefined) {
           retorno.push(
             <ConversationFiles
-              key={j * 24}
+              key={j * 50}
               files={files}
               animation={animation}
               send={send}
@@ -363,7 +363,7 @@ export default class Conversations extends Component {
                   // debugger
                   retorno.push(
                     <Valoracion
-                      key={j}
+                      key={j*55}
                       generalStates={generalStates}
                       setErrorValoracion={setErrorValoracion}
                       sendValoracion={sendValoracion}
@@ -399,7 +399,7 @@ export default class Conversations extends Component {
                 if (enabledFormulario) {
                   retorno.push(
                     <Formulario
-                      key={j}
+                      key={j*60}
                       formularioStates={formularioStates}
                       form={form}
                       generalStates={generalStates}
@@ -425,7 +425,7 @@ export default class Conversations extends Component {
             const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
               <ConversationLikes
-                key={j * 33}
+                key={j * 65}
                 conversationsStates={conversationsStates}
                 sendLike={sendLike}
                 colorHeader={colorHeader}
@@ -439,7 +439,7 @@ export default class Conversations extends Component {
             const { sendValoracion, generalStates } = this.props;
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
-              <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormularioValoracion key={`${j} * 75`} generalStates={generalStates} sendValoracion={sendValoracion} />
             );
           }
         }
