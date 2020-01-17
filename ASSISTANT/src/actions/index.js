@@ -97,6 +97,13 @@ export function setOrigen(data) {
         dispatch({ type: "SET_ORIGEN", data });
     };
 }
+
+export function setToken(data) {
+    return function action(dispatch) {
+        dispatch({ type: "SET_TOKEN", data });
+    };
+}
+
 export function setIntegracion(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_INTEGRACION", data });
@@ -247,9 +254,10 @@ export function getSaludo() {
                     cid: null,
                     id_cliente: "1",
                     origen: origen,
-                    rut: getUrlParams(getState, 'rut'),
-                    user: getUrlParams(getState, 'user'),
-                    clave: getUrlParams(getState, 'clave')
+                    token: localStorage.getItem('token')
+                        // rut: getUrlParams(getState, 'rut'),
+                        // user: getUrlParams(getState, 'user'),
+                        // clave: getUrlParams(getState, 'clave')
                 },
                 msg: null,
             },
@@ -261,9 +269,10 @@ export function getSaludo() {
                 url: APIURL + "/message",
                 data: {
                     ...data,
-                    rut: getUrlParams(getState, 'rut'),
-                    user: getUrlParams(getState, 'user'),
-                    clave: getUrlParams(getState, 'clave')
+                    token: localStorage.getItem('token')
+                        // rut: getUrlParams(getState, 'rut'),
+                        // user: getUrlParams(getState, 'user'),
+                        // clave: getUrlParams(getState, 'clave')
                 }
             });
         return request.then(
@@ -535,9 +544,10 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                rut: getUrlParams(getState, 'rut'),
-                user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
+                token: localStorage.getItem('token')
+                    // rut: getUrlParams(getState, 'rut'),
+                    // user: getUrlParams(getState, 'user'),
+                    // clave: getUrlParams(getState, 'clave')
             }
         });
         return request
@@ -1266,9 +1276,10 @@ export function updateConversationButton(data) {
                     url: APIURL + "/message",
                     data: {
                         ...data,
-                        rut: getUrlParams(getState, 'rut'),
-                        user: getUrlParams(getState, 'user'),
-                        clave: getUrlParams(getState, 'clave')
+                        token: localStorage.getItem('token')
+                            // rut: getUrlParams(getState, 'rut'),
+                            // user: getUrlParams(getState, 'user'),
+                            // clave: getUrlParams(getState, 'clave')
                     }
                 });
                 return request.then(
@@ -1511,9 +1522,10 @@ export function closeForm(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                rut: getUrlParams(getState, 'rut'),
-                user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
+                token: localStorage.getItem('token')
+                    // rut: getUrlParams(getState, 'rut'),
+                    // user: getUrlParams(getState, 'user'),
+                    // clave: getUrlParams(getState, 'clave')
             }
         });
         return request.then(
@@ -1569,9 +1581,10 @@ export function sendForm(data, url, general) {
                         url: APIURL + "/message",
                         data: {
                             ...item,
-                            rut: getUrlParams(getState, 'rut'),
-                            user: getUrlParams(getState, 'user'),
-                            clave: getUrlParams(getState, 'clave')
+                            token: localStorage.getItem('token')
+                                // rut: getUrlParams(getState, 'rut'),
+                                // user: getUrlParams(getState, 'user'),
+                                // clave: getUrlParams(getState, 'clave')
                         }
                     });
                     return request
