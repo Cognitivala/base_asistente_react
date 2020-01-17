@@ -80,12 +80,12 @@ export class App extends Component {
 
             // console.log('tokenAuth:: ', e.data.tokenAuth);
 
-            if (e.data.tokenAuth !== null) {
-                setToken(e.data.tokenAuth);
+            // if (e.data.tokenAuth !== null) {
+                _this.props.setToken(e.data.tokenAuth);
                 localStorage.setItem('token', e.data.tokenAuth);
                 console.log('localStorage desde Asistente: ', localStorage.getItem('token'));
                 // _this.props.tokenAuth(e.data.tokenAuth);
-            }
+            // }
 
             if (e.data.colorBtn !== undefined) {
                 _this.props.updateCustomColorBtn(e.data.colorBtn);
