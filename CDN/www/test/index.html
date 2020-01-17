@@ -162,9 +162,11 @@
     <script>
         window.addEventListener('load', function() {
             var origen = null;
+            const token = sessionStorage.getItem('token');
             window.CognitiveAssistantMain.init(
                 // 'https://dev-sura.mycognitiva.io/asistente/'
-                'https://dev-coasin-sbk.mycognitiva.io/asistente/?rut=16746695&user=PSANTI&clave=1'
+
+                'https://dev-coasin-sbk.mycognitiva.io/asistente/?token=' + token
             );
             // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
         });
