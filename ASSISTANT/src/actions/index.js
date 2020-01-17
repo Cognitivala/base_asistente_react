@@ -548,10 +548,11 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                token: JSON.stringify(localStorage.getItem('token'))
-                    // rut: getUrlParams(getState, 'rut'),
-                    // user: getUrlParams(getState, 'user'),
-                    // clave: getUrlParams(getState, 'clave')
+                token: getUrlParams(getState, 'token'),
+                // token: JSON.stringify(localStorage.getItem('token'))
+                // rut: getUrlParams(getState, 'rut'),
+                // user: getUrlParams(getState, 'user'),
+                // clave: getUrlParams(getState, 'clave')
             }
         });
         return request
@@ -1280,10 +1281,11 @@ export function updateConversationButton(data) {
                     url: APIURL + "/message",
                     data: {
                         ...data,
-                        token: JSON.stringify(localStorage.getItem('token'))
-                            // rut: getUrlParams(getState, 'rut'),
-                            // user: getUrlParams(getState, 'user'),
-                            // clave: getUrlParams(getState, 'clave')
+                        // token: JSON.stringify(localStorage.getItem('token'))
+                        token: getUrlParams(getState, 'token'),
+                        // rut: getUrlParams(getState, 'rut'),
+                        // user: getUrlParams(getState, 'user'),
+                        // clave: getUrlParams(getState, 'clave')
                     }
                 });
                 return request.then(
@@ -1585,10 +1587,11 @@ export function sendForm(data, url, general) {
                         url: APIURL + "/message",
                         data: {
                             ...item,
-                            token: JSON.stringify(localStorage.getItem('token'))
-                                // rut: getUrlParams(getState, 'rut'),
-                                // user: getUrlParams(getState, 'user'),
-                                // clave: getUrlParams(getState, 'clave')
+                            token: getUrlParams(getState, 'token'),
+                            // token: JSON.stringify(localStorage.getItem('token'))
+                            // rut: getUrlParams(getState, 'rut'),
+                            // user: getUrlParams(getState, 'user'),
+                            // clave: getUrlParams(getState, 'clave')
                         }
                     });
                     return request
