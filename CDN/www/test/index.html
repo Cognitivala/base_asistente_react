@@ -256,7 +256,8 @@
         const generarToken = async(rut, password) => {
             // console.log('Enviando...');
 
-            urlEndpoint = 'https://qa-coasin01.mycognitiva.io/mad/cred_token';
+            urlEndpoint = 'https://dev-coasin-sbk.mycognitiva.io/mad/cred_token';
+
             body = {
                 user: rut,
                 pass: password
@@ -279,6 +280,8 @@
                     // SE ALMACENA TOKEN
                     if (resp.status === 200) {
                         sessionStorage.setItem('token', resp.token);
+                    } else {
+                        console.log(resp.status);
                     }
                 })
                 .catch(error => {
