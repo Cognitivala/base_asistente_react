@@ -7,7 +7,7 @@ export function generalStates(
         nodo_id: null,
         intent: null,
         auth: null,
-        token: null,
+        token: localStorage.getItem('token'),
         location: null,
         id_cliente: "1",
         integracion: null,
