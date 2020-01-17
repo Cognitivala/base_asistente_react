@@ -78,6 +78,8 @@ export class App extends Component {
         const _this = this;
         window.onmessage = e => {
 
+            console.log('tokenAuth:: ', e.data.tokenAuth);
+
             if (e.data.tokenAuth) {
                 setToken(e.data.tokenAuth);
                 localStorage.setItem('token', e.data.tokenAuth);
