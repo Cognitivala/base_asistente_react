@@ -78,9 +78,9 @@ export class App extends Component {
         const _this = this;
         window.onmessage = e => {
 
-            console.log('tokenAuth:: ', e.data.tokenAuth);
+            // console.log('tokenAuth:: ', e.data.tokenAuth);
 
-            if (e.data.tokenAuth) {
+            if (e.data.tokenAuth !== null) {
                 setToken(e.data.tokenAuth);
                 localStorage.setItem('token', e.data.tokenAuth);
                 console.log('localStorage desde Asistente: ', localStorage.getItem('token'));
