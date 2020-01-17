@@ -7,10 +7,12 @@ export default class ConversationMsg extends Component {
   render() {
     const { msgs, animation, send, avatar, mainCss} = this.props;
     const  to = send === "to" ? true : false;
-    console.log('msgs:: ', msgs);
+    
+    // console.log('msgs:: ', msgs);
 
     if (typeof msgs === "string") {
       console.log('msgs:: ', msgs);
+      return;
     }
 
     return msgs.map( (map, i) => {

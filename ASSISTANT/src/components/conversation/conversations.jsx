@@ -209,11 +209,14 @@ export default class Conversations extends Component {
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
       userImg = customParamsStates.getIn(["customParams", "userImg"]);
 
+
+
     return conversationsStates.get("conversations").map((map, j) => {
       const conversation = map,
         enabled = conversation.get("enabled");
       let retorno = [];
       if (enabled !== undefined && enabled) {
+        console.log('conversation.get("msg"):: ', conversation.get("msg"));
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
