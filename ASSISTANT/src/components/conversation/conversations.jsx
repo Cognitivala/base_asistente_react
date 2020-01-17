@@ -216,7 +216,9 @@ export default class Conversations extends Component {
         enabled = conversation.get("enabled");
       let retorno = [];
       if (enabled !== undefined && enabled) {
+        
         console.log('conversation.get("msg"):: ', conversation.get("msg"));
+        
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
