@@ -454,7 +454,7 @@ export default class Conversations extends Component {
     let css = ayudaStates.get("open") ? " active" : "",
       cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
-      <IsFetching
+      <IsFetching key='isFetching'
         isFetching={conversationsStates.get("isFetching")}
         showChildren={true} colorHeader={colorHeader} mainCss={mainCss}
       >
