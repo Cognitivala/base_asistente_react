@@ -7,7 +7,7 @@ export function generalStates(
         nodo_id: null,
         intent: null,
         auth: null,
-        token: localStorage.getItem('token'),
+        token: sessionStorage.getItem('token'),
         location: null,
         id_cliente: "1",
         integracion: null,
@@ -39,7 +39,6 @@ export function generalStates(
             return state.set("region", action.data);
         case "DEFAULT_GENERAL":
             return state.withMutations(map => {
-                console.log('map token:: ', map.set("token"));
                 map.set("cid", null)
                     .set("origen", 1)
                     .set("nodo_id", null)
@@ -52,7 +51,7 @@ export function generalStates(
         case "SET_GENERAL":
             return state.withMutations(map => {
                 map.set("cid", action.data.cid);
-                map.set("token", localStorage.getItem('token'));
+                map.set("token", sessionStorage.getItem('token'));
             });
         default:
             return state;
