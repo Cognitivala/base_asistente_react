@@ -51,6 +51,7 @@ export function generalStates(
         case "SET_GENERAL":
             return state.withMutations(map => {
                 map.set("cid", action.data.cid);
+                map.set("token", action.data.token);
             });
         default:
             return state;

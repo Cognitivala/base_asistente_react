@@ -269,7 +269,7 @@ export function getSaludo() {
                 url: APIURL + "/message",
                 data: {
                     ...data,
-                    token: sessionStorage.getItem('token')
+                    token: setToken(sessionStorage.getItem('token'))
                         // rut: getUrlParams(getState, 'rut'),
                         // user: getUrlParams(getState, 'user'),
                         // clave: getUrlParams(getState, 'clave')
