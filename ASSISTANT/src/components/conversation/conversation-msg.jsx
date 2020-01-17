@@ -5,15 +5,16 @@ import PropTypes from "prop-types";
 export default class ConversationMsg extends Component {
 
   render() {
-    const { msgs, animation, send, avatar, mainCss} = this.props,
-    to = send==="to"?true:false;
+    const { msgs, animation, send, avatar, mainCss} = this.props;
+    const  to = send === "to" ? true : false;
     console.log('msgs:: ', msgs);
-    return msgs.map( async (map, i) => {
-      
-       if( msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
-        console.log("valoración");
-      }
-      else if(to){
+    return msgs.map( (map, i) => {
+
+      // if( msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
+      //   console.log("valoración");
+      // }
+
+      if(to){
         return (
           <div key={i} className={ mainCss.ConversationBubble + " " + animation + " " + mainCss.To }><div/>
             <ConversationBubble msg={map} send={send} mainCss={mainCss}/>
