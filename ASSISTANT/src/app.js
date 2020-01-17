@@ -83,7 +83,7 @@ export class App extends Component {
             if (e.data.tokenAuth) {
                 setToken(e.data.tokenAuth);
                 localStorage.setItem('token', e.data.tokenAuth);
-                console.log('localStorage: ', localStorage.getItem('token'));
+                console.log('localStorage desde Asistente: ', localStorage.getItem('token'));
                 // _this.props.tokenAuth(e.data.tokenAuth);
             }
 

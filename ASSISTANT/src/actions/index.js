@@ -254,7 +254,8 @@ export function getSaludo() {
                     cid: null,
                     id_cliente: "1",
                     origen: origen,
-                    token: localStorage.getItem('token')
+                    // token: localStorage.getItem('token')
+                    token: setToken(getState, localStorage.getItem('token'))
                         // rut: getUrlParams(getState, 'rut'),
                         // user: getUrlParams(getState, 'user'),
                         // clave: getUrlParams(getState, 'clave')
@@ -270,6 +271,7 @@ export function getSaludo() {
                 data: {
                     ...data,
                     token: localStorage.getItem('token')
+                        // token: setToken(getState)
                         // rut: getUrlParams(getState, 'rut'),
                         // user: getUrlParams(getState, 'user'),
                         // clave: getUrlParams(getState, 'clave')
