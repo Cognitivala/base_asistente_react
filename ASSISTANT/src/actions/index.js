@@ -272,11 +272,11 @@ export function getSaludo() {
                 url: APIURL + "/message",
                 data: {
                     ...data,
-                    token: JSON.stringify(localStorage.getItem('token'))
-                        // token: setToken(getState)
-                        // rut: getUrlParams(getState, 'rut'),
-                        // user: getUrlParams(getState, 'user'),
-                        // clave: getUrlParams(getState, 'clave')
+                    // token: JSON.stringify(localStorage.getItem('token'))
+                    // token: setToken(getState)
+                    // rut: getUrlParams(getState, 'rut'),
+                    // user: getUrlParams(getState, 'user'),
+                    // clave: getUrlParams(getState, 'clave')
                 }
             });
         return request.then(
