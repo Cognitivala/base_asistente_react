@@ -277,6 +277,7 @@ export function getSaludo() {
             });
         return request.then(
             response => {
+                console.log('response::', response.data);
                 if (response.status === 200) {
                     let item = {};
                     item.msg = response.data.msg;
