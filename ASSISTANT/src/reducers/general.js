@@ -44,14 +44,15 @@ export function generalStates(
                     .set("nodo_id", null)
                     .set("intent", null)
                     .set("auth", null)
-                    .set("token", null)
+                    // .set("token", null)
                     .set("integracion", null)
                     .set("region", null)
             });
         case "SET_GENERAL":
             return state.withMutations(map => {
                 map.set("cid", action.data.cid);
-                map.set("token", sessionStorage.getItem('token'));
+                // map.set("token", sessionStorage.getItem('token'));
+                map.set("token", action.data.token);
             });
         default:
             return state;
