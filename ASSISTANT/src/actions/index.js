@@ -254,7 +254,7 @@ export function getSaludo() {
                     cid: null,
                     id_cliente: "1",
                     origen: origen,
-                    token: sessionStorage.getItem('token')
+                    token: setToken(sessionStorage.getItem('token'))
                         // rut: getUrlParams(getState, 'rut'),
                         // user: getUrlParams(getState, 'user'),
                         // clave: getUrlParams(getState, 'clave')
