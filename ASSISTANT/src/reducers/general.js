@@ -54,7 +54,7 @@ export function generalStates(
                 console.log('SET_GENERAL:: ', map);
                 map.set("cid", action.data.cid);
                 // map.set("token", sessionStorage.getItem('token'));
-                map.set("token", action.data.token);
+                map.set("token", sessionStorage.getItem('token'));
             });
         default:
             return state;
