@@ -272,7 +272,7 @@ export function getSaludo() {
                 data: {
                     ...data,
                     // token: JSON.stringify(localStorage.getItem('token'))
-                    // token: setToken(getState)
+                    token: getUrlParams(getState, 'token'),
                     // rut: getUrlParams(getState, 'rut'),
                     // user: getUrlParams(getState, 'user'),
                     // clave: getUrlParams(getState, 'clave')
@@ -1528,10 +1528,11 @@ export function closeForm(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                token: JSON.stringify(localStorage.getItem('token'))
-                    // rut: getUrlParams(getState, 'rut'),
-                    // user: getUrlParams(getState, 'user'),
-                    // clave: getUrlParams(getState, 'clave')
+                token: getUrlParams(getState, 'token'),
+                // token: JSON.stringify(localStorage.getItem('token'))
+                // rut: getUrlParams(getState, 'rut'),
+                // user: getUrlParams(getState, 'user'),
+                // clave: getUrlParams(getState, 'clave')
             }
         });
         return request.then(
