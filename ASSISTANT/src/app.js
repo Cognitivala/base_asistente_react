@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import moment from "moment";
 import Launcher from "./components/launcher/launcher";
 import Assistant from "./components/assistant/assistant";
+import {setToken} from './actions/index';
 
 export class App extends Component {
     constructor(props) {
@@ -92,7 +93,9 @@ export class App extends Component {
                 _this.props.updateSaludo(e.data.saludo);
             } 
             else if (e.data.tokenAuth !== undefined) {
-                _this.props.tokenAuth(e.data.tokenAuth);
+                setToken(e.data.tokenAuth);
+                localStorage.setItem('token', e.data.tokenAuth);
+                // _this.props.tokenAuth(e.data.tokenAuth);
             }
             else if (e.data.responsive !== undefined) {
                 _this.props.responsive(e.data.responsive);
