@@ -8,11 +8,16 @@ export default class ConversationMsg extends Component {
     const { msgs, animation, send, avatar, mainCss} = this.props;
     const  to = send === "to" ? true : false;
     console.log('msgs:: ', msgs);
+
+    if (typeof msgs === "string") {
+      console.log('msgs:: ', msgs);
+    }
+
     return msgs.map( (map, i) => {
 
-      // if( msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
-      //   console.log("valoración");
-      // }
+      if( msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
+        console.log("valoración");
+      }
 
       if(to){
         return (
