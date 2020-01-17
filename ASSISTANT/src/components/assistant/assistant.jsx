@@ -87,6 +87,7 @@ export default class Assistant extends Component {
 
   //ORIGEN
   getOrigen() {
+    console.log('this.props:: ', this.props);
     if (isMobile) {
       this.props.setOrigen("mobile");
     } else {
