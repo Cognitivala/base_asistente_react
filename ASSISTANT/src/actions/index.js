@@ -256,10 +256,11 @@ export function getSaludo() {
                     id_cliente: "1",
                     origen: origen,
                     // token: localStorage.getItem('token')
-                    token: setToken(getState, 'token')
-                        // rut: getUrlParams(getState, 'rut'),
-                        // user: getUrlParams(getState, 'user'),
-                        // clave: getUrlParams(getState, 'clave')
+                    // token: setToken(getState, 'token')
+                    token: getUrlParams(getState, 'token'),
+                    // rut: getUrlParams(getState, 'rut'),
+                    // user: getUrlParams(getState, 'user'),
+                    // clave: getUrlParams(getState, 'clave')
                 },
                 msg: null,
             },
@@ -271,7 +272,7 @@ export function getSaludo() {
                 url: APIURL + "/message",
                 data: {
                     ...data,
-                    token: localStorage.getItem('token')
+                    token: JSON.stringify(localStorage.getItem('token'))
                         // token: setToken(getState)
                         // rut: getUrlParams(getState, 'rut'),
                         // user: getUrlParams(getState, 'user'),
@@ -548,7 +549,7 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                token: localStorage.getItem('token')
+                token: JSON.stringify(localStorage.getItem('token'))
                     // rut: getUrlParams(getState, 'rut'),
                     // user: getUrlParams(getState, 'user'),
                     // clave: getUrlParams(getState, 'clave')
@@ -1280,7 +1281,7 @@ export function updateConversationButton(data) {
                     url: APIURL + "/message",
                     data: {
                         ...data,
-                        token: localStorage.getItem('token')
+                        token: JSON.stringify(localStorage.getItem('token'))
                             // rut: getUrlParams(getState, 'rut'),
                             // user: getUrlParams(getState, 'user'),
                             // clave: getUrlParams(getState, 'clave')
@@ -1526,7 +1527,7 @@ export function closeForm(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                token: localStorage.getItem('token')
+                token: JSON.stringify(localStorage.getItem('token'))
                     // rut: getUrlParams(getState, 'rut'),
                     // user: getUrlParams(getState, 'user'),
                     // clave: getUrlParams(getState, 'clave')
@@ -1585,7 +1586,7 @@ export function sendForm(data, url, general) {
                         url: APIURL + "/message",
                         data: {
                             ...item,
-                            token: localStorage.getItem('token')
+                            token: JSON.stringify(localStorage.getItem('token'))
                                 // rut: getUrlParams(getState, 'rut'),
                                 // user: getUrlParams(getState, 'user'),
                                 // clave: getUrlParams(getState, 'clave')
