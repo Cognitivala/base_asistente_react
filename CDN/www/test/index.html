@@ -18,11 +18,12 @@
             font-size: 20px !important;
         }
         
-        .modal {
+        .modalContainer {
             display: block;
             position: fixed;
             z-index: 1;
-            padding-top: 100px;
+            /* padding-top: 100px; */
+            padding-top: 10%;
             left: 0;
             top: 0;
             width: 100%;
@@ -41,8 +42,9 @@
             margin: auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 60%;
-            height: 60%;
+            /* width: 60%; */
+            width: 35%;
+            /* height: 60%; */
             justify-content: center;
             align-items: center;
             display: flex;
@@ -51,13 +53,13 @@
         /* Close Button */
         
         .close {
-            color: #aaaaaa;
+            color: #151515;
             float: right;
             font-size: 28px;
             font-weight: bold;
             position: relative;
-            top: -65px;
-            right: -48%;
+            top: -10px;
+            right: -49%;
         }
         
         .close:hover,
@@ -73,7 +75,7 @@
             max-width: 400px;
             margin: 10px auto;
             padding: 16px;
-            background: #f7f7f7;
+            background: #f3f3f3;
         }
         
         .form-style h1 {
@@ -98,10 +100,18 @@
             width: 100%;
             background: #fff;
             margin-bottom: 4%;
-            border: 1px solid #ccc;
+            /* border: 1px solid #ccc; */
             padding: 3%;
             color: #555;
             font: 95% Arial, Helvetica, sans-serif;
+            height: 42px !important;
+        }
+        
+        .form-style input:hover,
+        .form-style input[type='password']:hover {
+            border-bottom: none !important;
+            /* border: none !important; */
+            transition: none !important;
         }
         
         .form-style input:focus {
@@ -134,6 +144,12 @@
         .form-style input[type='button']:hover {
             background: #2ebc99;
         }
+        
+        @media only screen and (max-width: 820px) {
+            .modal-content {
+                width: 45%;
+            }
+        }
     </style>
 
     <script type="text/javascript" src="https://asistente-react.mycognitiva.io/assets/js/constant.js"></script>
@@ -161,10 +177,10 @@
         <button type="button" id="btnAbrir">Abrir Modal</button>
     </main>
 
-    <iframe id="demo" src="https://www.example.com/" frameborder="0"></iframe>
+    <!-- <iframe id="demo" src="https://www.example.com/" frameborder="0"></iframe> -->
 
     <!-- Modal -->
-    <div id="modal" class="modal">
+    <div id="modal" class="modalContainer">
         <!-- Contenido Modal -->
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -225,8 +241,8 @@
             let rut = document.querySelector('#rut').value;
             let password = document.querySelector('#password').value;
 
-            // console.log(rut);
-            // console.log(password);
+            console.log(rut);
+            console.log(password);
 
             if (rut && password) {
                 generarToken(rut, password);
