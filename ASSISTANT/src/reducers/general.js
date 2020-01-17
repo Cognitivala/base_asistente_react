@@ -44,7 +44,7 @@ export function generalStates(
                     .set("nodo_id", null)
                     .set("intent", null)
                     .set("auth", null)
-                    // .set("token", null)
+                    .set("token", null)
                     .set("integracion", null)
                     .set("region", null)
             });
