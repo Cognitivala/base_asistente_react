@@ -10,7 +10,7 @@ export default class ConversationMsg extends Component {
     console.log('msgs:: ', msgs);
     return msgs.map( async (map, i) => {
       
-       if( await msgs._tail.array[0] === "exito_formulario" || await msgs._tail.array[0] === "error_formulario" || await msgs._tail.array[0] === ''){
+       if( msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
         console.log("valoración");
       }
       else if(to){
