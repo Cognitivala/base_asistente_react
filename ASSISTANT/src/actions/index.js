@@ -1439,7 +1439,7 @@ export function setErrorValoracion(data) {
     };
 }
 export function sendValoracion(data, general) {
-    console.log('DATA sendValoracion:: ', data)
+    console.log('DATA sendValoracion:: ', data);
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
@@ -1452,18 +1452,19 @@ export function sendValoracion(data, general) {
         });
         return request.then(
             response => {
-                console.log('response sendValoracion:: ', response);
+                // console.log('response sendValoracion:: ', response);
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
                 ) {
-                    let item = {};
-                    item.send = "from";
-                    item.enabled = true;
-                    item.general = general;
-                    item.msg = ['exito_formulario'];
-                    dispatch(updateConversation(item));
-                    dispatch({ type: "GET_CONVERSATIONS_END" });
+                    console.log('response sendValoracion:: ', response);
+                    // let item = {};
+                    // item.send = "from";
+                    // item.enabled = true;
+                    // item.general = general;
+                    // item.msg = ['exito_formulario'];
+                    // dispatch(updateConversation(item));
+                    // dispatch({ type: "GET_CONVERSATIONS_END" });
 
                 } else {
                     let msg = ['error_formulario'];
@@ -1486,6 +1487,7 @@ export function closeValoracion(data) {
 
 //LIKE
 export function sendLike(data, general) {
+    console.log('SENDLIKE:: ', data)
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
