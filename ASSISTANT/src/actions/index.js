@@ -1464,8 +1464,8 @@ export function sendValoracion(data, general) {
                     item.general = general;
                     item.msg = ['exito_formulario'];
                     console.log('ITEM: ', item);
-                    // dispatch(updateConversation(item));
-                    // dispatch({ type: "GET_CONVERSATIONS_END" });
+                    dispatch(updateConversation(item));
+                    dispatch({ type: "GET_CONVERSATIONS_END" });
 
                 } else {
                     let msg = ['error_formulario'];
