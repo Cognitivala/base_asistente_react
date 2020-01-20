@@ -1439,6 +1439,7 @@ export function setErrorValoracion(data) {
     };
 }
 export function sendValoracion(data, general) {
+    console.log('DATA sendValoracion:: ', data)
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
@@ -1451,6 +1452,7 @@ export function sendValoracion(data, general) {
         });
         return request.then(
             response => {
+                console.log('response sendValoracion:: ', response);
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
