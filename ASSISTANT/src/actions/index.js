@@ -538,7 +538,6 @@ function updateConversationError(data) {
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
-    console.log('updateConversation: ', data);
     if (data.general.token === "null") {
         data.general.token = null;
     }
@@ -553,7 +552,7 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                // token: getUrlParams(getState, 'token'),
+                token: getUrlParams(getState, 'token'),
                 // token: JSON.stringify(localStorage.getItem('token'))
                 // rut: getUrlParams(getState, 'rut'),
                 // user: getUrlParams(getState, 'user'),

@@ -43,7 +43,6 @@ class FormularioValoracion extends Component {
     }
 
     const { generalStates, sendValoracion } = this.props;
-    console.log('generalStates:: ', generalStates);
     const general = generalStates.toJS();
 
     let resolvio = null;
@@ -63,9 +62,7 @@ class FormularioValoracion extends Component {
       valoracion: this.state.starsSelected,
       comentario: this.state.mensajeAdicional
     };
-    console.log('DATA!', data);
     // sendLike(data, general);
-    debugger;
     await sendValoracion(data, general);
   };
 
