@@ -1125,8 +1125,9 @@ export function sendLike(data, general) {
             url: APIURL + "/valorar",
             data: data
         });
-        return request.then(
-            response => {
+        return request.then(response => {
+
+                // console.log('RESPONSE:: ', response);
 
                 if (
                     response.status === 200 &&
