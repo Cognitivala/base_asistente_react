@@ -539,6 +539,9 @@ function updateConversationError(data) {
 }
 export function updateConversation(data) {
     console.log('updateConversation: ', data);
+    if (data.general.token === "null") {
+        data.general.token = null;
+    }
     return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
