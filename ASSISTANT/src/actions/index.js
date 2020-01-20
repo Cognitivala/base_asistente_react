@@ -1458,11 +1458,12 @@ export function sendValoracion(data, general) {
                     response.data.estado.codigoEstado === 200
                 ) {
                     console.log('response sendValoracion:: ', response);
-                    // let item = {};
-                    // item.send = "from";
-                    // item.enabled = true;
-                    // item.general = general;
-                    // item.msg = ['exito_formulario'];
+                    let item = {};
+                    item.send = "from";
+                    item.enabled = true;
+                    item.general = general;
+                    item.msg = ['exito_formulario'];
+                    console.log('ITEM: ', item);
                     // dispatch(updateConversation(item));
                     // dispatch({ type: "GET_CONVERSATIONS_END" });
 
