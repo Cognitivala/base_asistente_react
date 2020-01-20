@@ -43,6 +43,7 @@ class FormularioValoracion extends Component {
     }
 
     const { generalStates, sendValoracion } = this.props;
+    console.log('generalStates:: ', generalStates);
     const general = generalStates.toJS();
 
     let resolvio = null;
