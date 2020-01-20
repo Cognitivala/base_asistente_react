@@ -553,7 +553,7 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                token: getUrlParams(getState, 'token'),
+                // token: getUrlParams(getState, 'token'),
                 // token: JSON.stringify(localStorage.getItem('token'))
                 // rut: getUrlParams(getState, 'rut'),
                 // user: getUrlParams(getState, 'user'),
