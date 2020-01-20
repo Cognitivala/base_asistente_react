@@ -803,7 +803,6 @@ export function updateConversation(data) {
 
 function messageResponse(dispatch, data) {
     if (data.liftUp !== undefined) {
-        console.log("DATAAA", data.liftUp)
         //Si trae para levantar modales
         switch (data.liftUp) {
             case "valoracion":
