@@ -8,6 +8,7 @@ export default class ConversationLikes extends Component {
   }
 
   sendLikeHandled(event) {
+    console.log('sendLikeHandled');
     const { sendLike, generalStates, conversationsStates } = this.props;
     const like = event.currentTarget.dataset.like;
     const general = generalStates.toJS();
