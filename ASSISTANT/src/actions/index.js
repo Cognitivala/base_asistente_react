@@ -559,7 +559,7 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                // console.log('message updateConversation:: ', response.data);
+                console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (response.data.estado.codigoEstado === 400) {
                     dispatch(updateConversationError(response.data.msg));
