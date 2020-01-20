@@ -99,6 +99,7 @@ export function setOrigen(data) {
 }
 
 export function setToken(data) {
+    // console.log('ENTRÉ A setToken', data);
     return function action(dispatch) {
         dispatch({ type: "SET_TOKEN", data });
     };

@@ -456,18 +456,11 @@ export default class Conversations extends Component {
     let css = ayudaStates.get("open") ? " active" : "",
       cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
-      <IsFetching key='isFetching'
-        isFetching={conversationsStates.get("isFetching")}
-        showChildren={true} colorHeader={colorHeader} mainCss={mainCss}
-      >
-        <section
-          // onScroll={this.handleScroll}
-          className={
-            mainCss.ConversationHolder + " " + css + cssHolder
-          }
-          data-conversation=""
-          ref={this.test}
-        >
+      <IsFetching isFetching={conversationsStates.get("isFetching")} showChildren={true} colorHeader={colorHeader} mainCss={mainCss}>
+        <section className={ mainCss.ConversationHolder + " " + css + cssHolder}
+          data-conversation="" ref={this.test}
+          // onScroll={this.handleScroll} 
+          >
           {this.fillConversation()}
         </section>
       </IsFetching>
