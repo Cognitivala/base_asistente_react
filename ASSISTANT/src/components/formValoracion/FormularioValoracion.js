@@ -64,6 +64,7 @@ class FormularioValoracion extends Component {
     };
     console.log('DATA!', data);
     // sendLike(data, general);
+    debugger;
     await sendValoracion(data, general);
   };
 
