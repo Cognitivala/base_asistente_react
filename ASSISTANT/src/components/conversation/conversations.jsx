@@ -95,7 +95,8 @@ class Conversations extends Component {
         datepicker = lastConversation.get("datepicker"),
         attach = lastConversation.get("attach"),
         liftUp = lastConversation.get("liftUp"),
-        like = lastConversation.get("like");
+        like = lastConversation.get("like"),
+        rating = lastConversation.get("rating");
       if (
         buttons !== undefined ||
         selects !== undefined ||
@@ -104,13 +105,22 @@ class Conversations extends Component {
         datepicker !== undefined ||
         attach !== undefined ||
         (like !== undefined && like)
+        (rating !== undefined && rating)
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
-        if ((help && ayudaStates.get("enabled"))) this.props.disabledHelp();
-        if (inputStates.get("enabled")) this.props.disabledInput();
+        if ((help && ayudaStates.get("enabled"))) {
+          this.props.disabledHelp();
+        }
+        if (inputStates.get("enabled")) {
+          this.props.disabledInput();
+        }
       } else {
-        if ((help && !ayudaStates.get("enabled"))) this.props.enabledHelp();
-        if (!inputStates.get("enabled")) this.props.enabledInput();
+        if ((help && !ayudaStates.get("enabled"))) {
+          this.props.enabledHelp();
+        }
+        if (!inputStates.get("enabled")) {
+          this.props.enabledInput();
+        }
       }
     }
   }
