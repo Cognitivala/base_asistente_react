@@ -40,11 +40,11 @@ export default class ConversationMsg extends Component {
               src={send==="to"?userImg:avatar}
               alt=""
             /> */}
-            <img
-              className={mainCss.RoundedImg}
-              src={avatar}
-              alt=""
-            />
+            { map !== '' ? 
+                <img className={mainCss.RoundedImg} src={avatar} alt="" />
+              : null
+            }
+            
             <ConversationBubble msg={map} send={send} mainCss={mainCss}/>
           </div>
         );
