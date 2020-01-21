@@ -104,7 +104,7 @@ class Conversations extends Component {
         multibuttons !== undefined ||
         datepicker !== undefined ||
         attach !== undefined ||
-        (like !== undefined && like)
+        (like !== undefined && like) || 
         (rating !== undefined && rating)
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
