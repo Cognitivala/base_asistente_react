@@ -890,6 +890,7 @@ export function sendValoracion(data, general) {
                     // console.log('ITEM: ', item);
                     dispatch(updateConversation(item));
                     dispatch({ type: "GET_CONVERSATIONS_END" });
+                    dispatch(disabledInput());
 
                 } else {
                     let msg = ['error_formulario'];
