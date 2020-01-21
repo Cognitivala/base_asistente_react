@@ -190,8 +190,8 @@
         window.addEventListener('load', function() {
             var origen = null;
             window.CognitiveAssistantMain.init(
-                'https://dev-coasin-sbk.mycognitiva.io/asistente/'
-                // 'http://localhost:3001/asistente/'
+                // 'https://dev-coasin-sbk.mycognitiva.io/asistente/'
+                'http://localhost:3001/asistente/'
             );
             // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
         });
@@ -242,8 +242,8 @@
             let rut = document.querySelector('#rut').value;
             let password = document.querySelector('#password').value;
 
-            console.log(rut);
-            console.log(password);
+            // console.log(rut);
+            // console.log(password);
 
             if (rut && password) {
                 generarToken(rut, password);
@@ -277,7 +277,7 @@
                     return res.json();
                 })
                 .then(resp => {
-                    console.log('resp:: ', resp);
+                    // console.log('resp:: ', resp);
                     // SE ALMACENA TOKEN
                     if (resp.status === 200) {
                         sessionStorage.setItem('token', resp.token);

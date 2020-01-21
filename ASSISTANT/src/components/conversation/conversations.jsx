@@ -45,7 +45,6 @@ export default class Conversations extends Component {
   }
 
   componentWillMount(){
-    
     const { conversationsStates, disabledInput } = this.props,
       conversations = conversationsStates.get('conversations'),
       conversation = conversations.get(-1),
@@ -214,10 +213,11 @@ export default class Conversations extends Component {
     return conversationsStates.get("conversations").map((map, j) => {
       const conversation = map,
         enabled = conversation.get("enabled");
+        // console.log('enabled: ', enabled);
       let retorno = [];
       if (enabled !== undefined && enabled) {
         
-        console.log('conversation.get("msg"):: ', conversation.get("msg"));
+        // console.log('conversation.get("msg"):: ', conversation.get("msg"));
         
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),

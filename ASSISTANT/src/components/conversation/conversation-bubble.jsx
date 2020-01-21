@@ -6,6 +6,14 @@ export default class ConversationBubble extends Component {
   render() {
     const { msg, send, mainCss } = this.props;
 
+    if(msg === "") {
+      return null;
+    }
+
+    if(msg === "exito_formulario") {
+      return null;
+    }
+
     if (send === "to") {
       return (
         <div className={mainCss.Bubble}>
