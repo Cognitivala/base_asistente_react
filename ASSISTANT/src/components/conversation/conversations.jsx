@@ -18,7 +18,12 @@ import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
 import FormularioValoracion from "../formValoracion/FormularioValoracion";
 
-export default class Conversations extends Component {
+
+import { connect } from "react-redux";
+import {disabledInput} from '../../actions/index';
+
+
+class Conversations extends Component {
   constructor(props) {
     super(props);
     this.test = React.createRef();
@@ -439,6 +444,7 @@ export default class Conversations extends Component {
           
           else if ( rating ) {
             const { sendValoracion, generalStates } = this.props;
+            disabledInput();
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
               <FormularioValoracion key={`${j} * 75`} generalStates={generalStates} sendValoracion={sendValoracion} />
@@ -467,3 +473,5 @@ export default class Conversations extends Component {
     );
   }
 }
+
+export default connect(null, {disabledInput})(Conversations);
