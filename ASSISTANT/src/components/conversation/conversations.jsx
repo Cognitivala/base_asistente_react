@@ -107,7 +107,9 @@ class Conversations extends Component {
         (like !== undefined && like) || 
         (rating !== undefined && rating)
       ) {
-        if (help && ayudaStates.get("open")) this.props.closeHelp();
+        if (help && ayudaStates.get("open")) {
+          this.props.closeHelp();
+        }
         if ((help && ayudaStates.get("enabled"))) {
           this.props.disabledHelp();
         }
@@ -454,7 +456,6 @@ class Conversations extends Component {
           
           else if ( rating ) {
             const { sendValoracion, generalStates } = this.props;
-            disabledInput();
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
               <FormularioValoracion key={`${j} * 75`} generalStates={generalStates} sendValoracion={sendValoracion} />

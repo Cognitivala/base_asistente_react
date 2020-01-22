@@ -25,6 +25,7 @@ function setNodoId(data) {
         data
     };
 }
+
 export function getLocation() {
     return function action(dispatch) {
         const geolocation = navigator.geolocation;
@@ -66,6 +67,7 @@ export function getLocation() {
             });
     };
 }
+
 export function getLocationObject(results) {
     let data = {};
     for (let i = 0; i < results.length; i++) {
@@ -129,6 +131,7 @@ export function closeLauncher() {
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
     };
 }
+
 export function sendNotification(data) {
     return {
         type: "SET_NOTIFICATION",
@@ -197,37 +200,44 @@ function getCustomParamsEnd(data) {
         data
     };
 }
+
 export function setCustomParams(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_CUSTOM_PARAMS", data });
     };
 }
+
 export function updateCustomTitle(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_CUSTOM_TITULO", data });
     };
 }
+
 export function updateCustomSubtitle(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_CUSTOM_SUBTITULO", data });
     };
 }
+
 export function updateCustomColorHeader(data) {
     setColors(data);
     return function action(dispatch) {
         dispatch({ type: "SET_CUSTOM_COLOR_HEADER", data });
     };
 }
+
 export function updateCustomColorBtn(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_CUSTOM_COLOR_BTN", data });
     };
 }
+
 export function updateCustomLogo(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_CUSTOM_LOGO", data });
     };
 }
+
 export function updateCustomAvatar(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_CUSTOM_AVATAR", data });
@@ -237,6 +247,7 @@ export function setColors(colorHeader) {
     document.documentElement.style.setProperty("--first", colorHeader);
     document.documentElement.style.setProperty("--laucher", colorHeader);
 }
+
 //SALUDO
 export function getSaludo() {
     return function action(dispatch, getState) {
@@ -399,66 +410,7 @@ export function getAyuda() {
             }
         );
 
-        // setTimeout(() => {
-        //   let item;
-        //   item = [
-        //     {
-        //       action: false,
-        //       collapse: false,
-        //       description:
-        //         "Te puedo ayudar a consultar tu remanente, formas para aumentarlo, detalle de tus cuotas de participaci\u00f3n, entre otras cosas.\r\nPreg\u00fantame algo o usa alguna de estas alternativas:",
-        //       listChild: [
-        //         {
-        //           title: "\u00bfQu\u00e9 es el remanente?"
-        //         },
-        //         {
-        //           title: "Detalle de las Cuotas de Participaci\u00f3n"
-        //         },
-        //         {
-        //           title: "Formas de pago de la cuota de participaci\u00f3n"
-        //         }
-        //       ],
-        //       title: "Remanente y Cuotas de Participaci\u00f3n"
-        //     },
-        //     {
-        //       action: false,
-        //       collapse: false,
-        //       description:
-        //         "Me puedes preguntar sobre la Cooperativa, sus representantes, como hacerte socio y todos los beneficios que Coopeuch te entrega en tu comuna, en comercios, salud, educaci\u00f3n, espect\u00e1culos y productos SUMA.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
-        //       listChild: [
-        //         {
-        //           title: "\u00bfQuiero ser socio?"
-        //         },
-        //         {
-        //           title: "\u00bfQu\u00e9 beneficios tengo? "
-        //         },
-        //         {
-        //           title: "Quiero actualizar mis datos"
-        //         }
-        //       ],
-        //       title: "La Cooperativa y sus beneficios"
-        //     },
-        //     {
-        //       action: false,
-        //       collapse: false,
-        //       description:
-        //         "Te puedo ayudar a obtener, bloquear y recuperar tus distintas claves, indicarte direcciones y horarios de oficinas y a comunicarte con Coopeuch.\u00a0\u000bPreg\u00fantame algo o usa alguna de estas alternativas:",
-        //       listChild: [
-        //         {
-        //           title: "\u00bfDonde hay una oficina en mi comuna?"
-        //         },
-        //         {
-        //           title: "\u00bfComo obtener o activar mi clave?"
-        //         },
-        //         {
-        //           title: "\u00bfComo contacto a un ejecutivo?"
-        //         }
-        //       ],
-        //       title: "Claves y Oficinas"
-        //     }
-        //   ];
-        //   dispatch(getAyudaEnd(item));
-        // }, 500);
+
     };
 }
 
@@ -540,9 +492,16 @@ export function updateConversation(data) {
     if (data.general.token === "null") {
         data.general.token = null;
     }
+
+    // if (data.msg[0] === "exito_formulario") {
+    //     data.enabled = false;
+    //     data.disabledInput = true;
+    // }
+
     return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
+
         const request = axios({
             method: "POST",
             headers: {
@@ -560,6 +519,7 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
+                // console.log('response:: ', response);
                 if (response.data.estado.codigoEstado === 400) {
                     dispatch(updateConversationError(response.data.msg));
                     return false;
@@ -570,8 +530,14 @@ export function updateConversation(data) {
                     response.data.msg !== null &&
                     response.data.estado.codigoEstado === 200
                 ) {
+
                     let item = response.data;
                     item.send = "from";
+
+                    // if (item.msg[0] === "Muchas gracias por su evaluación, nos ayuda a seguir mejorando.") {
+                    //     item.disabledInput = true;
+                    // }
+
                     item.enabled = true;
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
@@ -586,7 +552,7 @@ export function updateConversation(data) {
 }
 
 function messageResponse(dispatch, data) {
-    // console.log('messageResponse:: ', data);
+
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -613,6 +579,9 @@ function messageResponse(dispatch, data) {
             default:
                 break;
         }
+    } else if (data.end_conversation === true) {
+        dispatch(pushConversation(data));
+        dispatch({ type: "DISABLED_INPUT" });
     } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
@@ -624,7 +593,14 @@ function messageResponse(dispatch, data) {
                 dispatch(setIntegracion(data.general.integracion))
             };
         }
+        // console.log('data.disabledInput:: ', data.disabledInput);
         dispatch(pushConversation(data));
+        // if (data.disabledInput) {
+        //     // VERIFICAR ACTION PARA BLOUEAR INPUT
+        //     dispatch({ type: "DISABLED_INPUT" });
+        // }
+        // dispatch({ type: "DISABLED_INPUT" });
+
     }
 }
 export function setHistory(data) {
@@ -884,9 +860,10 @@ export function sendValoracion(data, general) {
                     // console.log('response sendValoracion:: ', response);
                     let item = {};
                     item.send = "from";
-                    item.enabled = true;
+                    item.enabled = false;
                     item.general = general;
                     item.msg = ['exito_formulario'];
+                    // console.log('item.msg : ', item.msg);
                     // console.log('ITEM: ', item);
                     dispatch(updateConversation(item));
                     dispatch({ type: "GET_CONVERSATIONS_END" });
@@ -1029,8 +1006,9 @@ export function sendForm(data, url, general) {
                     item.send = "to";
                     item.enabled = false;
                     item.general = general;
-                    //updateConversation(item);
+                    // updateConversation(item);
                     // messageResponse(dispatch, item);
+                    // dispatch(disabledInput());
                     dispatch({ type: "DISABLED_FORM" });
                     const request = axios({
                         method: "POST",
@@ -1094,27 +1072,6 @@ export function sendForm(data, url, general) {
         // dispatch(setGeneral(data.general));
         // dispatch(pushConversation(data));
 
-        //Respuesta
-        // setTimeout(() => {
-        //   console.log("url ==> ", url);
-        //   let data = {
-        //     general: {
-        //       cid: "SOYELCID",
-        //       origen: "Sitio Público",
-        //       nodo_id: null,
-        //       intent: null,
-        //       auth: null,
-        //       token: null,
-        //       location: null
-        //     },
-        //     msg: ["Se ha enviado el formulario"]
-        //   };
-        //   data.send = "from";
-        //   data.enabled = true;
-        //   messageResponse(dispatch, data);
-        //   dispatch({ type: "SEND_FORM_END" });
-        //   dispatch({ type: "DISABLED_FORM" });
-        // }, 500);
     };
 }
 //RESPONSIVE

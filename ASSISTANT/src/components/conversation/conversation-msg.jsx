@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import ConversationBubble from "./conversation-bubble";
 import PropTypes from "prop-types";
 
-export default class ConversationMsg extends Component {
+import { connect } from "react-redux";
+import {disabledInput} from '../../actions/index';
+
+class ConversationMsg extends Component {
 
   render() {
     const { msgs, animation, send, avatar, mainCss} = this.props;
@@ -16,9 +19,11 @@ export default class ConversationMsg extends Component {
     // }
 
     return msgs.map( (map, i) => {
-      console.log('MAP:: ', map);
+      // console.log('MAP:: ', map);
       if( msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
         console.log("valoración");
+        this.props.disabledInput();
+
       }
 
       if(to){
@@ -64,3 +69,6 @@ ConversationMsg.propTypes = {
   sendLike: PropTypes.func,
   mainCss: PropTypes.any.isRequired
 };
+
+
+export default connect(null, {disabledInput})(ConversationMsg);
