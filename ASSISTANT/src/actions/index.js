@@ -1261,10 +1261,10 @@ export function updateConversationButton(data) {
 
                 console.log('data.msg[0]:: ', data.msg[0]);
 
-                if (data.msg[0] !== 'SI' || data.msg[0] !== 'NO') {
-                    const buttonLarge = document.querySelector('.buttonLarge');
-                    buttonLarge.style.width = '100%';
-                }
+                // if (data.msg[0] !== 'SI' || data.msg[0] !== 'NO') {
+                //     const buttonLarge = document.querySelector('.buttonLarge');
+                //     buttonLarge.style.width = '100%';
+                // }
 
 
                 const request = axios({
