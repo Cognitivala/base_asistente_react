@@ -1258,6 +1258,13 @@ export function updateConversationButton(data) {
             return function action(dispatch, getState) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
+
+                if (data.msg[0] === 'SI' || data.msg[0] === 'NO') {
+                    const buttonLarge = document.querySelector('.Btn');
+                    buttonLarge.style.width = '100%';
+                }
+
+
                 const request = axios({
                     method: "POST",
                     headers: {
