@@ -1259,8 +1259,8 @@ export function updateConversationButton(data) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
 
-                if (data.msg[0] === 'SI' || data.msg[0] === 'NO') {
-                    const buttonLarge = document.querySelector('#buttonLarge');
+                if (data.msg[0] !== 'SI' || data.msg[0] !== 'NO') {
+                    const buttonLarge = document.querySelector('.buttonLarge');
                     buttonLarge.style.width = '100%';
                 }
 

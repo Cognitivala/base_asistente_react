@@ -25,10 +25,9 @@ export default class ConversationButtons extends Component {
     const { buttons, animation, send, mainCss } = this.props,
       botones = buttons.map((map, i) => {
         return (
-          <button 
-            id="buttonLarge"
+          <button
             key={i}
-            className={mainCss.Btn + " " + mainCss.BtnBig}
+            className={'buttonLarge' + mainCss.Btn + " " + mainCss.BtnBig}
             data-msg={map.get("value")}
             onClick={this.sendButtonresponse}
           >
