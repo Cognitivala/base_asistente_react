@@ -189,8 +189,10 @@
     <script>
         window.addEventListener('load', function() {
             var origen = null;
+            var url = 'URL_A_CAMBIAR';
             window.CognitiveAssistantMain.init(
-                'https://dev-coasin-sbk.mycognitiva.io/asistente/'
+                'https://' + url + '.mycognitiva.io/asistente/'
+                // 'https://dev-coasin-sbk.mycognitiva.io/asistente/'
                 // 'http://localhost:3001/asistente/'
             );
             // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
@@ -257,7 +259,8 @@
         const generarToken = async(rut, password) => {
             // console.log('Enviando...');
 
-            urlEndpoint = 'https://dev-coasin-sbk.mycognitiva.io/mad/cred_token';
+            var url = 'URL_A_CAMBIAR';
+            var urlEndpoint = 'https://' + url + '.mycognitiva.io/mad/cred_token';
 
             body = {
                 user: rut,
