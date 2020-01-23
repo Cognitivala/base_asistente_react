@@ -27,9 +27,11 @@
         document.getElementById('preJS').remove();
     </script>
     <script>
+        var url = 'URL_A_CAMBIAR';
         window.addEventListener('load', function() {
             window.CognitiveAssistantMain.init(
-                'https://qa-sura.mycognitiva.io/asistente/'
+                'https://' + url + '/asistente/'
+                // 'https://qa-sura.mycognitiva.io/asistente/'
             );
             // window.CognitiveAssistantMain.init('http://localhost:3000/assistant/');
         });
