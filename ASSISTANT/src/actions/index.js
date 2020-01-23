@@ -1260,7 +1260,7 @@ export function updateConversationButton(data) {
                 dispatch(pushConversation(data));
 
                 if (data.msg[0] === 'SI' || data.msg[0] === 'NO') {
-                    const buttonLarge = document.querySelector('button');
+                    const buttonLarge = document.querySelector('button.Btn');
                     buttonLarge.style.width = '100%';
                 }
 
