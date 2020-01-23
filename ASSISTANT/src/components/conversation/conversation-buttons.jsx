@@ -27,7 +27,7 @@ export default class ConversationButtons extends Component {
         return (
           <button
             key={i}
-            className={'buttonLarge' + mainCss.Btn + " " + mainCss.BtnBig}
+            className={'buttonLarge ' + mainCss.Btn + " " + mainCss.BtnBig}
             data-msg={map.get("value")}
             onClick={this.sendButtonresponse}
           >
