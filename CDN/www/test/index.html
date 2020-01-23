@@ -20,9 +20,10 @@
     <script>
         window.addEventListener('load', function() {
             var origen = null;
+            var url = 'URL_A_CAMBIAR';
             window.CognitiveAssistantMain.init(
+                'https://' + url + '/asistente/'
                 // 'https://dev-sura.mycognitiva.io/asistente/'
-
                 'https://qa-sura.mycognitiva.io/asistente/?rut=16746695&user=PSANTI&clave=1'
             );
             // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
