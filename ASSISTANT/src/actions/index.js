@@ -5,6 +5,9 @@ import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from 'react-device-detect';
 
+const LYNN_ENDPOINT = '/lynn_in';
+const ASISTANT_INTERVAL_TIMER = 5000;
+
 //GENERAL
 function defaultGeneral() {
     return {
@@ -523,8 +526,31 @@ function updateConversationError(data) {
     }
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
-export function updateConversation(data) {
+export function updateConversation(conversationData) {
     return function action(dispatch, getState) {
+        const useLynn = getState().assistantStates.getIn(["useLynn"]);
+        console.log("USELYNN: ", useLynn)
+        const url =  useLynn ? LYNN_ENDPOINT : "/message"
+        let data = {};
+
+        if(useLynn){
+            data = {
+                ...conversationData,
+                general: {
+                    ...getState().assistantStates.getIn(["lynnData"]),
+                    token: getState().generalStates.getIn(["token"]),
+                }
+            }
+        }else {
+            data = {
+                ...conversationData,
+                rut: getUrlParams(getState, 'rut'),
+                user: getUrlParams(getState, 'user'),
+                clave: getUrlParams(getState, 'clave')
+            };
+        }
+
+        console.log("useLynn: ", useLynn, url, data)
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
@@ -532,18 +558,11 @@ export function updateConversation(data) {
             headers: {
                 "Content-Type": "application/json"
             },
-            url: APIURL + "/message",
-            data: {
-                ...data,
-                rut: getUrlParams(getState, 'rut'),
-                user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
-            }
+            url: APIURL + url,
+            data,
         });
         return request
             .then(response => {
-                // console.log('message updateConversation:: ', response.data);
-                // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -801,7 +820,7 @@ export function updateConversation(data) {
     };
 }
 
-function messageResponse(dispatch, data) {
+function messageResponse(dispatch, data, general) {
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -829,8 +848,12 @@ function messageResponse(dispatch, data) {
     } else if(data.end_conversation === true){
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
+
+    } else if(data.estado.codigoEstado === 303){
+        dispatch(addLynnData(data.general));
+        dispatch(LynnInit(data, general))
+
     }else {
-        // console.log('data.general ', data)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -843,6 +866,79 @@ function messageResponse(dispatch, data) {
         dispatch(pushConversation(data));
     }
 }
+
+function LynnInit(data, general){
+    return function action(dispatch){
+        const request = axios({
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            url: APIURL + "/lynn_in",
+            data: data,
+        });
+        return request.then(
+            response => {
+                if(response.status === 200){
+                    dispatch(startLynn());
+                    dispatch(pushConversation(data));
+                    
+                     // Intervalo para buscar posibles respuestas de Lynn
+                    dispatch(LynnOutInterval(data, general));
+                }
+            }
+        )
+    }
+}
+
+function LynnOutInterval(data){
+    return function action(dispatch, getState){
+        const asistantInterval = setInterval(function() {
+            const request = axios({
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                url: APIURL + "/lynn_out",
+                data: data,
+            });
+            return request.then(
+                response => {
+                    console.log("LYNN! OUT", response)
+                    let item = {};
+                    item.send = "from";
+                    item.enabled = true;
+                    item.general = getState().assistantStates.getIn(["lynnData"]);
+                    item.msg = response.data.textos
+                    dispatch(pushConversation(item));
+    
+                    if(response.data.eventos[0] === "chatConversationEnd"){
+                        console.log("LYNEND");
+                        const request = axios({
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            url: APIURL + "/lynn_end",
+                            data: data,
+                        });
+                        return request.then(
+                            response => {
+                                if(response.status === 200){
+                                    dispatch({ type: "DISABLED_INPUT" });
+                                    clearInterval(asistantInterval);
+                                    dispatch(closeLynn());
+                                    return;
+                                }
+                            }
+                        )  
+                    }
+                }
+            )
+        }, ASISTANT_INTERVAL_TIMER);  
+    }
+}
+
 export function setHistory(data) {
     return function action(dispatch) {
         const lastConversation = data[data.length - 1],
@@ -1349,4 +1445,22 @@ export function getUrlParams(getState, urlParam) {
     const paramValue = getState().generalStates.getIn(["url_params", urlParam]);
     if (paramValue === "null") return null;
     return paramValue;
+}
+
+export function startLynn() {
+    return function action(dispatch) {
+        dispatch({ type: "USE_LYNN", data: true })
+    }
+}
+
+export function closeLynn() {
+    return function action(dispatch) {
+        dispatch({ type: "USE_LYNN", data: false })
+    }
+}
+
+export function addLynnData(data) {
+    return function action(dispatch) {
+        dispatch({ type: "LYNN_DATA", data: data })
+    }
 }
