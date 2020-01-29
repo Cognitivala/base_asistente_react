@@ -848,6 +848,12 @@ function messageResponse(dispatch, data, general) {
         dispatch({ type: "DISABLED_INPUT" });
 
     } else if(data.estado.codigoEstado === 303){
+        let item = {};
+        item.send = "from";
+        item.enabled = true;
+        item.general = data.general;
+        item.msg = ['hola'];
+        dispatch(pushConversation(item))
         dispatch(addLynnData(data.general));
         dispatch(LynnInit(data, general))
 
