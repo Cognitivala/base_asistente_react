@@ -6,6 +6,7 @@ import InputAttach from "./input-attach";
 import InputEmoji from "./input-emoji";
 import InputHelp from "./input-help";
 import InputVoice from "./input-voice";
+import InputFile from "./input-file";
 
 export default class Input extends Component {
   constructor(props) {
@@ -134,10 +135,21 @@ export default class Input extends Component {
     }
   }
 
+  attachFile = (file) => {
+    this.props.LynnSendFile(file);
+  }
+
   fillSend() {
-    const { customParamsStates, mainCss, inputStates } = this.props,
+    const { customParamsStates, mainCss, inputStates, assistantStates } = this.props,
       enabledInput = inputStates.get("enabledInput"),
       voice = customParamsStates.getIn(["customParams", "settings", "voice"]);
+    const useLynn = assistantStates.getIn(["useLynn"]);
+
+    const divStyle = {
+      'display': 'flex',
+      'flex-direction': 'row',
+    };
+      
     if (voice) {
       // Si tiene voice
       if (this.input.current !== null && this.input.current.value.length > 0) {
@@ -164,10 +176,11 @@ export default class Input extends Component {
         if (isChrome) return <InputVoice {...this.props} />;
         return null;
       }
-    } else {
+    }else{
       if(enabledInput){
         return (
-          <button
+          <div style={divStyle}>
+            <button
             className={
               mainCss.InputUserBtn +
               " " +
@@ -180,6 +193,10 @@ export default class Input extends Component {
           >
             <i className={mainCss.IconPlane} />
           </button>
+          {
+            useLynn && <InputFile attachFile={this.attachFile}/>
+          }
+          </div>
         );
       }else{
         return null;

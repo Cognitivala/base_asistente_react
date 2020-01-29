@@ -1,0 +1,54 @@
+@import "../../../src/assets/sass/variables.scss";
+@import "../../../src/assets/sass/mixins.scss";
+
+
+$primary: 'white';
+$primary-hover: 'red';
+
+.input-user-btn {
+    border-color: transparent;
+    background: transparent;
+    position: relative;
+}
+
+.hide {
+    display: none;
+}
+
+.btn {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    padding-left: 0;
+    cursor: pointer;
+    text-align: center;
+    color: #ffffff;
+    transition: all 300ms ease;
+    font-size: 14px;
+    background: $primary; // background: -moz-linear-gradient(top, $primary 0%, darken( $primary, 20% ) 150%);
+    // background: -webkit-linear-gradient(top, $primary 0%, darken( $primary, 20% ) 150%);
+    // background: linear-gradient(to bottom, $primary 0%, darken( $primary, 20% ) 150%);
+    // filter: progid:DXImageTransform.Microsoft.gradient( startColorstr=$primary, endColorstr='#ad2e2e',GradientType=0 );
+    // font-size: 15px;
+    &:hover {
+        background: $primary-hover !important; // background-color: lighten($primary, 3%);
+        // box-shadow: 0 0 15px rgba(218,94,75,.7);
+    }
+    &.btn-rounded {
+        // border-radius: 100%;
+        // width: 42px;
+        // height: 42px;
+        &:hover {
+            box-shadow: none;
+            background: transparent !important;
+        }
+    }
+}
+
+.icon{
+    margin-top: 6px;
+    margin-right: 10px;
+    padding-left: 0px;
+    color: #cacaca;
+    font-size: 24px;
+}

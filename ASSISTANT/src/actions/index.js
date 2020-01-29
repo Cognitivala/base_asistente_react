@@ -529,7 +529,6 @@ function updateConversationError(data) {
 export function updateConversation(conversationData) {
     return function action(dispatch, getState) {
         const useLynn = getState().assistantStates.getIn(["useLynn"]);
-        console.log("USELYNN: ", useLynn)
         const url =  useLynn ? LYNN_ENDPOINT : "/message"
         let data = {};
 
@@ -550,7 +549,6 @@ export function updateConversation(conversationData) {
             };
         }
 
-        console.log("useLynn: ", useLynn, url, data)
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
@@ -882,7 +880,6 @@ function LynnInit(data, general){
                 if(response.status === 200){
                     dispatch(startLynn());
                     dispatch(pushConversation(data));
-                    
                      // Intervalo para buscar posibles respuestas de Lynn
                     dispatch(LynnOutInterval(data, general));
                 }
@@ -939,6 +936,42 @@ function LynnOutInterval(data){
     }
 }
 
+export function LynnSendFile(file){
+    return function action(dispatch, getState){
+        const data = {
+            general: {
+                ...getState().assistantStates.getIn(["lynnData"]),
+                token: getState().generalStates.getIn(["token"]),
+            },
+            file, 
+        }
+
+        let item = {};
+        item.send = "from";
+        item.enabled = true;
+        item.general = data.general;
+        item.msg = ['Enviando archivo...'];
+
+        dispatch(pushConversation(item));
+
+        const request = axios({
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            url: APIURL + "/lynn_create",
+            data: data,
+        });
+        return request.then(
+            response => {
+                console.log("LynnSendFile: ", response)
+                
+                item.msg = ['formulario_exitoso']; 
+                dispatch(pushConversation(item));
+            }
+        )
+    }
+}
 export function setHistory(data) {
     return function action(dispatch) {
         const lastConversation = data[data.length - 1],
@@ -1081,6 +1114,11 @@ export function updateConversationButton(data) {
 export function enabledInput() {
     return function action(dispatch) {
         dispatch({ type: "ENABLED_INPUT" });
+    };
+}
+export function enableAttachFile(){
+    return function action(dispatch) {
+        dispatch({ type: "ENABLED_ATTACH_FILE" });
     };
 }
 export function disabledInput() {
