@@ -866,6 +866,10 @@ function messageResponse(dispatch, data, general) {
 }
 
 function LynnInit(data, general){
+    const newData = {
+        ...data,
+        msg: ["Hola"],
+     }
     return function action(dispatch){
         const request = axios({
             method: "POST",
@@ -873,7 +877,7 @@ function LynnInit(data, general){
                 "Content-Type": "application/json"
             },
             url: APIURL + "/lynn_in",
-            data: data,
+            data: newData,
         });
         return request.then(
             response => {
