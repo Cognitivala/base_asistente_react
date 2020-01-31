@@ -32,7 +32,7 @@ export default class ConversationButtons extends Component {
             className={'buttonLarge ' + mainCss.Btn + " " + mainCss.BtnBig}
             data-msg={map.get("value")}
             onClick={this.sendButtonresponse}
-            style={ map.get("title") === 'SI' || map.get("title") === 'NO' ?  '' : { width:'100%'} }
+            style={ map.get("title") === 'SI' || map.get("title") === 'NO' ? { width: 'auto'}  : { width:'100%'} }
           >
             {map.get("title")}
           </button>
