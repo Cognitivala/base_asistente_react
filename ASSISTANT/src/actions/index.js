@@ -529,10 +529,10 @@ function updateConversationError(data) {
 export function updateConversation(conversationData) {
     return function action(dispatch, getState) {
         const useLynn = getState().assistantStates.getIn(["useLynn"]);
-        const url =  useLynn ? LYNN_ENDPOINT : "/message"
+        const url = useLynn ? LYNN_ENDPOINT : "/message"
         let data = {};
 
-        if(useLynn){
+        if (useLynn) {
             data = {
                 ...conversationData,
                 general: {
@@ -540,7 +540,7 @@ export function updateConversation(conversationData) {
                     token: getState().generalStates.getIn(["token"]),
                 }
             }
-        }else {
+        } else {
             data = {
                 ...conversationData,
                 rut: getUrlParams(getState, 'rut'),
@@ -843,15 +843,15 @@ function messageResponse(dispatch, data, general) {
             default:
                 break;
         }
-    } else if(data.end_conversation === true){
+    } else if (data.end_conversation === true) {
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
 
-    } else if(data.estado.codigoEstado === 303){
+    } else if (data.estado.codigoEstado === 303) {
         dispatch(addLynnData(data.general));
         dispatch(LynnInit(data, general))
 
-    }else {
+    } else {
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -865,12 +865,12 @@ function messageResponse(dispatch, data, general) {
     }
 }
 
-function LynnInit(data, general){
+function LynnInit(data, general) {
     const newData = {
         ...data,
         msg: ["Hola"],
-     }
-    return function action(dispatch){
+    }
+    return function action(dispatch) {
         const request = axios({
             method: "POST",
             headers: {
@@ -881,10 +881,10 @@ function LynnInit(data, general){
         });
         return request.then(
             response => {
-                if(response.status === 200){
+                if (response.status === 200) {
                     dispatch(startLynn());
                     dispatch(pushConversation(data));
-                     // Intervalo para buscar posibles respuestas de Lynn
+                    // Intervalo para buscar posibles respuestas de Lynn
                     dispatch(LynnOutInterval(data, general));
                 }
             }
@@ -892,8 +892,9 @@ function LynnInit(data, general){
     }
 }
 
-function LynnOutInterval(data){
-    return function action(dispatch, getState){
+function LynnOutInterval(data) {
+    return function action(dispatch, getState) {
+        // MÉTODO PARA ESCUCHAR LOS POSIBLES MENSAJES DEL EJECUTIVO LYNN 
         const asistantInterval = setInterval(function() {
             const request = axios({
                 method: "POST",
@@ -912,8 +913,9 @@ function LynnOutInterval(data){
                     item.general = getState().assistantStates.getIn(["lynnData"]);
                     item.msg = response.data.textos
                     dispatch(pushConversation(item));
-    
-                    if(response.data.eventos[0] === "chatConversationEnd"){
+
+                    // SE MANDA POST A LYNEND
+                    if (response.data.eventos[0] === "chatConversationEnd") {
                         console.log("LYNEND");
                         const request = axios({
                             method: "POST",
@@ -925,29 +927,29 @@ function LynnOutInterval(data){
                         });
                         return request.then(
                             response => {
-                                if(response.status === 200){
+                                if (response.status === 200) {
                                     dispatch({ type: "DISABLED_INPUT" });
                                     clearInterval(asistantInterval);
                                     dispatch(closeLynn());
                                     return;
                                 }
                             }
-                        )  
+                        )
                     }
                 }
             )
-        }, ASISTANT_INTERVAL_TIMER);  
+        }, ASISTANT_INTERVAL_TIMER);
     }
 }
 
-export function LynnSendFile(file){
-    return function action(dispatch, getState){
+export function LynnSendFile(file) {
+    return function action(dispatch, getState) {
         const data = {
             general: {
                 ...getState().assistantStates.getIn(["lynnData"]),
                 token: getState().generalStates.getIn(["token"]),
             },
-            file, 
+            file,
         }
 
         let item = {};
@@ -969,8 +971,8 @@ export function LynnSendFile(file){
         return request.then(
             response => {
                 console.log("LynnSendFile: ", response)
-                
-                item.msg = ['formulario_exitoso']; 
+
+                item.msg = ['formulario_exitoso']; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
                 dispatch(pushConversation(item));
             }
         )
@@ -1120,7 +1122,7 @@ export function enabledInput() {
         dispatch({ type: "ENABLED_INPUT" });
     };
 }
-export function enableAttachFile(){
+export function enableAttachFile() {
     return function action(dispatch) {
         dispatch({ type: "ENABLED_ATTACH_FILE" });
     };
