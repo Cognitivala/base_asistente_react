@@ -91,7 +91,8 @@ export default class Conversations extends Component {
         datepicker = lastConversation.get("datepicker"),
         attach = lastConversation.get("attach"),
         liftUp = lastConversation.get("liftUp"),
-        like = lastConversation.get("like");
+        like = lastConversation.get("like"),
+        rating = lastConversation.get("rating");
       if (
         buttons !== undefined ||
         selects !== undefined ||
@@ -99,7 +100,8 @@ export default class Conversations extends Component {
         multibuttons !== undefined ||
         datepicker !== undefined ||
         attach !== undefined ||
-        (like !== undefined && like)
+        (like !== undefined && like) ||
+        (rating !== undefined && rating)
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
         if ((help && ayudaStates.get("enabled"))) this.props.disabledHelp();
