@@ -24,8 +24,8 @@ export default class ConversationButtons extends Component {
   render() {
     const { buttons, animation, send, mainCss } = this.props,
       botones = buttons.map((map, i) => {
-        console.log('map.get("value"):: ', map.get("value"));
-        console.log('map.get("title"):: ', map.get("title"));
+        // console.log('map.get("value"):: ', map.get("value"));
+        // console.log('map.get("title"):: ', map.get("title"));
         return (
           <button
             key={i}

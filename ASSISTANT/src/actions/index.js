@@ -544,7 +544,7 @@ export function updateConversation(data) {
             .then(response => {
                 // console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
-                console.log('buttons:: ', response.data.buttons);
+                // console.log('buttons:: ', response.data.buttons);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -1260,7 +1260,7 @@ export function updateConversationButton(data) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
 
-                console.log('data.msg[0]:: ', data.msg[0]);
+                // console.log('data.msg[0]:: ', data.msg[0]);
 
                 // if (data.msg[0] !== 'SI' || data.msg[0] !== 'NO') {
                 //     const buttonLarge = document.querySelector('.buttonLarge');
