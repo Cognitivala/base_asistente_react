@@ -274,15 +274,14 @@ export function getSaludo() {
                     let str_md5v = AES.encrypt(JSON.stringify(item), KEY_ENCRYPT).toString();
                     localStorage.setItem("gr", str_md5v);
                     dispatch(getSaludoEnd(item));
-                    //Si tiene notificación, la envía
-                    console.log('notification:: ', response.data.notification);
 
+                    // PROCESO PARA AGREGAR TAG <BR/> EN SALUDO INICIAL 
                     var cutString = response.data.notification.split('!');
                     var concatString = cutString.join("! <br>");
                     let newNotificacion = concatString;
+                    // console.log('notificacionFinal:: ', newNotificacion);
 
-                    console.log('notificacionFinal:: ', newNotificacion);
-
+                    //Si tiene notificación, la envía
                     if (response.data.notification) {
                         // dispatch(sendNotification(response.data.notification));
                         dispatch(sendNotification(newNotificacion));
