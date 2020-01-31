@@ -544,6 +544,7 @@ export function updateConversation(data) {
             .then(response => {
                 // console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
+                console.log('buttons:: ', response.data.buttons);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
