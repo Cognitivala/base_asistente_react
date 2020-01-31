@@ -275,6 +275,7 @@ export function getSaludo() {
                     localStorage.setItem("gr", str_md5v);
                     dispatch(getSaludoEnd(item));
                     //Si tiene notificación, la envía
+                    console.log('notification:: ', response.data.notification);
                     if (response.data.notification) {
                         dispatch(sendNotification(response.data.notification));
                     }
