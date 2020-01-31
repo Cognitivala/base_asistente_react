@@ -276,6 +276,13 @@ export function getSaludo() {
                     dispatch(getSaludoEnd(item));
                     //Si tiene notificación, la envía
                     console.log('notification:: ', response.data.notification);
+
+                    var qna = response.data.notification.split('!');
+                    var res = qna.join(" <br> ");
+                    let newNotificacion = res;
+
+                    console.log('notificacionFinal:: ', newNotificacion);
+
                     if (response.data.notification) {
                         dispatch(sendNotification(response.data.notification));
                     }
