@@ -278,7 +278,7 @@ export function getSaludo() {
                     console.log('notification:: ', response.data.notification);
 
                     var cutString = response.data.notification.split('!');
-                    var concatString = cutString.join(" <br>");
+                    var concatString = cutString.join("! <br>");
                     let newNotificacion = concatString;
 
                     console.log('notificacionFinal:: ', newNotificacion);
