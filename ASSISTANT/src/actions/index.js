@@ -957,14 +957,17 @@ function LynnOutInterval(data) {
 export function LynnSendFile(file) {
     return function action(dispatch, getState) {
         console.log('FILE:: ', file);
-        console.log('lynnData:: ', getState().assistantStates.getIn(["lynnData"]), );
+        console.log('lynnData:: ', getState().assistantStates.getIn(["lynnData"]));
+
+        const formData = new FormData();
+        formData.append('file', file);
 
         const data = {
             general: {
                 ...getState().assistantStates.getIn(["lynnData"]),
                 token: getState().generalStates.getIn(["token"]),
             },
-            file,
+            file: formData,
             cid: getState().assistantStates.getIn(["lynnData", "cid"]),
             sid: getState().assistantStates.getIn(["lynnData", "sid"]),
             token: getState().assistantStates.getIn(["lynnData", "token"])
