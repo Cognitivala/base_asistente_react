@@ -975,6 +975,8 @@ export function LynnSendFile(file) {
             token: getState().assistantStates.getIn(["lynnData", "token"])
         };
 
+        console.log('FORMDATA:: ', form);
+
         let item = {};
         item.send = "from";
         item.enabled = true;
