@@ -18,26 +18,37 @@ export default class InputFile extends Component {
         
         console.log('attachFile InputFILE:: ', event.target.files);
 
-        var file = event.target.files[0];
-        var reader = new FileReader();
-        reader.onloadend = function() {
-            console.log('Encoded Base 64 File String:', reader.result);
-            
-            /******************* for Binary ***********************/
-            var data=(reader.result).split(',')[1];
-            var binaryBlob = atob(data);
-            console.log('Encoded Binary File String:', binaryBlob);
-        }
-        reader.readAsDataURL(file);
+        // let fileReader = new FileReader();
+        //     fileReader.readAsDataURL(file);
+        //     fileReader.onload = function(fileLoad){
+        //     consoloe.log(fileReader.result);
+        // }
 
-        console.log(reader.readAsDataURL(file));
+       
 
         if(event.target.files.length){
             const { attachFile } = this.props;
-            const file = this.attach.current.files[0];
+
+            // const file = this.attach.current.files[0];
+
+            var file = event.target.files[0];
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            
+            let binaryBlob = '';
+            reader.onload = function() {
+                /******************* for Binary ***********************/
+                var data = (reader.result).split(',')[1];
+                binaryBlob = atob(data);
+                console.log('Encoded Binary File String:', binaryBlob);
+            }
+
             let item = {};
-            item.file = file;
+            item.file = binaryBlob;
+            console.log('ITEM:: ', item);
             attachFile(item);
+
+           
         }
     }
 
