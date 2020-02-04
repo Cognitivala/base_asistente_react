@@ -348,7 +348,6 @@ export function closeAssistant() {
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
-        dispatch(closeLynn());
     };
 }
 export function toggleMinimizedAssistant(data) {
