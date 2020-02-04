@@ -122,6 +122,7 @@ export function closeLauncher() {
     return function action(dispatch) {
         dispatch({ type: "CLOSE_LAUNCHER" });
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        dispatch(closeLynn());
     };
 }
 export function sendNotification(data) {
@@ -925,7 +926,7 @@ function LynnOutInterval(data) {
                     dispatch(pushConversation(item));
 
                     // SE MANDA POST A LYNEND
-                    if (response.data.eventos[0] === "chatConversationEnd") {
+                    if (response.data.eventos[0] === "conversationEnd") {
                         console.log("LYNEND");
                         const request = axios({
                             method: "POST",
@@ -939,7 +940,6 @@ function LynnOutInterval(data) {
                             response => {
                                 if (response.status === 200) {
                                     dispatch({ type: "DISABLED_INPUT" });
-                                    clearInterval(asistantInterval);
                                     dispatch(closeLynn());
                                     clearInterval(asistantInterval);
                                     return;
@@ -961,14 +961,14 @@ export function LynnSendFile(file) {
         console.log('lynnData:: ', getState().assistantStates.getIn(["lynnData"]), );
 
         const data = {
-            general: {
-                ...getState().assistantStates.getIn(["lynnData"]),
-                token: getState().generalStates.getIn(["token"]),
-            },
+            // general: {
+            //     ...getState().assistantStates.getIn(["lynnData"]),
+            //     token: getState().generalStates.getIn(["token"]),
+            // },
             file,
-            // cid: general.cid,
-            // sid: data.general.sid,
-            token: getState().generalStates.getIn(["token"]),
+            cid: getState().assistantStates.getIn(["lynnData", "cid"]),
+            sid: getState().assistantStates.getIn(["lynnData", "sid"]),
+            token: getState().assistantStates.getIn(["lynnData", "token"])
         };
 
         let item = {};
