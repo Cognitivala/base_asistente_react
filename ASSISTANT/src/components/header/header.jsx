@@ -3,12 +3,16 @@ import PropTypes from "prop-types";
 import BtnHelp from "../help/btn-help";
 import logo from "../../assets/images/logoH.svg";
 
+import {getUrlParams} from '../../actions/index';
+
 export default class Header extends Component {
   constructor(props) {
     super(props);
     this.showMore = this.showMore.bind(this);
     this.div = React.createRef();
+    console.log('PROPS:: ', props);
   }
+
 
   showMore() {
     if (this.props.moreHeader) {
@@ -74,7 +78,7 @@ export default class Header extends Component {
             </button>
             {this.fillCloseButton(mainCss, responsive)}
             <div className={mainCss.HeaderText} onClick={this.showMore}>
-              <h3>¡Hola!</h3>
+              <h3>¡Hola {getUrlParams(getState, 'user')} !</h3>
               <p dangerouslySetInnerHTML={{ __html: this.props.saludo }}>
   
               {/* Hola soy el Asistente Digital de DUOC Educación Continua y estoy aquí para ayudarte a dar respuestas a tus preguntas sobre: Cursos, Cursos/SAP o Diplomados. */}
