@@ -122,7 +122,6 @@ export function closeLauncher() {
     return function action(dispatch) {
         dispatch({ type: "CLOSE_LAUNCHER" });
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-        dispatch(closeLynn());
     };
 }
 export function sendNotification(data) {
@@ -349,6 +348,7 @@ export function closeAssistant() {
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
+        dispatch(closeLynn());
     };
 }
 export function toggleMinimizedAssistant(data) {
