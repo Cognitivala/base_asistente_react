@@ -961,6 +961,7 @@ export function LynnSendFile(file) {
 
         var archivo = file;
         var reader = new FileReader();
+
         reader.onloadend = function() {
             console.log('Encoded Base 64 File String:', reader.result);
             /******************* for Binary ***********************/
@@ -976,7 +977,7 @@ export function LynnSendFile(file) {
                 ...getState().assistantStates.getIn(["lynnData"]),
                 token: getState().generalStates.getIn(["token"]),
             },
-            file: reader.readAsDataURL(archivo),
+            file: archivo,
             cid: getState().assistantStates.getIn(["lynnData", "cid"]),
             sid: getState().assistantStates.getIn(["lynnData", "sid"]),
             token: getState().assistantStates.getIn(["lynnData", "token"])
