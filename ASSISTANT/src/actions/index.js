@@ -941,6 +941,7 @@ function LynnOutInterval(data) {
                                     dispatch({ type: "DISABLED_INPUT" });
                                     clearInterval(asistantInterval);
                                     dispatch(closeLynn());
+                                    clearInterval(asistantInterval);
                                     return;
                                 }
                             }
@@ -949,6 +950,8 @@ function LynnOutInterval(data) {
                 }
             )
         }, ASISTANT_INTERVAL_TIMER);
+
+
     }
 }
 
