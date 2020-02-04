@@ -988,7 +988,8 @@ export function LynnSendFile(file) {
         const request = axios({
             method: "POST",
             headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
+                // "Content-Type": "application/x-www-form-urlencoded",
+                'Content-Type': 'multipart/form-data'
             },
             // url: APIURL + "/lynn_in",
             url: "https://d900eb73.ngrok.io/lynn_in",
