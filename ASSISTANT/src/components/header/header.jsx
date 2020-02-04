@@ -78,7 +78,8 @@ export default class Header extends Component {
             </button>
             {this.fillCloseButton(mainCss, responsive)}
             <div className={mainCss.HeaderText} onClick={this.showMore}>
-              <h3>¡Hola {getUrlParams(getState, 'user')} !</h3>
+              {/* <h3>¡Hola!</h3> */}
+              <h3>¡Hola !</h3> {/* {getUrlParams(getState, 'user')} */}
               <p dangerouslySetInnerHTML={{ __html: this.props.saludo }}>
   
               {/* Hola soy el Asistente Digital de DUOC Educación Continua y estoy aquí para ayudarte a dar respuestas a tus preguntas sobre: Cursos, Cursos/SAP o Diplomados. */}
