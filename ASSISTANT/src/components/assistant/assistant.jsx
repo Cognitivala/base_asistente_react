@@ -232,7 +232,7 @@ export default class Assistant extends Component {
       assistantStates.get("active") &&
       conversationsStates.get("conversations").size > 0
     ) {
-      const { customParamsStates, mainCss, saludoStates } = this.props,
+      const { customParamsStates, mainCss, saludoStates, generalStates } = this.props,
       ayuda = customParamsStates
       .get("customParams")
       .get("settings")
@@ -282,6 +282,7 @@ export default class Assistant extends Component {
               toggleHeaderMore={this.toggleHeaderMore}
               moreHeader={this.state.moreHeader}
               saludo={saludoStates.getIn(['saludo','msg'])}
+              user={generalStates.get("url_params", "user")}
             />
             {this.fillHelp(ayuda)}
             <Conversations {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
