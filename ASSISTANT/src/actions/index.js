@@ -957,20 +957,12 @@ function LynnOutInterval(data) {
 export function LynnSendFile(file) {
     return function action(dispatch, getState) {
         console.log('FILE:: ', file);
-        console.log('lynnData:: ', getState().assistantStates.getIn(["lynnData"]));
 
-        var archivo = file;
-        var reader = new FileReader();
-        // debugger;
-        // reader.onloadend = function() {
-        //     console.log('Encoded Base 64 File String:', reader.result);
-        //     /******************* for Binary ***********************/
-        //     var data = (reader.result).split(',')[1];
-        //     var binaryBlob = atob(data);
-        //     console.log('Encoded Binary File String:', binaryBlob);
-        // }
-        // reader.readAsDataURL(archivo);
-        // console.log('reader.readAsDataURL(archivo)::: ', reader.readAsDataURL(archivo));
+        var form = new FormData();
+        form.append("file", file);
+        form.append("cid", getState().assistantStates.getIn(["lynnData", "cid"]);
+        form.append("sid", getState().assistantStates.getIn(["lynnData", "sid"]);
+        form.append("token", getState().assistantStates.getIn(["lynnData", "token"]);
 
         const data = {
             general: {
@@ -994,10 +986,10 @@ export function LynnSendFile(file) {
         const request = axios({
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/x-www-form-urlencoded"
             },
             url: APIURL + "/lynn_in",
-            data: data,
+            data: form,
         });
         return request.then(
             response => {
