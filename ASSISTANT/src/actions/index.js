@@ -6,7 +6,7 @@ import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from 'react-device-detect';
 
 const LYNN_ENDPOINT = '/lynn_in';
-const ASISTANT_INTERVAL_TIMER = 5000;
+const ASISTANT_INTERVAL_TIMER = 4000;
 
 //GENERAL
 function defaultGeneral() {
@@ -881,6 +881,7 @@ function LynnInit(data, general) {
         });
         return request.then(
             response => {
+                console.log('RESPONSE LYNN', response);
                 if (response.status === 200) {
                     dispatch(startLynn());
                     dispatch(pushConversation(data));
