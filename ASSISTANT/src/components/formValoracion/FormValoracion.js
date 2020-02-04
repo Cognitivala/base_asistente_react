@@ -77,11 +77,11 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
       <form autoComplete="off" onSubmit={enviarValoracion}>
         
         <div className="headerForm">
-            <p>Gracias por utilizar nuestro chat. No dude en dejarnos cualquier comentario adicional.</p>
+            <p>Gracias por utilizar nuestro chat. No dudes en dejarnos cualquier comentario adicional.</p>
         </div>
         
         <fieldset className="radios">
-            <legend>¿Su caso o inquietud fueron resueltas?</legend>
+            <legend>¿Tu caso o inquietud fueron resueltas?</legend>
             <label>
                 <div className="round">
                     <div className={respuesta === 'si' ?  "active circle" : " circle"}></div>Sí
@@ -109,7 +109,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
                 </div>
         
                 <div>
-                    { starsSelected === 0 && <p>Seleccione su valoración</p> }
+                    { starsSelected === 0 && <p>Selecciona tu valoración</p> }
                     { starsSelected === 1 && <p>Muy insatisfecho <span role="img" aria-label="">😡</span></p> }
                     { starsSelected === 2 && <p>No fue de mucha ayuda <span role="img" aria-label="">😞</span></p> }
                     { starsSelected === 3 && <p>Me ayudó, pero necesita mejorar <span role="img" aria-label="">😐</span></p> }

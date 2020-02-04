@@ -75,13 +75,12 @@ class FormularioValoracion extends Component {
           <form autoComplete="off" onSubmit={this.enviarValoracion}>
             <div className="headerForm">
               <p>
-                Gracias por utilizar nuestro chat. No dude en dejarnos cualquier
-                comentario adicional.
+                Gracias por utilizar nuestro chat. No dudes en dejarnos cualquier comentario adicional.
               </p>
             </div>
 
             <fieldset className="radios">
-              <legend>¿Su caso o inquietud fueron resueltas?</legend>
+              <legend>¿Tu caso o inquietud fueron resueltas?</legend>
               <label>
                 <div className="round">
                   <div className={ this.state.respuesta === "si" ? "active circle" : " circle" }></div>
@@ -109,7 +108,7 @@ class FormularioValoracion extends Component {
 
                 <div>
                   {this.state.starsSelected === 0 && (
-                    <p>Seleccione su valoración</p>
+                    <p>Selecciona tu valoración</p>
                   )}
                   {this.state.starsSelected === 1 && ( <p> Muy insatisfecho <span role="img" aria-label=""> 😡</span></p> )}
                   {this.state.starsSelected === 2 && ( <p>No fue de mucha ayuda <span role="img" aria-label=""> 😞</span></p> )}
