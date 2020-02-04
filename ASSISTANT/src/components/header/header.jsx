@@ -10,7 +10,6 @@ export default class Header extends Component {
     super(props);
     this.showMore = this.showMore.bind(this);
     this.div = React.createRef();
-    console.log('PROPS:: ', props);
   }
 
 

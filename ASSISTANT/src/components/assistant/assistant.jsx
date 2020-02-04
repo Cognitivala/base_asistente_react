@@ -20,6 +20,7 @@ export default class Assistant extends Component {
     this.closeEscape = this.closeEscape.bind(this);
     this.minimizedAssistant = this.minimizedAssistant.bind(this);
     this.toggleHeaderMore = this.toggleHeaderMore.bind(this);
+    console.log('PROPS ASISTENTE:: ', props);
   }
 
   componentDidMount() {
