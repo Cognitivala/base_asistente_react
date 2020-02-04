@@ -961,8 +961,19 @@ export function LynnSendFile(file) {
 
         const formData = new FormData();
         formData.append('file', file);
-
         console.log('formData:: ', formData);
+
+        var archivo = file.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function() {
+            console.log('Encoded Base 64 File String:', reader.result);
+            /******************* for Binary ***********************/
+            var data = (reader.result).split(',')[1];
+            var binaryBlob = atob(data);
+            console.log('Encoded Binary File String:', binaryBlob);
+        }
+        reader.readAsDataURL(archivo);
+        console.log('reader.readAsDataURL(archivo)::: ', reader.readAsDataURL(archivo));
 
         const data = {
             general: {
