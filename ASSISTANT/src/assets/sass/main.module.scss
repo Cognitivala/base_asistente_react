@@ -118,8 +118,8 @@ textarea {
 
 //** FIN TRANVERSAL **
 .MainLauncher {
-    width: 100%;
-    max-width: 200px;
+    // width: 100%;
+    // max-width: 200px;
     position: fixed;
     bottom: 1rem;
     right: 1rem;
@@ -162,7 +162,8 @@ textarea {
             }
         }
         &.Close {
-            margin-left: 68%;
+            // margin-left: 68%;
+            margin-left: 1%;
             .IconLauncher {
                 height: 0rem;
             }
@@ -200,11 +201,11 @@ textarea {
     .Notification {
         position: relative;
         bottom: 2.0rem;
-        right: 85px;
-        max-width: 28rem;
-        width: 28rem;
+        right: 52px;
+        // max-width: 28rem;
+        // width: 28rem;
         padding: 1.6rem;
-        padding-right: 4.2rem;
+        // padding-right: 4.2rem;
         box-shadow: 0 0 3rem 0 rgba(0, 0, 0, 0.1);
         background-color: #fff;
         animation: notification 2s infinite linear;
