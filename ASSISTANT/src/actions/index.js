@@ -962,6 +962,8 @@ export function LynnSendFile(file) {
         const formData = new FormData();
         formData.append('file', file);
 
+        console.log('formData:: ', formData);
+
         const data = {
             general: {
                 ...getState().assistantStates.getIn(["lynnData"]),
