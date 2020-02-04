@@ -957,13 +957,19 @@ function LynnOutInterval(data) {
 
 export function LynnSendFile(file) {
     return function action(dispatch, getState) {
+        console.log('FILE:: ', file);
+        console.log('lynnData:: ', getState().assistantStates.getIn(["lynnData"]), );
+
         const data = {
             general: {
                 ...getState().assistantStates.getIn(["lynnData"]),
                 token: getState().generalStates.getIn(["token"]),
             },
             file,
-        }
+            // cid: general.cid,
+            // sid: data.general.sid,
+            token: getState().generalStates.getIn(["token"]),
+        };
 
         let item = {};
         item.send = "from";
@@ -978,13 +984,12 @@ export function LynnSendFile(file) {
             headers: {
                 "Content-Type": "application/json"
             },
-            url: APIURL + "/lynn_create",
+            url: APIURL + "/lynn_in",
             data: data,
         });
         return request.then(
             response => {
                 console.log("LynnSendFile: ", response)
-
                 item.msg = ['formulario_exitoso']; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
                 dispatch(pushConversation(item));
             }
