@@ -1164,6 +1164,7 @@ export function disabledInput() {
     };
 }
 export function attachFile(data) {
+    console.log('attachFile:: ', data);
     return function action(dispatch) {
         dispatch(attachFileStart());
         setTimeout(() => {

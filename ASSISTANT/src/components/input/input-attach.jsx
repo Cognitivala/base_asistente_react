@@ -17,9 +17,10 @@ export default class InputAttach extends Component {
     const size = this.attach.current.files[0].size;
     const { attachFile, generalStates } = this.props;
     
+    console.log('attachFile:: ', size);
+    
     if (size > 0) {
       const file = this.attach.current.files[0];
-      console.log('attachFile:: ', file);
       // console.log(file.type)
       let item = {};
       item.file = file;

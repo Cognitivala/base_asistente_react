@@ -15,6 +15,7 @@ export default class InputFile extends Component {
     }
 
     attachFile(event) {
+        console.log('attachFile InputFILE:: ', event.target.files);
         if(event.target.files.length){
             const { attachFile } = this.props;
             const file = this.attach.current.files[0];
