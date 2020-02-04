@@ -961,7 +961,7 @@ export function LynnSendFile(file) {
 
         var archivo = file;
         var reader = new FileReader();
-
+        debugger;
         reader.onloadend = function() {
             console.log('Encoded Base 64 File String:', reader.result);
             /******************* for Binary ***********************/
