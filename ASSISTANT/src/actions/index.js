@@ -915,7 +915,13 @@ function LynnOutInterval(data) {
                     item.send = "from";
                     item.enabled = true;
                     item.general = getState().assistantStates.getIn(["lynnData"]);
-                    item.msg = response.data.textos
+                    if (response.data.textos === "Inicio") {
+                        delete item.msg;
+                    } else {
+                        item.msg = response.data.textos;
+                    }
+
+
                     dispatch(pushConversation(item));
 
                     // SE MANDA POST A LYNEND
