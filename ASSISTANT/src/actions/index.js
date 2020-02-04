@@ -960,9 +960,9 @@ export function LynnSendFile(file) {
 
         var form = new FormData();
         form.append("file", file);
-        form.append("cid", getState().assistantStates.getIn(["lynnData", "cid"]);
-        form.append("sid", getState().assistantStates.getIn(["lynnData", "sid"]);
-        form.append("token", getState().assistantStates.getIn(["lynnData", "token"]);
+        form.append("cid", getState().assistantStates.getIn(["lynnData", "cid"]));
+        form.append("sid", getState().assistantStates.getIn(["lynnData", "sid"]));
+        form.append("token", getState().assistantStates.getIn(["lynnData", "token"]));
 
         const data = {
             general: {
