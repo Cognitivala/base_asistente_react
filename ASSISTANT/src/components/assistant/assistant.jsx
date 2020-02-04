@@ -282,7 +282,7 @@ export default class Assistant extends Component {
               toggleHeaderMore={this.toggleHeaderMore}
               moreHeader={this.state.moreHeader}
               saludo={saludoStates.getIn(['saludo','msg'])}
-              user={generalStates.getIn("url_params", "user")}
+              user={generalStates.getIn(["url_params", "user"])}
             />
             {this.fillHelp(ayuda)}
             <Conversations {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
