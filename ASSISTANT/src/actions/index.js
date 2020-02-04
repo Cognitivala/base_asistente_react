@@ -990,8 +990,7 @@ export function LynnSendFile(file) {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             },
-            // url: APIURL + "/lynn_in",
-            url: "https://047e6bd6.ngrok.io/lynn_in",
+            url: APIURL + "/lynn_in",
             data: form,
         });
         return request.then(
