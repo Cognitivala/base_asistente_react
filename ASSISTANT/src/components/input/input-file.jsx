@@ -32,20 +32,21 @@ export default class InputFile extends Component {
             // const file = this.attach.current.files[0];
 
             var file = event.target.files[0];
-            var reader = new FileReader();
-            reader.readAsDataURL(file);
             
-            
-            reader.onload = function() {
-                /******************* for Binary ***********************/
-                var data = (reader.result).split(',')[1];
-                var binaryBlob = atob(data);
-                console.log('Encoded Binary File String:', binaryBlob);
-                // let item = {};
-                let item = binaryBlob;
-                console.log('ITEM:: ', item);
-                attachFile(item);
-            }
+            // var reader = new FileReader();
+            // reader.readAsDataURL(file);
+            // reader.onload = function() {
+            //     /******************* for Binary ***********************/
+            //     var data = (reader.result).split(',')[1];
+            //     var binaryBlob = atob(data);
+            //     console.log('Encoded Binary File String:', binaryBlob);
+            //     // let item = {};
+            //     let item = binaryBlob;
+            //     console.log('ITEM:: ', item);
+            //     attachFile(item);
+            // }
+
+            attachFile(file);
 
             
 
