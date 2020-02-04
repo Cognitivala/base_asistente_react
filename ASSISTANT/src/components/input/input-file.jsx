@@ -41,8 +41,8 @@ export default class InputFile extends Component {
                 var data = (reader.result).split(',')[1];
                 var binaryBlob = atob(data);
                 console.log('Encoded Binary File String:', binaryBlob);
-                let item = {};
-                item.file = binaryBlob;
+                // let item = {};
+                let item = binaryBlob;
                 console.log('ITEM:: ', item);
                 attachFile(item);
             }
