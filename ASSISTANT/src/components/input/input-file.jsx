@@ -18,7 +18,7 @@ export default class InputFile extends Component {
         
         console.log('attachFile InputFILE:: ', event.target.files);
 
-        var file = event.files[0];
+        var file = event.target.files[0];
         var reader = new FileReader();
         reader.onloadend = function() {
             console.log('Encoded Base 64 File String:', reader.result);
