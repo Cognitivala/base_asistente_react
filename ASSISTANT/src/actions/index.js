@@ -848,10 +848,11 @@ function messageResponse(dispatch, data, general) {
         dispatch({ type: "DISABLED_INPUT" });
 
     } else if (data.estado.codigoEstado === 303) {
-        console.log('data.general:: ', data.general);
         dispatch(addLynnData(data.general));
         // SE COMENTA PARA REVISAR INIT DE LYNN
-        // dispatch(LynnInit(data, general));
+        console.log('data:: ', data);
+        console.log('general:: ', general);
+        dispatch(LynnInit(data, general));
 
     } else {
         if (data.general !== undefined) {
@@ -870,7 +871,7 @@ function messageResponse(dispatch, data, general) {
 function LynnInit(data, general) {
     const newData = {
         ...data,
-        // msg: ["Hola"],
+        msg: [".... Iniciando Comunicación con Ejecutivo ...."],
     }
     return function action(dispatch) {
         const request = axios({
