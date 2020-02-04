@@ -961,10 +961,10 @@ export function LynnSendFile(file) {
         console.log('lynnData:: ', getState().assistantStates.getIn(["lynnData"]), );
 
         const data = {
-            // general: {
-            //     ...getState().assistantStates.getIn(["lynnData"]),
-            //     token: getState().generalStates.getIn(["token"]),
-            // },
+            general: {
+                ...getState().assistantStates.getIn(["lynnData"]),
+                token: getState().generalStates.getIn(["token"]),
+            },
             file,
             cid: getState().assistantStates.getIn(["lynnData", "cid"]),
             sid: getState().assistantStates.getIn(["lynnData", "sid"]),
@@ -990,6 +990,7 @@ export function LynnSendFile(file) {
         return request.then(
             response => {
                 console.log("LynnSendFile: ", response)
+
                 item.msg = ['formulario_exitoso']; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
                 dispatch(pushConversation(item));
             }
