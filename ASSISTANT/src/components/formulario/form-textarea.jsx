@@ -3,6 +3,15 @@ import PropTypes from "prop-types";
 
 export default class FormTextarea extends Component {
 
+
+  validateInput = (e) => {
+    const { validateFunc ,validate, name } = this.props;
+    if(validate.get("types").filter(type => type === "textarea").size > 0){
+      console.log('HOLA, LLEGUÉ!');
+    }
+    validateFunc(validate, name,e);
+  }
+
   content() {
     const { name,placeholder,autocomplete,rows, validateFunc ,validate, withError } = this.props;
     let cssClass = withError?" error":"";
