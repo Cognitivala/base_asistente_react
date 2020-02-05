@@ -987,7 +987,7 @@ export function LynnSendFile(file) {
         item.send = "from";
         item.enabled = true;
         item.general = data.general;
-        item.msg = ['Enviando archivo...' + file.name];
+        item.msg = [`Enviando archivo: <b>${file.name}</b>`];
 
         dispatch(pushConversation(item));
 
