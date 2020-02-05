@@ -6,15 +6,13 @@ export default class FormTextarea extends Component {
   content() {
     const { name,placeholder,autocomplete,rows, validateFunc ,validate, withError } = this.props;
     let cssClass = withError?" error":"";
+
+    console.log('VALIDATE:: ', validate);
+    console.log('validateFunc:: ', validateFunc);
+
     return (
-        <textarea
-          name={name}
-          placeholder={placeholder}
-          autoComplete={autocomplete}
-          rows={rows}
-          onKeyUp={validateFunc.bind(this, validate, name)}
-          className={cssClass}
-        />
+        <textarea name={name} placeholder={placeholder} autoComplete={autocomplete} 
+        rows={rows} onKeyUp={validateFunc.bind(this, validate, name)} className={cssClass}/>
     );
   }
 

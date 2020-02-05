@@ -32,13 +32,13 @@ export default class Formulario extends Component {
 
   validate(validates, name, e) {
     const typesValidate = validates.get("types");
-    
+    console.log('typesValidate:: ', typesValidate);
     let error = false;
     let input = e.target === undefined ? e : e.target;
     let arr = this.state.invalidFiels;
 
     arr = arr.filter(item => item !== name);
-    console.log('arr:: ', arr);
+
     let required = typesValidate.filter(item => item === "required");
     required = required.size > 0;
   
