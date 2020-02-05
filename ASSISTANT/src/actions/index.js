@@ -353,6 +353,7 @@ export function closeAssistant() {
         dispatch(deleteHistory());
         dispatch(closeLynn());
         clearInterval(asistantInterval);
+        lynnEnd();
     };
 }
 export function toggleMinimizedAssistant(data) {
