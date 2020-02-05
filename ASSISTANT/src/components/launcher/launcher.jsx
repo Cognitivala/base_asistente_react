@@ -114,22 +114,25 @@ export default class Launcher extends Component {
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
-            {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
+            
+              { 
+                bubble_logo.length > 0 ? 
+                (
+                  <div className="boxBubbleLogo">
+                    <img className="imgBubbleLogo" onClick={this.closeLauncher} src={`${bubble_logo}`} alt="Avatar Img" />
+                  </div>
+                ) 
+                : 
+                (
+                  <button ref={this.launcher} className={mainCss.LauncherButton} onClick={this.closeLauncher}>
+                    <i className={mainCss.IconLauncher} />
+                  </button>
+                )
+              }
 
-              { bubble_logo.length > 0 ? (
-                <div className="boxBubbleLogo">
-                  <img
-                    className="imgBubbleLogo"
-                    onClick={this.closeLauncher}
-                    src={`${bubble_logo}`}
-                    alt="Avatar Img"
-                  />
-                </div>
-              ) : (
-                <button ref={this.launcher} className={mainCss.LauncherButton} onClick={this.closeLauncher}>
-                  <i className={mainCss.IconLauncher} />
-                </button>
-              )}
+            {
+              this.notification(launcherStates, mainCss, bubble_logo, bubble);
+            }
               
             </div>
           </Fragment>
