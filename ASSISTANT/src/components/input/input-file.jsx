@@ -15,16 +15,6 @@ export default class InputFile extends Component {
     }
 
     attachFile(event) {
-        
-        console.log('attachFile InputFILE:: ', event.target.files);
-
-        // let fileReader = new FileReader();
-        //     fileReader.readAsDataURL(file);
-        //     fileReader.onload = function(fileLoad){
-        //     consoloe.log(fileReader.result);
-        // }
-
-       
 
         if(event.target.files.length){
             const { attachFile } = this.props;
@@ -32,7 +22,8 @@ export default class InputFile extends Component {
             // const file = this.attach.current.files[0];
 
             var file = event.target.files[0];
-            
+            console.log('InputFILE', file);
+            attachFile(file);
             // var reader = new FileReader();
             // reader.readAsDataURL(file);
             // reader.onload = function() {
@@ -45,11 +36,6 @@ export default class InputFile extends Component {
             //     console.log('ITEM:: ', item);
             //     attachFile(item);
             // }
-
-            attachFile(file);
-
-            
-
            
         }
     }
