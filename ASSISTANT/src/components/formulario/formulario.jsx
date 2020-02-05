@@ -32,15 +32,20 @@ export default class Formulario extends Component {
 
   validate(validates, name, e) {
     const typesValidate = validates.get("types");
-    let error = false,
-      input = e.target === undefined ? e : e.target,
-      arr = this.state.invalidFiels;
+    
+    let error = false;
+    let input = e.target === undefined ? e : e.target;
+    let arr = this.state.invalidFiels;
+
     arr = arr.filter(item => item !== name);
+    console.log('arr:: ', arr);
     let required = typesValidate.filter(item => item === "required");
     required = required.size > 0;
+  
     typesValidate.forEach(map => {
       if (!Validator[map](input, validates, required)) error = true;
     });
+  
     if (error) {
       arr.push(name);
     }
