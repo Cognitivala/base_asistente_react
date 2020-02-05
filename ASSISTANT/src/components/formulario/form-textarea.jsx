@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 export default class FormTextarea extends Component {
 
 
-  validateInput = (e) => {
-    const { validateFunc ,validate, name } = this.props;
-    if(validate.get("types").filter(type => type === "textarea").size > 0){
-      console.log('HOLA, LLEGUÉ!');
-    }
-    validateFunc(validate, name,e);
-  }
+  // validateInput = (e) => {
+  //   const { validateFunc ,validate, name } = this.props;
+  //   if(validate.get("types").filter(type => type === "textarea").size > 0){
+  //     console.log('HOLA, LLEGUÉ!');
+  //   }
+  //   validateFunc(validate, name,e);
+  // }
 
   content() {
     const { name,placeholder,autocomplete,rows, validateFunc ,validate, withError } = this.props;
@@ -20,7 +20,7 @@ export default class FormTextarea extends Component {
     console.log('validateFunc:: ', validateFunc);
 
     return (
-        <textarea minlength="1" maxlength='5' name={name} placeholder={placeholder} autoComplete={autocomplete} 
+        <textarea minLength="1" maxLength='1000' name={name} placeholder={placeholder} autoComplete={autocomplete} 
         rows={rows} onKeyUp={validateFunc.bind(this, validate, name)} className={cssClass}/>
     );
   }
