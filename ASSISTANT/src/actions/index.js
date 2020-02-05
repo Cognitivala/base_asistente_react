@@ -987,7 +987,7 @@ export function LynnSendFile(file) {
         item.send = "from";
         item.enabled = true;
         item.general = data.general;
-        item.msg = ['Enviando archivo...'];
+        item.msg = ['Enviando archivo...' + file.name];
 
         dispatch(pushConversation(item));
 
@@ -1002,7 +1002,9 @@ export function LynnSendFile(file) {
         });
         return request.then(
             response => {
-                console.log("LynnSendFile: ", response)
+                console.log("LynnSendFile: ", response);
+
+
 
                 item.msg = ['formulario_exitoso']; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
                 dispatch(pushConversation(item));
