@@ -131,7 +131,7 @@ export default class Launcher extends Component {
               }
 
             {
-              this.notification(launcherStates, mainCss, bubble_logo, bubble);
+              this.notification(launcherStates, mainCss, bubble_logo, bubble)
             }
               
             </div>
