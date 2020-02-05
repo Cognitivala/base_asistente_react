@@ -84,19 +84,15 @@ export default class Launcher extends Component {
   notification(launcherStates, mainCss, bubble_logo, bubble) {
 
     if (bubble){
-
-    if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
-      return (
-        <Notification
-          saludo={launcherStates.get("notification")}
-          mainCss={mainCss} bubbleLogo={bubble_logo}
-        />
-      );
-    } else if (launcherStates.get("circle")) {
-      return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
-    } else {
-      return null
-    }
+      if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
+        return (
+          <Notification saludo={launcherStates.get("notification")} mainCss={mainCss} bubbleLogo={bubble_logo} />
+        );
+      } else if (launcherStates.get("circle")) {
+        return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
+      } else {
+        return null
+      }
     } else {
       return null;
     }
@@ -115,24 +111,17 @@ export default class Launcher extends Component {
           <Fragment>
             <div className={mainCss.MainLauncher}>
             
-              { 
-                bubble_logo.length > 0 ? 
-                (
-                  <div className="boxBubbleLogo">
-                    <img className="imgBubbleLogo" onClick={this.closeLauncher} src={`${bubble_logo}`} alt="Avatar Img" />
-                  </div>
-                ) 
-                : 
-                (
-                  <button ref={this.launcher} className={mainCss.LauncherButton} onClick={this.closeLauncher}>
-                    <i className={mainCss.IconLauncher} />
-                  </button>
-                )
-              }
+            {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
 
-            {
-              this.notification(launcherStates, mainCss, bubble_logo, bubble)
-            }
+              { bubble_logo.length > 0 ? (
+                <div className="boxBubbleLogo">
+                  <img className="imgBubbleLogo" onClick={this.closeLauncher} src={`${bubble_logo}`} alt="Avatar Img" />
+                </div>
+              ) : (
+                <button ref={this.launcher} className={mainCss.LauncherButton} onClick={this.closeLauncher}>
+                  <i className={mainCss.IconLauncher} />
+                </button>
+              )}
               
             </div>
           </Fragment>
