@@ -11,7 +11,7 @@ export default class FormTextarea extends Component {
     console.log('validateFunc:: ', validateFunc);
 
     return (
-        <textarea name={name} placeholder={placeholder} autoComplete={autocomplete} 
+        <textarea minlength="1" maxlength='5' name={name} placeholder={placeholder} autoComplete={autocomplete} 
         rows={rows} onKeyUp={validateFunc.bind(this, validate, name)} className={cssClass}/>
     );
   }
