@@ -41,7 +41,8 @@ export default class Launcher extends Component {
     this.notificationCDN();
     localStorage.removeItem("hcm");
     localStorage.removeItem("hc");
-
+    
+    console.log('closeAssistant:: ', closeAssistant);
     closeAssistant();
   }
 
