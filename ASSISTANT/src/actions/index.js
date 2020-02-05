@@ -991,8 +991,7 @@ export function LynnSendFile(file) {
                 // "Content-Type": "application/x-www-form-urlencoded",
                 'Content-Type': 'multipart/form-data'
             },
-            // url: APIURL + "/lynn_in",
-            url: "https://d900eb73.ngrok.io/lynn_in",
+            url: APIURL + "/lynn_in",
             data: form,
         });
         return request.then(
