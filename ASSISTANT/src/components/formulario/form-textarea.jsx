@@ -19,6 +19,7 @@ export default class FormTextarea extends Component {
     console.log(type);
     console.log(mainCss);
     console.log(value);
+    console.log(withError);
 
     let cssClass = withError?" error":"";
 
