@@ -15,6 +15,7 @@ export default class FormTextarea extends Component {
   content() {
     const { name,placeholder,autocomplete,rows, validateFunc ,validate, withError } = this.props;
     const { type, mainCss, value } = this.props;
+    let cssClass = withError?" "+mainCss.Error:"";
 
     console.log(type);
     console.log(mainCss);
