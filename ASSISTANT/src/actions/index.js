@@ -858,8 +858,6 @@ function messageResponse(dispatch, data, general) {
     } else if (data.estado.codigoEstado === 303) {
         dispatch(addLynnData(data.general));
         // SE COMENTA PARA REVISAR INIT DE LYNN
-        console.log('data:: ', data);
-        console.log('general:: ', general);
         dispatch(LynnInit(data, general));
 
     } else {
