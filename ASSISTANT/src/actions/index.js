@@ -338,6 +338,9 @@ export function openAssistant() {
         dispatch({ type: "OPEN_ASSISTANT" });
     };
 }
+
+var asistantInterval = null;
+
 export function closeAssistant() {
     return function action(dispatch) {
         dispatch(defaultGeneral());
@@ -348,6 +351,8 @@ export function closeAssistant() {
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
+        dispatch(closeLynn());
+        clearInterval(asistantInterval);
     };
 }
 export function toggleMinimizedAssistant(data) {
@@ -899,7 +904,7 @@ function LynnInit(data, general) {
 function LynnOutInterval(data) {
     return function action(dispatch, getState) {
         // MÉTODO PARA ESCUCHAR LOS POSIBLES MENSAJES DEL EJECUTIVO LYNN 
-        const asistantInterval = setInterval(function() {
+        asistantInterval = setInterval(function() {
             const request = axios({
                 method: "POST",
                 headers: {
