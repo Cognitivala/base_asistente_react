@@ -902,6 +902,34 @@ function LynnInit(data, general) {
     }
 }
 
+function lynnEnd(dispatch, getState) {
+
+    const data = {
+        cid: getState().assistantStates.getIn(["lynnData", "cid"]),
+        sid: getState().assistantStates.getIn(["lynnData", "sid"]),
+        token: getState().assistantStates.getIn(["lynnData", "token"])
+    }
+
+    const request = axios({
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        url: APIURL + "/lynn_end",
+        data: data,
+    });
+    return request.then(
+        response => {
+            if (response.status === 200) {
+                dispatch({ type: "DISABLED_INPUT" });
+                dispatch(closeLynn());
+                clearInterval(asistantInterval);
+                return;
+            }
+        }
+    )
+}
+
 function LynnOutInterval(data) {
     return function action(dispatch, getState) {
         // MÉTODO PARA ESCUCHAR LOS POSIBLES MENSAJES DEL EJECUTIVO LYNN 
@@ -932,7 +960,7 @@ function LynnOutInterval(data) {
 
                     // SE MANDA POST A LYNEND
                     if (response.data.eventos[0] === "conversationEnd") {
-                        console.log("LYNEND");
+                        console.log("LYNEND", data);
                         const request = axios({
                             method: "POST",
                             headers: {
