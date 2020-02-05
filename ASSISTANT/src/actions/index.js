@@ -1004,10 +1004,17 @@ export function LynnSendFile(file) {
             response => {
                 console.log("LynnSendFile: ", response);
 
+                if (response.status === '200') {
+                    item.msg = ['Archivo enviado exitosamente.']; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
+                    dispatch(pushConversation(item));
+                } else  {
+                    item.msg = ['El archivo no enviado, favor intente nuevamente.'];
+                    dispatch(pushConversation(item));
+                }
 
 
-                item.msg = ['formulario_exitoso']; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
-                dispatch(pushConversation(item));
+
+
             }
         )
     }
