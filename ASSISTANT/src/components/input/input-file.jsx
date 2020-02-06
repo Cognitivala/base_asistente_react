@@ -22,7 +22,7 @@ export default class InputFile extends Component {
             // const file = this.attach.current.files[0];
 
             var file = event.target.files[0];
-            console.log('InputFILE', file);
+            // console.log('InputFILE', file);
             attachFile(file);
             // var reader = new FileReader();
             // reader.readAsDataURL(file);

@@ -42,7 +42,7 @@ export default class Launcher extends Component {
     localStorage.removeItem("hcm");
     localStorage.removeItem("hc");
     
-    console.log('closeAssistant:: ', closeAssistant);
+    // console.log('closeAssistant:: ', closeAssistant);
     closeAssistant();
   }
 

@@ -891,7 +891,7 @@ function LynnInit(data, general) {
         });
         return request.then(
             response => {
-                console.log('RESPONSE LYNN', response);
+                // console.log('RESPONSE LYNN', response);
                 if (response.status === 200) {
                     dispatch(startLynn());
                     dispatch(pushConversation(data));
@@ -945,7 +945,7 @@ function LynnOutInterval(data) {
             });
             return request.then(
                 response => {
-                    console.log("LYNN! OUT", response)
+                    // console.log("LYNN! OUT", response)
                     let item = {};
                     item.send = "from";
                     item.enabled = true;
@@ -961,7 +961,7 @@ function LynnOutInterval(data) {
 
                     // SE MANDA POST A LYNEND
                     if (response.data.eventos[0] === "conversationEnd") {
-                        console.log("LYNEND", data);
+                        // console.log("LYNEND", data);
                         const request = axios({
                             method: "POST",
                             headers: {
@@ -991,7 +991,7 @@ function LynnOutInterval(data) {
 
 export function LynnSendFile(file) {
     return function action(dispatch, getState) {
-        console.log('FILE:: ', file);
+        // console.log('FILE:: ', file);
 
         var form = new FormData();
         form.append("file", file);
@@ -1010,7 +1010,7 @@ export function LynnSendFile(file) {
             token: getState().assistantStates.getIn(["lynnData", "token"])
         };
 
-        console.log('FORMDATA:: ', form);
+        // console.log('FORMDATA:: ', form);
 
         let item = {};
         item.send = "from";
@@ -1031,7 +1031,7 @@ export function LynnSendFile(file) {
         });
         return request.then(
             response => {
-                console.log("LynnSendFile: ", response);
+                // console.log("LynnSendFile: ", response);
 
                 if (response.status === 200) {
                     item.msg = ['Archivo enviado exitosamente.']; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
@@ -1203,7 +1203,7 @@ export function disabledInput() {
     };
 }
 export function attachFile(data) {
-    console.log('attachFile DATA:: ', data);
+    // console.log('attachFile DATA:: ', data);
     return function action(dispatch) {
         dispatch(attachFileStart());
         setTimeout(() => {
