@@ -20,12 +20,8 @@
     <script>
         window.addEventListener('load', function() {
             var origen = null;
-            window.CognitiveAssistantMain.init(
-                // 'https://dev-sura.mycognitiva.io/asistente/'
-
-                'https://qa-sura.mycognitiva.io/asistente/?rut=16746695&user=PSANTI&clave=1'
-            );
-            // window.CognitiveAssistantMain.init('http://localhost:3000/asistente/?origen=' + origen);
+            var url = 'URL_A_CAMBIAR';
+            window.CognitiveAssistantMain.init('https://' + url + '/asistente/');
         });
     </script>
 </head>
@@ -34,11 +30,12 @@
     <iframe id="demo" src="https://www.example.com/" frameborder="0"></iframe>
 </body>
 
-<script>
+<!-- <script>
     const getUrl = async() => {
         const data = {
             id_cliente: '1'
         };
+
         const apiUrl = 'https://qa-sura.mycognitiva.io/mad/customize_param';
         await fetch(apiUrl, {
                 method: 'POST',
@@ -57,6 +54,6 @@
             });
     };
     getUrl();
-</script>
+</script> -->
 
 </html>
