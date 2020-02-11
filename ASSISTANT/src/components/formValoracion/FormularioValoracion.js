@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Star from "./Star";
 
+// REDUX
+import {closeAssistant} from '../../actions/';
+
 import "./FormValoracion.scss";
 
 const style = {
@@ -73,11 +76,9 @@ class FormularioValoracion extends Component {
   }
 
   cerrarAsistente() {
-    const { closeAssistant } = this.props;
     this.notificationCDN();
     localStorage.removeItem("hcm");
     localStorage.removeItem("hc");
-
     closeAssistant();
   }
 
