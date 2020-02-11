@@ -70,12 +70,14 @@ class FormularioValoracion extends Component {
 
     console.log(this.props.customParamsStates);
     console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
+
+    let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
   
     return (
       <div className="conversationBubbleForm Send">
         {/* <img className={mainCss.RoundedImg} src={} alt="" /> */}
 
-        <div className="containerForm">
+        <div className="containerForm" style={ colorHeader ? { borderTop: `${colorHeader}` } : null} >
           <form autoComplete="off" onSubmit={this.enviarValoracion}>
             <div className="headerForm">
               <p>
