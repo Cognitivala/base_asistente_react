@@ -587,7 +587,7 @@ function messageResponse(dispatch, data) {
         dispatch({ type: "SET_NOTIFICATION", data: null });
         dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
-        // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     } else {
