@@ -145,7 +145,7 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" onMouseLeave={this.toggleHover}>Valorar</button> 
+              <button type="submit" onMouseLeave={this.toggleHover.bind(this)}>Valorar</button> 
             </fieldset>
           </form>
         </div>
