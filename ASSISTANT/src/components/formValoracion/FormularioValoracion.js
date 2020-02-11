@@ -89,14 +89,14 @@ class FormularioValoracion extends Component {
               <legend>¿Su caso o inquietud fueron resueltas?</legend>
               <label>
                 <div className="round">
-                  <div className={ this.state.respuesta === "si" ? "active circle" : " circle" }></div>
+                  <div className={ this.state.respuesta === "si" ? "active circle" : " circle" } style={ colorHeader ? { border: `.2rem solid ${colorHeader}` } : null}></div>
                   Sí
                   <input type="radio" name="desicion" value="si" checked={this.state.respuesta === "si"} onChange={this.handleOptionChange} />
                 </div>
               </label>
               <label>
                 <div className="round">
-                  <div className={ this.state.respuesta === "no" ? "active circle" : " circle" }></div>
+                  <div className={ this.state.respuesta === "no" ? "active circle" : " circle" } style={ colorHeader ? { border: `.2rem solid ${colorHeader}` } : null}></div>
                   No
                   <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} />
                 </div>
@@ -108,7 +108,7 @@ class FormularioValoracion extends Component {
               <div className="star-rating">
                 <div style={style.boxStar}>
                   {[...Array(totalStars)].map((n, i) => (
-                    <Star key={i} selected={i < this.state.starsSelected} onClick={() => this.setState({ starsSelected: i + 1 })} />
+                    <Star colorHeader={colorHeader} key={i} selected={i < this.state.starsSelected} onClick={() => this.setState({ starsSelected: i + 1 })} />
                   ))}
                 </div>
 
