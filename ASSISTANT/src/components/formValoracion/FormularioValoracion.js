@@ -2,10 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Star from "./Star";
 
-// REDUX
-import {connect}  from 'react-redux';
-import {closeAssistant} from '../../actions/';
-
 import "./FormValoracion.scss";
 
 const style = {
@@ -69,25 +65,10 @@ class FormularioValoracion extends Component {
     };
     // sendLike(data, general);
     await sendValoracion(data, general);
-    this.cerrarAsistente();
   };
 
   toggleHover() {
     this.setState({hover: !this.state.hover})
-  }
-
-  cerrarAsistente() {
-    this.notificationCDN();
-    localStorage.removeItem("hcm");
-    localStorage.removeItem("hc");
-    // this.props.store.dispatch(closeAssistant());
-    this.props.dispatch(closeAssistant())
-  }
-
-  notificationCDN() {
-    window.top.postMessage(
-      { test: [{ msg: "notification"}] }, "*"
-    );
   }
 
   render() {
@@ -178,4 +159,4 @@ FormularioValoracion.propTypes = {
     sendValoracion: PropTypes.func.isRequired
 };
 
-export default connect()(FormularioValoracion);
+export default FormularioValoracion;
