@@ -20,7 +20,8 @@ class FormularioValoracion extends Component {
   state = {
     respuesta: null,
     starsSelected: 0,
-    mensajeAdicional: ""
+    mensajeAdicional: "",
+    hover: false
   };
 
   handleOptionChange = e => {
@@ -66,12 +67,23 @@ class FormularioValoracion extends Component {
     await sendValoracion(data, general);
   };
 
+  toggleHover() {
+    this.setState({hover: !this.state.hover})
+  }
+
   render() {
 
     console.log(this.props.customParamsStates);
     console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
 
     let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
+
+    var linkStyle;
+    if (this.state.hover) {
+      linkStyle = {background: '#0052dc'}
+    } else {
+      linkStyle = {}
+    }
   
     return (
       <div className="conversationBubbleForm Send">
@@ -133,7 +145,7 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" style={ :hover { background: `${colorHeader}` } }>Valorar</button> 
+              <button type="submit" onMouseLeave={this.toggleHover}>Valorar</button> 
             </fieldset>
           </form>
         </div>
