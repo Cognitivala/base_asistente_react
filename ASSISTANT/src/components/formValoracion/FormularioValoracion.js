@@ -86,12 +86,7 @@ class FormularioValoracion extends Component {
   }
 
   limpiarError() {
-    if (this.state.mensajeAdicional.length > 0) {
       this.setState({campoRequerido: true});
-    } else {
-      return false;
-    }
-    
   }
 
   render() {
