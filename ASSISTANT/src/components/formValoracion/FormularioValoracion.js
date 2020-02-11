@@ -162,7 +162,7 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} onMouseOver={this.toggleHover.bind(this)}>Valorar</button> 
+              <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onMouseOver={this.toggleHover.bind(this)}>Valorar</button> 
             </fieldset>
           </form>
         </div>
