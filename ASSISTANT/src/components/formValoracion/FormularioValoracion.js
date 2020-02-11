@@ -78,12 +78,12 @@ class FormularioValoracion extends Component {
 
     let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
 
-    var linkStyle;
-    if (this.state.hover) {
-      linkStyle = {background: `${colorHeader}`, color: '#fff', cursor: 'pointer'}
-    } else {
-      linkStyle = {color: `${colorHeader}`}
-    }
+    // var linkStyle;
+    // if (this.state.hover) {
+    //   linkStyle = {background: `${colorHeader}`, color: '#fff', cursor: 'pointer'}
+    // } else {
+    //   linkStyle = {color: `${colorHeader}`}
+    // }
   
     return (
       <div className="conversationBubbleForm Send">
@@ -145,7 +145,8 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onMouseOver={this.toggleHover.bind(this)}>Valorar</button> 
+              {/* <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onMouseOver={this.toggleHover.bind(this)}>Valorar</button>  */}
+              <button type="submit">Valorar</button> 
             </fieldset>
           </form>
         </div>

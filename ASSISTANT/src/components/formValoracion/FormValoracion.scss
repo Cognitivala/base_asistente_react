@@ -21,7 +21,7 @@
     border-radius: .4rem;
     position: relative;
     z-index: 2;
-    border-top: .2rem solid #2979ff;
+    border-top: .2rem solid #ff2200;
     box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, .2);
     margin-left: .8rem;
     width: 100%;
@@ -110,7 +110,7 @@
     width: 1.4rem;
     height: 1.4rem;
     border-radius: 50%;
-    border: .2rem solid #2979ff;
+    border: .2rem solid #ff2200;
     transition: all .3s ease;
     cursor: pointer;
     margin-right: 1rem;
@@ -136,7 +136,7 @@
     content: "";
     width: .6rem;
     height: .6rem;
-    background: #2979ff;
+    background: #ff2200;
     background: var(--first);
     position: absolute;
     left: .2rem;
@@ -148,7 +148,7 @@
     content: "";
     width: .6rem;
     height: .6rem;
-    background: #2979ff;
+    background: #ff2200;
     position: absolute;
     left: .2rem;
     top: .2rem;
@@ -178,11 +178,11 @@
 
 .containerForm form button {
     font-size: 1.4rem;
-    color: #2979ff;
+    color: #ff2200;
     height: 3.6rem;
     border-radius: .4rem;
     font-weight: 700;
-    border: 1px solid #2979ff;
+    border: 1px solid #ff2200;
     outline: 0;
     transition: all .3s ease;
     background: transparent;
@@ -211,13 +211,13 @@
     width: 2em;
     height: 2em;
     background-color: grey;
-    -webkit-clip-path: polygon( 50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
-    clip-path: polygon( 50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+    -webkit-clip-path: polygon(50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
+    clip-path: polygon(50% 0%, 63% 38%, 100% 38%, 69% 59%, 82% 100%, 50% 75%, 18% 100%, 31% 59%, 0% 38%, 37% 38%);
     margin-right: 15px;
 }
 
 .star.selected {
-    background-color: #2979ff;
+    background-color: #ff2200;
 }
 
 // .star-rating p {
