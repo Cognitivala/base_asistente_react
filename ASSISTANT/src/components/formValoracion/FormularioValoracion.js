@@ -25,7 +25,8 @@ class FormularioValoracion extends Component {
     respuesta: null,
     starsSelected: 0,
     mensajeAdicional: "",
-    hover: false
+    // hover: false
+    requerido: false
   };
 
   handleOptionChange = e => {
@@ -39,6 +40,11 @@ class FormularioValoracion extends Component {
 
   enviarValoracion = async (e) => {
     e.preventDefault();
+    if (this.state.starsSelected <= 3) {
+      this.setState({requerido: true});
+      return false
+    }
+
     if (
       this.state.respuesta === null ||
       this.state.starsSelected === 0 ||
@@ -144,12 +150,14 @@ class FormularioValoracion extends Component {
               <legend style={{ fontWeight: 100, marginBottom: "0.8rem" }}>
                 ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente:
               </legend>
-              <textarea name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
+              <textarea style={ this.state.requerido ? { border: '.2rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
+              { this.state.requerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
+              
             </fieldset>
 
             <fieldset>
               {/* <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onMouseOver={this.toggleHover.bind(this)}>Valorar</button>  */}
-              <button type="submit" disabled={this.state.starsSelected <= 3 ? true : false} style={this.state.starsSelected <= 3 ? style.disable : null}>Valorar</button> 
+              <button type="submit" disabled={this.state.requerido} style={this.state.requerido ? style.disable : null}>Valorar</button> 
             </fieldset>
           </form>
         </div>
