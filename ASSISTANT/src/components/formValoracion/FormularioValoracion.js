@@ -4,13 +4,6 @@ import Star from "./Star";
 
 import "./FormValoracion.scss";
 
-
-
-
-class FormularioValoracion extends Component {
-
-  let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
-
 const style = {
   boxStar: {
     width: "100%",
@@ -18,21 +11,12 @@ const style = {
     alignItems: "flex-end",
     justifyContent: "flex-start",
     marginBottom: "10px"
-  },
-
-  backColor: {
-    "&:hover": {
-      background: colorHeader ? colorHeader : '#2979ff'
-    },
   }
-
 };
-
-
 
 const totalStars = 5;
 
-
+class FormularioValoracion extends Component {
   state = {
     respuesta: null,
     starsSelected: 0,
@@ -87,7 +71,15 @@ const totalStars = 5;
     console.log(this.props.customParamsStates);
     console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
 
-    
+    let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
+
+    const estilo = {
+      backColor: {
+        "&:hover": {
+          background: colorHeader ? `${colorHeader}` : '#2979ff'
+        },
+      }
+    };
   
     return (
       <div className="conversationBubbleForm Send">
