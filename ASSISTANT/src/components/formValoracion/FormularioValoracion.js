@@ -77,7 +77,7 @@ class FormularioValoracion extends Component {
       <div className="conversationBubbleForm Send">
         {/* <img className={mainCss.RoundedImg} src={} alt="" /> */}
 
-        <div className="containerForm" style={ colorHeader ? { borderTop: `${colorHeader}` } : null} >
+        <div className="containerForm" style={ colorHeader ? { borderTop: `.2rem solid ${colorHeader}` } : null} >
           <form autoComplete="off" onSubmit={this.enviarValoracion}>
             <div className="headerForm">
               <p>
