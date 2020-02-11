@@ -11,8 +11,17 @@ const style = {
     alignItems: "flex-end",
     justifyContent: "flex-start",
     marginBottom: "10px"
+  },
+
+  backColor: {
+    "&:hover": {
+      background: colorHeader ? `${colorHeader}` : '#2979ff'
+    },
   }
+
 };
+
+
 
 const totalStars = 5;
 
@@ -133,7 +142,7 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" style={ colorHeader ? { color: `${colorHeader}`,  border: `1px solid ${colorHeader}`  { :hover {background: `${colorHeader}`} }} : null}  >Valorar</button>
+              <button type="submit" style={ style.backColor, colorHeader ? { color: `${colorHeader}`,  border: `1px solid ${colorHeader}`} : null}  >Valorar</button>
             </fieldset>
           </form>
         </div>
