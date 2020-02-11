@@ -150,14 +150,14 @@ class FormularioValoracion extends Component {
               <legend style={{ fontWeight: 100, marginBottom: "0.8rem" }}>
                 ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente:
               </legend>
-              <textarea style={ this.state.requerido ? { border: '.2rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
+              <textarea style={ this.state.requerido ? { border: '.1rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
               { this.state.requerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
               
             </fieldset>
 
             <fieldset>
               {/* <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onMouseOver={this.toggleHover.bind(this)}>Valorar</button>  */}
-              <button type="submit" disabled={this.state.requerido} style={this.state.requerido ? style.disable : null}>Valorar</button> 
+              <button type="submit" disabled={this.state.requerido ? this.state.requerido : false} style={this.state.requerido ? style.disable : null}>Valorar</button> 
             </fieldset>
           </form>
         </div>
