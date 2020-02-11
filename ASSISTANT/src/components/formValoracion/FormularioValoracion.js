@@ -67,6 +67,9 @@ class FormularioValoracion extends Component {
   };
 
   render() {
+
+    console.log(this.props.customParamsStates);
+  
     return (
       <div className="conversationBubbleForm Send">
         {/* <img className={mainCss.RoundedImg} src={} alt="" /> */}
@@ -75,8 +78,7 @@ class FormularioValoracion extends Component {
           <form autoComplete="off" onSubmit={this.enviarValoracion}>
             <div className="headerForm">
               <p>
-                Gracias por utilizar nuestro chat. No dude en dejarnos cualquier
-                comentario adicional.
+                Gracias por utilizar nuestro chat. No dude en dejarnos cualquier comentario adicional.
               </p>
             </div>
 

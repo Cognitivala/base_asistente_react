@@ -455,10 +455,10 @@ class Conversations extends Component {
           } 
           
           else if ( rating ) {
-            const { sendValoracion, generalStates } = this.props;
+            const { sendValoracion, generalStates, customParamsStates } = this.props;
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
-              <FormularioValoracion key={`${j} * 75`} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormularioValoracion key={`${j} * 75`} generalStates={generalStates} sendValoracion={sendValoracion} customParamsStates={customParamsStates} />
             );
           }
         }
