@@ -69,6 +69,7 @@ class FormularioValoracion extends Component {
   render() {
 
     console.log(this.props.customParamsStates);
+    console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
   
     return (
       <div className="conversationBubbleForm Send">
