@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Star from "./Star";
 
 // REDUX
+import {connect}  from 'react-redux';
 import {closeAssistant} from '../../actions/';
 
 import "./FormValoracion.scss";
@@ -79,7 +80,8 @@ class FormularioValoracion extends Component {
     this.notificationCDN();
     localStorage.removeItem("hcm");
     localStorage.removeItem("hc");
-    this.props.store.dispatch(closeAssistant());
+    // this.props.store.dispatch(closeAssistant());
+    this.props.dispatch(closeAssistant())
   }
 
   notificationCDN() {
@@ -176,4 +178,4 @@ FormularioValoracion.propTypes = {
     sendValoracion: PropTypes.func.isRequired
 };
 
-export default FormularioValoracion;
+export default connect()(FormularioValoracion);
