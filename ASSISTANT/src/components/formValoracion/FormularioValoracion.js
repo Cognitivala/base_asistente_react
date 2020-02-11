@@ -4,6 +4,9 @@ import Star from "./Star";
 
 import "./FormValoracion.scss";
 
+
+let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
+
 const style = {
   boxStar: {
     width: "100%",
@@ -15,7 +18,7 @@ const style = {
 
   backColor: {
     "&:hover": {
-      background: colorHeader ? `${colorHeader}` : '#2979ff'
+      background: colorHeader ? colorHeader : '#2979ff'
     },
   }
 
@@ -80,7 +83,7 @@ class FormularioValoracion extends Component {
     console.log(this.props.customParamsStates);
     console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
 
-    let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
+    
   
     return (
       <div className="conversationBubbleForm Send">
