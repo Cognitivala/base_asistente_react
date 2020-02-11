@@ -26,7 +26,7 @@ class FormularioValoracion extends Component {
     starsSelected: 0,
     mensajeAdicional: "",
     // hover: false
-    requerido: false
+    campoRequerido: false
   };
 
   handleOptionChange = e => {
@@ -45,7 +45,7 @@ class FormularioValoracion extends Component {
       this.state.starsSelected <= 3 && 
       this.state.mensajeAdicional === ""
     ) {
-      this.setState({requerido: true});
+      this.setState({campoRequerido: true});
       return false;
     }
 
@@ -83,6 +83,15 @@ class FormularioValoracion extends Component {
 
   toggleHover() {
     this.setState({hover: !this.state.hover})
+  }
+
+  limpiarError() {
+    if (this.state.mensajeAdicional.length > 0) {
+      this.setState({campoRequerido: true});
+    } else {
+      return false;
+    }
+    
   }
 
   render() {
@@ -154,14 +163,14 @@ class FormularioValoracion extends Component {
               <legend style={{ fontWeight: 100, marginBottom: "0.8rem" }}>
                 ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente:
               </legend>
-              <textarea style={ this.state.requerido ? { border: '.1rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
-              { this.state.requerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
+              <textarea onKeyUp={this.limpiarError} style={ this.state.campoRequerido ? { border: '.1rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
+              { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
               
             </fieldset>
 
             <fieldset>
               {/* <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onMouseOver={this.toggleHover.bind(this)}>Valorar</button>  */}
-              <button type="submit" style={this.state.requerido ? style.disable : null}>Valorar</button> 
+              <button type="submit" style={this.state.campoRequerido ? style.disable : null}>Valorar</button> 
             </fieldset>
           </form>
         </div>
