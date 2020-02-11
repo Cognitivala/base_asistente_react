@@ -133,7 +133,7 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" style={ colorHeader ? { color: `${colorHeader}`,  border: `1px solid ${colorHeader}` } { :hover {background: `${colorHeader}` } } : null}  >Valorar</button>
+              <button type="submit" style={ colorHeader ? { color: `${colorHeader}`,  border: `1px solid ${colorHeader}`  { :hover {background: `${colorHeader}`} }} : null}  >Valorar</button>
             </fieldset>
           </form>
         </div>
