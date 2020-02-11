@@ -40,13 +40,17 @@ class FormularioValoracion extends Component {
 
   enviarValoracion = async (e) => {
     e.preventDefault();
-    if ( this.state.starsSelected > 0 && this.state.starsSelected <= 3 && this.state.mensajeAdicional === "") {
+    if ( 
+      // this.state.starsSelected > 0 && 
+      this.state.starsSelected <= 3 && 
+      this.state.mensajeAdicional === ""
+    ) {
       this.setState({requerido: true});
-      return false
+      return false;
     }
 
     if (
-      this.state.respuesta === null ||
+      // this.state.respuesta === null ||
       this.state.starsSelected === 0 ||
       this.state.mensajeAdicional === ""
     ) {
