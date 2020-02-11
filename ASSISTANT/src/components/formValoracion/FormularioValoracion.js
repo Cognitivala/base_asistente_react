@@ -65,14 +65,14 @@ class FormularioValoracion extends Component {
     };
     // sendLike(data, general);
     await sendValoracion(data, general);
-    this.closeAssistant();
+    this.cerrarAsistente();
   };
 
   toggleHover() {
     this.setState({hover: !this.state.hover})
   }
 
-  closeAssistant() {
+  cerrarAsistente() {
     const { closeAssistant } = this.props;
     this.notificationCDN();
     localStorage.removeItem("hcm");
@@ -161,7 +161,7 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" style={linkStyle} onMouseOver={this.toggleHover.bind(this)}>Valorar</button> 
+              <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover} onMouseOver={this.toggleHover.bind(this)}>Valorar</button> 
             </fieldset>
           </form>
         </div>
