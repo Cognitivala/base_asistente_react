@@ -5,7 +5,11 @@ import Star from "./Star";
 import "./FormValoracion.scss";
 
 
-let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
+
+
+class FormularioValoracion extends Component {
+
+  let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
 
 const style = {
   boxStar: {
@@ -28,7 +32,7 @@ const style = {
 
 const totalStars = 5;
 
-class FormularioValoracion extends Component {
+
   state = {
     respuesta: null,
     starsSelected: 0,
