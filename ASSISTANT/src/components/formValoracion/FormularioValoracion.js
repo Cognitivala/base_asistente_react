@@ -11,6 +11,10 @@ const style = {
     alignItems: "flex-end",
     justifyContent: "flex-start",
     marginBottom: "10px"
+  },
+  disable: {
+    background: '#e4e4e4',
+    color: '#757575'
   }
 };
 
@@ -145,7 +149,7 @@ class FormularioValoracion extends Component {
 
             <fieldset>
               {/* <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onMouseOver={this.toggleHover.bind(this)}>Valorar</button>  */}
-              <button type="submit" disabled={this.state.starsSelected <= 3 ? true : false}>Valorar</button> 
+              <button type="submit" disabled={this.state.starsSelected <= 3 ? true : false} style={this.state.starsSelected <= 3 ? style.disable : null}>Valorar</button> 
             </fieldset>
           </form>
         </div>
