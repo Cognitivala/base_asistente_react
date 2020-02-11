@@ -79,7 +79,7 @@ class FormularioValoracion extends Component {
     this.notificationCDN();
     localStorage.removeItem("hcm");
     localStorage.removeItem("hc");
-    closeAssistant();
+    this.props.store.dispatch(closeAssistant());
   }
 
   notificationCDN() {
