@@ -73,8 +73,7 @@ class FormularioValoracion extends Component {
 
   render() {
 
-    console.log(this.props.customParamsStates);
-    console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
+    // console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
 
     let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
 
@@ -146,7 +145,7 @@ class FormularioValoracion extends Component {
 
             <fieldset>
               {/* <button type="submit" style={linkStyle} onMouseEnter={this.toggleHover.bind(this)} onMouseLeave={this.toggleHover.bind(this)} onMouseOver={this.toggleHover.bind(this)}>Valorar</button>  */}
-              <button type="submit">Valorar</button> 
+              <button type="submit" disabled={this.state.starsSelected <= 3 ? true : false}>Valorar</button> 
             </fieldset>
           </form>
         </div>
