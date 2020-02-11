@@ -72,14 +72,6 @@ class FormularioValoracion extends Component {
     console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
 
     let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
-
-    const estilo = {
-      backColor: {
-        "&:hover": {
-          background: colorHeader ? `${colorHeader}` : '#2979ff'
-        },
-      }
-    };
   
     return (
       <div className="conversationBubbleForm Send">
@@ -141,7 +133,7 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" style={ colorHeader ? { color: `${colorHeader}`,  border: `1px solid ${colorHeader}` } : null} >Valorar</button>
+              <button type="submit" style={ :hover { background: `${colorHeader}` } }>Valorar</button> 
             </fieldset>
           </form>
         </div>
