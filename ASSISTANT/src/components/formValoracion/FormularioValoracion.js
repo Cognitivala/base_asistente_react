@@ -81,6 +81,12 @@ class FormularioValoracion extends Component {
     closeAssistant();
   }
 
+  notificationCDN() {
+    window.top.postMessage(
+      { test: [{ msg: "notification"}] }, "*"
+    );
+  }
+
   render() {
 
     console.log(this.props.customParamsStates);
@@ -155,7 +161,7 @@ class FormularioValoracion extends Component {
             </fieldset>
 
             <fieldset>
-              <button type="submit" style={linkStyle} onMouseLeave={this.toggleHover.bind(this)}>Valorar</button> 
+              <button type="submit" style={linkStyle} onMouseOver={this.toggleHover.bind(this)}>Valorar</button> 
             </fieldset>
           </form>
         </div>
