@@ -65,10 +65,20 @@ class FormularioValoracion extends Component {
     };
     // sendLike(data, general);
     await sendValoracion(data, general);
+    this.closeAssistant();
   };
 
   toggleHover() {
     this.setState({hover: !this.state.hover})
+  }
+
+  closeAssistant() {
+    const { closeAssistant } = this.props;
+    this.notificationCDN();
+    localStorage.removeItem("hcm");
+    localStorage.removeItem("hc");
+
+    closeAssistant();
   }
 
   render() {
