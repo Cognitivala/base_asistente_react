@@ -80,9 +80,9 @@ class FormularioValoracion extends Component {
 
     var linkStyle;
     if (this.state.hover) {
-      linkStyle = {background: '#0052dc'}
+      linkStyle = {background: `${colorHeader}`, color: '#fff', cursor: 'pointer'}
     } else {
-      linkStyle = {}
+      linkStyle = {color: `${colorHeader}`}
     }
   
     return (
