@@ -135,14 +135,14 @@ class FormularioValoracion extends Component {
                 <div className="round">
                   <div className={ this.state.respuesta === "si" ? "active circle" : " circle" } style={ colorHeader ? { border: `.2rem solid ${colorHeader}` } : null}></div>
                   Sí
-                  <input type="radio" name="desicion" value="si" checked={this.state.respuesta === "si"} onChange={this.handleOptionChange} />
+                  <input type="radio" name="desicion" value="si" checked={this.state.respuesta === "si"} onChange={this.handleOptionChange} onKeyUp={this.limpiarError.bind(this)} />
                 </div>
               </label>
               <label>
                 <div className="round">
                   <div className={ this.state.respuesta === "no" ? "active circle" : " circle" } style={ colorHeader ? { border: `.2rem solid ${colorHeader}` } : null}></div>
                   No
-                  <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} />
+                  <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} onKeyUp={this.limpiarError.bind(this)} />
                 </div>
               </label>
               { this.state.campoRequerido && this.state.respuesta === null && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
@@ -156,8 +156,6 @@ class FormularioValoracion extends Component {
                     <Star colorHeader={colorHeader} key={i} selected={i < this.state.starsSelected} onClick={() => this.setState({ starsSelected: i + 1 })} />
                   ))}
 
-                  { this.state.campoRequerido && this.state.starsSelected === 0 && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
-
                 </div>
 
                 <div>
@@ -169,6 +167,8 @@ class FormularioValoracion extends Component {
                   {this.state.starsSelected === 3 && ( <p>Me ayudó, pero necesita mejorar <span role="img" aria-label=""> 😐</span></p> )}
                   {this.state.starsSelected === 4 && ( <p>¡Buen servicio! <span role="img" aria-label=""> 🙂</span></p> )}
                   {this.state.starsSelected === 5 && ( <p>¡Excelente servicio! <span role="img" aria-label=""> 😃</span></p> )}
+
+                  { this.state.campoRequerido && this.state.starsSelected === 0 && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
                 </div>
               </div>
 
