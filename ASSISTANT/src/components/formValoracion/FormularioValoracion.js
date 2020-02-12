@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import Star from "./Star";
 
 import "./FormValoracion.scss";
+import ConversationLoader from "../conversation/conversation-loader";
 
 const style = {
   boxStar: {
@@ -101,6 +102,12 @@ class FormularioValoracion extends Component {
     // } else {
     //   linkStyle = {color: `${colorHeader}`}
     // }
+
+    const { mainCss } = this.props;
+
+    if (this.props.conversationsStates.get("loading")) {
+      return <ConversationLoader active={true} mainCss={mainCss} />;
+    } else {
   
     return (
       <div className="conversationBubbleForm Send">
@@ -171,6 +178,8 @@ class FormularioValoracion extends Component {
         </div>
       </div>
     );
+  }
+
   }
 }
 
