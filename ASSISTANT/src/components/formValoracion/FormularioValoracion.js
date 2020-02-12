@@ -120,6 +120,14 @@ class FormularioValoracion extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.starsSelected !== this.state.pokemons) {
+      if ( this.state.starsSelected > 3  ) {
+        this.setState({campoRequerido: false});
+      }
+    }
+  }
+
   render() {
 
     // console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
@@ -133,12 +141,12 @@ class FormularioValoracion extends Component {
     //   linkStyle = {color: `${colorHeader}`}
   
     // }
-    
+
     console.log('this.state.starsSelected', this.state.starsSelected);
 
-    if ( this.state.starsSelected > 3  ) {
-      this.setState({campoRequerido: false});
-    }
+    // if ( this.state.starsSelected > 3  ) {
+    //   this.setState({campoRequerido: false});
+    // }
   
 
     return (
