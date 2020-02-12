@@ -48,7 +48,13 @@ class FormularioValoracion extends Component {
     ) {
       this.setState({campoRequerido: true});
       return false;
-    } else if (this.state.starsSelected <= 3 ) {
+    } else if (this.state.respuesta === null ) {
+      this.setState({campoRequerido: true});
+    }
+    else if (this.state.starsSelected === 0 ) {
+      this.setState({campoRequerido: true});
+    }
+    else if (this.state.starsSelected <= 3 ) {
       this.setState({campoRequerido: true});
     }
 
