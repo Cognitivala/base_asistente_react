@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Star = ({ limpiarError, colorHeader, selected = false, onClick = f => f }) => {
+const Star = ({ limpiarError, colorHeader, selected = false, onClick }) => {
     return (
         <div className={selected ? "star selected" : "star"} 
         onClick={() => {
