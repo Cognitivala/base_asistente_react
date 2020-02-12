@@ -46,13 +46,16 @@ class FormularioValoracion extends Component {
       this.state.starsSelected === 0 &&
       this.state.mensajeAdicional === ""
     ) {
+      console.log('1');
       this.setState({campoRequerido: true});
       return false;
     } else if (this.state.respuesta === null ) {
+      console.log('2');
       this.setState({campoRequerido: true});
       return false;
     }
     else if (this.state.starsSelected === 0 ) {
+      console.log('3');
       this.setState({campoRequerido: true});
       return false;
     }
@@ -61,6 +64,7 @@ class FormularioValoracion extends Component {
     //   return false;
     // }
     else if (this.state.starsSelected <= 3 && this.state.mensajeAdicional === "" ) {
+      console.log('4');
       this.setState({campoRequerido: true});
       return false;
     }
@@ -214,7 +218,7 @@ class FormularioValoracion extends Component {
               <textarea onKeyUp={this.limpiarError.bind(this)} style={ this.state.campoRequerido && this.state.starsSelected > 0 && this.state.starsSelected <= 3 ? { border: '.1rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
               
               { 
-              this.state.campoRequerido && this.state.mensajeAdicional === ""
+                this.state.campoRequerido && this.state.mensajeAdicional === ""
                 ? <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> 
                 : (
                   this.state.starsSelected > 0 && this.state.starsSelected <= 3 
