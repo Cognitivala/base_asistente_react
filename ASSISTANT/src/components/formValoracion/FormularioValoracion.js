@@ -203,7 +203,7 @@ class FormularioValoracion extends Component {
               { this.state.campoRequerido && this.state.mensajeAdicional === ""
                 ? <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> 
                 : (
-                  this.state.campoRequerido && this.state.starsSelected <= 3 
+                  this.state.starsSelected > 0 && this.state.starsSelected <= 3 
                   ? <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> 
                   : null
                 )
