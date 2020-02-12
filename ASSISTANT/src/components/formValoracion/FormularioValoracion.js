@@ -131,8 +131,11 @@ class FormularioValoracion extends Component {
     //   linkStyle = {background: `${colorHeader}`, color: '#fff', cursor: 'pointer'}
     // } else {
     //   linkStyle = {color: `${colorHeader}`}
+  
     // }
   
+    console.log('this.state.starsSelected', this.state.starsSelected);
+
     return (
       <div className="conversationBubbleForm Send">
         {/* <img className={mainCss.RoundedImg} src={} alt="" /> */}
@@ -200,7 +203,7 @@ class FormularioValoracion extends Component {
               { this.state.campoRequerido && this.state.mensajeAdicional === ""
                 ? <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> 
                 : (
-                  this.state.campoRequerido && this.state.starsSelected > 0 && this.state.starsSelected <= 3 
+                  this.state.campoRequerido && this.state.starsSelected <= 3 
                   ? <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> 
                   : null
                 )
