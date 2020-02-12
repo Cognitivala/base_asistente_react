@@ -169,7 +169,7 @@ class FormularioValoracion extends Component {
               <div className="star-rating">
                 <div style={style.boxStar}>
                   {[...Array(totalStars)].map((n, i) => (
-                    <Star colorHeader={colorHeader} key={i} selected={i < this.state.starsSelected} limpiarError={this.limpiarError.bind(this)} onClick={() => this.setState({ starsSelected: i + 1 })} />
+                    <Star colorHeader={colorHeader} key={i} selected={i < this.state.starsSelected} onClick={() => this.setState({ starsSelected: i + 1 }); this.limpiarError.bind(this) } />
                   ))}
 
                 </div>
