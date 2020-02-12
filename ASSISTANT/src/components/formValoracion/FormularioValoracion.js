@@ -105,6 +105,7 @@ class FormularioValoracion extends Component {
   }
 
   limpiarError() {
+    console.log('limpiarError', this.state.starsSelected);
     if ( 
       this.state.starsSelected > 0 && 
       this.state.starsSelected <= 3
