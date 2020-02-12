@@ -105,7 +105,14 @@ class FormularioValoracion extends Component {
   }
 
   limpiarError() {
-    this.setState({campoRequerido: false});
+    if ( 
+      this.state.starsSelected > 0 && 
+      this.state.starsSelected <= 3
+    ) {
+      this.setState({campoRequerido: true});
+    } else {
+      this.setState({campoRequerido: false});
+    }
   }
 
   render() {
@@ -157,7 +164,7 @@ class FormularioValoracion extends Component {
               <div className="star-rating">
                 <div style={style.boxStar}>
                   {[...Array(totalStars)].map((n, i) => (
-                    <Star colorHeader={colorHeader} key={i} selected={i < this.state.starsSelected} onClick={() => this.setState({ starsSelected: i + 1 })} />
+                    <Star colorHeader={colorHeader} key={i} selected={i < this.state.starsSelected} onKeyUp={this.limpiarError.bind(this)} onClick={() => this.setState({ starsSelected: i + 1 })} />
                   ))}
 
                 </div>
