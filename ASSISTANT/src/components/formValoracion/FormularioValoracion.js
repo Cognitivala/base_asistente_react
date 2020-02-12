@@ -149,7 +149,7 @@ class FormularioValoracion extends Component {
                   <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} />
                 </div>
               </label>
-              { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
+              {/* { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> } */}
             </fieldset>
 
             <fieldset>
@@ -173,7 +173,7 @@ class FormularioValoracion extends Component {
                 </div>
               </div>
 
-              { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
+              {/* { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> } */}
             </fieldset>
 
             <fieldset>
