@@ -50,13 +50,13 @@ class FormularioValoracion extends Component {
       return false;
     }
 
-    // if (
-    //   this.state.respuesta === null ||
-    //   this.state.starsSelected === 0 ||
-    //   this.state.mensajeAdicional === ""
-    // ) {
-    //   return false;
-    // }
+    if (
+      this.state.respuesta === null ||
+      this.state.starsSelected === 0 ||
+      this.state.mensajeAdicional === ""
+    ) {
+      return false;
+    }
 
     const { generalStates, sendValoracion } = this.props;
     const general = generalStates.toJS();
