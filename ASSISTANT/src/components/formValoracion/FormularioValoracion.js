@@ -109,8 +109,10 @@ class FormularioValoracion extends Component {
     if ( 
       this.state.starsSelected > 0 && 
       this.state.starsSelected <= 3
-    ) {
+    ){
       this.setState({campoRequerido: true});
+    } else if( this.state.mensajeAdicional !== "") {
+      this.setState({campoRequerido: false});
     } else if( this.state.starsSelected > 3) {
       this.setState({campoRequerido: false});
     } else {
@@ -192,7 +194,7 @@ class FormularioValoracion extends Component {
               <legend style={{ fontWeight: 100, marginBottom: "0.8rem" }}>
                 ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente:
               </legend>
-              <textarea onKeyUp={this.limpiarError.bind(this)} style={ this.state.campoRequerido ? { border: '.1rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
+              <textarea onKeyUp={this.limpiarError.bind(this)} style={ this.state.campoRequerido && this.state.starsSelected > 0 && this.state.starsSelected <= 3 ? { border: '.1rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
               
               { this.state.campoRequerido && this.state.mensajeAdicional === ""
                 ? <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> 
