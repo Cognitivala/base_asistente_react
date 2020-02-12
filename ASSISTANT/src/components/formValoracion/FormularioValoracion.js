@@ -50,12 +50,15 @@ class FormularioValoracion extends Component {
       return false;
     } else if (this.state.respuesta === null ) {
       this.setState({campoRequerido: true});
+      return false;
     }
     else if (this.state.starsSelected === 0 ) {
       this.setState({campoRequerido: true});
+      return false;
     }
     else if (this.state.starsSelected <= 3 ) {
       this.setState({campoRequerido: true});
+      return false;
     }
 
     // if ( 
@@ -152,6 +155,9 @@ class FormularioValoracion extends Component {
                   {[...Array(totalStars)].map((n, i) => (
                     <Star colorHeader={colorHeader} key={i} selected={i < this.state.starsSelected} onClick={() => this.setState({ starsSelected: i + 1 })} />
                   ))}
+
+                  { this.state.campoRequerido && this.state.starsSelected === 0 && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
+
                 </div>
 
                 <div>
@@ -166,7 +172,6 @@ class FormularioValoracion extends Component {
                 </div>
               </div>
 
-              {/* { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> } */}
             </fieldset>
 
             <fieldset>
