@@ -58,11 +58,9 @@ class FormularioValoracion extends Component {
       console.log('3');
       this.setState({campoRequerido: true});
       return false;
+    } else if (this.state.starsSelected > 3 ) {
+      this.setState({campoRequerido: false});
     }
-    // else if (this.state.starsSelected > 3 && this.state.mensajeAdicional === "" ) {
-    //   this.setState({campoRequerido: true});
-    //   return false;
-    // }
     else if (this.state.starsSelected <= 3 && this.state.mensajeAdicional === "" ) {
       console.log('4');
       this.setState({campoRequerido: true});
@@ -110,10 +108,7 @@ class FormularioValoracion extends Component {
 
   limpiarError() {
     console.log('limpiarError', this.state.starsSelected);
-    if ( 
-      this.state.starsSelected > 0 && 
-      this.state.starsSelected <= 3
-    ){
+    if ( this.state.starsSelected > 0 && this.state.starsSelected <= 3 ){
       this.setState({campoRequerido: true});
     } else if( this.state.mensajeAdicional !== "") {
       this.setState({campoRequerido: false});
