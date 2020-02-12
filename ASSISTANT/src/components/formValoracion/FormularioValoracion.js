@@ -46,23 +46,19 @@ class FormularioValoracion extends Component {
       this.state.starsSelected === 0 &&
       this.state.mensajeAdicional === ""
     ) {
-      console.log('1');
       this.setState({campoRequerido: true});
       return false;
     } else if (this.state.respuesta === null ) {
-      console.log('2');
       this.setState({campoRequerido: true});
       return false;
     }
     else if (this.state.starsSelected === 0 ) {
-      console.log('3');
       this.setState({campoRequerido: true});
       return false;
     } else if (this.state.starsSelected > 3 ) {
       this.setState({campoRequerido: false});
     }
     else if (this.state.starsSelected <= 3 && this.state.mensajeAdicional === "" ) {
-      console.log('4');
       this.setState({campoRequerido: true});
       return false;
     }
@@ -107,7 +103,6 @@ class FormularioValoracion extends Component {
   }
 
   limpiarError() {
-    console.log('limpiarError', this.state.starsSelected);
     if ( this.state.starsSelected > 0 && this.state.starsSelected <= 3 ){
       this.setState({campoRequerido: true});
     } else if( this.state.mensajeAdicional !== "") {
@@ -129,8 +124,6 @@ class FormularioValoracion extends Component {
 
   render() {
 
-    // console.log(this.props.customParamsStates.getIn(["customParams", "color_header"]) );
-
     let colorHeader = this.props.customParamsStates.getIn(["customParams", "color_header"]);
 
     // var linkStyle;
@@ -139,12 +132,6 @@ class FormularioValoracion extends Component {
     // } else {
     //   linkStyle = {color: `${colorHeader}`}
   
-    // }
-
-    console.log('this.state.starsSelected', this.state.starsSelected);
-
-    // if ( this.state.starsSelected > 3  ) {
-    //   this.setState({campoRequerido: false});
     // }
   
 
