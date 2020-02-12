@@ -56,10 +56,10 @@ class FormularioValoracion extends Component {
       this.setState({campoRequerido: true});
       return false;
     }
-    else if (this.state.mensajeAdicional === "" ) {
-      this.setState({campoRequerido: true});
-      return false;
-    }
+    // else if (this.state.starsSelected > 3 && this.state.mensajeAdicional === "" ) {
+    //   this.setState({campoRequerido: true});
+    //   return false;
+    // }
     else if (this.state.starsSelected <= 3 && this.state.mensajeAdicional === "" ) {
       this.setState({campoRequerido: true});
       return false;
@@ -149,7 +149,7 @@ class FormularioValoracion extends Component {
                   <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} onKeyUp={this.limpiarError.bind(this)} />
                 </div>
               </label>
-              { this.state.campoRequerido && this.state.respuesta === null && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
+              { this.state.campoRequerido && this.state.respuesta === null && <legend style={{color: '#ff2200', fontWeight: 700}}>*Este campo es obligatorio</legend> }
             </fieldset>
 
             <fieldset>
