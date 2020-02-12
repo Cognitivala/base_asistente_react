@@ -41,6 +41,16 @@ class FormularioValoracion extends Component {
 
   enviarValoracion = async (e) => {
     e.preventDefault();
+
+    if (
+      this.state.respuesta === null &&
+      this.state.starsSelected === 0 &&
+      this.state.mensajeAdicional === ""
+    ) {
+      this.setState({campoRequerido: true});
+      return false;
+    }
+
     if ( 
       // this.state.starsSelected > 0 && 
       this.state.starsSelected <= 3 && 
@@ -50,23 +60,7 @@ class FormularioValoracion extends Component {
       return false;
     }
 
-    if (this.state.respuesta === null) {
-      this.setState({campoRequerido: true});
-      return false;
-    }
-
-    if (this.state.starsSelected === 0) {
-      this.setState({campoRequerido: true});
-      return false;
-    }
-
-    // if (
-    //   this.state.respuesta === null ||
-    //   this.state.starsSelected === 0 ||
-    //   this.state.mensajeAdicional === ""
-    // ) {
-    //   return false;
-    // }
+    
 
     const { generalStates, sendValoracion } = this.props;
     const general = generalStates.toJS();
