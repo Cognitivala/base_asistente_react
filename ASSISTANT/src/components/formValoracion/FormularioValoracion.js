@@ -50,13 +50,23 @@ class FormularioValoracion extends Component {
       return false;
     }
 
-    if (
-      this.state.respuesta === null ||
-      this.state.starsSelected === 0 ||
-      this.state.mensajeAdicional === ""
-    ) {
+    if (this.state.respuesta === null) {
+      this.setState({campoRequerido: true});
       return false;
     }
+
+    if (this.state.starsSelected === 0) {
+      this.setState({campoRequerido: true});
+      return false;
+    }
+
+    // if (
+    //   this.state.respuesta === null ||
+    //   this.state.starsSelected === 0 ||
+    //   this.state.mensajeAdicional === ""
+    // ) {
+    //   return false;
+    // }
 
     const { generalStates, sendValoracion } = this.props;
     const general = generalStates.toJS();
@@ -139,6 +149,7 @@ class FormularioValoracion extends Component {
                   <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} />
                 </div>
               </label>
+              { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
             </fieldset>
 
             <fieldset>
@@ -161,6 +172,8 @@ class FormularioValoracion extends Component {
                   {this.state.starsSelected === 5 && ( <p>¡Excelente servicio! <span role="img" aria-label=""> 😃</span></p> )}
                 </div>
               </div>
+
+              { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
             </fieldset>
 
             <fieldset>
@@ -168,6 +181,7 @@ class FormularioValoracion extends Component {
                 ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente:
               </legend>
               <textarea onKeyUp={this.limpiarError.bind(this)} style={ this.state.campoRequerido ? { border: '.1rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
+              
               { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
               
             </fieldset>
