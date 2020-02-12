@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import Star from "./Star";
 
 import "./FormValoracion.scss";
-import ConversationLoader from "../conversation/conversation-loader";
 
 const style = {
   boxStar: {
@@ -49,16 +48,18 @@ class FormularioValoracion extends Component {
     ) {
       this.setState({campoRequerido: true});
       return false;
+    } else if (this.state.starsSelected <= 3 ) {
+      this.setState({campoRequerido: true});
     }
 
-    if ( 
-      // this.state.starsSelected > 0 && 
-      this.state.starsSelected <= 3 && 
-      this.state.mensajeAdicional === ""
-    ) {
-      this.setState({campoRequerido: true});
-      return false;
-    }
+    // if ( 
+    //   // this.state.starsSelected > 0 && 
+    //   this.state.starsSelected <= 3 && 
+    //   this.state.mensajeAdicional === ""
+    // ) {
+    //   this.setState({campoRequerido: true});
+    //   return false;
+    // }
 
     
 
@@ -106,14 +107,6 @@ class FormularioValoracion extends Component {
     // } else {
     //   linkStyle = {color: `${colorHeader}`}
     // }
-
-    // const { mainCss } = this.props;
-
-    // if (this.props.conversationsStates.get("loading")) {
-    //   return <ConversationLoader active={true} mainCss={mainCss} />;
-    // } else {
-      
-    // }
   
     return (
       <div className="conversationBubbleForm Send">
@@ -143,7 +136,7 @@ class FormularioValoracion extends Component {
                   <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} />
                 </div>
               </label>
-              {/* { this.state.campoRequerido && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> } */}
+              { this.state.campoRequerido && this.state.respuesta === null && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
             </fieldset>
 
             <fieldset>
