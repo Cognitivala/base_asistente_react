@@ -103,11 +103,13 @@ class FormularioValoracion extends Component {
     //   linkStyle = {color: `${colorHeader}`}
     // }
 
-    const { mainCss } = this.props;
+    // const { mainCss } = this.props;
 
-    if (this.props.conversationsStates.get("loading")) {
-      return <ConversationLoader active={true} mainCss={mainCss} />;
-    } else {
+    // if (this.props.conversationsStates.get("loading")) {
+    //   return <ConversationLoader active={true} mainCss={mainCss} />;
+    // } else {
+      
+    // }
   
     return (
       <div className="conversationBubbleForm Send">
@@ -178,8 +180,6 @@ class FormularioValoracion extends Component {
         </div>
       </div>
     );
-  }
-
   }
 }
 
