@@ -20,7 +20,8 @@ class FormularioValoracion extends Component {
   state = {
     respuesta: null,
     starsSelected: 0,
-    mensajeAdicional: ""
+    mensajeAdicional: "",
+    campoRequerido: false
   };
 
   handleOptionChange = e => {
@@ -34,13 +35,36 @@ class FormularioValoracion extends Component {
 
   enviarValoracion = async (e) => {
     e.preventDefault();
+    
     if (
-      this.state.respuesta === null ||
-      this.state.starsSelected === 0 ||
+      this.state.respuesta === null &&
+      this.state.starsSelected === 0 &&
       this.state.mensajeAdicional === ""
     ) {
+      this.setState({campoRequerido: true});
+      return false;
+    } else if (this.state.respuesta === null ) {
+      this.setState({campoRequerido: true});
       return false;
     }
+    else if (this.state.starsSelected === 0 ) {
+      this.setState({campoRequerido: true});
+      return false;
+    } else if (this.state.starsSelected > 3 ) {
+      this.setState({campoRequerido: false});
+    }
+    else if (this.state.starsSelected <= 3 && this.state.mensajeAdicional === "" ) {
+      this.setState({campoRequerido: true});
+      return false;
+    }
+
+    // if (
+    //   this.state.respuesta === null ||
+    //   this.state.starsSelected === 0 ||
+    //   this.state.mensajeAdicional === ""
+    // ) {
+    //   return false;
+    // }
 
     const { generalStates, sendValoracion } = this.props;
     const general = generalStates.toJS();
