@@ -11,6 +11,10 @@ const style = {
     alignItems: "flex-end",
     justifyContent: "flex-start",
     marginBottom: "10px"
+  },
+  disable: {
+    background: '#e4e4e4',
+    color: '#757575'
   }
 };
 
