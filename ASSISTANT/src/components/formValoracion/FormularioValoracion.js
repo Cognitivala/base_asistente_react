@@ -90,6 +90,18 @@ class FormularioValoracion extends Component {
     await sendValoracion(data, general);
   };
 
+  limpiarError() {
+    if ( this.state.starsSelected > 0 && this.state.starsSelected <= 3 ){
+      this.setState({campoRequerido: true});
+    } else if( this.state.mensajeAdicional !== "") {
+      this.setState({campoRequerido: false});
+    } else if( this.state.starsSelected > 3) {
+      this.setState({campoRequerido: false});
+    } else {
+      this.setState({campoRequerido: false});
+    }
+  }
+
   render() {
     return (
       <div className="conversationBubbleForm Send">
