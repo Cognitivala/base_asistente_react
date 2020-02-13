@@ -106,6 +106,14 @@ class FormularioValoracion extends Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.starsSelected !== this.state.starsSelected) {
+      if ( this.state.starsSelected > 3  ) {
+        this.setState({campoRequerido: false});
+      }
+    }
+  }
+
   render() {
     return (
       <div className="conversationBubbleForm Send">
