@@ -195,7 +195,7 @@ class FormularioValoracion extends Component {
 
             <fieldset>
               <legend style={{ fontWeight: 100, marginBottom: "0.8rem" }}>
-                ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente:
+                ¡Gracias por tu valoración! Ayúdame a seguir mejorando, comenta en el recuadro inferior tu opinión.
               </legend>
               <textarea onKeyUp={this.limpiarError.bind(this)} style={ this.state.campoRequerido && this.state.mensajeAdicional === "" && this.state.starsSelected <= 3  ? { border: '.1rem solid #ff2200' } : null} name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
               

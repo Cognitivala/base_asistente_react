@@ -120,7 +120,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
     
         <fieldset>
             <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
-                ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
+            ¡Gracias por tu valoración! Ayúdame a seguir mejorando, comenta en el recuadro inferior tu opinión.
             </legend>
             <textarea name="por-que" rows="2" onChange={(e) => setMensajeAdicional(e.target.value)}></textarea>
         </fieldset>
