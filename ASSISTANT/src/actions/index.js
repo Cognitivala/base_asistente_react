@@ -542,7 +542,7 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                // console.log('message updateConversation:: ', response.data);
+                console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
