@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import {cleanAssistant} from '../../actions/index';
 
 export default class ConversationButtons extends Component {
   constructor(props) {
@@ -23,8 +24,8 @@ export default class ConversationButtons extends Component {
 
   closeButtonresponse(event) {
     console.log('closeButtonresponse');
-    
-    this.props.cleanAssistant();
+
+    this.props.dispatch(cleanAssistant())
   }
 
   render() {
