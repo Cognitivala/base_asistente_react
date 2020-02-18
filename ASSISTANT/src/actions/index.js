@@ -347,6 +347,20 @@ export function closeAssistant() {
         dispatch(deleteHistory());
     };
 }
+
+export function cleanAssistant() {
+    return function action(dispatch) {
+        dispatch(defaultGeneral());
+        dispatch({ type: "CLOSE_ASSISTANT" });
+        dispatch({ type: "SET_NOTIFICATION", data: null });
+        dispatch({ type: "ENABLED_INPUT" });
+        dispatch({ type: "ENABLED_HELP" });
+        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        dispatch({ type: "OPEN_LAUNCHER" });
+        dispatch(deleteHistory());
+    };
+}
+
 export function toggleMinimizedAssistant(data) {
     return function action(dispatch) {
         dispatch({ type: "TOGGLE_MINIMIZED", data });

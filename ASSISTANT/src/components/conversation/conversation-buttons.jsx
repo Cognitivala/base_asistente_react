@@ -23,17 +23,8 @@ export default class ConversationButtons extends Component {
 
   closeButtonresponse(event) {
     console.log('closeButtonresponse');
-    const $item = event.target,
-      msg = $item.dataset.msg.toString();
-    const { generalStates } = this.props,
-      general = generalStates.toJS(),
-      conversation = {
-        general,
-        msg: [msg],
-        send: "to",
-        enabled: false
-      };
-    this.props.updateConversationButton(conversation);
+    
+    this.props.cleanAssistant();
   }
 
   render() {
