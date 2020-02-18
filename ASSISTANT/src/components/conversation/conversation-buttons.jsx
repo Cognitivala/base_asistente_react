@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import {cleanAssistant} from '../../actions/index';
 
-export default class ConversationButtons extends Component {
+import { connect } from 'react-redux';
+
+class ConversationButtons extends Component {
   constructor(props) {
     super(props);
     this.sendButtonresponse = this.sendButtonresponse.bind(this);
@@ -25,7 +27,7 @@ export default class ConversationButtons extends Component {
   closeButtonresponse(event) {
     console.log('closeButtonresponse');
 
-    this.props.dispatch(cleanAssistant())
+    this.props.cleanAssistant();
   }
 
   render() {
@@ -61,3 +63,9 @@ ConversationButtons.propTypes = {
   generalStates: PropTypes.any.isRequired,
   mainCss: PropTypes.any.isRequired
 };
+
+const mapDispatchToProps = {
+  cleanAssistant,
+ };
+
+ export default connect(null, mapDispatchToProps)(ConversationButtons);
