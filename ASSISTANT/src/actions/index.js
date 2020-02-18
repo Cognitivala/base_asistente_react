@@ -350,7 +350,10 @@ export function closeAssistant() {
 
 export function cleanAssistant() {
     console.log('Llegué a cleanAssistant:: ');
+
     return function action(dispatch) {
+        // dispatch(pushConversation(data));
+        console.log('Didsparando...!');
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
