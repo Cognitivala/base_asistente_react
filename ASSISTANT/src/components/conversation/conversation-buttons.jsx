@@ -21,6 +21,21 @@ export default class ConversationButtons extends Component {
     this.props.updateConversationButton(conversation);
   }
 
+  closeButtonresponse(event) {
+    console.log('closeButtonresponse');
+    const $item = event.target,
+      msg = $item.dataset.msg.toString();
+    const { generalStates } = this.props,
+      general = generalStates.toJS(),
+      conversation = {
+        general,
+        msg: [msg],
+        send: "to",
+        enabled: false
+      };
+    this.props.updateConversationButton(conversation);
+  }
+
   render() {
     console.log('botones...');
     const { buttons, animation, send, mainCss } = this.props,
@@ -30,7 +45,7 @@ export default class ConversationButtons extends Component {
             key={i}
             className={mainCss.Btn + " " + mainCss.BtnBig}
             data-msg={map.get("value")}
-            onClick={this.sendButtonresponse}
+            onClick={ map.get("value") === 'FINALIZAR' ? this.closeButtonresponse : this.sendButtonresponse}
           >
             {map.get("title")}
           </button>
