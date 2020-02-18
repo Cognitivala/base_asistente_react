@@ -349,6 +349,7 @@ export function closeAssistant() {
 }
 
 export function cleanAssistant() {
+    console.log('Llegué a cleanAssistant:: ');
     return function action(dispatch) {
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
