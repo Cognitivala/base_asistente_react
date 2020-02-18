@@ -26,7 +26,7 @@ class ConversationButtons extends Component {
 
   closeButtonresponse() {
     console.log('closeButtonresponse');
-    this.props.cleanAssistant();
+    cleanAssistant();
   }
 
   render() {
