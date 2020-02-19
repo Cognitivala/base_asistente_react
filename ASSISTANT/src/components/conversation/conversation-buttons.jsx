@@ -29,12 +29,12 @@ class ConversationButtons extends Component {
   closeButtonresponse() {
     // console.log('closeButtonresponse');
     // dispatch({ type: "CLOSE_ASSISTANT" });
-    // dispatch({ type: "SET_NOTIFICATION", data: null });
-    // dispatch({ type: "ENABLED_INPUT" });
-    // dispatch({ type: "ENABLED_HELP" });
+    this.props.dispatch({ type: "SET_NOTIFICATION", data: null });
+    this.props.dispatch({ type: "ENABLED_INPUT" });
+    this.props.dispatch({ type: "ENABLED_HELP" });
     // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-    // dispatch({ type: "OPEN_LAUNCHER" });
-    cleanAssistant();
+    this.props.dispatch({ type: "OPEN_LAUNCHER" });
+    // cleanAssistant();
   }
 
   render() {
