@@ -8,6 +8,7 @@ class ConversationButtons extends Component {
   constructor(props) {
     super(props);
     this.sendButtonresponse = this.sendButtonresponse.bind(this);
+    this.closeButtonresponse = this.closeButtonresponse.bind(this);
     const { generalStates } = this.props;
     console.log('generalStates:: ', generalStates);
   }
