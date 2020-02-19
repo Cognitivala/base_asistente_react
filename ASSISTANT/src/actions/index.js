@@ -349,11 +349,11 @@ export function closeAssistant() {
 }
 
 export function cleanAssistant() {
-    console.log('Llegué a cleanAssistant:: ');
+    // console.log('Llegué a cleanAssistant:: ');
 
     return function action(dispatch) {
         // dispatch(pushConversation(data));
-        console.log('Didsparando...!');
+        // console.log('Didsparando...!');
         dispatch(defaultGeneral());
         // dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
@@ -560,7 +560,7 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                console.log('message updateConversation:: ', response.data);
+                // console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation:: ', response.data.buttons[0]);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (

@@ -9,8 +9,6 @@ class ConversationButtons extends Component {
     super(props);
     this.sendButtonresponse = this.sendButtonresponse.bind(this);
     this.closeButtonresponse = this.closeButtonresponse.bind(this);
-    const { generalStates } = this.props;
-    console.log('generalStates:: ', generalStates);
   }
 
   sendButtonresponse(event) {
@@ -28,18 +26,10 @@ class ConversationButtons extends Component {
   }
 
   closeButtonresponse() {
-    // console.log('closeButtonresponse');
-    // dispatch({ type: "CLOSE_ASSISTANT" });
     this.props.cleanAssistant();
-    // this.props.dispatch({ type: "SET_NOTIFICATION", data: null });
-    // this.props.dispatch({ type: "ENABLED_INPUT" });
-    // this.props.dispatch({ type: "ENABLED_HELP" });
-    // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-    // this.props.dispatch({ type: "OPEN_LAUNCHER" });
   }
 
   render() {
-    console.log('botones...');
     const { buttons, animation, send, mainCss } = this.props,
       botones = buttons.map((map, i) => {
         return (
@@ -72,9 +62,4 @@ ConversationButtons.propTypes = {
   mainCss: PropTypes.any.isRequired
 };
 
-//  const mapDispatchToProps = (dispatch) => ({
-//   cleanAssistant: () => dispatch(cleanAssistant()),
-// })
-
  export default ConversationButtons;
-//  export default connect(null, mapDispatchToProps)(ConversationButtons);
