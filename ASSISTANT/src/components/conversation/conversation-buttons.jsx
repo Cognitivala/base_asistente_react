@@ -30,12 +30,12 @@ class ConversationButtons extends Component {
   closeButtonresponse() {
     // console.log('closeButtonresponse');
     // dispatch({ type: "CLOSE_ASSISTANT" });
-    this.props.dispatch({ type: "SET_NOTIFICATION", data: null });
-    this.props.dispatch({ type: "ENABLED_INPUT" });
-    this.props.dispatch({ type: "ENABLED_HELP" });
+    this.props.cleanAssistant();
+    // this.props.dispatch({ type: "SET_NOTIFICATION", data: null });
+    // this.props.dispatch({ type: "ENABLED_INPUT" });
+    // this.props.dispatch({ type: "ENABLED_HELP" });
     // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-    this.props.dispatch({ type: "OPEN_LAUNCHER" });
-    // cleanAssistant();
+    // this.props.dispatch({ type: "OPEN_LAUNCHER" });
   }
 
   render() {
@@ -72,8 +72,9 @@ ConversationButtons.propTypes = {
   mainCss: PropTypes.any.isRequired
 };
 
- const mapDispatchToProps = (dispatch) => ({
-  cleanAssistant: () => dispatch(cleanAssistant()),
-})
+//  const mapDispatchToProps = (dispatch) => ({
+//   cleanAssistant: () => dispatch(cleanAssistant()),
+// })
 
- export default connect(null, mapDispatchToProps)(ConversationButtons);
+ export default ConversationButtons;
+//  export default connect(null, mapDispatchToProps)(ConversationButtons);
