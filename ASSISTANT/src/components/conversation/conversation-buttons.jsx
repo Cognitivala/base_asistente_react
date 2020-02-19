@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {cleanAssistant} from '../../actions/index';
 
 import { connect } from 'react-redux';
+import {cleanAssistant} from '../../actions/index';
 
 class ConversationButtons extends Component {
   constructor(props) {
@@ -25,8 +25,14 @@ class ConversationButtons extends Component {
   }
 
   closeButtonresponse() {
-    console.log('closeButtonresponse');
-    cleanAssistant();
+    // console.log('closeButtonresponse');
+    // dispatch({ type: "CLOSE_ASSISTANT" });
+    // dispatch({ type: "SET_NOTIFICATION", data: null });
+    // dispatch({ type: "ENABLED_INPUT" });
+    // dispatch({ type: "ENABLED_HELP" });
+    // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+    // dispatch({ type: "OPEN_LAUNCHER" });
+    this.props.cleanAssistant();
   }
 
   render() {
@@ -63,8 +69,8 @@ ConversationButtons.propTypes = {
   mainCss: PropTypes.any.isRequired
 };
 
-const mapDispatchToProps = {
-  cleanAssistant,
- };
+ const mapDispatchToProps = (dispatch) => ({
+  cleanAssistant: () => dispatch(cleanAssistant()),
+})
 
  export default connect(null, mapDispatchToProps)(ConversationButtons);
