@@ -11,8 +11,8 @@ class ConversationButtons extends Component {
   }
 
   sendButtonresponse(event) {
-    const $item = event.target,
-      msg = $item.dataset.msg.toString();
+    const $item = event.target;
+    const msg = $item.dataset.msg.toString();
     const { generalStates } = this.props,
       general = generalStates.toJS(),
       conversation = {
@@ -25,6 +25,8 @@ class ConversationButtons extends Component {
   }
 
   closeButtonresponse() {
+    const { generalStates } = this.props;
+    console.log('generalStates:: ', generalStates);
     // console.log('closeButtonresponse');
     // dispatch({ type: "CLOSE_ASSISTANT" });
     // dispatch({ type: "SET_NOTIFICATION", data: null });
@@ -32,7 +34,7 @@ class ConversationButtons extends Component {
     // dispatch({ type: "ENABLED_HELP" });
     // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
     // dispatch({ type: "OPEN_LAUNCHER" });
-    this.props.cleanAssistant();
+    cleanAssistant();
   }
 
   render() {
