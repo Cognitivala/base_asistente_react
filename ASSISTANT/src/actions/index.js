@@ -355,11 +355,11 @@ export function cleanAssistant() {
         // dispatch(pushConversation(data));
         console.log('Didsparando...!');
         dispatch(defaultGeneral());
-        dispatch({ type: "CLOSE_ASSISTANT" });
+        // dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
         dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
-        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     };
