@@ -8,6 +8,8 @@ class ConversationButtons extends Component {
   constructor(props) {
     super(props);
     this.sendButtonresponse = this.sendButtonresponse.bind(this);
+    const { generalStates } = this.props;
+    console.log('generalStates:: ', generalStates);
   }
 
   sendButtonresponse(event) {
@@ -25,8 +27,6 @@ class ConversationButtons extends Component {
   }
 
   closeButtonresponse() {
-    const { generalStates } = this.props;
-    console.log('generalStates:: ', generalStates);
     // console.log('closeButtonresponse');
     // dispatch({ type: "CLOSE_ASSISTANT" });
     // dispatch({ type: "SET_NOTIFICATION", data: null });
