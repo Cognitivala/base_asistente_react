@@ -360,7 +360,7 @@ export function cleanAssistant() {
         dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
         // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-        dispatch({ type: "OPEN_LAUNCHER" });
+        // dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     };
 }
