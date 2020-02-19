@@ -199,6 +199,7 @@ export default class Conversations extends Component {
     const {
         updateConversation,
         updateConversationButton,
+        cleanAssistant,
         conversationsStates,
         customParamsStates,
         generalStates,
@@ -255,6 +256,7 @@ export default class Conversations extends Component {
               animation={animation}
               send={send}
               updateConversationButton={updateConversationButton}
+              cleanAssistant={cleanAssistant}
               generalStates={generalStates}
               mainCss={mainCss}
             />
@@ -353,6 +355,7 @@ export default class Conversations extends Component {
                     setErrorValoracion,
                     setServicioValoracion,
                     updateConversationButton,
+                    cleanAssistant,
                     generalStates,
                     disabledHelp,
                     disabledInput
