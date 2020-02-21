@@ -109,9 +109,9 @@ class FormularioValoracion extends Component {
 
   limpiarError() {
 
-    console.log(this.state.starsSelected);
-    console.log(this.state.minCaracteres);
-    console.log(this.state.mensajeAdicional.length);
+    // console.log(this.state.starsSelected);
+    // console.log(this.state.minCaracteres);
+    // console.log(this.state.mensajeAdicional.length);
 
     if (this.state.starsSelected <= 3 && this.state.mensajeAdicional.length < 10){
       this.setState({minCaracteres: true});
@@ -160,7 +160,7 @@ class FormularioValoracion extends Component {
         {/* <img className={mainCss.RoundedImg} src={} alt="" /> */}
 
         <div className="containerForm" style={ colorHeader ? { borderTop: `.2rem solid ${colorHeader}` } : null} >
-          <form autoComplete="off" onSubmit={this.enviarValoracion}>
+          <form autoComplete="off" onSubmit={this.enviarValoracion} novalidate>
             <div className="headerForm">
               <p>
                 Gracias por utilizar nuestro chat. No dude en dejarnos cualquier comentario adicional.
