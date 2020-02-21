@@ -109,7 +109,7 @@ class FormularioValoracion extends Component {
     console.log(this.state.minCaracteres);
     console.log(this.state.mensajeAdicional.length);
 
-    if (this.state.starsSelected <= 3 && this.state.mensajeAdicional.length < 10){
+    if (this.state.starsSelected <= 3 && this.state.mensajeAdicional.length <= 10){
       this.setState({minCaracteres: true});
     } else {
       this.setState({minCaracteres: false});
@@ -133,6 +133,7 @@ class FormularioValoracion extends Component {
     if (prevState.starsSelected !== this.state.starsSelected) {
       if ( this.state.starsSelected > 3  ) {
         this.setState({campoRequerido: false});
+        this.setState({minCaracteres: false});
       }
     }
   }
@@ -224,7 +225,7 @@ class FormularioValoracion extends Component {
                 )
               } */}
               { this.state.campoRequerido && this.state.mensajeAdicional === "" && this.state.starsSelected <= 3 && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
-              { this.state.starsSelected <= 3 && this.state.minCaracteres && this.state.mensajeAdicional.length < 10 && <legend style={{color: '#ff2200'}}>*Debe ingresar mínimo 10 carácteres</legend> }
+              { this.state.starsSelected <= 3 && this.state.minCaracteres && this.state.mensajeAdicional.length <= 10 && <legend style={{color: '#ff2200'}}>*Debe ingresar mínimo 10 carácteres</legend> }
               
             </fieldset>
 
