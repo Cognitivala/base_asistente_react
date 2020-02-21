@@ -104,6 +104,11 @@ class FormularioValoracion extends Component {
   }
 
   limpiarError() {
+
+    console.log(this.state.starsSelected);
+    console.log(this.state.mensajeAdicional);
+    console.log(this.state.mensajeAdicional.length);
+
     if (this.state.starsSelected <= 3 && this.state.mensajeAdicional.length <= 10){
       this.setState({minCaracteres: true});
     } else {
