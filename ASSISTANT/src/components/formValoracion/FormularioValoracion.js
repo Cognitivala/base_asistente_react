@@ -104,9 +104,9 @@ class FormularioValoracion extends Component {
   }
 
   limpiarError() {
-    // if (this.state.starsSelected <= 3 ){
-    //   this.setState({minCaracteres: 10});
-    // }
+    if (this.state.starsSelected <= 3 && this.state.mensajeAdicional.length <= 10){
+      this.setState({minCaracteres: 10});
+    }
     
     if ( this.state.starsSelected > 0 && this.state.starsSelected <= 3 ){
       this.setState({campoRequerido: true});
@@ -217,7 +217,7 @@ class FormularioValoracion extends Component {
                 )
               } */}
               { this.state.campoRequerido && this.state.mensajeAdicional === "" && this.state.starsSelected <= 3 && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
-              { this.state.starsSelected > 0 && this.state.starsSelected <= 3 && this.state.minCaracteres === 10 && <legend style={{color: '#ff2200'}}>*Debe ingresar mínimo 10 carácteres</legend> }
+              { this.state.starsSelected <= 3 && this.state.mensajeAdicional.length <= 10 && <legend style={{color: '#ff2200'}}>*Debe ingresar mínimo 10 carácteres</legend> }
               
             </fieldset>
 
