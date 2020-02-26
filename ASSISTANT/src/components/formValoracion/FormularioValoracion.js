@@ -187,10 +187,12 @@ class FormularioValoracion extends Component {
               <button type="submit" style={this.state.campoRequerido && this.state.mensajeAdicional === "" ? style.disable : null}>Valorar</button>
             </fieldset>
 
-            <div>
-                    <img src={logoCognitiva} alt="Cognitiva"/>
-            </div>
+            
           </form>
+
+          <div>
+              <img src={logoCognitiva} alt="Cognitiva"/>
+          </div>
         </div>
       </div>
     );
