@@ -183,17 +183,21 @@ class FormularioValoracion extends Component {
                 </div>
               </div>
             </fieldset>
-
+    
+    
             <fieldset>
               <legend style={{ fontWeight: 100, marginBottom: "0.8rem" }}>
                 ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente:
               </legend>
-              <textarea name="mensajeAdicional" rows="2" onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
+              <textarea name="mensajeAdicional" rows="2" onKeyUp={this.limpiarError.bind(this)} style={ this.state.campoRequerido && this.state.mensajeAdicional === "" && this.state.starsSelected <= 3  ? { border: '.1rem solid #ff2200' } : null} onChange={ e => this.setState({ ...this.state, mensajeAdicional: e.target.value }) }></textarea>
+
+              { this.state.campoRequerido && this.state.mensajeAdicional === "" && this.state.starsSelected <= 3 && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
             </fieldset>
 
             <fieldset>
-              <button type="submit">Valorar</button>
+              <button type="submit" style={this.state.campoRequerido && this.state.mensajeAdicional === "" ? style.disable : null}>Valorar</button>
             </fieldset>
+
           </form>
           <div style={style.boxLogoCognitiva}>
               <img style={style.svgLogo} src={logoCognitiva} alt="Cognitiva"/>
