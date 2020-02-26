@@ -159,13 +159,13 @@ class FormularioValoracion extends Component {
 
               { this.state.campoRequerido && this.state.respuesta === null && <legend style={{color: '#ff2200', fontWeight: 700}}>*Este campo es obligatorio</legend> }
             </fieldset>
-
+              
             <fieldset>
 
               <div className="star-rating">
                 <div style={style.boxStar}>
                   {[...Array(totalStars)].map((n, i) => (
-                    <Star key={i} selected={i < this.state.starsSelected} onClick={() => this.setState({ starsSelected: i + 1 })} />
+                    <Star key={i} selected={i < this.state.starsSelected}  onClick={() => this.setState({ starsSelected: i + 1 })} />
                   ))}
                 </div>
 
@@ -178,6 +178,8 @@ class FormularioValoracion extends Component {
                   {this.state.starsSelected === 3 && ( <p>Me ayudó, pero necesita mejorar <span role="img" aria-label=""> 😐</span></p> )}
                   {this.state.starsSelected === 4 && ( <p>¡Buen servicio! <span role="img" aria-label=""> 🙂</span></p> )}
                   {this.state.starsSelected === 5 && ( <p>¡Excelente servicio! <span role="img" aria-label=""> 😃</span></p> )}
+
+                  { this.state.campoRequerido && this.state.starsSelected === 0 && <legend style={{color: '#ff2200'}}>*Este campo es obligatorio</legend> }
                 </div>
               </div>
             </fieldset>
