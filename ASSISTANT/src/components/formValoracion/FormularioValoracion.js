@@ -4,6 +4,8 @@ import Star from "./Star";
 
 import "./FormValoracion.scss";
 
+import logoCognitiva from '../../assets/images/powered-by-cognitiva.svg';
+
 const style = {
   boxStar: {
     width: "100%",
@@ -15,6 +17,16 @@ const style = {
   disable: {
     background: '#e4e4e4',
     color: '#757575'
+  },
+  boxLogoCognitiva:{
+    height: 'auto',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: '0 20px',
+  },
+  svgLogo: {
+    width: '38%'
   }
 };
 
@@ -238,6 +250,9 @@ class FormularioValoracion extends Component {
               <button type="submit" style={this.state.campoRequerido && this.state.mensajeAdicional === "" ? style.disable : null}>Valorar</button> 
             </fieldset>
           </form>
+          <div style={style.boxLogoCognitiva}>
+              <img style={style.svgLogo} src={logoCognitiva} alt="Cognitiva"/>
+          </div>
         </div>
       </div>
     );
