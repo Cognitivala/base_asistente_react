@@ -83,7 +83,7 @@ export default class Header extends Component {
                 {
                 this.props.user ? 
                 // this.props.user.replace('%20', ' ').replace('%20', ' ').replace('%20', ' ')
-                this.props.user.uppercase().replace(/%20/g, ' ').replace('%C3%91', 'Ñ')
+                this.props.user.toUpperCase().replace(/%20/g, ' ').replace('%C3%91', 'Ñ')
                 : ''
                 }!
               </h3> {/* {getUrlParams(getState, 'user')} */}
