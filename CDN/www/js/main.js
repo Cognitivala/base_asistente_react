@@ -14,7 +14,7 @@
 
         createIframe() {
             var div = document.createElement("div"),
-                ifrm = document.createElement("iframe");
+                ifrm = document.createElement("object");
 
             ifrm.setAttribute("id", "ifrm-assitant");
             ifrm.classList.add("iframe-cognitive-assistant-container");
@@ -22,7 +22,7 @@
             ifrm.classList.add("notification");
             ifrm.setAttribute("allow", "geolocation *;");
             ifrm.setAttribute("allow", "microphone *;");
-            ifrm.setAttribute("src", this.src);
+            ifrm.setAttribute("data", this.src);
             ifrm.setAttribute("data-origin", this.origin);
             div.appendChild(ifrm);
             document.body.appendChild(div);
