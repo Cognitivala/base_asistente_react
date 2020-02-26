@@ -14,7 +14,7 @@
 
         createIframe() {
             var div = document.createElement("div"),
-                ifrm = document.createElement("object");
+                ifrm = document.createElement("iframe");
 
             ifrm.setAttribute("id", "ifrm-assitant");
             ifrm.classList.add("iframe-cognitive-assistant-container");
@@ -22,7 +22,7 @@
             ifrm.classList.add("notification");
             ifrm.setAttribute("allow", "geolocation *;");
             ifrm.setAttribute("allow", "microphone *;");
-            ifrm.setAttribute("data", this.src);
+            ifrm.setAttribute("src", this.src);
             ifrm.setAttribute("data-origin", this.origin);
             div.appendChild(ifrm);
             document.body.appendChild(div);
@@ -80,7 +80,7 @@
             css +=
                 ".iframe-cognitive-assistant-container.active {opacity: 1;transform: translate3d(0,0,0);pointer-events: auto;}";
             css +=
-                ".iframe-cognitive-assistant-container.notification{ height: 320px; width: 100%;max-width: 365px;box-shadow: none;right: 0;bottom: 0; }";
+                ".iframe-cognitive-assistant-container.notification{ height: 200px; width: 220px;max-width: 365px;box-shadow: none;right: 0;bottom: 0; }";
             css +=
                 ".iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%;max-width: 401px;right: 0px;bottom: 0px; }";
             css +=
