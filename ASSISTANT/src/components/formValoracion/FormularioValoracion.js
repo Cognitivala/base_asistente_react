@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Star from "./Star";
 
+import logoCognitiva from '../../assets/images/powered-by-cognitiva.svg';
+
 import "./FormValoracion.scss";
 
 const style = {
