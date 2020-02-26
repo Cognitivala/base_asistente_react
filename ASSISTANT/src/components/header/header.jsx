@@ -79,12 +79,11 @@ export default class Header extends Component {
             <div className={mainCss.HeaderText} onClick={this.showMore}>
               {/* <h3>¡Hola!</h3> */}
               <h3>
-                ¡Hola 
-                {
-                this.props.user ? 
+                ¡Hola {
+                  this.props.user ? 
                 // this.props.user.replace('%20', ' ').replace('%20', ' ').replace('%20', ' ')
-                this.props.user.toUpperCase().replace(/%20/g, ' ').replace('%C3%91', 'Ñ')
-                : ''
+                  this.props.user.toUpperCase().replace(/%20/g, ' ').replace('%C3%91', 'Ñ')
+                  : ''
                 }!
               </h3> {/* {getUrlParams(getState, 'user')} */}
               <p dangerouslySetInnerHTML={{ __html: this.props.saludo }}>
