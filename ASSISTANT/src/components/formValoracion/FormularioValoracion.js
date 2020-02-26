@@ -11,6 +11,16 @@ const style = {
     alignItems: "flex-end",
     justifyContent: "flex-start",
     marginBottom: "10px"
+  },
+  boxLogoCognitiva:{
+    height: 'auto',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    padding: '0 20px',
+  },
+  svgLogo: {
+    width: '38%'
   }
 };
 
@@ -131,6 +141,9 @@ class FormularioValoracion extends Component {
               <button type="submit">Valorar</button>
             </fieldset>
           </form>
+          <div style={style.boxLogoCognitiva}>
+              <img style={style.svgLogo} src={logoCognitiva} alt="Cognitiva"/>
+          </div>
         </div>
       </div>
     );
