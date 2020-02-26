@@ -78,12 +78,15 @@ export default class Header extends Component {
             {this.fillCloseButton(mainCss, responsive)}
             <div className={mainCss.HeaderText} onClick={this.showMore}>
               {/* <h3>¡Hola!</h3> */}
-              <h3>¡Hola {
+              <h3>
+                ¡Hola 
+                {
                 this.props.user ? 
                 // this.props.user.replace('%20', ' ').replace('%20', ' ').replace('%20', ' ')
-                this.props.user.replace(/%20/g, ' ').replace('%C3%91', 'Ñ')
+                this.props.user.uppercase().replace(/%20/g, ' ').replace('%C3%91', 'Ñ')
                 : ''
-                }!</h3> {/* {getUrlParams(getState, 'user')} */}
+                }!
+              </h3> {/* {getUrlParams(getState, 'user')} */}
               <p dangerouslySetInnerHTML={{ __html: this.props.saludo }}>
   
               {/* Hola soy el Asistente Digital de DUOC Educación Continua y estoy aquí para ayudarte a dar respuestas a tus preguntas sobre: Cursos, Cursos/SAP o Diplomados. */}
