@@ -146,16 +146,18 @@ class FormularioValoracion extends Component {
                 <div className="round">
                   <div className={ this.state.respuesta === "si" ? "active circle" : " circle" }></div>
                   Sí
-                  <input type="radio" name="desicion" value="si" checked={this.state.respuesta === "si"} onChange={this.handleOptionChange} />
+                  <input type="radio" name="desicion" value="si" checked={this.state.respuesta === "si"} onChange={this.handleOptionChange} onKeyUp={this.limpiarError.bind(this)} />
                 </div>
               </label>
               <label>
                 <div className="round">
                   <div className={ this.state.respuesta === "no" ? "active circle" : " circle" }></div>
                   No
-                  <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} />
+                  <input type="radio" name="desicion" value="no" checked={this.state.respuesta === "no"} onChange={this.handleOptionChange} onKeyUp={this.limpiarError.bind(this)} />
                 </div>
               </label>
+
+              { this.state.campoRequerido && this.state.respuesta === null && <legend style={{color: '#ff2200', fontWeight: 700}}>*Este campo es obligatorio</legend> }
             </fieldset>
 
             <fieldset>
