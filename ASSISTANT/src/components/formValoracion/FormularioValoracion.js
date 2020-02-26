@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Star from "./Star";
 
+import logoCognitiva from '../../assets/images/powered-by-cognitiva.svg';
+
 import "./FormValoracion.scss";
 
 const style = {
@@ -184,6 +186,10 @@ class FormularioValoracion extends Component {
             <fieldset>
               <button type="submit" style={this.state.campoRequerido && this.state.mensajeAdicional === "" ? style.disable : null}>Valorar</button>
             </fieldset>
+
+            <div>
+                    <img src={logoCognitiva} alt="Cognitiva"/>
+            </div>
           </form>
         </div>
       </div>
