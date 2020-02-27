@@ -827,6 +827,9 @@ function messageResponse(dispatch, data) {
             default:
                 break;
         }
+    } else if (data.end_conversation === true) {
+        dispatch(pushConversation(data));
+        dispatch({ type: "DISABLED_INPUT" });
     } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
