@@ -17,6 +17,7 @@ import ConversationLikes from "./conversation-likes";
 import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
 import FormularioValoracion from "../formValoracion/FormularioValoracion";
+import CalendarAssistant from '../datepicker/datepicker-conversation'
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -202,12 +203,15 @@ export default class Conversations extends Component {
         conversationsStates,
         customParamsStates,
         generalStates,
+        inputStates,
         mainCss
       } = this.props,
       sizeConversation = conversationsStates.get("conversations").size,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
-      userImg = customParamsStates.getIn(["customParams", "userImg"]);
+      userImg = customParamsStates.getIn(["customParams", "userImg"]),
+      calendarShow = inputStates.get('calendarShow'),
+      calendarDates = inputStates.get('calendarDates');
 
     return conversationsStates.get("conversations").map((map, j) => {
       const conversation = map,
@@ -334,6 +338,18 @@ export default class Conversations extends Component {
               mainCss={mainCss}
             />
           );
+        }
+
+        if (calendarShow) {
+          const { generalStates } = this.props;
+          retorno.push(
+            <CalendarAssistant
+              key={j}
+              days={calendarDates}
+              func={updateConversationButton}
+              generalStates={generalStates}
+            />
+          )
         }
 
         //Sólo si es la última conversación y tiene para levantar modal

@@ -1256,6 +1256,9 @@ export function updateConversationButton(data) {
             };
         default:
             return function action(dispatch, getState) {
+
+                // ON BUTTON CLICK
+
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
                 const request = axios({
@@ -1273,13 +1276,21 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
-                        // console.log('RESPONSE MENSAJE 3::');
+                        console.log('RESPONSE MENSAJE 3: ', response);
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
-                            dispatch(setNodoId(item.msg[item.msg.length - 1]));
-                            messageResponse(dispatch, item);
+                            
+                            
+                            if(response.data.calendar){
+                                item.msg = "Por favor elige una fecha del calendario"
+                                dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                                manageCalendar(response.data, dispatch)
+                            }else{
+                                dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                                messageResponse(dispatch, item);
+                            }
                         } else {
                             dispatch(updateConversationError(response.statusText));
                         }
@@ -1291,6 +1302,27 @@ export function updateConversationButton(data) {
             };
     }
 }
+
+function manageCalendar(response, dispatch){
+    dispatch(showCalendar(response.array_fechas))
+}
+
+// CALENDAR
+
+export function showCalendar(dates) {
+    return function action(dispatch) {
+        dispatch({ type: "SHOW_CALENDAR", dates: dates });
+    };
+}
+
+export function hideCalendar() {
+    return function action(dispatch) {
+        dispatch({ type: "HIDE_CALENDAR" });
+    };
+}
+
+// END CALENDAR
+
 //INPUT
 export function enabledInput() {
     return function action(dispatch) {

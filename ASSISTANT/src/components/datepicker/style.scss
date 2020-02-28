@@ -1,0 +1,44 @@
+// Assistant Calendar
+
+.calendar-assistant-holder{
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 20px;
+    max-width: 350px;
+    border: 1px solid #e7e7e7;
+    margin-right: 10px;
+}
+
+.calendar-assistant-title{
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    margin-bottom: 5px;
+}
+  
+.calendar-assistant-table{
+
+    width: 100%;
+
+    th{
+        font-weight: bold;
+        color: #6b6a6f;
+    }
+    td{
+        color: #e7e7e7;
+        &.active{
+        font-weight: bold;
+        }
+    }
+    td, th{
+        padding: 5px;
+        font-size: #{(12 / 16)}rem;
+        border-bottom: 1px solid #e7e7e7;
+    }
+    tr:last-child{
+        td {
+            border-bottom: 0 none;
+        }
+    }
+}
