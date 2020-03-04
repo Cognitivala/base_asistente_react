@@ -14,7 +14,6 @@ export function inputStates(
     enabledVoice: true,
     enabledInput: true,
     calendarDates: [],
-    calendarShow: false,
   }),
   action
 ) {
@@ -93,11 +92,8 @@ export function inputStates(
           .set("enabledVoice",true)
           .set("enabledInput",true)
       });
-    case "SHOW_CALENDAR":
-      return state.withMutations(map=>{
-        map.set("calendarShow",true)
-          .set("calendarDates", action.dates)
-      });
+    case "ADD_CALENDAR_DATES":
+      return state.set("calendarDates", action.dates)
     case "HIDE_CALENDAR":
       return state.set("calendarShow", false);
     default:

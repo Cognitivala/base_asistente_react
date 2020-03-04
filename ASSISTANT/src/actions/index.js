@@ -372,7 +372,7 @@ export function getAyuda() {
         });
         return request.then(
             response => {
-                // console.log('RESPONSE MENSAJE 2::');
+
                 if (response.data.estado.codigoEstado === 200) {
                     dispatch(getAyudaEnd(response.data.respuesta));
                 } else {
@@ -542,8 +542,6 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                // console.log('message updateConversation:: ', response.data);
-                // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -802,7 +800,7 @@ export function updateConversation(data) {
 }
 
 function messageResponse(dispatch, data) {
-    // console.log('messageResponse:: ', data);
+
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -828,7 +826,6 @@ function messageResponse(dispatch, data) {
                 break;
         }
     } else {
-        // console.log('data.general ', data)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -1261,6 +1258,8 @@ export function updateConversationButton(data) {
 
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
+
+                
                 const request = axios({
                     method: "POST",
                     headers: {
@@ -1276,17 +1275,20 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
-                        console.log('RESPONSE MENSAJE 3: ', response);
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
                             
                             
-                            if(response.data.calendar){
-                                item.msg = "Por favor elige una fecha del calendario"
+                            if(response.data.calendar || data.msg[0] === 'otra fecha'){
+                                item.msg = ["<prosody rate='1.1' pitch='+10%'> Elige una <break time='200ms'/> fecha.</prosody> "]
+                              
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
-                                manageCalendar(response.data, dispatch)
+                                manageCalendar(dispatch, response.data)
+                                messageResponse(dispatch, response.data)
+
+                                
                             }else{
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                                 messageResponse(dispatch, item);
@@ -1303,15 +1305,16 @@ export function updateConversationButton(data) {
     }
 }
 
-function manageCalendar(response, dispatch){
-    dispatch(showCalendar(response.array_fechas))
+function manageCalendar(dispatch, data){
+
+    dispatch(addCalendarDates(data.array_fechas))
 }
 
 // CALENDAR
 
-export function showCalendar(dates) {
+export function addCalendarDates(dates) {
     return function action(dispatch) {
-        dispatch({ type: "SHOW_CALENDAR", dates: dates });
+        dispatch({ type: "ADD_CALENDAR_DATES", dates: dates });
     };
 }
 
@@ -1501,8 +1504,6 @@ export function sendLike(data, general) {
         });
         return request.then(response => {
 
-                // console.log('RESPONSE:: ', response);
-
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1608,7 +1609,6 @@ export function sendForm(data, url, general) {
                     });
                     return request
                         .then(response => {
-                            // console.log('RESPONSE MENSAJE 5::');
                             if (
                                 response.status === 200 &&
                                 response.data.estado.codigoEstado === 200

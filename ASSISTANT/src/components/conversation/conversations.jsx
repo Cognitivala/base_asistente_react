@@ -203,17 +203,17 @@ export default class Conversations extends Component {
         conversationsStates,
         customParamsStates,
         generalStates,
+        mainCss,
         inputStates,
-        mainCss
       } = this.props,
       sizeConversation = conversationsStates.get("conversations").size,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
-      userImg = customParamsStates.getIn(["customParams", "userImg"]),
-      calendarShow = inputStates.get('calendarShow'),
-      calendarDates = inputStates.get('calendarDates');
+      userImg = customParamsStates.getIn(["customParams", "userImg"]);
+      const calendarDates = inputStates.get('calendarDates');
 
     return conversationsStates.get("conversations").map((map, j) => {
+
       const conversation = map,
         enabled = conversation.get("enabled");
       let retorno = [];
@@ -229,6 +229,7 @@ export default class Conversations extends Component {
           attach = conversation.get("attach"),
           like = conversation.get("like"),
           rating = conversation.get("rating"),
+          calendar = conversation.get("calendar"),
           last = j + 1 === sizeConversation ? true : false,
           withStars = conversation.get("withStars"),
           animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" "; //Si es la última conversa
@@ -340,16 +341,15 @@ export default class Conversations extends Component {
           );
         }
 
-        if (calendarShow) {
-          const { generalStates } = this.props;
+        if(calendar){
           retorno.push(
             <CalendarAssistant
-              key={j}
+              key={j * 60}
+              animation={animation}
               days={calendarDates}
               func={updateConversationButton}
               generalStates={generalStates}
-            />
-          )
+            />)
         }
 
         //Sólo si es la última conversación y tiene para levantar modal
@@ -462,8 +462,17 @@ export default class Conversations extends Component {
   }
 
   render() {
-    const { ayudaStates, inputStates, conversationsStates, customParamsStates, mainCss } = this.props;
+    const { 
+      ayudaStates,
+      inputStates,
+      conversationsStates,
+      customParamsStates,
+      mainCss,
+      generalStates,
+      updateConversationButton,
+    } = this.props;
     const colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
+
     let css = ayudaStates.get("open") ? " active" : "",
       cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (

@@ -16,7 +16,7 @@ export default class CalendarAssistant extends Component{
         general,
         msg: [date],
         send: "to",
-        enabled: false
+        enabled: true
     };
     this.props.func(conversation);
   }
@@ -134,7 +134,7 @@ export default class CalendarAssistant extends Component{
     });
   }
   render(){
-    const { days } = this.props;
+    const { days, animation } = this.props;
      const startDay = days[0];
      const lastDay = days[days.length - 1];
      const months = this.getCalendarData(startDay, lastDay);
@@ -142,7 +142,7 @@ export default class CalendarAssistant extends Component{
      const monthsContent = this.getMonthsContent(monthData);
 
     return (
-      <div className="align-center">
+      <div className={"align-center"+ " "+ animation}>
         { monthsContent }
       </div>
     );
@@ -151,5 +151,6 @@ export default class CalendarAssistant extends Component{
 
 CalendarAssistant.propTypes = {
   days: PropTypes.array,
-  func: PropTypes.func
+  func: PropTypes.func,
+  animation: PropTypes.string.isRequired,
 }
