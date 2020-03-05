@@ -198,16 +198,26 @@ textarea {
         }
     }
     .Notification {
+        // position: relative;
+        // bottom: 2.0rem;
+        // right: 85px;
+        // max-width: 28rem;
+        // width: 28rem;
+        // padding: 1.6rem;
+        // padding-right: 4.2rem;
+        // box-shadow: 0 0 3rem 0 rgba(0, 0, 0, 0.1);
+        // background-color: #fff;
+        // animation: notification 2s infinite linear;
+        // border-radius: 2.4rem 2.4rem 0 2.4rem;
+        // line-height: 1.8rem;
         position: relative;
-        bottom: 2.0rem;
-        right: 85px;
-        max-width: 28rem;
-        width: 28rem;
+        bottom: 2rem;
+        right: 18px;
         padding: 1.6rem;
-        padding-right: 4.2rem;
-        box-shadow: 0 0 3rem 0 rgba(0, 0, 0, 0.1);
+        box-shadow: -2px 3px 1rem 0 rgba(0, 0, 0, .1);
         background-color: #fff;
-        animation: notification 2s infinite linear;
+        -webkit-animation: main_notification__2KvGh 2s linear infinite;
+        animation: main_notification__2KvGh 2s linear infinite;
         border-radius: 2.4rem 2.4rem 0 2.4rem;
         line-height: 1.8rem;
         span {
