@@ -249,7 +249,7 @@ export function getSaludo() {
                 general: {
                     cid: null,
                     id_cliente: "1",
-                    origen: origen,
+                    origen: 1,
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
                     clave: getUrlParams(getState, 'clave')
