@@ -18,6 +18,8 @@ import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
 import FormularioValoracion from "../formValoracion/FormularioValoracion";
 import CalendarAssistant from '../datepicker/datepicker-conversation'
+import DatePicker from "react-datepicker";
+import moment from 'moment';
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -343,13 +345,22 @@ export default class Conversations extends Component {
 
         if(calendar){
           retorno.push(
-            <CalendarAssistant
-              key={j * 60}
-              animation={animation}
-              days={calendarDates}
-              func={updateConversationButton}
-              generalStates={generalStates}
-            />)
+            <DatePicker
+                onChange={date => {
+                  const general = generalStates.toJS();
+                  const conversation = {
+                      general,
+                      msg: [date.format('DD-MM-YYYY')],
+                      send: "to",
+                      enabled: true
+                  };
+                  updateConversationButton(conversation)
+                }}
+                includeDates={ last ? calendarDates.map( date => moment(date)) : [] }
+                showDisabledMonthNavigation
+                inline
+             />
+            )
         }
 
         //Sólo si es la última conversación y tiene para levantar modal
