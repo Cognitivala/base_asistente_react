@@ -2494,3 +2494,20 @@ table {
         transform: translate3d(0, 100%, 0);
     }
 }
+
+.react-datepicker{
+    width: 300px !important;
+    margin-left: 20px !important;
+}
+
+.react-datepicker__month-container{
+    width: 300px !important;
+}
+
+.react-datepicker__day-name.react-datepicker__day.react-datepicker__time-name{
+    width: 3.2rem;
+}
+
+.datepicker-container{
+    background-color: #c7254e;
+}

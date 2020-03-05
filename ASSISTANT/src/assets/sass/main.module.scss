@@ -1867,3 +1867,22 @@ textarea {
 .closeFormButton {
     margin: 0 !important;
 }
+
+.react-datepicker{
+    width: 300px !important;
+    margin-left: 20px !important;
+}
+
+.react-datepicker__month-container{
+    width: 300px !important;
+}
+
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name{
+    width: 3.2rem !important;
+}
+
+.datepicker-container{
+    background-color: #c7254e;
+}

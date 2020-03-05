@@ -20,7 +20,7 @@ import FormularioValoracion from "../formValoracion/FormularioValoracion";
 import CalendarAssistant from '../datepicker/datepicker-conversation'
 import DatePicker from "react-datepicker";
 import moment from 'moment';
-
+import style from './style.scss';
 export default class Conversations extends Component {
   constructor(props) {
     super(props);
@@ -359,6 +359,12 @@ export default class Conversations extends Component {
                 includeDates={ last ? calendarDates.map( date => moment(date)) : [] }
                 showDisabledMonthNavigation
                 inline
+                dayClassName={date => {
+                  const calendarDate = date.format("YYYY-MM-DD")
+                  const selectedDay = calendarDates.includes(calendarDate) ? "color-red" : undefined;
+                  return selectedDay;
+                  }
+                }
              />
             )
         }
