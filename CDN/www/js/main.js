@@ -80,7 +80,7 @@
             css +=
                 ".iframe-cognitive-assistant-container.active {opacity: 1;transform: translate3d(0,0,0);pointer-events: auto;}";
             css +=
-                ".iframe-cognitive-assistant-container.notification{ height: 200px; width: 250px; max-width: 365px;box-shadow: none;right: 0;bottom: 0; }";
+                ".iframe-cognitive-assistant-container.notification{ height: 200px; width: 275px; max-width: 365px;box-shadow: none;right: 0;bottom: 0; }";
             css +=
                 ".iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%;max-width: 401px;right: 0px;bottom: 0px; }";
             css +=
