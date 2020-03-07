@@ -245,6 +245,9 @@ export default class Input extends Component {
           autoComplete="off"
           id="inputMessage"
         />
+         // const [count, setCount] = useState('');
+        // <input onChange={(e) => setCount(e.target.value)} maxLength='10'  /> 
+        // {count.length}/10
       );
     }else{
       return (
