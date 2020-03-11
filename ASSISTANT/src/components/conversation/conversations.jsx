@@ -465,8 +465,8 @@ export default class Conversations extends Component {
           data-conversation=""
           ref={this.test}
         >
-          <h2>hola</h2>
           {this.fillConversation()}
+          <h2>hola</h2>
         </section>
       </IsFetching>
     );
