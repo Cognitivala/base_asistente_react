@@ -8,17 +8,22 @@ const FormAsistencia = (props) => {
 
     // const general = generalStates.toJS();
 
-    const [inputAsistencia, setInputAsistencia] = useState('');
+    // const [inputAsistencia, setInputAsistencia] = useState('');
+
+    const onChange = (e) => {
+        console.log(onChange);
+        // setInputAsistencia(e.target.value);
+    }
 
     const enviarAsistencia = (e) =>{
         e.preventDefault();
-        if(inputAsistencia === null || inputAsistencia === 0 || inputAsistencia === '') {
-            return false;
-        }
-        const data = {
-            usuarioAmsa: inputAsistencia,
-        }
-        console.log('DATA VALORACIÓN:: ', data);
+        // if(inputAsistencia === null || inputAsistencia === 0 || inputAsistencia === '') {
+        //     return false;
+        // }
+        // const data = {
+        //     usuarioAmsa: inputAsistencia,
+        // }
+        // console.log('DATA VALORACIÓN:: ', data);
         // sendValoracion(data, general);
     }
 
@@ -36,7 +41,7 @@ const FormAsistencia = (props) => {
                             ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
                         </legend>
 
-                        <input name="asistencia" onChange={(e) => setInputAsistencia(e.target.value)} />
+                        <input name="asistencia" onChange={onChange} />
                     </fieldset>
 
                     <fieldset>
