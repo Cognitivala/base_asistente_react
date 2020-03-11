@@ -1,55 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState} from 'react'
+import PropTypes from 'prop-types'
 
-// import logoCognitiva from '../../assets/images/powered-by-cognitiva.svg';
-import './FormAsistencia.scss';
-
-
-const FormAsistencia = (props) => {
-
-    // const general = generalStates.toJS();
-
-    const [usuarioAmsa, setUsuarioAmsa] = useState(null);
-
-    const onChange = (e) => {
-        console.log(onChange);
-        // setInputAsistencia(e.target.value);
-    }
-
-    const enviarAsistencia = (e) =>{
-        e.preventDefault();
-        // if(inputAsistencia === null || inputAsistencia === 0 || inputAsistencia === '') {
-        //     return false;
-        // }
-        // const data = {
-        //     usuarioAmsa: inputAsistencia,
-        // }
-        // console.log('DATA VALORACIÓN:: ', data);
-        // sendValoracion(data, general);
-    }
-
+const FormAsistencia = props => {
+    const [usuarioAmsa, setUsuarioAmsa] = useState('');
     return (
-        <div className='conversationBubbleForm Send'>
-            <div className='containerForm'>
-                <form autoComplete="off" onSubmit={enviarAsistencia}>
-                    
-                    <div className="headerForm">
-                        <p>Gracias por utilizar nuestro chat. No dude en dejarnos cualquier comentario adicional.</p>
-                    </div>   
-                
-                    <fieldset>
-                        <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
-                            ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
-                        </legend>
-
-                        <input name="asistencia" onChange={onChange} />
-                    </fieldset>
-
-                    <fieldset>
-                        <button type="submit">Enviar</button>
-                    </fieldset>
-
-                </form>
-            </div>
+        <div>
+            hola!
         </div>
     )
 }
