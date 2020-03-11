@@ -23,6 +23,7 @@ export default class Conversations extends Component {
     super(props);
     this.test = React.createRef();
     this.handleScroll = this.handleScroll.bind(this);
+    this.state = { asistencia: false }
   }
 
   componentDidUpdate(nextProps) {
@@ -441,10 +442,20 @@ export default class Conversations extends Component {
               <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
             );
           }
+          else if ( this.state.asistencia ) {
+            retorno.push(
+              <FormularioValoracion key={`${j} * 55`}   />
+            )
+          }
         }
       }
       return retorno;
     });
+  }
+
+  verAsistencia(value) {
+    console.log('Asistencia:: ', value);
+    this.setState({asistencia: value});
   }
 
   render() {
@@ -466,7 +477,9 @@ export default class Conversations extends Component {
           ref={this.test}
         >
           {this.fillConversation()}
-          <h2>hola</h2>
+          <div>
+            <i className="fas fa-paperclip" onClick={this.verAsistencia(!this.state.asistencia)} />
+          </div>
         </section>
       </IsFetching>
     );
