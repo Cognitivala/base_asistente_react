@@ -16,7 +16,7 @@ const FormAsistencia = (props) => {
             return false;
         }
         const data = {
-            input: inputAsistencia,
+            usuarioAmsa: inputAsistencia,
         }
         console.log('DATA VALORACIÓN:: ', data);
         // sendValoracion(data, general);
