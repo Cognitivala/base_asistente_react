@@ -452,10 +452,12 @@ export default class Conversations extends Component {
           }
           else if ( this.state.asistencia ) {
             const { sendValoracion, generalStates } = this.props;
-            // retorno.push(<FormAsistencia key={`${j} * 535`} />)
             retorno.push(
-              <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormAsistencia key={`${j} * 535`} />
             )
+            // retorno.push(
+            //   <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
+            // )
           }
         }
       }
