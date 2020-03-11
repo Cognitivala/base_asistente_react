@@ -442,7 +442,6 @@ export default class Conversations extends Component {
               />
             );
           } 
-          
           else if ( rating ) {
             const { sendValoracion, generalStates } = this.props;
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
@@ -450,14 +449,10 @@ export default class Conversations extends Component {
               <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
             );
           }
-          else if ( this.state.asistencia ) {
-            const { sendValoracion, generalStates } = this.props;
+          else if ( this.state.asistencia === true) {
             retorno.push(
               <FormAsistencia key={`${j} * 535`} />
             )
-            // retorno.push(
-            //   <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
-            // )
           }
         }
       }

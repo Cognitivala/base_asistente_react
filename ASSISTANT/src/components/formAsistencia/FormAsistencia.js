@@ -19,35 +19,33 @@ const FormAsistencia = (props) => {
             usuarioAmsa: inputAsistencia,
         }
         console.log('DATA VALORACIÓN:: ', data);
-        // sendValoracion(data, general);
+        sendValoracion(data, general);
     }
 
     return (
         <div className='conversationBubbleForm Send'>
-      {/* <img className={mainCss.RoundedImg} src={} alt="" /> */}
+            <div className='containerForm'>
+                <form autoComplete="off" onSubmit={enviarAsistencia}>
+                    
+                    <div className="headerForm">
+                        <p>Gracias por utilizar nuestro chat. No dude en dejarnos cualquier comentario adicional.</p>
+                    </div>   
+                
+                    <fieldset>
+                        <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
+                            ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
+                        </legend>
 
-      <div className='containerForm'>
-      
-      <form autoComplete="off" onSubmit={enviarAsistencia}>
-        
-        <div className="headerForm">
-            <p>Gracias por utilizar nuestro chat. No dude en dejarnos cualquier comentario adicional.</p>
-        </div>   
-    
-        <fieldset>
-            <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
-                ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
-            </legend>
+                        <input name="asistencia" onChange={(e) => setInputAsistencia(e.target.value)} />
+                    </fieldset>
 
-            <input name="por-que" rows="2" onChange={(e) => setInputAsistencia(e.target.value)}></input>
-        </fieldset>
+                    <fieldset>
+                        <button type="submit">Enviar</button>
+                    </fieldset>
 
-        <fieldset>
-            <button type="submit" >Enviar</button>
-        </fieldset>
-        </form>
-      </div>
-    </div>
+                </form>
+            </div>
+        </div>
     )
 }
 
