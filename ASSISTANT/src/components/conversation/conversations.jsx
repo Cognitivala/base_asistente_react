@@ -46,10 +46,6 @@ export default class Conversations extends Component {
     this.scrollToBottom();
   }
 
-  verAsistencia(value) {
-    console.log('Asistencia:: ', value);
-    this.setState({asistencia: value});
-  }
 
   componentWillMount(){
     
@@ -67,6 +63,11 @@ export default class Conversations extends Component {
       if(buttons || selects || multibuttons || datepicker || files || attach || like || withStars){
         disabledInput();
       }
+  }
+
+  verAsistencia(value) {
+    console.log('Asistencia:: ', value);
+    this.setState({asistencia: value});
   }
 
   handleScroll(event) {
@@ -481,7 +482,7 @@ export default class Conversations extends Component {
         >
           {this.fillConversation()}
           <div>
-            <i className="fas fa-paperclip" onClick={this.verAsistencia(!this.state.asistencia)} />
+            <i className="fas fa-paperclip" onClick={ () => this.verAsistencia(!this.state.asistencia)} />
           </div>
         </section>
       </IsFetching>
