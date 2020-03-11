@@ -467,8 +467,7 @@ export default class Conversations extends Component {
   render() {
     const { ayudaStates, inputStates, conversationsStates, customParamsStates, mainCss } = this.props;
     const colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
-    let css = ayudaStates.get("open") ? " active" : "",
-      cssHolder = inputStates.get("enabled") ? "" : " holder";
+    let css = ayudaStates.get("open") ? " active" : "", cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
       <IsFetching
         isFetching={conversationsStates.get("isFetching")}
@@ -476,11 +475,8 @@ export default class Conversations extends Component {
       >
         <section
           // onScroll={this.handleScroll}
-          className={
-            mainCss.ConversationHolder + " " + css + cssHolder
-          }
-          data-conversation=""
-          ref={this.test}
+          className={ mainCss.ConversationHolder + " " + css + cssHolder }
+          data-conversation="" ref={this.test}
         >
           {this.fillConversation()}
           <div>
