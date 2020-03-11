@@ -61,7 +61,7 @@ const FormValoracion = ({ generalStates, sendValoracion}) => {
         }
         // console.log('DATA VALORACIÓN:: ', data);
         // sendLike(data, general);
-        debugger;
+        // debugger;
         sendValoracion(data, general);
     }
 

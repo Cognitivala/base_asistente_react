@@ -17,6 +17,7 @@ import ConversationLikes from "./conversation-likes";
 import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
 import FormularioValoracion from "../formValoracion/FormularioValoracion";
+import FormAsistencia from "../formAsistencia/FormAsistencia";
 
 export default class Conversations extends Component {
   constructor(props) {
@@ -450,8 +451,9 @@ export default class Conversations extends Component {
             );
           }
           else if ( this.state.asistencia ) {
+            const { sendValoracion, generalStates } = this.props;
             retorno.push(
-              <FormularioValoracion key={`${j} * 55`}   />
+              <FormAsistencia key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion}  />
             )
           }
         }
