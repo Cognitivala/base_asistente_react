@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
-import logoCognitiva from '../../assets/images/powered-by-cognitiva.svg';
-import './FormValoracion.scss';
+// import logoCognitiva from '../../assets/images/powered-by-cognitiva.svg';
+import './FormAsistencia.scss';
 
 
 
