@@ -12,7 +12,6 @@ const FormAsistencia = ({ generalStates, sendValoracion}) => {
     const [inputAsistencia, setInputAsistencia] = useState('');
 
     const enviarAsistencia = (e) =>{
-        // console.log('Llegué a enviarValoracion:: ');
         e.preventDefault();
         if(inputAsistencia === null || inputAsistencia === 0 || inputAsistencia === '') {
             return false;
