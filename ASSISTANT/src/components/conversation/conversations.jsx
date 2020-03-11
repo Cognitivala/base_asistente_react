@@ -45,6 +45,11 @@ export default class Conversations extends Component {
     this.scrollToBottom();
   }
 
+  verAsistencia(value) {
+    console.log('Asistencia:: ', value);
+    this.setState({asistencia: value});
+  }
+
   componentWillMount(){
     
     const { conversationsStates, disabledInput } = this.props,
@@ -453,10 +458,7 @@ export default class Conversations extends Component {
     });
   }
 
-  verAsistencia(value) {
-    console.log('Asistencia:: ', value);
-    this.setState({asistencia: value});
-  }
+  
 
   render() {
     const { ayudaStates, inputStates, conversationsStates, customParamsStates, mainCss } = this.props;
