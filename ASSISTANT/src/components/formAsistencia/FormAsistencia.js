@@ -4,10 +4,9 @@ import React, {useState} from 'react';
 import './FormAsistencia.scss';
 
 
+const FormAsistencia = (props) => {
 
-const FormAsistencia = ({ generalStates, sendValoracion}) => {
-
-    const general = generalStates.toJS();
+    // const general = generalStates.toJS();
 
     const [inputAsistencia, setInputAsistencia] = useState('');
 
@@ -19,7 +18,7 @@ const FormAsistencia = ({ generalStates, sendValoracion}) => {
         const data = {
             input: inputAsistencia,
         }
-        // console.log('DATA VALORACIÓN:: ', data);
+        console.log('DATA VALORACIÓN:: ', data);
         // sendValoracion(data, general);
     }
 
