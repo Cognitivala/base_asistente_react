@@ -266,7 +266,6 @@ export default class Input extends Component {
             {this.fillInput()}
             {this.fillAttach()}
             {this.fillHelp(positionHelp)}
-            <div>hola!</div>
             {this.fillSend()}
           </div>
         </IsFetching>
