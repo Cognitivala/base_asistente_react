@@ -19,7 +19,7 @@ const FormAsistencia = (props) => {
             usuarioAmsa: inputAsistencia,
         }
         console.log('DATA VALORACIÓN:: ', data);
-        sendValoracion(data, general);
+        // sendValoracion(data, general);
     }
 
     return (
