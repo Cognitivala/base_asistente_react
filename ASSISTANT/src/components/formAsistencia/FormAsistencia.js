@@ -8,7 +8,7 @@ const FormAsistencia = (props) => {
 
     // const general = generalStates.toJS();
 
-    // const [inputAsistencia, setInputAsistencia] = useState('');
+    const [usuarioAmsa, setUsuarioAmsa] = useState(null);
 
     const onChange = (e) => {
         console.log(onChange);
