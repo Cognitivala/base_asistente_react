@@ -15,6 +15,8 @@ export default class ConversationButtons extends Component {
     console.log('INDEX: ', index);
 
     var element = document.getElementById(index);
+    console.log('element:: ', element);
+    
     element.classList.toggle("botonActive");
 
     const $item = event.target;
