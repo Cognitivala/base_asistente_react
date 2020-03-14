@@ -16,8 +16,8 @@ export default class ConversationButtons extends Component {
     var element = document.getElementById(index);
     element.classList.toggle("botonActive");
 
-    const $item = event.target,
-      msg = $item.dataset.msg.toString();
+    const $item = event.target;
+    const msg = $item.dataset.msg.toString();
     const { generalStates } = this.props,
       general = generalStates.toJS(),
       conversation = {
@@ -35,7 +35,7 @@ export default class ConversationButtons extends Component {
     const { buttons, animation, send, mainCss } = this.props,
       botones = buttons.map((map, i) => {
         return (
-          <button id={i} data-index={i} key={i} className={mainCss.Btn + " " + mainCss.BtnBig} data-msg={map.get("value")} onClick={this.sendButtonresponse} >
+          <button id={map.get("value")} data-index={map.get("value")} key={i} className={mainCss.Btn + " " + mainCss.BtnBig} data-msg={map.get("value")} onClick={this.sendButtonresponse} >
             {map.get("title")}
           </button>
         );
