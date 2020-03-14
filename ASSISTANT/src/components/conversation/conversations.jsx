@@ -479,9 +479,9 @@ export default class Conversations extends Component {
           data-conversation="" ref={this.test}
         >
           {this.fillConversation()}
-          <div>
+          {/* <div className='asistencia'>
             <i className="fas fa-paperclip" onClick={ () => this.verAsistencia(!this.state.asistencia)} />
-          </div>
+          </div> */}
         </section>
       </IsFetching>
     );
