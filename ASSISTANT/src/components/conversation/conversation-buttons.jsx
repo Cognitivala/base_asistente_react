@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { v4 as uuidv4 } from 'uuid';
 
 import './conversation-buttons.css';
 
@@ -35,7 +36,7 @@ export default class ConversationButtons extends Component {
     const { buttons, animation, send, mainCss } = this.props,
       botones = buttons.map((map, i) => {
         return (
-          <button id={map.get("value")} data-index={map.get("value")} key={i} className={mainCss.Btn + " " + mainCss.BtnBig} data-msg={map.get("value")} onClick={this.sendButtonresponse} >
+          <button id={uuidv4()} data-index={uuidv4()} key={i} className={mainCss.Btn + " " + mainCss.BtnBig} data-msg={map.get("value")} onClick={this.sendButtonresponse} >
             {map.get("title")}
           </button>
         );
