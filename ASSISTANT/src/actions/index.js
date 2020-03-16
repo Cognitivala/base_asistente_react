@@ -46,7 +46,7 @@ export function getLocation() {
 
         location
             .then(res => {
-                const keyGoogleMaps = "AIzaSyDcsYlKbJi5SIYzYtZuaXEkTZXiXBLrym8",
+                const keyGoogleMaps = "AIzaSyDBcsn5BcZvyssmnCUlKsgRPPJq1eYjjC0",
                     latitud = res.coords.latitude.toString(),
                     longitud = res.coords.longitude.toString();
                 Geocode.setApiKey(keyGoogleMaps);
