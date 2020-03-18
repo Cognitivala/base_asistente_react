@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import {cleanAssistant} from '../../actions/index';
 import { v4 as uuidv4 } from 'uuid';
 
+import './conversation-buttons.css'
+
 class ConversationButtons extends Component {
   constructor(props) {
     super(props);
