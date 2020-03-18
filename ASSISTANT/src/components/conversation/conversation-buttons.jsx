@@ -32,12 +32,14 @@ class ConversationButtons extends Component {
   render() {
     const { buttons, animation, send, mainCss } = this.props,
       botones = buttons.map((map, i) => {
+        let idAux = uuidv4();
         return (
-          <button
-            key={i}
-            className={mainCss.Btn + " " + mainCss.BtnBig}
-            data-msg={map.get("value")}
-            onClick={ map.get("value") === 'FINALIZAR' ? this.closeButtonresponse : this.sendButtonresponse}
+          <button 
+          id={idAux} data-index={idAux} 
+          key={i} 
+          className={mainCss.Btn + " " + mainCss.BtnBig} 
+          data-msg={map.get("value")} 
+          onClick={ map.get("value") === 'FINALIZAR' ? this.closeButtonresponse : this.sendButtonresponse}
             // onClick={this.sendButtonresponse}
           >
             {map.get("title")}
