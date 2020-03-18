@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 import { connect } from 'react-redux';
 import {cleanAssistant} from '../../actions/index';
+import { v4 as uuidv4 } from 'uuid';
 
 class ConversationButtons extends Component {
   constructor(props) {
@@ -12,6 +13,10 @@ class ConversationButtons extends Component {
   }
 
   sendButtonresponse(event) {
+    const index = event.currentTarget.dataset.index;
+    var element = document.getElementById(index);
+    element.classList.toggle("botonActive");
+
     const $item = event.target;
     const msg = $item.dataset.msg.toString();
     const { generalStates } = this.props,
