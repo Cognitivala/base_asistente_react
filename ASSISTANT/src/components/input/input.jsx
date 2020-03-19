@@ -223,7 +223,9 @@ export default class Input extends Component {
   render() {
     const { mainCss } = this.props;
     const { generalStates } = this.props;
-    console.log('generalStates: ', generalStates);
+    console.log('generalStates: ', generalStates.get("url_params"));
+    console.log('generalStates: ', generalStates.getIn("url_params" ));
+
     if (this.props.conversationsStates.get("loading")) {
       return <ConversationLoader active={true} mainCss={mainCss} />;
     } else if ( !this.props.inputStates.get("enabled") ) {
