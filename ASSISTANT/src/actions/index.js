@@ -526,7 +526,7 @@ function updateConversationError(data) {
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
-    console.log('data:: ', data);
+    console.log('data updateConversation:: ', data);
     return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -541,7 +541,8 @@ export function updateConversation(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
+                email_user: data.email_user
+                    // email_user: getUrlParams(getState, 'ejecutivo_amsa')
             }
         });
         return request

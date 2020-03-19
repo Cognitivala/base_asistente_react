@@ -13,20 +13,18 @@ class FormAsistencia extends Component {
     enviarAsistencia = (e) =>{
         e.preventDefault();
         const {updateConversation} = this.props;
-        console.log('this.props:: ', this.props);
-
-        if(this.state.inputAsistencia === null || this.state.inputAsistencia === 0 || this.state.inputAsistencia === '') {
-            return false;
-        }
-        const data = {
-            usuarioAmsa: this.state.inputAsistencia,
-        }
-
         const { generalStates } = this.props;
         const general = generalStates.toJS();
+
+        console.log('this.props:: ', this.props);
+
+        if(this.state.usuarioAmsa === null || this.state.usuarioAmsa === 0 || this.state.usuarioAmsa === '') {
+            return false;
+        }
+        
         const conversation = {
             general,
-            usuarioAmsa: this.state.inputAsistencia,
+            email_user: this.state.usuarioAmsa,
         };
         
         
@@ -52,7 +50,7 @@ class FormAsistencia extends Component {
                             ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
                         </legend> */}
 
-                        <input name="asistencia" onChange={(e) => this.setState({usuarioAmsa: e.target.value})} />
+                        <input placeholder='Ej: Nombre de Usuario o Correo Eléctronico' name="asistencia" onChange={(e) => this.setState({usuarioAmsa: e.target.value})} />
                     </fieldset>
 
                     <fieldset>
