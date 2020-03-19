@@ -255,7 +255,7 @@ export default class Input extends Component {
             {this.fillHelp(positionHelp)}
             {this.fillSend()}
             {
-              ejecutivoAmsa === true && 
+              ejecutivoAmsa === 'true' && 
                 <button 
                   className={ mainCss.InputUserBtn + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
                   onClick={ () => this.props.getAsistencia(!this.props.asistencia)} id="buttonInputMessage">
