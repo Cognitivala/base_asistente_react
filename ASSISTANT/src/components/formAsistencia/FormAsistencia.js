@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import 'FormAsistencia.scss';
+import './FormAsistencia.scss';
 
 class FormAsistencia extends Component {
     state = { usuarioAmsa: '' }
