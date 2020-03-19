@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
 
 import {updateConversation} from '../../actions/index';
 
@@ -16,7 +17,7 @@ class FormAsistencia extends Component {
             usuarioAmsa: this.state.inputAsistencia,
         }
         
-        updateConversation(data)
+        this.props.updateConversation(data);
     }
 
     
@@ -51,5 +52,9 @@ class FormAsistencia extends Component {
          );
     }
 }
+
+const mapDispatchToProps = {
+    updateConversation,
+};
  
-export default FormAsistencia;
+export default connect(null, mapDispatchToProps)(FormAsistencia);
