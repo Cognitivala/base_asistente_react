@@ -252,7 +252,7 @@ export default class Input extends Component {
             
             <button 
               className={ mainCss.InputUserBtn + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
-              onClick={ () => this.props.verAsistencia(!this.props.asistencia)} id="buttonInputMessage">
+              onClick={ () => this.props.getAsistencia(!this.props.asistencia)} id="buttonInputMessage">
                 <i style={{color: '#989898'}} className="fas fa-paperclip"  />
             </button>
             {/* <div style={{textAlign: 'right'}}>

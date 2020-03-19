@@ -290,7 +290,7 @@ export default class Assistant extends Component {
             />
             {this.fillHelp(ayuda)}
             <Conversations asistencia={this.state.asistencia} {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
-            <Input {...this.props} asistencia={this.state.asistencia} verAsistencia={this.verAsistencia} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
+            <Input {...this.props} asistencia={this.state.asistencia} getAsistencia={this.verAsistencia} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
             <a href="https://www.cognitiva.la/" target="_blank" rel="noopener noreferrer" className={mainCss.LogoCognitiva}>
             </a>
           </div>
