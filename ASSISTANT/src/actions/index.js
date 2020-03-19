@@ -533,6 +533,10 @@ export function updateConversation(data) {
 
         const emailUser = data.email_user;
 
+        if (data.email_user) {
+
+        }
+
         const request = axios({
             method: "POST",
             headers: {
@@ -541,16 +545,17 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                integracion: {...data.integracion, emailUser },
+                ...data.integracion,
+                emailUser,
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                // email_user: getUrlParams(getState, 'ejecutivo_amsa'),
+                email_user: getUrlParams(getState, data.email_user),
                 // integracion: {
                 //     email_user: data.email_user
                 // }
                 // general: {...data.general.integracion, email_user: data.email_user }
-                email_user: data.email_user
+                // email_user: data.email_user
             }
         });
         return request
