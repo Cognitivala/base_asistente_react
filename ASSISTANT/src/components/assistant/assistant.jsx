@@ -21,6 +21,7 @@ export default class Assistant extends Component {
     this.closeEscape = this.closeEscape.bind(this);
     this.minimizedAssistant = this.minimizedAssistant.bind(this);
     this.toggleHeaderMore = this.toggleHeaderMore.bind(this);
+    this.verAsistencia = this.verAsistencia.bind(this);
   }
 
   componentDidMount() {
@@ -229,7 +230,9 @@ export default class Assistant extends Component {
 
   verAsistencia(value) {
     console.log('Asistencia:: ', value);
-    this.setState({asistencia: value});
+    console.log('State:: ', this.state);
+
+    this.setState({...this.state, asistencia: value});
   }
 
   content(assistantStates, conversationsStates, responsiveStates) {

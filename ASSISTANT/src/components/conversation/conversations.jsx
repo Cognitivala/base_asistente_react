@@ -23,9 +23,9 @@ export default class Conversations extends Component {
   constructor(props) {
     super(props);
     this.test = React.createRef();
-    this.state = { asistencia: false }
+    // this.state = { asistencia: false }
     this.handleScroll = this.handleScroll.bind(this);
-    this.verAsistencia = this.verAsistencia.bind(this);
+    // this.verAsistencia = this.verAsistencia.bind(this);
   }
 
   componentDidUpdate(nextProps) {
@@ -66,10 +66,10 @@ export default class Conversations extends Component {
       }
   }
 
-  verAsistencia(value) {
-    console.log('Asistencia:: ', value);
-    this.setState({asistencia: value});
-  }
+  // verAsistencia(value) {
+  //   console.log('Asistencia:: ', value);
+  //   this.setState({asistencia: value});
+  // }
 
   handleScroll(event) {
     const { conversationsStates, toggleHeaderMore, moreHeader } = this.props,
