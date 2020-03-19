@@ -6,7 +6,7 @@ import {updateConversation} from '../../actions/index';
 import './FormAsistencia.scss';
 
 class FormAsistencia extends Component {
-    state = { usuarioAmsa: '' }
+    state = { usuarioAmsa: '', mensajeError: false }
 
     enviarAsistencia = async (e) =>{
         e.preventDefault();
@@ -28,10 +28,11 @@ class FormAsistencia extends Component {
         let RegExPatternEmail = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
     
 
-        const validEmail = new RegExp(RegExPatternEmail).test(this.state.usuarioAmsa)
+        const validEmail = RegExPatternEmail.test(String(this.state.usuarioAmsa).toLowerCase())
+        console.log(validEmail);
 
         if (validEmail === false) {
-            console.log('Error');
+            this.setState({...this.state, mensajeError: true});
             return false;
         }
         
@@ -69,6 +70,16 @@ class FormAsistencia extends Component {
 
                         <input placeholder='Ej: Nombre de Usuario o Correo Eléctronico' name="asistencia" onChange={(e) => this.setState({usuarioAmsa: e.target.value})} />
                     </fieldset>
+
+                        {
+                            this.state.mensajeError && 
+                            <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
+                                *Debe ingresar un Email válido.
+                            </legend>
+                        }
+                    
+
+                    
 
                     <fieldset>
                         <button type="submit">Enviar</button>
