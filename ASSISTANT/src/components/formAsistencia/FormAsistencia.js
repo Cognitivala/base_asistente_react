@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+import {updateConversation} from '../../actions/index';
+
 import './FormAsistencia.scss';
 
 class FormAsistencia extends Component {
@@ -13,7 +15,7 @@ class FormAsistencia extends Component {
         const data = {
             usuarioAmsa: this.state.inputAsistencia,
         }
-        this.props.updateConversation(data);
+        updateConversation(data);
     }
 
     
