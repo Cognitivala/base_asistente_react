@@ -14,6 +14,8 @@ class FormAsistencia extends Component {
         const { generalStates } = this.props;
         const general = generalStates.toJS();
 
+        console.log('general.integracion:: ', general.integracion);
+
         console.log('this.props:: ', this.props);
 
         if(this.state.usuarioAmsa === null || this.state.usuarioAmsa === 0 || this.state.usuarioAmsa === '') {
@@ -35,8 +37,12 @@ class FormAsistencia extends Component {
         }
         
         const conversation = {
-            general,
-            email_user: this.state.usuarioAmsa,
+            ...general,
+            integracion: {
+                ...integracion,
+                email_user: this.state.usuarioAmsa,
+            },
+           
         };
         
         await updateConversation(conversation);
