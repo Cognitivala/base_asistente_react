@@ -10,7 +10,7 @@ class FormAsistencia extends Component {
 
     
 
-    enviarAsistencia = (e) =>{
+    enviarAsistencia = async (e) =>{
         e.preventDefault();
         const {updateConversation} = this.props;
         const { generalStates } = this.props;
@@ -27,8 +27,9 @@ class FormAsistencia extends Component {
             email_user: this.state.usuarioAmsa,
         };
         
-        
-        updateConversation(conversation);
+        await updateConversation(conversation);
+        this.props.getAsistencia(false);
+
     }
 
     
