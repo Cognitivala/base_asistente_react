@@ -223,8 +223,8 @@ export default class Input extends Component {
   render() {
     const { mainCss } = this.props;
     const { generalStates } = this.props;
-    console.log('generalStates: ', generalStates.get("url_params"));
-    console.log('generalStates: ', generalStates.get("url_params", 'ejecutivo_amsa'));
+    const ejecutivoAmsa = generalStates.get("url_params");
+    console.log('ejecutivo_amsa:: ', ejecutivoAmsa.ejecutivo_amsa);
 
     if (this.props.conversationsStates.get("loading")) {
       return <ConversationLoader active={true} mainCss={mainCss} />;
