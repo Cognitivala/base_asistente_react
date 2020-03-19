@@ -541,8 +541,8 @@ export function updateConversation(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                email_user: data.email_user
-                    // email_user: getUrlParams(getState, 'ejecutivo_amsa')
+                general: {...data.general.integracion, email_user: data.email_user }
+                // email_user: getUrlParams(getState, 'ejecutivo_amsa')
             }
         });
         return request
