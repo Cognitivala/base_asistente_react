@@ -19,6 +19,18 @@ class FormAsistencia extends Component {
         if(this.state.usuarioAmsa === null || this.state.usuarioAmsa === 0 || this.state.usuarioAmsa === '') {
             return false;
         }
+
+        const emailRegex = RegExp(
+            /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        );
+
+        let RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
+        let RegExPatternEmail = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i
+
+        if (this.state.usuarioAmsa !== RegExPatternEmail) {
+            console.log('Error');
+            return false;
+        }
         
         const conversation = {
             general,
@@ -34,6 +46,9 @@ class FormAsistencia extends Component {
     render() { 
         // let asistencia = document.querySelector('.boxAsistencia');
         // asistencia.classList.toggle('fade');
+
+        
+
 
         return ( 
             <div  className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
