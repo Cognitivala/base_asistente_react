@@ -21,7 +21,9 @@
         window.addEventListener('load', function() {
             var origen = null;
             var url = 'URL_A_CAMBIAR';
-            window.CognitiveAssistantMain.init('https://' + url + '/asistente/');
+            window.CognitiveAssistantMain.init(
+                'https://' + url + '/asistente/?ejecutivo_amsa=true'
+            );
         });
     </script>
 </head>

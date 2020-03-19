@@ -14,9 +14,13 @@ class FormAsistencia extends Component {
         // sendValoracion(data, general);
     }
 
+    
     render() { 
+        // let asistencia = document.querySelector('.boxAsistencia');
+        // asistencia.classList.toggle('fade');
+
         return ( 
-            <div className='conversationBubbleForm Send'>
+            <div  className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? ' fade' : '')}>
             <div className='containerForm'>
                 <form autoComplete="off" onSubmit={this.enviarAsistencia}>
                     

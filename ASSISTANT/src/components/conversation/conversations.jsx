@@ -445,7 +445,7 @@ export default class Conversations extends Component {
           else if ( this.state.asistencia === true) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
-              <FormAsistencia key={`${j} * ${j} * 535`} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormAsistencia key={`${j} * ${j} * 535`} asistencia={this.state.asistencia} generalStates={generalStates} sendValoracion={sendValoracion} />
             )
           }
           else if ( rating ) {
@@ -479,8 +479,8 @@ export default class Conversations extends Component {
           data-conversation="" ref={this.test}
         >
           {this.fillConversation()}
-          <div>
-            <i className="fas fa-paperclip" onClick={ () => this.verAsistencia(!this.state.asistencia)} />
+          <div style={{textAlign: 'right'}}>
+            <i style={{color: '#989898'}} className="fas fa-paperclip" onClick={ () => this.verAsistencia(!this.state.asistencia)} />
           </div>
         </section>
       </IsFetching>
