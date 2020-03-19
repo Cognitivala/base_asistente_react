@@ -13,8 +13,8 @@ class FormAsistencia extends Component {
         const data = {
             usuarioAmsa: this.state.inputAsistencia,
         }
-        console.log('DATA VALORACIÓN:: ', data);
-        // sendValoracion(data, general);
+        console.log(this.props.updateConversationButton);
+        console.log(this.props.updateConversationButton());
     }
 
     
@@ -28,7 +28,7 @@ class FormAsistencia extends Component {
                 <form autoComplete="off" onSubmit={this.enviarAsistencia}>
                     
                     <div className="headerForm">
-                        <p>Gracias por utilizar nuestro chat. No dude en dejarnos cualquier comentario adicional.</p>
+                        <p>Ingrese el email de Usuario</p>
                     </div>   
                 
                     <fieldset>
