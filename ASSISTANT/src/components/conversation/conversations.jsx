@@ -89,8 +89,10 @@ export default class Conversations extends Component {
         inputStates,
         customParamsStates,
         conversationsStates
-      } = this.props,
-      sizeConv = conversationsStates.get("conversations").size;
+      } = this.props;
+      console.log(customParamsStates.getIn(["customParams"]) );
+      
+    const sizeConv = conversationsStates.get("conversations").size;
     if (sizeConv > 1) {
       const lastConversation = conversationsStates.get("conversations").get(-1),
         buttons = lastConversation.get("buttons"),
@@ -479,9 +481,9 @@ export default class Conversations extends Component {
           data-conversation="" ref={this.test}
         >
           {this.fillConversation()}
-          <div style={{textAlign: 'right'}}>
+          {/* <div style={{textAlign: 'right'}}>
             <i style={{color: '#989898'}} className="fas fa-paperclip" onClick={ () => this.verAsistencia(!this.state.asistencia)} />
-          </div>
+          </div> */}
         </section>
       </IsFetching>
     );

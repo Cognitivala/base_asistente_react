@@ -143,17 +143,8 @@ export default class Input extends Component {
       if (this.input.current !== null && this.input.current.value.length > 0) {
         // Si tiene texto
         return (
-          <button
-            className={
-              mainCss.InputUserBtn +
-              " " +
-              mainCss.Btn +
-              " " +
-              mainCss.BtnTransparent
-            }
-            onClick={this.submitMessage}
-            id="buttonInputMessage"
-          >
+          <button className={ mainCss.InputUserBtn + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
+            onClick={this.submitMessage} id="buttonInputMessage">
             <i className={mainCss.IconPlane} />
           </button>
         );
@@ -167,17 +158,8 @@ export default class Input extends Component {
     } else {
       if(enabledInput){
         return (
-          <button
-            className={
-              mainCss.InputUserBtn +
-              " " +
-              mainCss.Btn +
-              " " +
-              mainCss.BtnTransparent
-            }
-            onClick={this.submitMessage}
-            id="buttonInputMessage"
-          >
+          <button className={ mainCss.InputUserBtn + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
+            onClick={this.submitMessage} id="buttonInputMessage">
             <i className={mainCss.IconPlane} />
           </button>
         );
@@ -267,6 +249,16 @@ export default class Input extends Component {
             {this.fillAttach()}
             {this.fillHelp(positionHelp)}
             {this.fillSend()}
+            
+            <button 
+              className={ mainCss.InputUserBtn + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
+              onClick={ () => this.verAsistencia(!this.state.asistencia)} id="buttonInputMessage">
+                <i style={{color: '#989898'}} className="fas fa-paperclip"  />
+            </button>
+            {/* <div style={{textAlign: 'right'}}>
+              <i style={{color: '#989898'}} className="fas fa-paperclip" onClick={ () => this.verAsistencia(!this.state.asistencia)} />
+            </div> */}
+
           </div>
         </IsFetching>
       );
