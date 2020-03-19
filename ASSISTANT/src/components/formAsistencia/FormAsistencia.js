@@ -8,16 +8,29 @@ import './FormAsistencia.scss';
 class FormAsistencia extends Component {
     state = { usuarioAmsa: '' }
 
+    
+
     enviarAsistencia = (e) =>{
         e.preventDefault();
+        const {updateConversation} = this.props;
+        console.log('this.props:: ', this.props);
+        
         if(this.state.inputAsistencia === null || this.state.inputAsistencia === 0 || this.state.inputAsistencia === '') {
             return false;
         }
         const data = {
             usuarioAmsa: this.state.inputAsistencia,
         }
+
+        const { generalStates } = this.props;
+        const general = generalStates.toJS();
+        const conversation = {
+            general,
+            usuarioAmsa: this.state.inputAsistencia,
+        };
         
-        this.props.updateConversation(data);
+        
+        updateConversation(data);
     }
 
     
