@@ -309,7 +309,7 @@ export default class Assistant extends Component {
     const { assistantStates, conversationsStates ,customParamsStates, responsiveStates, mainCss } = this.props,
     colorHeader = customParamsStates.getIn(["customParams","color_header"]);
 
-    console.log('customParamsStates:: ', customParamsStates);
+    // console.log('customParamsStates:: ', customParamsStates);
 
     return (
       <IsFetching
