@@ -14,7 +14,7 @@ class FormAsistencia extends Component {
         e.preventDefault();
         const {updateConversation} = this.props;
         console.log('this.props:: ', this.props);
-        
+
         if(this.state.inputAsistencia === null || this.state.inputAsistencia === 0 || this.state.inputAsistencia === '') {
             return false;
         }
@@ -30,7 +30,7 @@ class FormAsistencia extends Component {
         };
         
         
-        updateConversation(data);
+        updateConversation(conversation);
     }
 
     
