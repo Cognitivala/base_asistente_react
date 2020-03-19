@@ -531,7 +531,7 @@ export function updateConversation(data) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
 
-        const paramValue = getState().generalStates.getIn(["integracion", data.general.integracion]);
+        const paramValue = getState().generalStates.get("integracion");
         console.log('paramValue:: ', paramValue);
 
         const request = axios({
