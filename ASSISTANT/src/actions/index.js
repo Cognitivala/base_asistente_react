@@ -533,10 +533,6 @@ export function updateConversation(data) {
 
         const emailUser = data.email_user;
 
-        if (data.email_user) {
-
-        }
-
         const request = axios({
             method: "POST",
             headers: {
@@ -545,11 +541,10 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                ...data.integracion,
-                emailUser,
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
+                emailUser,
                 email_user: getUrlParams(getState, data.email_user),
                 // integracion: {
                 //     email_user: data.email_user
