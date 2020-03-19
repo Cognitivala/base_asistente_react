@@ -828,8 +828,19 @@ function messageResponse(dispatch, data) {
                 break;
         }
     } else if (data.end_conversation === true) {
+        // dispatch(pushConversation(data));
+        // dispatch({ type: "DISABLED_INPUT" });
+
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
+        dispatch(defaultGeneral());
+        // dispatch({ type: "CLOSE_ASSISTANT" });
+        dispatch({ type: "SET_NOTIFICATION", data: null });
+        dispatch({ type: "ENABLED_INPUT" });
+        dispatch({ type: "ENABLED_HELP" });
+        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        dispatch({ type: "OPEN_LAUNCHER" });
+        dispatch(deleteHistory());
     } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
