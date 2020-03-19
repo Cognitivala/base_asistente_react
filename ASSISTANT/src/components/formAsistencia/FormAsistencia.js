@@ -38,7 +38,9 @@ class FormAsistencia extends Component {
         
         const conversation = {
             ...general,
-            email_user: this.state.usuarioAmsa,
+            general: {
+                integracion: {email_user: this.state.usuarioAmsa},
+            }
         };
         
         await updateConversation(conversation);
