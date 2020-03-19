@@ -17,6 +17,7 @@ class FormAsistencia extends Component {
         console.log('this.props:: ', this.props);
 
         if(this.state.usuarioAmsa === null || this.state.usuarioAmsa === 0 || this.state.usuarioAmsa === '') {
+            this.setState({...this.state, mensajeError: true});
             return false;
         }
 
@@ -24,12 +25,9 @@ class FormAsistencia extends Component {
             /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         );
 
-        let RegExPattern = /^\d{1,2}\/\d{1,2}\/\d{2,4}$/;
         let RegExPatternEmail = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-    
-
         const validEmail = RegExPatternEmail.test(String(this.state.usuarioAmsa).toLowerCase())
-        console.log(validEmail);
+        // console.log(validEmail);
 
         if (validEmail === false) {
             this.setState({...this.state, mensajeError: true});
@@ -73,13 +71,10 @@ class FormAsistencia extends Component {
 
                         {
                             this.state.mensajeError && 
-                            <legend style={{fontWeight: 100, color: 'red'}}>
+                            <legend style={{fontWeight: 100, color: 'red', marginBottom: '1.5rem'}}>
                                 *Debe ingresar un Email válido.
                             </legend>
                         }
-                    
-
-                    
 
                     <fieldset>
                         <button type="submit">Enviar</button>

@@ -542,7 +542,7 @@ export function updateConversation(data) {
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
                 general: {
-                    ...data.general,
+                    ...data.general.integracion,
                     email_user: data.email_user
                 }
                 // general: {...data.general.integracion, email_user: data.email_user }
@@ -551,7 +551,7 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                // console.log('message updateConversation:: ', response.data);
+                console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
