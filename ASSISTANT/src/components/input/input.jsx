@@ -224,7 +224,7 @@ export default class Input extends Component {
     const { mainCss } = this.props;
     const { generalStates } = this.props;
     const ejecutivoAmsa = generalStates.get("url_params");
-    console.log('ejecutivo_amsa:: ', ejecutivoAmsa.ejecutivo_amsa);
+    // console.log('ejecutivo_amsa:: ', ejecutivoAmsa.ejecutivo_amsa);
 
     if (this.props.conversationsStates.get("loading")) {
       return <ConversationLoader active={true} mainCss={mainCss} />;
@@ -253,15 +253,16 @@ export default class Input extends Component {
             {this.fillAttach()}
             {this.fillHelp(positionHelp)}
             {this.fillSend()}
-            
-            <button 
-              className={ mainCss.InputUserBtn + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
-              onClick={ () => this.props.getAsistencia(!this.props.asistencia)} id="buttonInputMessage">
+            {
+              ejecutivoAmsa && 
+              <button 
+                className={ mainCss.InputUserBtn + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
+                onClick={ () => this.props.getAsistencia(!this.props.asistencia)} id="buttonInputMessage">
                 <i style={{color: '#d3d3d3'}} className="fas fa-paperclip"  />
-            </button>
-            {/* <div style={{textAlign: 'right'}}>
-              <i style={{color: '#989898'}} className="fas fa-paperclip" onClick={ () => this.verAsistencia(!this.state.asistencia)} />
-            </div> */}
+              </button>
+            }
+            
+            
 
           </div>
         </IsFetching>
