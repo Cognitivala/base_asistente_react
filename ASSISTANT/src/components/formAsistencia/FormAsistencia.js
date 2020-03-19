@@ -8,8 +8,6 @@ import './FormAsistencia.scss';
 class FormAsistencia extends Component {
     state = { usuarioAmsa: '' }
 
-    
-
     enviarAsistencia = async (e) =>{
         e.preventDefault();
         const {updateConversation} = this.props;
