@@ -541,7 +541,7 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                integracion: { emailUser },
+                integracion: {...data.integracion, emailUser },
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
