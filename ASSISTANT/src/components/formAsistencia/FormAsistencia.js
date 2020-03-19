@@ -13,8 +13,7 @@ class FormAsistencia extends Component {
         const data = {
             usuarioAmsa: this.state.inputAsistencia,
         }
-        console.log(this.props.updateConversationButton);
-        console.log(this.props.updateConversationButton());
+        this.props.updateConversation(data);
     }
 
     
