@@ -30,10 +30,10 @@ class FormAsistencia extends Component {
                         <p>Ingrese el email de Usuario</p>
                     </div>   
                 
-                    <fieldset>
-                        <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
+                    <fieldset style={{ marginBottom: '1.5rem', marginTop: '1.5rem'}}>
+                        {/* <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
                             ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
-                        </legend>
+                        </legend> */}
 
                         <input name="asistencia" onChange={(e) => this.setState({usuarioAmsa: e.target.value})} />
                     </fieldset>
