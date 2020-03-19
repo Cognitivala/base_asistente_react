@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+
+import 'formAsistencia.scss';
+
 class FormAsistencia extends Component {
     state = { usuarioAmsa: '' }
 
@@ -20,7 +23,7 @@ class FormAsistencia extends Component {
         // asistencia.classList.toggle('fade');
 
         return ( 
-            <div  className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? ' fade' : '')}>
+            <div  className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
             <div className='containerForm'>
                 <form autoComplete="off" onSubmit={this.enviarAsistencia}>
                     
