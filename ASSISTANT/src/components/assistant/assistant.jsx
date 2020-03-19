@@ -13,7 +13,8 @@ export default class Assistant extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      moreHeader: true
+      moreHeader: true,
+      asistencia: false
     }
     this.divAssistant = React.createRef();
     this.closeAssistant = this.closeAssistant.bind(this);
@@ -226,6 +227,11 @@ export default class Assistant extends Component {
     }
   }
 
+  verAsistencia(value) {
+    console.log('Asistencia:: ', value);
+    this.setState({asistencia: value});
+  }
+
   content(assistantStates, conversationsStates, responsiveStates) {
     if (
       assistantStates.get("active") &&
@@ -283,8 +289,8 @@ export default class Assistant extends Component {
               saludo={saludoStates.getIn(['saludo','msg'])}
             />
             {this.fillHelp(ayuda)}
-            <Conversations {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
-            <Input {...this.props} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
+            <Conversations asistencia={this.state.asistencia} {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
+            <Input {...this.props} asistencia={this.state.asistencia} verAsistencia={this.verAsistencia} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
             <a href="https://www.cognitiva.la/" target="_blank" rel="noopener noreferrer" className={mainCss.LogoCognitiva}>
             </a>
           </div>

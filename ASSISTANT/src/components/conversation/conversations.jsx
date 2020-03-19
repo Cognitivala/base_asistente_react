@@ -91,7 +91,7 @@ export default class Conversations extends Component {
         conversationsStates
       } = this.props;
       console.log(customParamsStates.getIn(["customParams"]) );
-      
+
     const sizeConv = conversationsStates.get("conversations").size;
     if (sizeConv > 1) {
       const lastConversation = conversationsStates.get("conversations").get(-1),
@@ -444,7 +444,7 @@ export default class Conversations extends Component {
               />
             );
           } 
-          else if ( this.state.asistencia === true) {
+          else if ( this.props.asistencia === true) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
               <FormAsistencia key={`${j} * ${j} * 535`} asistencia={this.state.asistencia} generalStates={generalStates} sendValoracion={sendValoracion} />

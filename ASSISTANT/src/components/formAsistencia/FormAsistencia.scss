@@ -1,11 +1,11 @@
 .boxAsistencia {
     opacity: 0;
-    transition: all 0.5s ease;
+    transition: all .3s ease-in-out;
 }
 
 .boxAsistencia.fade {
     opacity: 1;
-    transition: all 0.5s ease;
+    transition: all .3s ease-in-out;
 }
 
 .conversationBubbleForm {
