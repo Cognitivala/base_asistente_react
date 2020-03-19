@@ -229,8 +229,12 @@ export default class Assistant extends Component {
   }
 
   verAsistencia(value) {
-    console.log('Asistencia:: ', value);
-    console.log('State:: ', this.state);
+    // console.log('Asistencia:: ', value);
+    // console.log('State:: ', this.state);
+
+    const { generalStates } = this.props;
+    const general = generalStates.toJS();
+    console.log('general:: ', general);
 
     this.setState({...this.state, asistencia: value});
   }
