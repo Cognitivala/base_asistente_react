@@ -531,8 +531,7 @@ export function updateConversation(data) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
 
-        const paramValue = getState().generalStates.get("integracion");
-        console.log('paramValue:: ', paramValue);
+        const emailUser = data.email_user;
 
         const request = axios({
             method: "POST",
@@ -542,6 +541,7 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
+                integracion: { emailUser },
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
