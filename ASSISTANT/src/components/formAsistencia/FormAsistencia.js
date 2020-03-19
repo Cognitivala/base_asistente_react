@@ -73,7 +73,7 @@ class FormAsistencia extends Component {
 
                         {
                             this.state.mensajeError && 
-                            <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
+                            <legend style={{fontWeight: 100, color: 'red'}}>
                                 *Debe ingresar un Email válido.
                             </legend>
                         }
