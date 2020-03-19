@@ -262,8 +262,6 @@ export default class Input extends Component {
               </button>
             }
             
-            
-
           </div>
         </IsFetching>
       );
