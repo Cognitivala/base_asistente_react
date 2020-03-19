@@ -37,10 +37,11 @@ class FormAsistencia extends Component {
         
         const conversation = {
             ...general,
-            ...general.integracion,
-            integracion: {
-                email_user: this.state.usuarioAmsa,
-            }
+            // ...general.integracion,
+            email_user: this.state.usuarioAmsa,
+            // integracion: {
+            //     email_user: this.state.usuarioAmsa,
+            // }
         };
         
         await updateConversation(conversation);
