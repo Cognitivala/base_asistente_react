@@ -249,7 +249,8 @@ export function getSaludo() {
                     origen: origen,
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
-                    clave: getUrlParams(getState, 'clave')
+                    clave: getUrlParams(getState, 'clave'),
+                    ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
                 },
                 msg: null,
             },
@@ -263,7 +264,8 @@ export function getSaludo() {
                     ...data,
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
-                    clave: getUrlParams(getState, 'clave')
+                    clave: getUrlParams(getState, 'clave'),
+                    ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
                 }
             });
         return request.then(
@@ -537,7 +539,8 @@ export function updateConversation(data) {
                 ...data,
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
+                clave: getUrlParams(getState, 'clave'),
+                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
             }
         });
         return request
@@ -1271,7 +1274,8 @@ export function updateConversationButton(data) {
                         ...data,
                         rut: getUrlParams(getState, 'rut'),
                         user: getUrlParams(getState, 'user'),
-                        clave: getUrlParams(getState, 'clave')
+                        clave: getUrlParams(getState, 'clave'),
+                        ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
                     }
                 });
                 return request.then(
@@ -1516,7 +1520,8 @@ export function closeForm(data) {
                 ...data,
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
+                clave: getUrlParams(getState, 'clave'),
+                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
             }
         });
         return request.then(
@@ -1574,7 +1579,8 @@ export function sendForm(data, url, general) {
                             ...item,
                             rut: getUrlParams(getState, 'rut'),
                             user: getUrlParams(getState, 'user'),
-                            clave: getUrlParams(getState, 'clave')
+                            clave: getUrlParams(getState, 'clave'),
+                            ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
                         }
                     });
                     return request
