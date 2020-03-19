@@ -2,11 +2,7 @@ import React, { Component } from "react";
 
 import {updateConversation} from '../../actions/index';
 
-import {useDispatch} from 'react-redux';
-
 import './FormAsistencia.scss';
-
-const dispatch = useDispatch();
 
 class FormAsistencia extends Component {
     state = { usuarioAmsa: '' }
@@ -20,7 +16,7 @@ class FormAsistencia extends Component {
             usuarioAmsa: this.state.inputAsistencia,
         }
         
-        dispatch(updateConversation(data));
+        updateConversation(data)
     }
 
     
