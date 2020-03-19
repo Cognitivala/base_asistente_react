@@ -28,7 +28,7 @@ class FormAsistencia extends Component {
         let RegExPatternEmail = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
         console.log(RegExPatternEmail);
 
-        if (!RegExPatternEmail) {
+        if (new RegExp(RegExPatternEmail).test(this.state.usuarioAmsa)) {
             console.log('Error');
             return false;
         }
