@@ -337,6 +337,7 @@ export function openAssistant() {
     };
 }
 export function closeAssistant() {
+    console.log('closeAssistant:: ')
     return function action(dispatch) {
         dispatch(defaultGeneral());
         // dispatch({ type: "CLOSE_ASSISTANT" });
