@@ -38,8 +38,10 @@ class FormAsistencia extends Component {
         }
         
         const conversation = {
-            general,
-            integracion: {...integracion, email_user: this.state.usuarioAmsa },
+            ...general,
+            general: {
+                integracion: {...integracion, email_user: this.state.usuarioAmsa },
+            },
             email_user: this.state.usuarioAmsa,
             // ...general.integracion,
             // integracion: {
