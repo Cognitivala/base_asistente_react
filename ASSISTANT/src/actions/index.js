@@ -831,16 +831,16 @@ function messageResponse(dispatch, data) {
         // dispatch(pushConversation(data));
         // dispatch({ type: "DISABLED_INPUT" });
 
-        // dispatch(pushConversation(data));
-        // dispatch({ type: "DISABLED_INPUT" });
-        // dispatch(defaultGeneral());
-        // dispatch({ type: "CLOSE_ASSISTANT" });
-        // dispatch({ type: "SET_NOTIFICATION", data: null });
+        dispatch(pushConversation(data));
+        dispatch({ type: "DISABLED_INPUT" });
+        dispatch(defaultGeneral());
+        dispatch({ type: "CLOSE_ASSISTANT" });
+        dispatch({ type: "SET_NOTIFICATION", data: null });
         // dispatch({ type: "ENABLED_INPUT" });
-        // dispatch({ type: "ENABLED_HELP" });
-        // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        dispatch({ type: "ENABLED_HELP" });
+        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         // dispatch({ type: "OPEN_LAUNCHER" });
-        // dispatch(deleteHistory());
+        dispatch(deleteHistory());
     } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
