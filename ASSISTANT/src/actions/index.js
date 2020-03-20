@@ -110,7 +110,7 @@ export function setUrlParams(data) {
 }
 
 export function setEndConversation(data) {
-    console.log('setEndConversation:: ', data);
+    // console.log('setEndConversation:: ', data);
     return function action(dispatch) {
         dispatch({ type: "SET_END_CONVERSATION", data });
     };
@@ -818,7 +818,7 @@ export function updateConversation(data) {
 }
 
 function messageResponse(dispatch, data) {
-    console.log('messageResponse:: ', data);
+    // console.log('messageResponse:: ', data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -909,7 +909,7 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-    console.log('updateConversationButton:: ', data)
+    // console.log('updateConversationButton:: ', data)
 
     switch (data.msg[0]) {
         case "siValorar":
@@ -954,8 +954,8 @@ export function updateConversationButton(data) {
             return function action(dispatch, getState) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
-                console.log('data updateConversationButton:: ', data)
-                console.log('data.general updateConversationButton::', data.general)
+                // console.log('data updateConversationButton:: ', data)
+                // console.log('data.general updateConversationButton::', data.general)
                 const request = axios({
                     method: "POST",
                     headers: {
@@ -971,7 +971,7 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
-                        console.log('RESPONSE MENSAJE updateConversationButton::', response);
+                        // console.log('RESPONSE MENSAJE updateConversationButton::', response);
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
