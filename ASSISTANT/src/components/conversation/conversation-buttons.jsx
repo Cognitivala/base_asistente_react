@@ -36,7 +36,7 @@ export default class ConversationButtons extends Component {
         msg: [msg],
         send: "to",
         enabled: false,
-        end_conversation: false
+        // end_conversation: false
       };
     console.log('conversation:: ', conversation);
     this.props.updateConversationButton(conversation);

@@ -978,6 +978,11 @@ export function updateConversationButton(data) {
                             item.enabled = true;
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
+                            if (item.end_conversation === true) {
+                                dispatch(setEndConversation(true));
+                            } else {
+                                dispatch(setEndConversation(false));
+                            }
                         } else {
                             dispatch(updateConversationError(response.statusText));
                         }
