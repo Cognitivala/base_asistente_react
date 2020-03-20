@@ -1159,6 +1159,9 @@ export function sendLike(data, general) {
     } else {
         data.resolvio = 1
     }
+    Number(data.like);
+    delete data.pudo_resolver;
+
 
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
@@ -1183,12 +1186,14 @@ export function sendLike(data, general) {
                     item.send = "from";
                     item.enabled = true;
                     item.general = general;
+                    item.msg = ['exito_formulario'];
 
                     console.log('sendLike:: ', item.general);
 
                     messageResponse(dispatch, item);
 
                 } else {
+                    let msg = ['error_formulario'];
                     dispatch(updateConversationError(response.statusText));
                 }
                 dispatch({ type: "GET_CONVERSATIONS_END" });
