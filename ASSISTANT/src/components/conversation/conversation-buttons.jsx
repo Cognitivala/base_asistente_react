@@ -18,13 +18,14 @@ export default class ConversationButtons extends Component {
     console.log('general:: ', general);
 
     const index = event.currentTarget.dataset.index;
-    var element = document.getElementById(index);
-    element.classList.toggle("botonActive");
+    
 
     if (general.end_conversation) {
       console.log('end_conversation::>', true);
     } else{
       console.log('end_conversation::>', false);
+      var element = document.getElementById(index);
+      element.classList.toggle("botonActive");
     }
 
     const $item = event.target;
