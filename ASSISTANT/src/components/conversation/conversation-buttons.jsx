@@ -20,14 +20,15 @@ export default class ConversationButtons extends Component {
     const index = event.currentTarget.dataset.index;
     
     var element = document.getElementById(index);
-
-    if (general.end_conversation) {
-      // console.log('end_conversation::>', true);
-      element.classList.toggle("");
-    } else{
-      // console.log('end_conversation::>', false);
-      element.classList.toggle("botonActive");
-    }
+    element.classList.toggle("botonActive");
+    
+    // if (general.end_conversation) {
+    //   // console.log('end_conversation::>', true);
+    //   element.classList.toggle("");
+    // } else{
+    //   // console.log('end_conversation::>', false);
+    //   element.classList.toggle("botonActive");
+    // }
 
     const $item = event.target;
     const msg = $item.dataset.msg.toString();
