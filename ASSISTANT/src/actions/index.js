@@ -526,11 +526,15 @@ function updateConversationError(data) {
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(data) {
-    console.log('data updateConversation:: ', data);
+    console.log('updateConversation:: ', data);
+    
     return function action(dispatch, getState) {
 
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
+
+        console.log('updateConversation data :: ', data);
+        console.log('updateConversation data.general:: ', data.general);
 
         const request = axios({
             method: "POST",
@@ -565,7 +569,6 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    item.cid = item.cid;
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
