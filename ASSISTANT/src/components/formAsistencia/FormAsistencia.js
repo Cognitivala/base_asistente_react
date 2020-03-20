@@ -57,8 +57,6 @@ class FormAsistencia extends Component {
             // }
         };
 
-
-
         console.log('conversation:: ', conversation);
         
         await messageResponse(conversation);

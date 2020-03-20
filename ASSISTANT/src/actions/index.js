@@ -815,7 +815,7 @@ export function updateConversation(data) {
 }
 
 export function messageResponse(dispatch, data) {
-    // console.log('messageResponse:: ', data);
+    console.log('messageResponse:: ', data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
