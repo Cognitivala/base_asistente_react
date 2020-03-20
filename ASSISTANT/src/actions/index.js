@@ -971,7 +971,7 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
-                        console.log('RESPONSE MENSAJE updateConversationButton::');
+                        console.log('RESPONSE MENSAJE updateConversationButton::', response);
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
