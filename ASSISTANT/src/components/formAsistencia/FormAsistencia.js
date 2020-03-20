@@ -46,8 +46,8 @@ class FormAsistencia extends Component {
             // ...general.integracion,
         };
         
-        await updateConversation(conversation);
         await setIntegracion(this.state.usuarioAmsa);
+        await updateConversation(conversation);
         // CIERRA MODAL
         this.props.getAsistencia(false);
 
