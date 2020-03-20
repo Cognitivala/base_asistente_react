@@ -22,10 +22,10 @@ export default class ConversationButtons extends Component {
     var element = document.getElementById(index);
 
     if (general.end_conversation) {
-      console.log('end_conversation::>', true);
+      // console.log('end_conversation::>', true);
       element.classList.toggle("");
     } else{
-      console.log('end_conversation::>', false);
+      // console.log('end_conversation::>', false);
       element.classList.toggle("botonActive");
     }
 
@@ -40,7 +40,7 @@ export default class ConversationButtons extends Component {
         enabled: false,
         // end_conversation: false
       };
-    console.log('conversation:: ', conversation);
+    // console.log('conversation:: ', conversation);
     this.props.updateConversationButton(conversation);
   }
 
