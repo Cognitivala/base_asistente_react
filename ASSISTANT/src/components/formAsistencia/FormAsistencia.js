@@ -16,7 +16,6 @@ class FormAsistencia extends Component {
         const general = generalStates.toJS();
 
         console.log('general.integracion:: ', general.integracion);
-        console.log('this.props:: ', this.props);
 
         let integracion = general.integracion;
         let url_params = general.url_params;
@@ -26,13 +25,9 @@ class FormAsistencia extends Component {
             return false;
         }
 
-        const emailRegex = RegExp(
-            /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-        );
-
+        const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
         let RegExPatternEmail = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
-        const validEmail = RegExPatternEmail.test(String(this.state.usuarioAmsa).toLowerCase())
-        // console.log(validEmail);
+        const validEmail = RegExPatternEmail.test(String(this.state.usuarioAmsa).toLowerCase());
 
         if (validEmail === false) {
             this.setState({...this.state, mensajeError: true});
@@ -40,26 +35,20 @@ class FormAsistencia extends Component {
         }
         
         const conversation = {
-            // ...general,
+            ...general,
             // url_params: {...url_params, email_user: this.state.usuarioAmsa },
             // integracion: {...integracion, email_user: this.state.usuarioAmsa },
-            // general: {
-            //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
-            // },
-            // general: {
-            //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
-            //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
-            // },
-            email_user: this.state.usuarioAmsa,
+            general: {
+                url_params: {...url_params, email_user: this.state.usuarioAmsa },
+                integracion: {...integracion, email_user: this.state.usuarioAmsa },
+            },
+            // email_user: this.state.usuarioAmsa,
             // ...general.integracion,
-            // integracion: {
-            //     email_user: this.state.usuarioAmsa,
-            // }
         };
-
-        console.log('conversation:: ', conversation);
         
-        await setIntegracion(conversation);
+        await updateConversation(conversation);
+        await setIntegracion(this.state.usuarioAmsa);
+        
         this.props.getAsistencia(false);
 
     }
