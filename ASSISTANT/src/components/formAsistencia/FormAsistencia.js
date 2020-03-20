@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {connect} from 'react-redux';
 
 import {updateConversation} from '../../actions/index';
+import {messageResponse} from '../../actions/index';
 
 import './FormAsistencia.scss';
 
@@ -10,7 +11,7 @@ class FormAsistencia extends Component {
 
     enviarAsistencia = async (e) =>{
         e.preventDefault();
-        const {updateConversation} = this.props;
+        const {updateConversation, messageResponse} = this.props;
         const { generalStates } = this.props;
         const general = generalStates.toJS();
 
@@ -39,11 +40,12 @@ class FormAsistencia extends Component {
         }
         
         const conversation = {
-            ...general,
-            integracion: {...integracion, email_user: this.state.usuarioAmsa },
-            url_params: {...url_params, email_user: this.state.usuarioAmsa },
-            // general: {
-            // },
+            // ...general,
+            // url_params: {...url_params, email_user: this.state.usuarioAmsa },
+            // integracion: {...integracion, email_user: this.state.usuarioAmsa },
+            general: {
+                integracion: {...integracion, email_user: this.state.usuarioAmsa },
+            },
             // general: {
             //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
             //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
@@ -55,9 +57,11 @@ class FormAsistencia extends Component {
             // }
         };
 
+
+
         console.log('conversation:: ', conversation);
         
-        await updateConversation(conversation);
+        await messageResponse(conversation);
         this.props.getAsistencia(false);
 
     }

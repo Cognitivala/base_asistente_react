@@ -532,8 +532,6 @@ export function updateConversation(data) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
 
-        const emailUser = data.email_user;
-
         const request = axios({
             method: "POST",
             headers: {
@@ -545,7 +543,7 @@ export function updateConversation(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                // email_user: getUrlParams(getState, data.email_user),
+                email_user: getUrlParams(getState, 'ejecutivo_amsa'),
                 // emailUser,
                 // integracion: {
                 //     email_user: data.email_user
@@ -567,6 +565,7 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
+                    item.cid = item.cid;
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
@@ -815,7 +814,7 @@ export function updateConversation(data) {
     };
 }
 
-function messageResponse(dispatch, data) {
+export function messageResponse(dispatch, data) {
     // console.log('messageResponse:: ', data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
@@ -823,7 +822,9 @@ function messageResponse(dispatch, data) {
             case "valoracion":
                 if (data.general !== undefined) {
                     dispatch(setGeneral(data.general));
-                    if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
+                    if (data.general.integracion !== undefined) {
+                        dispatch(setIntegracion(data.general.integracion));
+                    }
                 }
                 dispatch({ type: "ENABLED_VALORACION" });
                 disabledHelp();
@@ -854,6 +855,10 @@ function messageResponse(dispatch, data) {
             if (data.general.integracion !== undefined) {
                 dispatch(setIntegracion(data.general.integracion))
             };
+            if (data.general.integracion !== undefined) {
+                console.log('data.general.integracion:: ', data.general.integracion)
+                dispatch(setIntegracion(data.general.integracion))
+            }
         }
         dispatch(pushConversation(data));
     }
