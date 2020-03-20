@@ -37,7 +37,7 @@ class FormAsistencia extends Component {
         const conversation = {
             ...general,
             url_params: {...url_params, email_user: this.state.usuarioAmsa },
-            integracion: {...integracion, email_user: this.state.usuarioAmsa },
+            // integracion: {...integracion, email_user: this.state.usuarioAmsa },
             // general: {
             //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
             //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
@@ -46,7 +46,7 @@ class FormAsistencia extends Component {
             // ...general.integracion,
         };
         
-        await setIntegracion(this.state.usuarioAmsa);
+        // await setIntegracion(this.state.usuarioAmsa);
         await updateConversation(conversation);
         // CIERRA MODAL
         this.props.getAsistencia(false);
