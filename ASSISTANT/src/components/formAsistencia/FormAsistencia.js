@@ -53,7 +53,7 @@ class FormAsistencia extends Component {
         // await updateConversation(conversation);
         // await updateConversationButton(conversation);
 
-        await setUrlParams(email_user: this.state.usuarioAmsa);
+        await setUrlParams(this.state.usuarioAmsa);
         // CIERRA MODAL
         this.props.getAsistencia(false);
 
