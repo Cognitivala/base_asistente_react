@@ -11,7 +11,7 @@ class FormAsistencia extends Component {
 
     enviarAsistencia = async (e) =>{
         e.preventDefault();
-        const {updateConversation, messageResponse} = this.props;
+        const {updateConversation, messageResponse, setIntegracion} = this.props;
         const { generalStates } = this.props;
         const general = generalStates.toJS();
 
@@ -40,9 +40,9 @@ class FormAsistencia extends Component {
         }
         
         const conversation = {
-            ...general,
+            // ...general,
             // url_params: {...url_params, email_user: this.state.usuarioAmsa },
-            integracion: {...integracion, email_user: this.state.usuarioAmsa },
+            // integracion: {...integracion, email_user: this.state.usuarioAmsa },
             // general: {
             //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
             // },
@@ -59,7 +59,7 @@ class FormAsistencia extends Component {
 
         console.log('conversation:: ', conversation);
         
-        await messageResponse(conversation);
+        await setIntegracion(conversation);
         this.props.getAsistencia(false);
 
     }

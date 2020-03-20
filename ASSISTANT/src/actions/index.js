@@ -814,17 +814,15 @@ export function updateConversation(data) {
     };
 }
 
-export function messageResponse(dispatch, data) {
-    console.log('messageResponse:: ', data);
+function messageResponse(dispatch, data) {
+    // console.log('messageResponse:: ', data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
             case "valoracion":
                 if (data.general !== undefined) {
                     dispatch(setGeneral(data.general));
-                    if (data.general.integracion !== undefined) {
-                        dispatch(setIntegracion(data.general.integracion));
-                    }
+                    if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
                 }
                 dispatch({ type: "ENABLED_VALORACION" });
                 disabledHelp();
@@ -855,10 +853,6 @@ export function messageResponse(dispatch, data) {
             if (data.general.integracion !== undefined) {
                 dispatch(setIntegracion(data.general.integracion))
             };
-            if (data.general.integracion !== undefined) {
-                console.log('data.general.integracion:: ', data.general.integracion)
-                dispatch(setIntegracion(data.general.integracion))
-            }
         }
         dispatch(pushConversation(data));
     }
