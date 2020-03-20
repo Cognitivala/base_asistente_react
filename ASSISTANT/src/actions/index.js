@@ -837,6 +837,7 @@ function messageResponse(dispatch, data) {
     } else if (data.end_conversation === true) {
         // dispatch(pushConversation(data));
         // dispatch({ type: "DISABLED_INPUT" });
+        dispatch(setEndConversation(true));
 
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
