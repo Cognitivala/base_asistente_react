@@ -51,7 +51,7 @@ export function generalStates(
         case "SET_GENERAL":
             return state.withMutations(map => {
                 console.log('action.data.cid:: ', action.data.cid)
-                map.set("cid", action.data?.cid);
+                map.set("cid", action.data.cid);
             });
         default:
             return state;
