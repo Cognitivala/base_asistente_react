@@ -894,6 +894,8 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
+
+    console.log('updateConversationButton:: ', data)
     
     switch (data.msg[0]) {
         case "siValorar":
