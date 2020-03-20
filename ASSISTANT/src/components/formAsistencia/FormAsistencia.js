@@ -17,7 +17,8 @@ class FormAsistencia extends Component {
         console.log('general.integracion:: ', general.integracion);
         console.log('this.props:: ', this.props);
 
-        let integracion = general.integracion
+        let integracion = general.integracion;
+        let url_params = general.url_params;
 
         if(this.state.usuarioAmsa === null || this.state.usuarioAmsa === 0 || this.state.usuarioAmsa === '') {
             this.setState({...this.state, mensajeError: true});
@@ -41,6 +42,7 @@ class FormAsistencia extends Component {
             ...general,
             general: {
                 integracion: {...integracion, email_user: this.state.usuarioAmsa },
+                url_params: {...url_params, email_user: this.state.usuarioAmsa },
             },
             email_user: this.state.usuarioAmsa,
             // ...general.integracion,
