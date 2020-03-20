@@ -1145,6 +1145,8 @@ export function closeValoracion(data) {
 
 //LIKE
 export function sendLike(data, general) {
+    console.log('sendLike:: ', data)
+    console.log('sendLike:: ', general)
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
