@@ -1195,7 +1195,7 @@ export function sendLike(data, general) {
 
                     console.log('sendLike:: ', item.general);
                     dispatch(updateConversation(item));
-                    dispatch({ type: "GET_CONVERSATIONS_END" });
+                    // dispatch({ type: "GET_CONVERSATIONS_END" });
 
                     // messageResponse(dispatch, item);
 
