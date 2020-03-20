@@ -1147,6 +1147,19 @@ export function closeValoracion(data) {
 export function sendLike(data, general) {
     console.log('sendLike:: ', data)
     console.log('sendLike:: ', general)
+
+    data.id_data_canal = 123;
+    data.input = "www";
+    data.output = "www";
+    data.id_canal = 1;
+    data.valoracion = null;
+    data.comentario = null
+    if (data.like === "0") {
+        data.resolvio = 0
+    } else {
+        data.resolvio = 1
+    }
+
     return function action(dispatch) {
         dispatch({ type: "GET_CONVERSATIONS_START" });
         const request = axios({
