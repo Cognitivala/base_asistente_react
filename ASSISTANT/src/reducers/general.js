@@ -55,7 +55,7 @@ export function generalStates(
             return state.withMutations(map => {
                 console.log('map:: ', map)
                 map.set("cid", action.data.cid);
-                map.set("end_conversation", action.data.end_conversation);
+                // map.set("end_conversation", action.data.end_conversation);
             });
         default:
             return state;
