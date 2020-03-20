@@ -530,7 +530,8 @@ export function updateConversation(data) {
 
     return function action(dispatch, getState) {
 
-        console.log('setGeneral:: ', data.general);
+        console.log('setGeneral DATA:: ', data);
+        console.log('setGeneral DATA.GENERAL:: ', data.general);
 
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
