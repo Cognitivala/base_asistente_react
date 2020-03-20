@@ -14,11 +14,8 @@ export default class ConversationButtons extends Component {
 
     const { generalStates } = this.props;
     const general = generalStates.toJS();
-    console.log(generalStates);
+    // console.log(generalStates);
     console.log(general);
-    // if () {
-
-    // }
 
     const index = event.currentTarget.dataset.index;
     var element = document.getElementById(index);
@@ -34,7 +31,8 @@ export default class ConversationButtons extends Component {
         general,
         msg: [msg],
         send: "to",
-        enabled: false
+        enabled: false,
+        end_conversation: false
       };
     this.props.updateConversationButton(conversation);
   }
