@@ -572,6 +572,9 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
+                    item.email_user = response.data.email_user
+
+                    console.log('updateConversation:: ', item)
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
@@ -1118,6 +1121,8 @@ export function sendValoracion(data, general) {
                     item.msg = ['exito_formulario'];
                     dispatch(updateConversation(item));
                     dispatch({ type: "GET_CONVERSATIONS_END" });
+
+                    console.log('ITEM GENERAL:: ', item.general);
 
                 } else {
                     let msg = ['error_formulario'];
