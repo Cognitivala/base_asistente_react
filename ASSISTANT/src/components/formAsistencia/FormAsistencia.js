@@ -39,9 +39,10 @@ class FormAsistencia extends Component {
         }
         
         const conversation = {
-            general,
-            integracion: {...integracion, email_user: this.state.usuarioAmsa },
-            url_params: {...url_params, email_user: this.state.usuarioAmsa },
+            general: {
+                integracion: {...integracion, email_user: this.state.usuarioAmsa },
+                url_params: {...url_params, email_user: this.state.usuarioAmsa },
+            },
             // general: {
             //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
             //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
