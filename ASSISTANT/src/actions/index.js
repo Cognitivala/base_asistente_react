@@ -1157,7 +1157,7 @@ export function sendLike(data, general) {
         });
         return request.then(response => {
 
-                // console.log('RESPONSE:: ', response);
+                console.log('sendLike response:: ', response);
 
                 if (
                     response.status === 200 &&

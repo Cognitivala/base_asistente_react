@@ -11,7 +11,7 @@ class FormAsistencia extends Component {
 
     enviarAsistencia = async (e) =>{
         e.preventDefault();
-        const {updateConversation, updateConversationButton, messageResponse} = this.props;
+        const {updateConversation, updateConversationButton, setUrlParams} = this.props;
         const { generalStates } = this.props;
         const general = generalStates.toJS();
 
@@ -50,8 +50,10 @@ class FormAsistencia extends Component {
         };
         
         // await setIntegracion(this.state.usuarioAmsa);
-        await updateConversation(conversation);
-        await updateConversationButton(conversation);
+        // await updateConversation(conversation);
+        // await updateConversationButton(conversation);
+
+        await setUrlParams(email_user: this.state.usuarioAmsa);
         // CIERRA MODAL
         this.props.getAsistencia(false);
 

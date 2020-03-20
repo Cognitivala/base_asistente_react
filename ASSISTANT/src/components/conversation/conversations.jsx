@@ -447,7 +447,7 @@ export default class Conversations extends Component {
           else if ( this.props.asistencia === true) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
-              <FormAsistencia key={`${j} * ${j} * 535`} updateConversationButton={this.props.updateConversationButton} asistencia={this.props.asistencia} getAsistencia={this.props.getAsistencia} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormAsistencia key={`${j} * ${j} * 535`} setUrlParams={this.props.setUrlParams} updateConversationButton={this.props.updateConversationButton} asistencia={this.props.asistencia} getAsistencia={this.props.getAsistencia} generalStates={generalStates} sendValoracion={sendValoracion} />
             )
           }
           else if ( rating ) {
