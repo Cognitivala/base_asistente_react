@@ -343,7 +343,7 @@ export function closeAssistant() {
         dispatch({ type: "SET_NOTIFICATION", data: null });
         dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
-        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        dispatch({ type: "TOGGLE_MINIMIZED", data: true });
         // dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     };
