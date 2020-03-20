@@ -109,6 +109,12 @@ export function setUrlParams(data) {
     };
 }
 
+export function setEndConversation(data) {
+    return function action(dispatch) {
+        dispatch({ type: "SET_END_CONVERSATION", data });
+    };
+}
+
 export function setRegion(data) {
     return function action(dispatch) {
         dispatch({ type: "SET_REGION", data });
@@ -921,7 +927,7 @@ export function updateConversationButton(data) {
         // };
     if (data.end_conversation === true) {
         return function action(dispatch) {
-            dispatch(setGeneral(data.general));
+            dispatch(setEndConversation(data.end_conversation));
         }
     }
     switch (data.msg[0]) {

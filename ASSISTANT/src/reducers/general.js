@@ -12,7 +12,8 @@ export function generalStates(
         id_cliente: "1",
         integracion: null,
         region: null,
-        url_params: null
+        url_params: null,
+        end_conversation: null
     }),
     action
 ) {
@@ -35,6 +36,8 @@ export function generalStates(
             return state.set("integracion", action.data);
         case "SET_URL_PARAMS":
             return state.set("url_params", action.data);
+        case "SET_END_CONVERSATION":
+            return state.set("end_conversation", action.data);
         case "SET_REGION":
             return state.set("region", action.data);
         case "DEFAULT_GENERAL":
@@ -52,6 +55,7 @@ export function generalStates(
             return state.withMutations(map => {
                 console.log('map:: ', map)
                 map.set("cid", action.data.cid);
+                map.set("end_conversation", action.data.end_conversation);
             });
         default:
             return state;
