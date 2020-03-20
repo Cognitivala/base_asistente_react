@@ -838,6 +838,9 @@ function messageResponse(dispatch, data) {
     } else if (data.end_conversation === true) {
         // dispatch(pushConversation(data));
         // dispatch({ type: "DISABLED_INPUT" });
+        console.log('data: messageResponse', data)
+        console.log('data.end_conversation:: ', data.end_conversation)
+        dispatch(setEndConversation(true));
         const end_conversation = true;
         dispatch({ type: "SET_END_CONVERSATION", end_conversation });
         // dispatch(setEndConversation(true));
@@ -929,11 +932,7 @@ export function updateConversationButton(data) {
         //     }
         //   );
         // };
-    if (data.end_conversation === true) {
-        return function action(dispatch) {
-            dispatch(setEndConversation(true));
-        }
-    }
+
     switch (data.msg[0]) {
         case "siValorar":
             return function action(dispatch) {
