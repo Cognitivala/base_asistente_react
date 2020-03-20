@@ -339,12 +339,12 @@ export function openAssistant() {
 export function closeAssistant() {
     return function action(dispatch) {
         dispatch(defaultGeneral());
-        dispatch({ type: "CLOSE_ASSISTANT" });
+        // dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
         dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-        dispatch({ type: "OPEN_LAUNCHER" });
+        // dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     };
 }
