@@ -21,6 +21,12 @@ export default class ConversationButtons extends Component {
     var element = document.getElementById(index);
     element.classList.toggle("botonActive");
 
+    if (general.end_conversation) {
+      console.log('end_conversation::>', true);
+    } else{
+      console.log('end_conversation::>', false);
+    }
+
     const $item = event.target;
     const msg = $item.dataset.msg.toString();
     
