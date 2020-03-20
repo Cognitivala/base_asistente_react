@@ -1159,7 +1159,12 @@ export function sendLike(data, general) {
     } else {
         data.resolvio = 1
     }
-    Number(data.like);
+
+    if (data.like === '0') {
+        data.like = 0
+    } else {
+        data.like = 1
+    }
     delete data.pudo_resolver;
 
 
