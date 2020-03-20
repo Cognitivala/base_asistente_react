@@ -363,7 +363,7 @@ export function toggleMinimizedAssistant(data) {
 
         dispatch(defaultGeneral());
         dispatch({ type: "DISABLED_INPUT" });
-        dispatch({ type: "ENABLED_HELP" });
+        // dispatch({ type: "ENABLED_HELP" });
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         dispatch({ type: "SET_NOTIFICATION", data: null });
         dispatch(deleteHistory());
