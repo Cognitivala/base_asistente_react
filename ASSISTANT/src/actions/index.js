@@ -887,37 +887,43 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-    // return function action(dispatch) {
-    //   dispatch(setGeneral(data.general));
-    //   dispatch(pushConversation(data));
-    //   const request = axios({
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json"
-    //     },
-    //     url: APIURL + "/message",
-    //     data: data
-    //   });
-    //   return request.then(
-    //     response => {
-    //       if (response.status === 200) {
-    //         let item = response.data;
-    //         item.send = "from";
-    //         item.enabled = true;
-    //         messageResponse(dispatch, item);
-    //       } else {
-    //         dispatch(updateConversationError(response.statusText));
-    //       }
-    //     },
-    //     err => {
-    //       dispatch(
-    //         updateConversationError(
-    //           "Error de conexión con el servidor, intente nuevamente"
-    //         )
-    //       );
-    //     }
-    //   );
-    // };
+    console.log('updateConversationButton:: ', data)
+        // return function action(dispatch) {
+        //   dispatch(setGeneral(data.general));
+        //   dispatch(pushConversation(data));
+        //   const request = axios({
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json"
+        //     },
+        //     url: APIURL + "/message",
+        //     data: data
+        //   });
+        //   return request.then(
+        //     response => {
+        //       if (response.status === 200) {
+        //         let item = response.data;
+        //         item.send = "from";
+        //         item.enabled = true;
+        //         messageResponse(dispatch, item);
+        //       } else {
+        //         dispatch(updateConversationError(response.statusText));
+        //       }
+        //     },
+        //     err => {
+        //       dispatch(
+        //         updateConversationError(
+        //           "Error de conexión con el servidor, intente nuevamente"
+        //         )
+        //       );
+        //     }
+        //   );
+        // };
+    if (data.end_conversation === true) {
+        return function action(dispatch) {
+            dispatch(setGeneral(data.general));
+        }
+    }
     switch (data.msg[0]) {
         case "siValorar":
             return function action(dispatch) {

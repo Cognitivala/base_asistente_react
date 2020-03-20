@@ -21,8 +21,6 @@ export default class ConversationButtons extends Component {
     var element = document.getElementById(index);
     element.classList.toggle("botonActive");
 
-    
-
     const $item = event.target;
     const msg = $item.dataset.msg.toString();
     
@@ -34,6 +32,7 @@ export default class ConversationButtons extends Component {
         enabled: false,
         end_conversation: false
       };
+    console.log('conversation:: ', conversation);
     this.props.updateConversationButton(conversation);
   }
 
