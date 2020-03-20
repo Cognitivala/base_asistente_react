@@ -11,15 +11,26 @@ export default class ConversationButtons extends Component {
   }
 
   sendButtonresponse(event) {
+
+    const { generalStates } = this.props;
+    const general = generalStates.toJS();
+    console.log(generalStates);
+    console.log(general);
+    // if () {
+
+    // }
+
     const index = event.currentTarget.dataset.index;
     var element = document.getElementById(index);
     element.classList.toggle("botonActive");
 
+    
+
     const $item = event.target;
     const msg = $item.dataset.msg.toString();
-    const { generalStates } = this.props,
-      general = generalStates.toJS(),
-      conversation = {
+    
+
+    const conversation = {
         general,
         msg: [msg],
         send: "to",

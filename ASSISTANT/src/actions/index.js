@@ -252,6 +252,7 @@ export function getSaludo() {
                     clave: getUrlParams(getState, 'clave')
                 },
                 msg: null,
+                end_conversation: false
             },
             request = axios({
                 method: "POST",
