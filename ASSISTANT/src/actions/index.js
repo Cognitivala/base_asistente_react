@@ -834,7 +834,7 @@ function messageResponse(dispatch, data) {
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
         dispatch(defaultGeneral());
-        dispatch({ type: "CLOSE_ASSISTANT" });
+        // dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
         // dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
