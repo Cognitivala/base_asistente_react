@@ -13,7 +13,7 @@ export function generalStates(
         integracion: null,
         region: null,
         url_params: null,
-        end_conversation: null
+        end_conversation: false
     }),
     action
 ) {

@@ -931,7 +931,7 @@ export function updateConversationButton(data) {
         // };
     if (data.end_conversation === true) {
         return function action(dispatch) {
-            dispatch(setEndConversation(data.end_conversation));
+            dispatch(setEndConversation(true));
         }
     }
     switch (data.msg[0]) {

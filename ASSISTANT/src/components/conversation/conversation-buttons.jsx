@@ -15,7 +15,7 @@ export default class ConversationButtons extends Component {
     const { generalStates } = this.props;
     const general = generalStates.toJS();
     // console.log(generalStates);
-    console.log(general);
+    console.log('general:: ', general);
 
     const index = event.currentTarget.dataset.index;
     var element = document.getElementById(index);
