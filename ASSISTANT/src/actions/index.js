@@ -110,6 +110,7 @@ export function setUrlParams(data) {
 }
 
 export function setEndConversation(data) {
+    console.log(data);
     return function action(dispatch) {
         dispatch({ type: "SET_END_CONVERSATION", data });
     };
@@ -837,7 +838,9 @@ function messageResponse(dispatch, data) {
     } else if (data.end_conversation === true) {
         // dispatch(pushConversation(data));
         // dispatch({ type: "DISABLED_INPUT" });
-        dispatch(setEndConversation(true));
+        const end_conversation = true;
+        dispatch({ type: "SET_END_CONVERSATION", end_conversation });
+        // dispatch(setEndConversation(true));
 
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
