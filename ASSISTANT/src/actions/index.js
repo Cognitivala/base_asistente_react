@@ -575,7 +575,7 @@ export function updateConversation(data) {
                     // item.email_user = response.data.email_user
 
                     console.log('updateConversation:: ', item)
-                    // dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                        // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
                     dispatch(updateConversationError(response.statusText));
@@ -899,7 +899,7 @@ export function setModal(data) {
 export function updateConversationButton(data) {
 
     console.log('updateConversationButton:: ', data)
-    
+
     switch (data.msg[0]) {
         case "siValorar":
             return function action(dispatch) {
@@ -1168,7 +1168,11 @@ export function sendLike(data, general) {
                     item.send = "from";
                     item.enabled = true;
                     item.general = general;
+
+                    console.log('sendLike:: ', item.general);
+
                     messageResponse(dispatch, item);
+
                 } else {
                     dispatch(updateConversationError(response.statusText));
                 }
