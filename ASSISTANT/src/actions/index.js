@@ -840,8 +840,9 @@ function messageResponse(dispatch, data) {
         // dispatch({ type: "DISABLED_INPUT" });
         console.log('data: messageResponse', data)
         console.log('data.end_conversation:: ', data.end_conversation)
-        dispatch(setEndConversation(true));
-        const end_conversation = true;
+
+        dispatch(setEndConversation(data.end_conversation));
+        const end_conversation = data.end_conversation;
         dispatch({ type: "SET_END_CONVERSATION", end_conversation });
         // dispatch(setEndConversation(true));
 
