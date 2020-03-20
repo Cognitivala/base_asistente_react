@@ -13,7 +13,7 @@ export default class ConversationButtons extends Component {
   sendButtonresponse(event) {
     const index = event.currentTarget.dataset.index;
     var element = document.getElementById(index);
-    element.classList.toggle("botonActive");
+    element.classList.add("botonActive");
 
     const $item = event.target;
     const msg = $item.dataset.msg.toString();
