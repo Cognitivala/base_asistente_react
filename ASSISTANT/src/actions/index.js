@@ -110,7 +110,7 @@ export function setUrlParams(data) {
 }
 
 export function setEndConversation(data) {
-    console.log(data);
+    console.log('setEndConversation:: ', data);
     return function action(dispatch) {
         dispatch({ type: "SET_END_CONVERSATION", data });
     };
@@ -357,8 +357,16 @@ export function closeAssistant() {
 }
 export function toggleMinimizedAssistant(data) {
     return function action(dispatch) {
-        dispatch({ type: "TOGGLE_MINIMIZED", data });
-        dispatch({ type: "OPEN_LAUNCHER" });
+        // dispatch({ type: "TOGGLE_MINIMIZED", data });
+        // dispatch({ type: "OPEN_LAUNCHER" });
+
+
+        dispatch(defaultGeneral());
+        dispatch({ type: "DISABLED_INPUT" });
+        dispatch({ type: "ENABLED_HELP" });
+        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        dispatch({ type: "SET_NOTIFICATION", data: null });
+        dispatch(deleteHistory());
 
     };
 }
