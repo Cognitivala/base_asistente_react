@@ -246,7 +246,7 @@ export default class Conversations extends Component {
           
           retorno.push(
             <ConversationMsg
-              key={j}
+              key={j*333}
               avatar={avatar}
               msgs={msg}
               animation={animation}

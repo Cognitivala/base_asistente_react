@@ -249,10 +249,9 @@ export function getSaludo() {
                     origen: origen,
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
-                    clave: getUrlParams(getState, 'clave'),
+                    clave: getUrlParams(getState, 'clave')
                 },
                 msg: null,
-                end_conversation: false
             },
             request = axios({
                 method: "POST",
@@ -832,15 +831,15 @@ function messageResponse(dispatch, data) {
         // dispatch(pushConversation(data));
         // dispatch({ type: "DISABLED_INPUT" });
 
-        // dispatch({ type: "ENABLED_INPUT" });
-        // dispatch({ type: "CLOSE_ASSISTANT" });
-        // dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
         dispatch(defaultGeneral());
+        dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
+        dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     } else {
         // console.log('data.general ', data)
