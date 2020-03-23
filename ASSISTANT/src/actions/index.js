@@ -547,14 +547,13 @@ export function updateConversation(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                email_user: getUrlParams(getState, data.email_user),
-
-                // emailUser,
-                // integracion: {
-                //     email_user: data.email_user
-                // }
-                // general: {...data.general.integracion, email_user: data.email_user }
-                // email_user: data.email_user
+                email_user: data.email_user
+                    // emailUser,
+                    // integracion: {
+                    //     email_user: data.email_user
+                    // }
+                    // general: {...data.general.integracion, email_user: data.email_user }
+                    // email_user: data.email_user
             }
         });
         return request
@@ -570,10 +569,10 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    // item.email_user = response.data.email_user
+                    console.log('updateConversation Item:: ', item)
+                        // item.email_user = response.data.email_user
 
-                    console.log('updateConversation:: ', item)
-                        // dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                    // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
                     dispatch(updateConversationError(response.statusText));
