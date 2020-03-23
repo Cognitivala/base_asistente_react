@@ -49,7 +49,6 @@ export function getLocation() {
             console.warn('ERROR(' + err.code + '): ' + err.message);
         };
 
-
         async function getGeo(latitude, longitude) {
             const keyGoogleMaps = "AIzaSyC3eA5oAc20UDvlbODDsyMqLEpl5tX03o4";
             const latitud = latitude.toString();
