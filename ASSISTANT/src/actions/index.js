@@ -532,6 +532,7 @@ export function updateConversation(data) {
 
         console.log('updateConversation DATA:: ', data);
         console.log('updateConversation DATA.GENERAL:: ', data.general);
+        console.log('updateConversation DATA.GENERAL.INTEGRACION:: ', data.general.integracion);
 
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
