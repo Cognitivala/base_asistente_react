@@ -534,8 +534,14 @@ export function updateConversation(data) {
         console.log('updateConversation DATA.GENERAL:: ', data.general);
         console.log('updateConversation DATA.GENERAL.INTEGRACION:: ', data.general.integracion);
 
+        data.general.integracion = {
+            ...data.general.integracion,
+            email_user: data.email_user
+        }
+
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
+
 
         const request = axios({
             method: "POST",
@@ -548,13 +554,12 @@ export function updateConversation(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                email_user: data.email_user
-                    // emailUser,
-                    // integracion: {
-                    //     email_user: data.email_user
-                    // }
-                    // general: {...data.general.integracion, email_user: data.email_user }
-                    // email_user: data.email_user
+                // emailUser,
+                // integracion: {
+                //     email_user: data.email_user
+                // }
+                // general: {...data.general.integracion, email_user: data.email_user }
+                // email_user: data.email_user
             }
         });
         return request
