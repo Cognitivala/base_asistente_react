@@ -58,7 +58,7 @@ export function getLocation() {
             Geocode.enableDebug();
             await Geocode.fromLatLng(latitud, longitud).then(
                 response => {
-                    console.log('location:: ', response)
+                    // console.log('location:: ', response)
                     let data = getLocationObject(response.results);
                     dispatch({ type: "SET_LOCATION", data: data });
                 },
