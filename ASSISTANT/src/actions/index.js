@@ -27,48 +27,65 @@ function setNodoId(data) {
 }
 export function getLocation() {
     return function action(dispatch) {
-        const geolocation = navigator.geolocation;
-        console.log('geolocation:: ', navigator.geolocation.getCurrentPosition);
+        // const geolocation = navigator.geolocation;
 
-        const location = new Promise((resolve, reject) => {
+        var options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        };
 
+        function success(pos) {
+            var crd = pos.coords;
 
-            if (!geolocation) {
-                reject(new Error("Not Supported"));
-            }
-            geolocation.getCurrentPosition(
-                position => {
-                    resolve(position);
-                },
-                () => {
-                    console.log("Permiso denegado");
-                    //reject(new Error("Permission denied"));
-                }
-            );
-        });
+            console.log('Tu posición actual es:');
+            console.log('Latitude : ' + crd.latitude);
+            console.log('Longitude: ' + crd.longitude);
+            console.log('Más o menos ' + crd.accuracy + ' metros.');
+        };
 
-        location
-            .then(res => {
-                const keyGoogleMaps = "AIzaSyDBcsn5BcZvyssmnCUlKsgRPPJq1eYjjC0";
-                const latitud = res.coords.latitude.toString();
-                const longitud = res.coords.longitude.toString();
+        function error(err) {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+        };
 
-                Geocode.setApiKey(keyGoogleMaps);
-                Geocode.enableDebug();
-                Geocode.fromLatLng(latitud, longitud).then(
-                    response => {
-                        console.log('location:: ', response)
-                        let data = getLocationObject(response.results);
-                        dispatch({ type: "SET_LOCATION", data: data });
-                    },
-                    error => {
-                        console.log(error);
-                    }
-                );
-            })
-            .catch(err => {
-                console.log(err);
-            });
+        navigator.geolocation.getCurrentPosition(success, error, options);
+
+        console.log('geolocation:: ', navigator.geolocation.getCurrentPosition());
+        // const location = new Promise((resolve, reject) => {
+        //     if (!geolocation) {
+        //         reject(new Error("Not Supported"));
+        //     }
+        //     geolocation.getCurrentPosition(
+        //         position => { resolve(position);},
+        //         () => {
+        //             console.log("Permiso denegado");
+        //             //reject(new Error("Permission denied"));
+        //         }
+        //     );
+        // });
+
+        // location
+        //     .then(res => {
+        //         const keyGoogleMaps = "AIzaSyDBcsn5BcZvyssmnCUlKsgRPPJq1eYjjC0";
+        //         const latitud = res.coords.latitude.toString();
+        //         const longitud = res.coords.longitude.toString();
+
+        //         Geocode.setApiKey(keyGoogleMaps);
+        //         Geocode.enableDebug();
+        //         Geocode.fromLatLng(latitud, longitud).then(
+        //             response => {
+        //                 console.log('location:: ', response)
+        //                 let data = getLocationObject(response.results);
+        //                 dispatch({ type: "SET_LOCATION", data: data });
+        //             },
+        //             error => {
+        //                 console.log(error);
+        //             }
+        //         );
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     });
     };
 }
 export function getLocationObject(results) {
