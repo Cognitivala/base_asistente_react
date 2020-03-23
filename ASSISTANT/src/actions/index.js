@@ -527,18 +527,14 @@ function updateConversationError(data) {
 }
 
 export function updateConversation(data) {
-    console.log('updateConversation:: ', data);
 
     return function action(dispatch, getState) {
 
-        console.log('setGeneral DATA:: ', data);
-        console.log('setGeneral DATA.GENERAL:: ', data.general);
+        console.log('updateConversation DATA:: ', data);
+        console.log('updateConversation DATA.GENERAL:: ', data.general);
 
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
-
-        console.log('updateConversation data :: ', data);
-        console.log('updateConversation data.general:: ', data.general);
 
         const request = axios({
             method: "POST",

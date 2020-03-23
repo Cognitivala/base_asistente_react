@@ -25,7 +25,7 @@ class FormAsistencia extends Component {
             return false;
         }
 
-        const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
+        // const emailRegex = RegExp(/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/);
         let RegExPatternEmail = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
         const validEmail = RegExPatternEmail.test(String(this.state.usuarioAmsa).toLowerCase());
 
@@ -41,7 +41,10 @@ class FormAsistencia extends Component {
             //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
             // },
             // msg: [""]
-            ...general,
+
+            general: {
+                ...general,
+            },
             email_user: this.state.usuarioAmsa,
             // general: {
             //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
@@ -83,13 +86,13 @@ class FormAsistencia extends Component {
                             ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
                         </legend> */}
 
-                        <input placeholder='Ej: Nombre de Usuario o Correo Eléctronico' name="asistencia" onChange={(e) => this.setState({usuarioAmsa: e.target.value})} />
+                        <input placeholder='Ej: juan@perez.cl' name="asistencia" onChange={(e) => this.setState({usuarioAmsa: e.target.value})} />
                     </fieldset>
 
                         {
                             this.state.mensajeError && 
                             <legend style={{fontWeight: 100, color: 'red', marginBottom: '1.5rem'}}>
-                                *Debe ingresar un Email válido.
+                                <b>*Debe ingresar un Email válido.</b>
                             </legend>
                         }
 
