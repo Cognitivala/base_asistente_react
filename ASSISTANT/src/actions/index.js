@@ -35,21 +35,29 @@ export function getLocation() {
             maximumAge: 0
         };
 
-        function success(pos) {
+        async function success(pos) {
             var crd = pos.coords;
 
             console.log('Tu posición actual es:');
             console.log('Latitude : ' + crd.latitude);
             console.log('Longitude: ' + crd.longitude);
             console.log('Más o menos ' + crd.accuracy + ' metros.');
+            await getGeo(crd.latitude, crd.longitude)
+        };
 
-            const keyGoogleMaps = "AIzaSyDBcsn5BcZvyssmnCUlKsgRPPJq1eYjjC0";
-            const latitud = crd.latitude.toString();
-            const longitud = crd.longitude.toString();
+        async function error(err) {
+            console.warn('ERROR(' + err.code + '): ' + err.message);
+        };
+
+
+        async function getGeo(latitude, longitude) {
+            const keyGoogleMaps = "AIzaSyC3eA5oAc20UDvlbODDsyMqLEpl5tX03o4";
+            const latitud = latitude.toString();
+            const longitud = longitude.toString();
 
             Geocode.setApiKey(keyGoogleMaps);
             Geocode.enableDebug();
-            Geocode.fromLatLng(latitud, longitud).then(
+            await Geocode.fromLatLng(latitud, longitud).then(
                 response => {
                     console.log('location:: ', response)
                     let data = getLocationObject(response.results);
@@ -59,11 +67,7 @@ export function getLocation() {
                     console.log(error);
                 }
             );
-        };
-
-        function error(err) {
-            console.warn('ERROR(' + err.code + '): ' + err.message);
-        };
+        }
 
         navigator.geolocation.getCurrentPosition(success, error, options);
 
