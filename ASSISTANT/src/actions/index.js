@@ -28,7 +28,7 @@ function setNodoId(data) {
 export function getLocation() {
     return function action(dispatch) {
         const geolocation = navigator.geolocation;
-        console.log('geolocation:: ', navigator.geolocation);
+        console.log('geolocation:: ', navigator.geolocation.getCurrentPosition);
 
         const location = new Promise((resolve, reject) => {
 
