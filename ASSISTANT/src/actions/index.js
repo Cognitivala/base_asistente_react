@@ -42,6 +42,23 @@ export function getLocation() {
             console.log('Latitude : ' + crd.latitude);
             console.log('Longitude: ' + crd.longitude);
             console.log('Más o menos ' + crd.accuracy + ' metros.');
+
+            const keyGoogleMaps = "AIzaSyDBcsn5BcZvyssmnCUlKsgRPPJq1eYjjC0";
+            const latitud = crd.latitude.toString();
+            const longitud = crd.longitude.toString();
+
+            Geocode.setApiKey(keyGoogleMaps);
+            Geocode.enableDebug();
+            Geocode.fromLatLng(latitud, longitud).then(
+                response => {
+                    console.log('location:: ', response)
+                    let data = getLocationObject(response.results);
+                    dispatch({ type: "SET_LOCATION", data: data });
+                },
+                error => {
+                    console.log(error);
+                }
+            );
         };
 
         function error(err) {
