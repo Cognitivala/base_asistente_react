@@ -50,7 +50,7 @@ export function getLocation() {
 
         navigator.geolocation.getCurrentPosition(success, error, options);
 
-        console.log('geolocation:: ', navigator.geolocation.getCurrentPosition());
+        // console.log('geolocation:: ', navigator.geolocation.getCurrentPosition());
         // const location = new Promise((resolve, reject) => {
         //     if (!geolocation) {
         //         reject(new Error("Not Supported"));
