@@ -6,26 +6,18 @@ export default class ConversationBubble extends Component {
   render() {
     const { msg, send, mainCss } = this.props;
     if(msg === "exito_formulario") {
-      return (
-        console.log("form")
-      );
+      return null;
     }
     if (send === "to") {
       return (
         <div className={mainCss.Bubble}>
-          <span
-            className={mainCss.BubbleText}
-            dangerouslySetInnerHTML={{ __html: msg }}
-          />
+          <span className={mainCss.BubbleText} dangerouslySetInnerHTML={{ __html: msg }} />
         </div>
       );
     } else {
       return (
         <div className={mainCss.Bubble}>
-          <span
-            className={mainCss.BubbleText}
-            dangerouslySetInnerHTML={{ __html: msg }}
-          />
+          <span className={mainCss.BubbleText} dangerouslySetInnerHTML={{ __html: msg }}/>
         </div>
       );
     }
