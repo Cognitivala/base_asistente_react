@@ -545,7 +545,7 @@ export function updateConversation(data) {
             data: {
                 ...data,
                 general: {
-                    ...data.genral,
+                    ...data,
                     email_user: data.email_user,
                 },
                 rut: getUrlParams(getState, 'rut'),
