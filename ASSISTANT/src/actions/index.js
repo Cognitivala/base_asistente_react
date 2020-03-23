@@ -544,10 +544,13 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
+                data: {
+                    email_user: data.email_user,
+                },
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                email_user: data.email_user,
+
                 // emailUser,
                 // integracion: {
                 //     email_user: data.email_user
