@@ -38,10 +38,10 @@ export function getLocation() {
         async function success(pos) {
             var crd = pos.coords;
 
-            console.log('Tu posición actual es:');
-            console.log('Latitude : ' + crd.latitude);
-            console.log('Longitude: ' + crd.longitude);
-            console.log('Más o menos ' + crd.accuracy + ' metros.');
+            // console.log('Tu posición actual es:');
+            // console.log('Latitude : ' + crd.latitude);
+            // console.log('Longitude: ' + crd.longitude);
+            // console.log('Más o menos ' + crd.accuracy + ' metros.');
             await getGeo(crd.latitude, crd.longitude)
         };
 
