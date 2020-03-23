@@ -29,10 +29,12 @@ export function getLocation() {
     return function action(dispatch) {
         const geolocation = navigator.geolocation;
         const location = new Promise((resolve, reject) => {
+
+            console.log('geolocation:: ', geolocation);
+
             if (!geolocation) {
                 reject(new Error("Not Supported"));
             }
-
             geolocation.getCurrentPosition(
                 position => {
                     resolve(position);
@@ -46,13 +48,15 @@ export function getLocation() {
 
         location
             .then(res => {
-                const keyGoogleMaps = "AIzaSyDBcsn5BcZvyssmnCUlKsgRPPJq1eYjjC0",
-                    latitud = res.coords.latitude.toString(),
-                    longitud = res.coords.longitude.toString();
+                const keyGoogleMaps = "AIzaSyDBcsn5BcZvyssmnCUlKsgRPPJq1eYjjC0";
+                const latitud = res.coords.latitude.toString();
+                const longitud = res.coords.longitude.toString();
+
                 Geocode.setApiKey(keyGoogleMaps);
                 Geocode.enableDebug();
                 Geocode.fromLatLng(latitud, longitud).then(
                     response => {
+                        console.log('location:: ', response)
                         let data = getLocationObject(response.results);
                         dispatch({ type: "SET_LOCATION", data: data });
                     },
