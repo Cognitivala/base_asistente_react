@@ -28,9 +28,10 @@ function setNodoId(data) {
 export function getLocation() {
     return function action(dispatch) {
         const geolocation = navigator.geolocation;
+        console.log('geolocation:: ', navigator.geolocation);
+
         const location = new Promise((resolve, reject) => {
 
-            console.log('geolocation:: ', geolocation);
 
             if (!geolocation) {
                 reject(new Error("Not Supported"));
