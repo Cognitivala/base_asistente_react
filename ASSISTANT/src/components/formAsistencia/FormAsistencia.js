@@ -56,7 +56,7 @@ class FormAsistencia extends Component {
         
         // await setIntegracion(this.state.usuarioAmsa);
         await updateConversation(conversation);
-        await updateConversationButton(conversation);
+        // await updateConversationButton(conversation);
 
         // await setUrlParams(this.state.usuarioAmsa);
         // CIERRA MODAL
