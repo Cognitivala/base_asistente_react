@@ -533,15 +533,15 @@ export function updateConversation(data) {
         // console.log('updateConversation DATA:: ', data);
         // console.log('updateConversation DATA.GENERAL:: ', data.general);
 
-        data.general.integracion = {
-            ...data.general.integracion,
-            email_user: data.email_user
-        }
+        // data.general.integracion = {
+        //     ...data.general.integracion,
+        //     email_user: data.email_user
+        // }
 
-        data.general.url_params = {
-            ...data.general.url_params,
-            email_user: data.email_user
-        }
+        // data.general.url_params = {
+        //     ...data.general.url_params,
+        //     email_user: data.email_user
+        // }
 
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
