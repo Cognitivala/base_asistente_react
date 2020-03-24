@@ -580,9 +580,13 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    item.email_user = data.email_user;
                     // item.email_user = response.data.email_user
-                    localStorage.getItem('email_user');
+                    console.log(localStorage.getItem('email_user'))
+                    item.general = {
+                        ...item.general,
+                        integracion: localStorage.getItem('email_user'),
+                    }
+
                     console.log('updateConversation Item:: ', item)
 
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
