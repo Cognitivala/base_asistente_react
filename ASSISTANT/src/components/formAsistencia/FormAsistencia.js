@@ -15,7 +15,7 @@ class FormAsistencia extends Component {
         const { generalStates } = this.props;
         const general = generalStates.toJS();
 
-        console.log('general.integracion:: ', general.integracion);
+        // console.log('general.integracion:: ', general.integracion);
 
         let integracion = general.integracion;
         let url_params = general.url_params;

@@ -90,7 +90,7 @@ export default class Conversations extends Component {
         customParamsStates,
         conversationsStates
       } = this.props;
-      console.log(customParamsStates.getIn(["customParams"]) );
+      // console.log(customParamsStates.getIn(["customParams"]) );
 
     const sizeConv = conversationsStates.get("conversations").size;
     if (sizeConv > 1) {

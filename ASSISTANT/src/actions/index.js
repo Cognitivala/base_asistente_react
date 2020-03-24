@@ -530,7 +530,7 @@ export function updateConversation(data) {
 
     return function action(dispatch, getState) {
 
-        // console.log('updateConversation DATA:: ', data);
+
         // console.log('updateConversation DATA.GENERAL:: ', data.general);
 
         // SE AGREGA VARIABLE email_user 
@@ -546,6 +546,8 @@ export function updateConversation(data) {
 
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
+
+        // console.log('updateConversation DATA:: ', data);
 
         const request = axios({
             method: "POST",
@@ -582,7 +584,10 @@ export function updateConversation(data) {
                     item.enabled = true;
                     // item.email_user = response.data.email_user
                     console.log(localStorage.getItem('email_user'))
-
+                    item.general.integracion = {
+                        ...item.general.integracion,
+                        email_user
+                    }
                     if (localStorage.getItem('email_user') !== null) {
                         const email_user = localStorage.getItem('email_user');
                         item.general = {
