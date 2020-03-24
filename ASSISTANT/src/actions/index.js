@@ -983,7 +983,7 @@ export function updateConversationButton(data) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
-                            if (localStorage.getItem('email_user').length > 0) {
+                            if (localStorage.getItem('email_user') !== null) {
                                 const email_user = localStorage.getItem('email_user');
                                 item.general = {
                                     ...item.general,
@@ -1271,7 +1271,7 @@ export function closeForm(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    if (localStorage.getItem('email_user').length > 0) {
+                    if (localStorage.getItem('email_user') !== null) {
                         const email_user = localStorage.getItem('email_user');
                         item.general = {
                             ...item.general,
@@ -1339,7 +1339,7 @@ export function sendForm(data, url, general) {
                                 let item = response.data;
                                 item.send = "from";
                                 item.enabled = true;
-                                if (localStorage.getItem('email_user').length > 0) {
+                                if (localStorage.getItem('email_user') !== null) {
                                     const email_user = localStorage.getItem('email_user');
                                     item.general = {
                                         ...item.general,
