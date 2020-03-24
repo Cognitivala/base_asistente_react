@@ -559,13 +559,13 @@ export function updateConversation(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                // ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
-                // emailUser,
-                // integracion: {
-                //     email_user: data.email_user
-                // }
-                // general: {...data.general.integracion, email_user: data.email_user }
-                // email_user: data.email_user
+                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
+                    // emailUser,
+                    // integracion: {
+                    //     email_user: data.email_user
+                    // }
+                    // general: {...data.general.integracion, email_user: data.email_user }
+                    // email_user: data.email_user
             }
         });
         return request
@@ -584,13 +584,13 @@ export function updateConversation(data) {
                     // item.email_user = response.data.email_user
                     console.log(localStorage.getItem('email_user'))
 
-                    if (localStorage.getItem('email_user').length > 0) {
-                        const email_user = localStorage.getItem('email_user');
-                        item.general = {
+                    // if (localStorage.getItem('email_user').length > 0) {
+                    const email_user = localStorage.getItem('email_user');
+                    item.general = {
                             ...item.general,
                             integracion: { email_user },
                         }
-                    }
+                        // }
 
                     console.log('updateConversation Item:: ', item)
 
