@@ -533,6 +533,7 @@ export function updateConversation(data) {
         // console.log('updateConversation DATA:: ', data);
         // console.log('updateConversation DATA.GENERAL:: ', data.general);
 
+        // SE AGREGA VARIABLE email_user 
         // data.general.integracion = {
         //     ...data.general.integracion,
         //     email_user: data.email_user
@@ -580,8 +581,8 @@ export function updateConversation(data) {
                     item.send = "from";
                     item.enabled = true;
                     item.email_user = data.email_user;
+                    // item.email_user = response.data.email_user
                     console.log('updateConversation Item:: ', item)
-                        // item.email_user = response.data.email_user
 
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
