@@ -584,15 +584,13 @@ export function updateConversation(data) {
                     item.enabled = true;
                     // item.email_user = response.data.email_user
                     console.log(localStorage.getItem('email_user'))
-                    item.general.integracion = {
-                        ...item.general.integracion,
-                        email_user
-                    }
+
                     if (localStorage.getItem('email_user') !== null) {
                         const email_user = localStorage.getItem('email_user');
-                        item.general = {
-                            ...item.general,
-                            integracion: { email_user },
+                        item.general.integracion = {
+                            ...data.general.integracion,
+                            email_user: email_user
+                                // integracion: { email_user },
                         }
                     }
 
