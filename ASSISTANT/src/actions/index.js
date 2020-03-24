@@ -534,15 +534,15 @@ export function updateConversation(data) {
         // console.log('updateConversation DATA.GENERAL:: ', data.general);
 
         // SE AGREGA VARIABLE email_user 
-        // data.general.integracion = {
-        //     ...data.general.integracion,
-        //     email_user: data.email_user
-        // }
+        data.general.integracion = {
+            ...data.general.integracion,
+            email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+        }
 
-        // data.general.url_params = {
-        //     ...data.general.url_params,
-        //     email_user: data.email_user
-        // }
+        data.general.url_params = {
+            ...data.general.url_params,
+            email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+        }
 
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -559,13 +559,13 @@ export function updateConversation(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
-                    // emailUser,
-                    // integracion: {
-                    //     email_user: data.email_user
-                    // }
-                    // general: {...data.general.integracion, email_user: data.email_user }
-                    // email_user: data.email_user
+                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa'),
+                // emailUser,
+                // integracion: {
+                //     email_user: data.email_user
+                // }
+                // general: {...data.general.integracion, email_user: data.email_user }
+                // email_user: data.email_user
             }
         });
         return request
