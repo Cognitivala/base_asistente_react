@@ -547,7 +547,6 @@ export function updateConversation(data) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
 
-
         const request = axios({
             method: "POST",
             headers: {
@@ -960,8 +959,21 @@ export function updateConversationButton(data) {
             };
         default:
             return function action(dispatch, getState) {
+
+                // SE AGREGA VARIABLE email_user 
+                data.general.integracion = {
+                    ...data.general.integracion,
+                    email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+                }
+
+                data.general.url_params = {
+                    ...data.general.url_params,
+                    email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+                }
+
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
+
                 const request = axios({
                     method: "POST",
                     headers: {
@@ -1245,6 +1257,18 @@ export function sendLike(data, general) {
 //FORM
 export function closeForm(data) {
     return function action(dispatch, getState) {
+
+        // SE AGREGA VARIABLE email_user 
+        data.general.integracion = {
+            ...data.general.integracion,
+            email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+        }
+
+        data.general.url_params = {
+            ...data.general.url_params,
+            email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+        }
+
         dispatch({ type: "DISABLED_FORM" });
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
