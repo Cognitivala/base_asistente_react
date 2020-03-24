@@ -583,14 +583,12 @@ export function updateConversation(data) {
                     item.send = "from";
                     item.enabled = true;
                     // item.email_user = response.data.email_user
-                    console.log(localStorage.getItem('email_user'))
 
                     if (localStorage.getItem('email_user') !== null) {
                         const email_user = localStorage.getItem('email_user');
                         item.general.integracion = {
                             ...data.general.integracion,
                             email_user: email_user
-                                // integracion: { email_user },
                         }
                     }
 
@@ -1000,9 +998,9 @@ export function updateConversationButton(data) {
                             item.enabled = true;
                             if (localStorage.getItem('email_user') !== null) {
                                 const email_user = localStorage.getItem('email_user');
-                                item.general = {
-                                    ...item.general,
-                                    integracion: { email_user },
+                                item.general.integracion = {
+                                    ...data.general.integracion,
+                                    email_user: email_user
                                 }
                             }
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
@@ -1300,9 +1298,9 @@ export function closeForm(data) {
                     item.enabled = true;
                     if (localStorage.getItem('email_user') !== null) {
                         const email_user = localStorage.getItem('email_user');
-                        item.general = {
-                            ...item.general,
-                            integracion: { email_user },
+                        item.general.integracion = {
+                            ...data.general.integracion,
+                            email_user: email_user
                         }
                     }
                     dispatch(setNodoId(item.msg[item.msg.length - 1]));
@@ -1368,9 +1366,9 @@ export function sendForm(data, url, general) {
                                 item.enabled = true;
                                 if (localStorage.getItem('email_user') !== null) {
                                     const email_user = localStorage.getItem('email_user');
-                                    item.general = {
-                                        ...item.general,
-                                        integracion: { email_user },
+                                    item.general.integracion = {
+                                        ...data.general.integracion,
+                                        email_user: email_user
                                     }
                                 }
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
