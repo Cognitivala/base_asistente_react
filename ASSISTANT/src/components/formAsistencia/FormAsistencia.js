@@ -41,7 +41,6 @@ class FormAsistencia extends Component {
             //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
             // },
             // msg: [""]
-
             general: { ...general},
             email_user: this.state.usuarioAmsa,
         };
