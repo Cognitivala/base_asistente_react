@@ -530,12 +530,17 @@ export function updateConversation(data) {
 
     return function action(dispatch, getState) {
 
-        console.log('updateConversation DATA:: ', data);
-        console.log('updateConversation DATA.GENERAL:: ', data.general);
-        console.log('updateConversation DATA.GENERAL.INTEGRACION:: ', data.general.integracion);
+        // console.log('updateConversation DATA:: ', data);
+        // console.log('updateConversation DATA.GENERAL:: ', data.general);
+        // console.log('updateConversation DATA.GENERAL.INTEGRACION:: ', data.general.integracion);
 
         data.general.integracion = {
             ...data.general.integracion,
+            email_user: data.email_user
+        }
+
+        data.general.url_params = {
+            ...data.general.url_params,
             email_user: data.email_user
         }
 
