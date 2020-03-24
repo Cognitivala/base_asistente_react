@@ -42,10 +42,16 @@ class FormAsistencia extends Component {
             // },
             // msg: [""]
 
-            general: {
-                ...general,
-            },
+            //
+            // general: {
+            //     ...general,
+            // },
+            // email_user: this.state.usuarioAmsa,
+
+            //
+            ...general,
             email_user: this.state.usuarioAmsa,
+
             // general: {
             //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
             //     integracion: {...integracion, email_user: this.state.usuarioAmsa },

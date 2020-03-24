@@ -579,6 +579,7 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
+                    item.email_user = data.email_user;
                     console.log('updateConversation Item:: ', item)
                         // item.email_user = response.data.email_user
 
