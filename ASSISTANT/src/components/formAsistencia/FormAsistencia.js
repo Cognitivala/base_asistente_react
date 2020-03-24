@@ -33,21 +33,23 @@ class FormAsistencia extends Component {
             this.setState({...this.state, mensajeError: true});
             return false;
         }
+
+
+        localStorage.setItem("email_user", this.state.usuarioAmsa);
         
-        const conversation = {
-            // general: {
-            //     ...general,
-            //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
-            //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
-            // },
+        // const conversation = {
+        //     // general: {
+        //     //     ...general,
+        //     //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
+        //     //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
+        //     // },
             
-            general: { ...general},
-            email_user: this.state.usuarioAmsa,
-            msg: null
-        };
+        //     general: { ...general},
+        //     email_user: this.state.usuarioAmsa
+        // };
         
         // await setIntegracion(this.state.usuarioAmsa);
-        await updateConversation(conversation);
+        // await updateConversation(conversation);
         // await updateConversationButton(conversation);
 
         // await setUrlParams(this.state.usuarioAmsa);
