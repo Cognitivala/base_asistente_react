@@ -40,9 +40,10 @@ class FormAsistencia extends Component {
             //     url_params: {...url_params, email_user: this.state.usuarioAmsa },
             //     integracion: {...integracion, email_user: this.state.usuarioAmsa },
             // },
-            // msg: [""]
+            
             general: { ...general},
             email_user: this.state.usuarioAmsa,
+            msg: null
         };
         
         // await setIntegracion(this.state.usuarioAmsa);
