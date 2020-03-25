@@ -5,6 +5,8 @@ import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from 'react-device-detect';
 
+const CHATTIGO_ENDPOINT = '/chattigo_in';
+const CHATTIGO_INTERVAL_TIMER = 5000;
 //GENERAL
 function defaultGeneral() {
     return {
@@ -531,8 +533,34 @@ function updateConversationError(data) {
     }
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
-export function updateConversation(data) {
+export function updateConversation(conversationData, general) {
     return function action(dispatch, getState) {
+        const useChattigo = getState().assistantStates.getIn(["useChattigo"]);
+        console.log("USELYNN: ", useChattigo)
+        const url =  useChattigo ? CHATTIGO_ENDPOINT : "/message"
+        let data = {};
+
+        if(useChattigo){
+            data = {
+                ...conversationData,
+                general: {
+                    ...getState().assistantStates.getIn(["chattigoData"]),
+                    token: getState().generalStates.getIn(["token"]),
+                }
+            }
+        }else {
+            data = {
+                ...conversationData,
+                rut: getUrlParams(getState, 'rut'),
+                user: getUrlParams(getState, 'user'),
+                clave: getUrlParams(getState, 'clave')
+            };
+        }
+
+        console.log("TOKEN ",data)
+
+
+
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
@@ -540,19 +568,18 @@ export function updateConversation(data) {
             headers: {
                 "Content-Type": "application/json"
             },
-            url: APIURL + "/message",
-            data: {
-                ...data,
-                rut: getUrlParams(getState, 'rut'),
-                user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
-            }
+            url: APIURL + url,
+            data,
+            // {
+                // data,
+                // rut: getUrlParams(getState, 'rut'),
+                // user: getUrlParams(getState, 'user'),
+                // clave: getUrlParams(getState, 'clave')
+            // }
         });
         return request
             .then(response => {
-                // console.log('message updateConversation:: ', response.data);
-                // console.log('message updateConversation MSG:: ', response.data.msg);
-                // console.log('buttons:: ', response.data.buttons);
+                console.log("RESP::", response);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -564,254 +591,30 @@ export function updateConversation(data) {
                     item.enabled = true;
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
+                } 
+                 else if(response.data.estado.codigoEstado === 304){
+
+                    const newData = {
+                        ...data,
+                        general: {
+                            ...data.general,
+                            ...response.data.general,
+                        }
+                    }
+                    dispatch(addChattigoData(response.data.general));
+                    dispatch(chattigoInit(newData, general))
                 } else {
                     dispatch(updateConversationError(response.statusText));
                 }
             })
             .catch(err => {
                 dispatch(updateConversationError(err.response.data.msg));
-            });
-
-        //Respuesta
-        // const msg = parseInt(data.msg[0]);
-        // setTimeout(() => {
-        //   const rand = Math.floor(Math.random() * (6 - 1 + 1) + 1);
-        //   let data;
-        //   //1 = MSG + Buttons (Valoración)
-        //   //2 = MSG + Buttons (Contactar)
-        //   //3 = MSG + Attach
-        //   //4 = MSG + Select
-        //   //5 = MSG + Multibutton
-        //   //6 = MSG + Datepicker
-        //   //8 = MULTIMSG
-        //   //9 =
-        //   // debugger
-
-        //   switch (msg) {
-        //     case 1:
-        // data = {
-        //   general: {
-        //     cid: "SOYELCID",
-        //     origen: "Sitio Público",
-        //     nodo_id: null,
-        //     intent: null,
-        //     auth: null,
-        //     token: null,
-        //     location: null
-        //   },
-        //   msg: ["Soy una respuesta", "Te gustaría valorar la respuesta?"],
-        //   buttons: [
-        //     {
-        //       title: "SI",
-        //       value: "siValorar"
-        //     },
-        //     {
-        //       title: "NO",
-        //       value: "noValorar"
-        //     }
-        //   ]
-        // };
-        //       break;
-        //     case 2:
-        // data = {
-        //   general: {
-        //     cid: "SOYELCID",
-        //     origen: "Sitio Público",
-        //     nodo_id: null,
-        //     intent: null,
-        //     auth: null,
-        //     token: null,
-        //     location: null
-        //   },
-        //   msg: ["Contactar?"],
-        //   buttons: [
-        //     {
-        //       title: "SI",
-        //       value: "siContacto"
-        //     },
-        //     {
-        //       title: "NO",
-        //       value: "noContacto"
-        //     }
-        //   ]
-        // };
-        //       break;
-        //     case 3:
-        //       data = {
-        //         general: {
-        //           cid: "SOYELCID",
-        //           origen: "Sitio Público",
-        //           nodo_id: null,
-        //           intent: null,
-        //           auth: null,
-        //           token: null,
-        //           location: null
-        //         },
-        //         msg: ["Debes adjuntar tu imagen"],
-        //         attach: {
-        //           types: [
-        //             "image/jpeg",
-        //             "image/gif",
-        //             "image/png",
-        //             "application/pdf",
-        //             "application/word"
-        //           ],
-        //           maxSize: 300000
-        //         }
-        //       };
-        //       break;
-        //     case 4:
-        // data = {
-        //   general: {
-        //     cid: "SOYELCID",
-        //     origen: "Sitio Público",
-        //     nodo_id: null,
-        //     intent: null,
-        //     auth: null,
-        //     token: null,
-        //     location: null
-        //   },
-        //   msg: ["Por favor, selecciona una opción: "],
-        //   selects: [
-        //     {
-        //       text: "Seleccione",
-        //       value: "-1"
-        //     },
-        //     {
-        //       text: "Option 1",
-        //       value: "1"
-        //     },
-        //     {
-        //       text: "Option 2",
-        //       value: "2"
-        //     },
-        //     {
-        //       text: "Option 3",
-        //       value: "3"
-        //     },
-        //     {
-        //       text: "Option 4",
-        //       value: "4"
-        //     },
-        //     {
-        //       text: "Option 5",
-        //       value: "5"
-        //     },
-        //     {
-        //       text: "Option 6",
-        //       value: "6"
-        //     }
-        //   ]
-        // };
-        //       break;
-        //     case 5:
-        // data = {
-        //   general: {
-        //     cid: "SOYELCID",
-        //     origen: "Sitio Público",
-        //     nodo_id: null,
-        //     intent: null,
-        //     auth: null,
-        //     token: null,
-        //     location: null
-        //   },
-        //   msg: ["Hola, selecciona uno o varios botones:"],
-        //   multibuttons: [
-        //     { title: "hola", value: "1" },
-        //     { title: "holanda", value: "2" },
-        //     { title: "holiwis", value: "3" },
-        //     { title: "holo", value: "4" },
-        //     { title: "holawa", value: "5" }
-        //   ]
-        // };
-        //       break;
-        //     case 6:
-        // data = {
-        //   general: {
-        //     cid: "SOYELCID",
-        //     origen: "Sitio Público",
-        //     nodo_id: null,
-        //     intent: null,
-        //     auth: null,
-        //     token: null,
-        //     location: null
-        //   },
-        //   msg: ["Hola, seleccione una fecha:"],
-        //   datepicker: [
-        //     { name: "inicial", value: "22/05/1991" },
-        //     { name: "final", value: "22/05/1991" }
-        //   ]
-        // };
-        //       break;
-        //     // case 7:
-        //     //   data = {
-        //     //     general: {
-        //     //       cid: "SOYELCID",
-        //     //       origen: "Sitio Público",
-        //     //       nodo_id: null,
-        //     //       intent: null,
-        //     //       auth: null,
-        //     //       token: null,
-        //     //       location: null
-        //     //     },
-        //     //     msg: ["Hola, seleccione una fecha:"],
-        //     //     datepicker: [{ name: "", value: "" }, { name: "", value: "" }]
-        //     //   };
-        //     //   break;
-        //     case 8:
-        //       data = {
-        //         general: {
-        //           cid: "SOYELCID",
-        //           origen: "Sitio Público",
-        //           nodo_id: null,
-        //           intent: null,
-        //           auth: null,
-        //           token: null,
-        //           location: null
-        //         },
-        //         msg: ["lorem ipsum", "lorem ipsum", "lorem ipsum", "lorem ipsum"]
-        //       };
-        //       break;
-        //     case 9:
-        // data = {
-        //   general: {
-        //     cid: "SOYELCID",
-        //     origen: "Sitio Público",
-        //     nodo_id: null,
-        //     intent: null,
-        //     auth: null,
-        //     token: null,
-        //     location: null
-        //   },
-        //   like: true
-        // };
-        //       break;
-        //     default:
-        //       data = {
-        //         general: {
-        //           cid: "SOYELCID",
-        //           origen: "Sitio Público",
-        //           nodo_id: null,
-        //           intent: null,
-        //           auth: null,
-        //           token: null,
-        //           location: null
-        //         },
-        //         msg: ["Soy una respuesta", "Puedes seguir hablándome"]
-        //       };
-        //     break;
-        //   }
-
-        // data.send = "from";
-        // data.enabled = true;
-
-        // messageResponse(dispatch, data);
-        // }, 500);
+        });
     };
 }
 
-function messageResponse(dispatch, data) {
-    // console.log('messageResponse:: ', data);
+function messageResponse(dispatch, data, general) {
+    console.log("DATAAAA", data)
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -836,7 +639,7 @@ function messageResponse(dispatch, data) {
             default:
                 break;
         }
-    } else {
+    }   else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
@@ -850,6 +653,78 @@ function messageResponse(dispatch, data) {
         dispatch(pushConversation(data));
     }
 }
+
+function chattigoInit(data, general){
+    return function action(dispatch){
+        const request = axios({
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            url: APIURL + "/chattigo_in",
+            data: data,
+        });
+        return request.then(
+            response => {
+                if(response.status === 200){
+                    dispatch(startChattigo());
+                     // Intervalo para buscar posibles respuestas de Lynn
+                    dispatch(chattigoOutInterval(data, general));
+                }
+            }
+        )
+    }
+}
+
+function chattigoOutInterval(data){
+    return function action(dispatch, getState){
+        const asistantInterval = setInterval(function() {
+            const request = axios({
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                url: APIURL + "/chattigo_out",
+                data: data,
+            });
+            return request.then(
+                response => {
+                    console.log("LYNN! OUT", response)
+                    let item = {};
+                    item.send = "from";
+                    item.enabled = true;
+                    item.general = getState().assistantStates.getIn(["chattigoData"]);
+                    item.msg = response.data.textos
+                    dispatch(pushConversation(item));
+
+                    if(response.data.textos[0] === "chatConversationEnd"){
+                        console.log("LYNEND");
+                        const request = axios({
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            url: APIURL + "/lynn_end",
+                            data: data,
+                        });
+                        return request.then(
+                            response => {
+                                if(response.status === 200){
+                                    dispatch({ type: "DISABLED_INPUT" });
+                                    clearInterval(asistantInterval);
+                                    dispatch(closeChattigo());
+                                    return;
+                                }
+                            }
+                        )  
+                    }
+                }
+            )
+        }, CHATTIGO_INTERVAL_TIMER);  
+    }
+}
+
+
 export function setHistory(data) {
     return function action(dispatch) {
         const lastConversation = data[data.length - 1],
@@ -950,318 +825,6 @@ export function updateConversationButton(data) {
             return function action(dispatch) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
-
-                // setTimeout(() => {
-                //   let data = {
-                //     general: {
-                //       cid: "SOYELCID",
-                //       origen: "Sitio Público",
-                //       nodo_id: null,
-                //       intent: null,
-                //       auth: null,
-                //       token: null,
-                //       location: null
-                //     },
-                //     send: "from",
-                //     enabled: true,
-                //     liftUp: "form",
-                //     form: {
-                //       header: {
-                //         icon: "fas fa-user-tie",
-                //         textA: "Por favor ingrese sus datos y",
-                //         textStrong:
-                //           "uno de nuestros ejecutivos le responderá a la brevedad posible",
-                //         textB: "o en horario hábil siguiente",
-                //         closeMsg: "No"
-                //       },
-                //       bajada: "Campos obligatorios (*)",
-                //       url: "",
-                //       fields: [
-                //         {
-                //           legend: "Nombre*",
-                //           type: "text",
-                //           name: "nombre",
-                //           placeholder: "Ej. Juan",
-                //           autocomplete: "off",
-                //           validate: {
-                //             types: ["required", "text"],
-                //             rules: { min: 3, max: 10 },
-                //             error: "Debes completar el nombre (mínimo 3, máximo 10)"
-                //           }
-                //         },
-                //         {
-                //           type: "selects-link",
-                //           parent: {
-                //             legend: "Select",
-                //             type: "select",
-                //             name: "region",
-                //             options: [
-                //               { text: "Seleccione", value: -1 },
-                //               { text: "Region 1", value: "R1" },
-                //               { text: "Region 2", value: "R2" },
-                //               { text: "Region 3", value: "R3" }
-                //             ],
-                //             validate: {
-                //               types: ["required", "select"],
-                //               error: "Debes seleccionar una opción"
-                //             }
-                //           },
-                //           children: {
-                //             legend: "Select Search",
-                //             type: "search",
-                //             name: "cursos",
-                //             options: [
-                //               {
-                //                 key: "R1",
-                //                 options: [
-                //                   { text: "Curso 1 R1", value: "COD1" },
-                //                   { text: "Curso 2 R1", value: "COD2" },
-                //                   { text: "Curso 3 R1", value: "COD3" },
-                //                   { text: "Curso 4 R1", value: "COD4" }
-                //                 ]
-                //               },
-                //               {
-                //                 key: "R2",
-                //                 options: [
-                //                   { text: "Curso 1 R2", value: "COD1" },
-                //                   { text: "Curso 2 R2", value: "COD2" },
-                //                   { text: "Curso 3 R2", value: "COD3" },
-                //                   { text: "Curso 4 R2", value: "COD4" }
-                //                 ]
-                //               },
-                //               {
-                //                 key: "R3",
-                //                 options: [
-                //                   { text: "Curso 1 R3", value: "COD1" },
-                //                   { text: "Curso 2 R3", value: "COD2" },
-                //                   { text: "Curso 3 R3", value: "COD3" },
-                //                   { text: "Curso 4 R3", value: "COD4" }
-                //                 ]
-                //               },
-
-                //             ],
-                //             validate: {
-                //               types: ["required", "text"],
-                //               rules: { min: 3, max: 1000 },
-                //               error: "Debes seleccionar una opción"
-                //             }
-                //           }
-                //         },
-                //         // {
-                //         //   legend: "Select Search",
-                //         //   type: "search",
-                //         //   name: "opciones",
-                //         //   options: [
-                //         //     { text: "Perro" },
-                //         //     { text: "Gato" },
-                //         //     { text: "Cocodrilo" },
-                //         //     { text: "Serpiente" },
-                //         //     { text: "Chancho" },
-                //         //     { text: "Ratón" }
-                //         //   ],
-                //         //   validate: {
-                //         //     types: ["required", "search"],
-                //         //     error: "Debes seleccionar una opción"
-                //         //   }
-                //         // },
-                //         {
-                //           legend: "Rut*",
-                //           type: "text",
-                //           name: "rut",
-                //           placeholder: "Ej. 11111111-1",
-                //           autocomplete: "off",
-                //           validate: {
-                //             types: ["required", "rut"],
-                //             error: "Debes ingresar un rut válido"
-                //           }
-                //         },
-                //         {
-                //           legend: "Teléfono",
-                //           type: "tel",
-                //           name: "telefono",
-                //           placeholder: "Ej. 912345678",
-                //           autocomplete: "off",
-                //           validate: {
-                //             types: ["tel"],
-                //             error: "Debes ingresar un teléfono válido"
-                //           }
-                //         },
-                //         {
-                //           legend: "Correo electrónico*",
-                //           type: "email",
-                //           name: "email",
-                //           placeholder: "Ej. nombre@micorreo.cl",
-                //           autocomplete: "off",
-                //           validate: {
-                //             types: ["required", "email"],
-                //             error: "Debes ingresar un correo electrónico válido"
-                //           }
-                //         },
-                //         {
-                //           legend: "Switch*",
-                //           type: "checkbox",
-                //           name: "switch",
-                //           validate: {
-                //             types: ["checkbox"],
-                //             error: "Debes seleccionar el checkbox"
-                //           }
-                //         },
-                //         {
-                //           legend: "Select prueba",
-                //           type: "select",
-                //           name: "opciones",
-                //           options: [
-                //             { text: "Seleccione", value: -1 },
-                //             { text: "Opcion #1", value: 1 },
-                //             { text: "Opcion #2", value: 2 },
-                //             { text: "Opcion #3", value: 3 }
-                //           ],
-                //           validate: {
-                //             types: ["required", "select"],
-                //             error: "Debes seleccionar una opción"
-                //           }
-                //         },
-                //         {
-                //           legend: "Adjuntar*",
-                //           type: "file",
-                //           name: "attach",
-                //           validate: {
-                //             types: ["required", "file"],
-                //             error: "Debes adjuntar",
-                //             rules: {
-                //               types: [
-                //                 "image/jpeg",
-                //                 "image/gif",
-                //                 "image/png",
-                //                 "application/pdf",
-                //                 "application/word"
-                //               ],
-                //               maxSize: 300000,
-                //               maxQuantity: 3
-                //             }
-                //           }
-                //         },
-                //         {
-                //           legend: "Comentario",
-                //           type: "textarea",
-                //           name: "comentario",
-                //           placeholder: "Escriba aquí su comentario",
-                //           autocomplete: "off",
-                //           rows: 5,
-                //           validate: {
-                //             types: ["text"],
-                //             rules: { min: 3, max: 150 },
-                //             error: "Debes completar el nombre (mínimo 3, máximo 150)"
-                //           }
-                //         }
-                //       ]
-                //     }
-                //   };
-                //    data = {
-                //     general: {
-                //       cid: "SOYELCID",
-                //       origen: "Sitio Público",
-                //       nodo_id: null,
-                //       intent: null,
-                //       auth: null,
-                //       token: null,
-                //       location: null
-                //     },
-                //     send: "from",
-                //     enabled: true,
-                //     liftUp: "form",
-                //     form: {
-                //       header: {
-                //         icon: "fas fa-user-tie",
-                //         textA: "Por favor ingrese sus datos y",
-                //         textStrong:
-                //           "uno de nuestros ejecutivos le responderá a la brevedad posible",
-                //         textB: "o en horario hábil siguiente",
-                //         closeMsg: "No"
-                //       },
-                //       bajada: "Campos obligatorios (*)",
-                //       url: "",
-                //       fields: [
-                //         {
-                //           type: "selects-link",
-                //           parent: {
-                //             legend: "Select",
-                //             type: "select",
-                //             name: "region",
-                //             options: [
-                //               { text: "Seleccione", value: -1 },
-                //               { text: "Region 1", value: "R1" },
-                //               { text: "Region 2", value: "R2" },
-                //               { text: "Region 3", value: "R3" }
-                //             ],
-                //             validate: {
-                //               types: ["required", "select"],
-                //               error: "Debes seleccionar una opción"
-                //             }
-                //           },
-                //           children: {
-                //             legend: "Select Search",
-                //             type: "search",
-                //             name: "cursos",
-                //             options: [
-                //               {
-                //                 key: "R1",
-                //                 options: [
-                //                   { text: "Curso 1 R1", value: "COD1" },
-                //                   { text: "Curso 2 R1", value: "COD2" },
-                //                   { text: "Curso 3 R1", value: "COD3" },
-                //                   { text: "Curso 4 R1", value: "COD4" },
-                //                   { text: "Curso 4 R1", value: "COD4" },
-                //                   { text: "Curso 4 R1", value: "COD4" },
-                //                   { text: "Curso 4 R1", value: "COD4" },
-                //                   { text: "Curso 4 R1", value: "COD4" }
-                //                 ]
-                //               },
-                //               {
-                //                 key: "R2",
-                //                 options: [
-                //                   { text: "Curso 1 R2", value: "COD1" },
-                //                   { text: "Curso 2 R2", value: "COD2" },
-                //                   { text: "Curso 3 R2", value: "COD3" },
-                //                   { text: "Curso 4 R2", value: "COD4" }
-                //                 ]
-                //               },
-                //               {
-                //                 key: "R3",
-                //                 options: [
-                //                   { text: "Curso 1 R3", value: "COD1" },
-                //                   { text: "Curso 2 R3", value: "COD2" },
-                //                   { text: "Curso 3 R3", value: "COD3" },
-                //                   { text: "Curso 4 R3", value: "COD4" }
-                //                 ]
-                //               },
-
-                //             ],
-                //             validate: {
-                //               types: ["required", "text"],
-                //               rules: { min: 3, max: 1000 },
-                //               error: "Debes seleccionar una opción"
-                //             }
-                //           }
-                //         },
-                //         {
-                //           legend: "Comentario",
-                //           type: "textarea",
-                //           name: "comentario",
-                //           placeholder: "Escriba aquí su comentario",
-                //           autocomplete: "off",
-                //           rows: 5,
-                //           validate: {
-                //             types: ["text"],
-                //             rules: { min: 3, max: 150 },
-                //             error: "Debes completar el nombre (mínimo 3, máximo 150)"
-                //           }
-                //         }
-                //       ]
-                //     }
-                //   };
-                //   messageResponse(dispatch, data);
-                // }, 500);
             };
         default:
             return function action(dispatch, getState) {
@@ -1428,6 +991,24 @@ export function setErrorValoracion(data) {
             dispatch({ type: "SET_ERROR_VALORACION", data: false });
         }, 4000);
     };
+}
+
+export function startChattigo() {
+    return function action(dispatch) {
+        dispatch({ type: "USE_CHATTIGO", data: true })
+    }
+}
+
+export function closeChattigo() {
+    return function action(dispatch) {
+        dispatch({ type: "USE_CHATTIGO", data: false })
+    }
+}
+
+export function addChattigoData(data) {
+    return function action(dispatch) {
+        dispatch({ type: "CHATTIGO_DATA", data: data })
+    }
 }
 export function sendValoracion(data, general) {
     return function action(dispatch) {

@@ -5,7 +5,9 @@ export function assistantStates(
     isFetching: false,
     error: "",
     active: false,
-    minimized: false
+    minimized: false,
+    useChattigo: false,
+    chattigoData: {},
   }),
   action
 ) {
@@ -29,6 +31,10 @@ export function assistantStates(
       return state.withMutations(map => {
         map.set("isFetching", false).set("error", action.error);
       });
+    case "USE_CHATTIGO": 
+      return state.set("useChattigo", action.data);
+    case "CHATTIGO_DATA": 
+      return state.set("chattigoData", action.data);
     default:
       return state;
   }
