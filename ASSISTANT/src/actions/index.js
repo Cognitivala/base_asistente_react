@@ -1191,16 +1191,26 @@ export function getUrlParams(getState, urlParam) {
 //SIXBELL IN
 var asistantInterval = null;
 export function getSixbellIn(data) {
+
     console.log('getSixbellIn:: ', data)
     let getData = data;
     var ASISTANT_INTERVAL_TIMER = 5000;
+
+    const { general, msg, send, enabled } = data
+
+    let newData = {
+        general,
+        msg,
+        send,
+        enabled
+    }
 
     asistantInterval = setInterval(function() {
         const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
         const data = { data: getData }
         const token = sessionStorage.getItem("token");
 
-        axios.post(urlApi, data, {
+        axios.post(urlApi, newData, {
             headers: {
                 // 'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json",
