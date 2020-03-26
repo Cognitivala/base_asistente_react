@@ -725,8 +725,6 @@ export function setModal(data) {
 //BOTONES
 export function updateConversationButton(data) {
     console.log('updateConversationButton:: ', data)
-
-
     switch (data.msg[0]) {
         case "siValorar":
             return function action(dispatch) {
@@ -792,7 +790,7 @@ export function updateConversationButton(data) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
-
+                            console.log('response updateConversationButton:: ', response.data)
                             getSixbellIn(response.data);
 
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
