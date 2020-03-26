@@ -1240,7 +1240,7 @@ export function getSixbellOut(data) {
             console.log('getSixbellOut:: ', response.data);
             const dataResponse = response.data;
 
-            if (dataResponse.status === 200 || dataResponse.datos.length !== 0) {
+            if (dataResponse.estado.codigoEstado === 200) {
                 // dispatch(updateConversation(response.data.msg));
             } else {
 
