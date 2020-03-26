@@ -385,9 +385,9 @@ export function openAssistant() {
         dispatch({ type: "OPEN_ASSISTANT" });
     };
 }
+var asistantInterval = null;
 export function closeAssistant() {
-
-    getSixbellOut();
+    clearInterval(asistantInterval);
     return function action(dispatch) {
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
@@ -1193,7 +1193,6 @@ export function getUrlParams(getState, urlParam) {
 }
 
 //SIXBELL IN
-var asistantInterval = null;
 export function getSixbellIn(data) {
     console.log('getSixbellIn DATA:: ', data)
     const { general, msg, send, enabled } = data;
@@ -1224,10 +1223,9 @@ export function getSixbellIn(data) {
 //SIXBELL OUT
 export function getSixbellOut(data) {
     // clearInterval(asistantInterval);
+    var ASISTANT_INTERVAL_TIMER = 2000;
 
-    var ASISTANT_INTERVAL_TIMER = 5000;
-
-    var asistantInterval = setInterval(function() {
+    asistantInterval = setInterval(function() {
         const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_out'
         const { general, msg, send, enabled } = data;
         let newData = { general, msg, send, enabled }
