@@ -631,6 +631,7 @@ export function updateConversation(data) {
 async function messageResponse(dispatch, data) {
     console.log('messageResponse:: ', data);
     await getSixbellIn(data);
+    await getSixbellOut();
 
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
@@ -678,7 +679,8 @@ async function messageResponse(dispatch, data) {
         // dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     } else if (data.agent === true) {
-        getSixbellIn();
+        getSixbellIn(data);
+        getSixbellOut();
     } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
@@ -1193,27 +1195,19 @@ export function getUrlParams(getState, urlParam) {
 //SIXBELL IN
 var asistantInterval = null;
 export function getSixbellIn(data) {
-
     console.log('getSixbellIn DATA:: ', data)
-    let getData = data;
-    var ASISTANT_INTERVAL_TIMER = 5000;
-
     const { general, msg, send, enabled } = data;
-    let newData = { general, msg, send, enabled }
-        // asistantInterval = setInterval(function() {
 
+    let newData = { general, msg, send, enabled }
     const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
-        // const data = { data: getData }
     const token = sessionStorage.getItem("token");
 
-    console.log('newData:: ', newData);
     axios.post(urlApi, newData, {
         headers: {
             // 'Authorization': `Bearer ${token}`,
             "Content-Type": "application/json",
         }
     }).then((response) => {
-
         console.log('getSixbellIn:: ', response.data);
         const dataResponse = response.data;
         if (dataResponse.estado.codigoEstado === 200) {
@@ -1224,7 +1218,7 @@ export function getSixbellIn(data) {
     }).catch((error) => {
         console.log(error);
     });
-    // }, ASISTANT_INTERVAL_TIMER);
+
 }
 
 //SIXBELL OUT
@@ -1232,28 +1226,31 @@ export function getSixbellOut() {
     clearInterval(asistantInterval);
     return function action(dispatch) {
 
-        const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_out'
-        const data = { data: '' }
-        const token = sessionStorage.getItem("token");
+        var ASISTANT_INTERVAL_TIMER = 5000;
+        asistantInterval = setInterval(function() {
+            const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_out'
+            const data = { data: '' }
+            const token = sessionStorage.getItem("token");
 
-        axios.post(urlApi, data, {
-            headers: {
-                // 'Authorization': `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        }).then((response) => {
+            axios.post(urlApi, data, {
+                headers: {
+                    // 'Authorization': `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                }
+            }).then((response) => {
+                console.log('getSixbellOut:: ', response.data);
+                const dataResponse = response.data;
 
-            console.log('getSixbellOut:: ', response.data);
-            const dataResponse = response.data;
+                if (dataResponse.status === 200 || dataResponse.datos.length !== 0) {
+                    // dispatch(updateConversation(response.data.msg));
+                } else {
 
-            if (dataResponse.status === 200 || dataResponse.datos.length !== 0) {
-                // dispatch(updateConversation(response.data.msg));
-            } else {
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
 
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
+        }, ASISTANT_INTERVAL_TIMER);
 
     }
 }
