@@ -688,7 +688,7 @@ function messageResponse(dispatch, data) {
             if (data.general.integracion !== undefined) {
                 dispatch(setIntegracion(data.general.integracion))
             };
-            getSixbellIn(data);
+            // getSixbellIn(data);
         }
         dispatch(pushConversation(data));
     }
@@ -724,6 +724,8 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
+
+    getSixbellIn(data);
 
     switch (data.msg[0]) {
         case "siValorar":
