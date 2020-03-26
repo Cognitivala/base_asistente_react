@@ -725,9 +725,6 @@ export function setModal(data) {
 //BOTONES
 export function updateConversationButton(data) {
 
-    console.log('updateConversationButton:: ', data);
-    getSixbellIn(data);
-
     switch (data.msg[0]) {
         case "siValorar":
             return function action(dispatch) {
@@ -772,6 +769,7 @@ export function updateConversationButton(data) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
                 // console.log('data updateConversationButton:: ', data)
+
                 const request = axios({
                     method: "POST",
                     headers: {
@@ -785,6 +783,7 @@ export function updateConversationButton(data) {
                         clave: getUrlParams(getState, 'clave')
                     }
                 });
+
                 return request.then(
                     response => {
                         // console.log('RESPONSE MENSAJE updateConversationButton::', response);
@@ -792,6 +791,9 @@ export function updateConversationButton(data) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
+
+                            console.log('updateConversationButton:: ', item);
+                            getSixbellIn(item);
 
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
