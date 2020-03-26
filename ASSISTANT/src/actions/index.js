@@ -1192,7 +1192,7 @@ export function getUrlParams(getState, urlParam) {
 }
 
 //SIXBELL IN
-// var asistantInterval = null;
+var asistantInterval = null;
 export function getSixbellIn(data) {
 
     console.log('getSixbellIn:: ', data)
