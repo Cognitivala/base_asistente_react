@@ -630,7 +630,7 @@ export function updateConversation(data) {
 
 function messageResponse(dispatch, data) {
     console.log('messageResponse:: ', data);
-    getSixbellIn(data);
+
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -688,9 +688,9 @@ function messageResponse(dispatch, data) {
             if (data.general.integracion !== undefined) {
                 dispatch(setIntegracion(data.general.integracion))
             };
+            getSixbellIn(data);
         }
         dispatch(pushConversation(data));
-        getSixbellIn();
     }
 }
 export function setHistory(data) {
@@ -1190,7 +1190,7 @@ export function getUrlParams(getState, urlParam) {
 }
 
 //SIXBELL IN
-var asistantInterval = null;
+// var asistantInterval = null;
 export function getSixbellIn(data) {
 
     console.log('getSixbellIn:: ', data)
@@ -1200,36 +1200,36 @@ export function getSixbellIn(data) {
     const { general, msg, send, enabled } = data
 
     let newData = {
-        general,
-        msg,
-        send,
-        enabled
-    }
-    asistantInterval = setInterval(function() {
+            general,
+            msg,
+            send,
+            enabled
+        }
+        // asistantInterval = setInterval(function() {
 
-        const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
-        const data = { data: getData }
-        const token = sessionStorage.getItem("token");
+    const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
+        // const data = { data: getData }
+    const token = sessionStorage.getItem("token");
 
-        console.log('newData:: ', newData);
-        axios.post(urlApi, newData, {
-            headers: {
-                // 'Authorization': `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        }).then((response) => {
+    console.log('newData:: ', newData);
+    axios.post(urlApi, newData, {
+        headers: {
+            // 'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+        }
+    }).then((response) => {
 
-            console.log('getSixbellIn:: ', response.data);
-            const dataResponse = response.data;
-            if (dataResponse.status === 200 || dataResponse.datos.length !== 0) {
-                // dispatch(updateConversation(response.data.msg));
-            } else {
+        console.log('getSixbellIn:: ', response.data);
+        const dataResponse = response.data;
+        if (dataResponse.status === 200 || dataResponse.datos.length !== 0) {
+            // dispatch(updateConversation(response.data.msg));
+        } else {
 
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
-    }, ASISTANT_INTERVAL_TIMER);
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
+    // }, ASISTANT_INTERVAL_TIMER);
 }
 
 //SIXBELL OUT
