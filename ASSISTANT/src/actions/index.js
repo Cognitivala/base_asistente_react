@@ -1223,7 +1223,7 @@ export function getSixbellIn(data) {
 //SIXBELL OUT
 export function getSixbellOut(data) {
     // clearInterval(asistantInterval);
-    var ASISTANT_INTERVAL_TIMER = 2000;
+    var ASISTANT_INTERVAL_TIMER = 5000;
 
     asistantInterval = setInterval(function() {
         const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_out'
