@@ -630,7 +630,7 @@ export function updateConversation(data) {
 
 function messageResponse(dispatch, data) {
     console.log('messageResponse:: ', data);
-
+    getSixbellIn(data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -796,7 +796,7 @@ export function updateConversationButton(data) {
 
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
-                            getSixbellIn(item);
+
 
                             if (item.end_conversation === true) {
                                 dispatch(setEndConversation(true));
