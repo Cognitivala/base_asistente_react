@@ -615,7 +615,7 @@ export function updateConversation(data) {
                     item.send = "from";
                     item.enabled = true;
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
-                    getSixbellIn();
+
                     messageResponse(dispatch, item);
 
                 } else {
@@ -629,7 +629,9 @@ export function updateConversation(data) {
 }
 
 function messageResponse(dispatch, data) {
-    // console.log('messageResponse:: ', data);
+    console.log('messageResponse:: ', data);
+    debugger;
+    getSixbellIn();
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
