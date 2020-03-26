@@ -725,7 +725,7 @@ export function setModal(data) {
 //BOTONES
 export function updateConversationButton(data) {
     console.log('updateConversationButton:: ', data)
-    getSixbellIn(data);
+
 
     switch (data.msg[0]) {
         case "siValorar":
@@ -792,6 +792,9 @@ export function updateConversationButton(data) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
+
+                            getSixbellIn(response.data);
+
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
                             if (item.end_conversation === true) {
@@ -1188,7 +1191,7 @@ export function getUrlParams(getState, urlParam) {
 //SIXBELL IN
 var asistantInterval = null;
 export function getSixbellIn(data) {
-
+    console.log('getSixbellIn:: ', data)
     let getData = data;
     var ASISTANT_INTERVAL_TIMER = 5000;
 
