@@ -615,8 +615,9 @@ export function updateConversation(data) {
                     item.send = "from";
                     item.enabled = true;
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
-                    messageResponse(dispatch, item);
                     getSixbellIn();
+                    messageResponse(dispatch, item);
+
                 } else {
                     dispatch(updateConversationError(response.statusText));
                 }
@@ -1189,31 +1190,29 @@ export function getSixbellIn() {
 
         var ASISTANT_INTERVAL_TIMER = 5000;
 
-        asistantInterval = setInterval(function() {
-            const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
-            const data = { data: '' }
-            const token = sessionStorage.getItem("token");
+        // asistantInterval = setInterval(function() {
+        const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
+        const data = { data: '' }
+        const token = sessionStorage.getItem("token");
 
-            axios.post(urlApi, data, {
-                headers: {
-                    // 'Authorization': `Bearer ${token}`,
-                    "Content-Type": "application/json",
-                }
-            }).then((response) => {
+        axios.post(urlApi, data, {
+            headers: {
+                // 'Authorization': `Bearer ${token}`,
+                "Content-Type": "application/json",
+            }
+        }).then((response) => {
 
-                console.log('getSixbellIn:: ', response.data);
-                const dataResponse = response.data;
+            console.log('getSixbellIn:: ', response.data);
+            const dataResponse = response.data;
+            if (dataResponse.status === 200 || dataResponse.datos.length !== 0) {
+                // dispatch(updateConversation(response.data.msg));
+            } else {
 
-
-                if (dataResponse.status === 200 || dataResponse.datos.length !== 0) {
-                    // dispatch(updateConversation(response.data.msg));
-                } else {
-
-                }
-            }).catch((error) => {
-                console.log(error);
-            });
-        }, ASISTANT_INTERVAL_TIMER);
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+        // }, ASISTANT_INTERVAL_TIMER);
     }
 }
 
