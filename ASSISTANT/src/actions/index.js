@@ -772,7 +772,6 @@ export function updateConversationButton(data) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
                 // console.log('data updateConversationButton:: ', data)
-                // console.log('data.general updateConversationButton::', data.general)
                 const request = axios({
                     method: "POST",
                     headers: {
