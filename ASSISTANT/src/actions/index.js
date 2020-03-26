@@ -1194,7 +1194,7 @@ export function getUrlParams(getState, urlParam) {
 var asistantInterval = null;
 export function getSixbellIn(data) {
 
-    console.log('getSixbellIn:: ', data)
+    console.log('getSixbellIn DATA:: ', data)
     let getData = data;
     var ASISTANT_INTERVAL_TIMER = 5000;
 
@@ -1216,7 +1216,7 @@ export function getSixbellIn(data) {
 
         console.log('getSixbellIn:: ', response.data);
         const dataResponse = response.data;
-        if (dataResponse.status === 200 || dataResponse.datos.length !== 0) {
+        if (dataResponse.estado.codigoEstado === 200) {
             // dispatch(updateConversation(response.data.msg));
         } else {
 
