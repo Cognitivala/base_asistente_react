@@ -628,8 +628,9 @@ export function updateConversation(data) {
     };
 }
 
-function messageResponse(dispatch, data) {
+async function messageResponse(dispatch, data) {
     console.log('messageResponse:: ', data);
+    await getSixbellIn(data);
 
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
@@ -725,7 +726,7 @@ export function setModal(data) {
 //BOTONES
 export function updateConversationButton(data) {
 
-    getSixbellIn(data);
+
 
     switch (data.msg[0]) {
         case "siValorar":
@@ -786,14 +787,12 @@ export function updateConversationButton(data) {
                     }
                 });
 
-                return request.then(
-                    response => {
+                return request.then(async(response) => {
                         // console.log('RESPONSE MENSAJE updateConversationButton::', response);
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
-
                             console.log('updateConversationButton Item:: ', item);
 
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
@@ -1199,14 +1198,8 @@ export function getSixbellIn(data) {
     let getData = data;
     var ASISTANT_INTERVAL_TIMER = 5000;
 
-    const { general, msg, send, enabled } = data
-
-    let newData = {
-            general,
-            msg,
-            send,
-            enabled
-        }
+    const { general, msg, send, enabled } = data;
+    let newData = { general, msg, send, enabled }
         // asistantInterval = setInterval(function() {
 
     const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
