@@ -631,7 +631,7 @@ export function updateConversation(data) {
 async function messageResponse(dispatch, data) {
     console.log('messageResponse:: ', data);
     await getSixbellIn(data);
-    await getSixbellOut();
+    await getSixbellOut(data);
 
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
@@ -1222,12 +1222,14 @@ export function getSixbellIn(data) {
 }
 
 //SIXBELL OUT
-export function getSixbellOut() {
-    clearInterval(asistantInterval);
+export function getSixbellOut(data) {
+
+    // clearInterval(asistantInterval);
+
     return function action(dispatch) {
 
         var ASISTANT_INTERVAL_TIMER = 5000;
-        asistantInterval = setInterval(function() {
+        var asistantInterval = setInterval(function() {
             const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_out'
             const data = { data: '' }
             const token = sessionStorage.getItem("token");
