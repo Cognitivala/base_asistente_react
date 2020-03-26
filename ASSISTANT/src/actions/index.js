@@ -792,11 +792,12 @@ export function updateConversationButton(data) {
                             item.send = "from";
                             item.enabled = true;
 
-                            console.log('updateConversationButton:: ', item);
-                            getSixbellIn(item);
+                            console.log('updateConversationButton Item:: ', item);
 
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
+                            getSixbellIn(item);
+
                             if (item.end_conversation === true) {
                                 dispatch(setEndConversation(true));
                             } else {
@@ -1204,12 +1205,13 @@ export function getSixbellIn(data) {
         send,
         enabled
     }
-
     asistantInterval = setInterval(function() {
+
         const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
         const data = { data: getData }
         const token = sessionStorage.getItem("token");
 
+        console.log('newData:: ', newData);
         axios.post(urlApi, newData, {
             headers: {
                 // 'Authorization': `Bearer ${token}`,
