@@ -630,8 +630,8 @@ export function updateConversation(data) {
 
 async function messageResponse(dispatch, data) {
     console.log('messageResponse:: ', data);
-    await getSixbellIn(data);
-    await getSixbellOut(data);
+    // await getSixbellIn(data);
+    // await getSixbellOut(data);
 
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
@@ -679,8 +679,8 @@ async function messageResponse(dispatch, data) {
         // dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     } else if (data.agent === true) {
-        getSixbellIn(data);
-        getSixbellOut();
+        await getSixbellIn(data);
+        await getSixbellOut(data);
     } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
