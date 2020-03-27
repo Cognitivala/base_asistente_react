@@ -631,7 +631,7 @@ export function updateConversation(data) {
 async function messageResponse(dispatch, data) {
     console.log('messageResponse:: ', data);
     // await getSixbellIn(data);
-    // await getSixbellOut(data);
+    await getSixbellOut(dispatch, data);
 
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
@@ -680,7 +680,7 @@ async function messageResponse(dispatch, data) {
         dispatch(deleteHistory());
     } else if (data.agent === true) {
         await getSixbellIn(dispatch, data);
-        await getSixbellOut(dispatch, data);
+        // await getSixbellOut(dispatch, data);
     } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
