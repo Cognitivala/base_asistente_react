@@ -1195,7 +1195,7 @@ export function getUrlParams(getState, urlParam) {
 //SIXBELL IN
 export function getSixbellIn(data) {
     console.log('getSixbellIn DATA:: ', data)
-
+    debugger;
     return function action(dispatch) {
         const { general, msg, send, enabled } = data;
         let newData = { general, msg, send, enabled }
