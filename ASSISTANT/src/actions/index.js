@@ -1193,9 +1193,12 @@ export function getUrlParams(getState, urlParam) {
 //SIXBELL IN
 export const getSixbellIn = (dispatch, data) => {
     console.log('getSixbellIn DATA:: ', data)
-
-
-    const { general, msg, send, enabled } = data;
+    const {
+        general,
+        msg,
+        send,
+        enabled
+    } = data;
     let newData = { general, msg, send, enabled }
     const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
     const token = sessionStorage.getItem("token");
@@ -1209,11 +1212,13 @@ export const getSixbellIn = (dispatch, data) => {
         console.log('response.data getSixbellIn:: ', response.data);
         const dataResponse = response.data;
         if (dataResponse.estado.codigoEstado === 200) {
-            let item = response.data;
-            item.send = "from";
-            item.enabled = true;
-            console.log('item in', item);
-            dispatch(updateConversation(item));
+            // let item = response.data;
+            // item.send = "from";
+            // item.enabled = true;
+            console.log('item in', dataResponse);
+
+            // dispatch(updateConversation(item));
+
         } else {
 
         }
@@ -1246,6 +1251,10 @@ export function getSixbellOut(dispatch, data) {
 
             if (dataResponse.estado.codigoEstado === 200) {
                 // dispatch(updateConversation(response.data.msg));
+                let item = response.data;
+                item.send = "from";
+                item.enabled = true;
+                dispatch(updateConversation(item));
             } else {
 
             }
