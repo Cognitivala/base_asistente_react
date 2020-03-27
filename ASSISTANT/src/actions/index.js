@@ -1226,6 +1226,8 @@ export const getSixbellIn = (dispatch, data) => {
 //SIXBELL OUT
 export function getSixbellOut(data) {
     // clearInterval(asistantInterval);
+
+    console.log('getSixbellOut: ', data);
     var ASISTANT_INTERVAL_TIMER = 5000;
 
     asistantInterval = setInterval(function() {
