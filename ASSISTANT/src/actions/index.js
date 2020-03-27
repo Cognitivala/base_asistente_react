@@ -1196,33 +1196,32 @@ export function getUrlParams(getState, urlParam) {
 export function getSixbellIn(data) {
     console.log('getSixbellIn DATA:: ', data)
     debugger;
-    return function action(dispatch) {
-        const { general, msg, send, enabled } = data;
-        let newData = { general, msg, send, enabled }
-        const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
-        const token = sessionStorage.getItem("token");
 
-        axios.post(urlApi, newData, {
-            headers: {
-                // 'Authorization': `Bearer ${token}`,
-                "Content-Type": "application/json",
-            }
-        }).then((response) => {
-            console.log('getSixbellIn:: ', response.data);
-            const dataResponse = response.data;
-            if (dataResponse.estado.codigoEstado === 200) {
-                // dispatch(updateConversation(response.data.msg));
-                let item = response.data;
-                item.send = "from";
-                item.enabled = true;
-                dispatch(updateConversation(item));
-            } else {
+    const { general, msg, send, enabled } = data;
+    let newData = { general, msg, send, enabled }
+    const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
+    const token = sessionStorage.getItem("token");
 
-            }
-        }).catch((error) => {
-            console.log(error);
-        });
-    }
+    axios.post(urlApi, newData, {
+        headers: {
+            // 'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+        }
+    }).then((response) => {
+        console.log('getSixbellIn:: ', response.data);
+        const dataResponse = response.data;
+        if (dataResponse.estado.codigoEstado === 200) {
+            // dispatch(updateConversation(response.data.msg));
+            let item = response.data;
+            item.send = "from";
+            item.enabled = true;
+            updateConversation(item);
+        } else {
+
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
 }
 
 //SIXBELL OUT
