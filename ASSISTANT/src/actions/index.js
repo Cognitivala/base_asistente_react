@@ -631,7 +631,6 @@ export function updateConversation(data) {
 async function messageResponse(dispatch, data) {
     console.log('messageResponse:: ', data);
     // await getSixbellIn(data);
-    await getSixbellOut(dispatch, data);
 
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
@@ -691,7 +690,7 @@ async function messageResponse(dispatch, data) {
             if (data.general.integracion !== undefined) {
                 dispatch(setIntegracion(data.general.integracion))
             };
-            // getSixbellIn(data);
+            await getSixbellOut(dispatch, data);
         }
         dispatch(pushConversation(data));
     }
