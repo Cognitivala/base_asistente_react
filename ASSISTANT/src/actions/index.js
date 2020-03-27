@@ -679,8 +679,8 @@ async function messageResponse(dispatch, data) {
         // dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     } else if (data.agent === true) {
-        await getSixbellIn(data);
-        await getSixbellOut(data);
+        await getSixbellIn(dispatch, data);
+        await getSixbellOut(dispatch, data);
     } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
@@ -727,8 +727,6 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-
-
 
     switch (data.msg[0]) {
         case "siValorar":
@@ -882,6 +880,7 @@ function attachFileEnd(data) {
         type: "GET_CONVERSATIONS_END"
     };
 }
+
 export function openEmoji() {
     return function action(dispatch) {
         dispatch({ type: "OPEN_EMOJI" })
@@ -1193,9 +1192,9 @@ export function getUrlParams(getState, urlParam) {
 }
 
 //SIXBELL IN
-export function getSixbellIn(data) {
+export const getSixbellIn = (dispatch, data) => {
     console.log('getSixbellIn DATA:: ', data)
-    debugger;
+
 
     const { general, msg, send, enabled } = data;
     let newData = { general, msg, send, enabled }
@@ -1208,14 +1207,14 @@ export function getSixbellIn(data) {
             "Content-Type": "application/json",
         }
     }).then((response) => {
-        console.log('getSixbellIn:: ', response.data);
+        console.log('response.data getSixbellIn:: ', response.data);
         const dataResponse = response.data;
         if (dataResponse.estado.codigoEstado === 200) {
-            // dispatch(updateConversation(response.data.msg));
             let item = response.data;
             item.send = "from";
             item.enabled = true;
-            updateConversation(item);
+            console.log('item in', item);
+            dispatch(updateConversation(item));
         } else {
 
         }
