@@ -1223,7 +1223,7 @@ export const getSixbellIn = (dispatch, data) => {
 }
 
 //SIXBELL OUT
-export function getSixbellOut(data) {
+export function getSixbellOut(dispatch, data) {
     // clearInterval(asistantInterval);
 
     console.log('getSixbellOut: ', data);
