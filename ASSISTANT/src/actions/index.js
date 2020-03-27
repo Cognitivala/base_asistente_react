@@ -637,21 +637,21 @@ async function messageResponse(dispatch, data) {
         switch (data.liftUp) {
             case "valoracion":
                 if (data.general !== undefined) {
-                    dispatch(setGeneral(data.general));
+                    await dispatch(setGeneral(data.general));
                     if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
                 }
-                dispatch({ type: "ENABLED_VALORACION" });
-                disabledHelp();
-                disabledInput();
-                dispatch(pushConversation(data));
+                await dispatch({ type: "ENABLED_VALORACION" });
+                await disabledHelp();
+                await disabledInput();
+                await dispatch(pushConversation(data));
                 break;
             case "form":
                 if (data.general !== undefined) {
-                    dispatch(setGeneral(data.general));
+                    await dispatch(setGeneral(data.general));
                     if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
                 }
-                dispatch({ type: "ENABLED_FORM" });
-                dispatch(pushConversation(data));
+                await dispatch({ type: "ENABLED_FORM" });
+                await dispatch(pushConversation(data));
                 break;
             default:
                 break;
@@ -692,7 +692,7 @@ async function messageResponse(dispatch, data) {
                 dispatch(setIntegracion(data.general.integracion))
             };
         }
-        dispatch(pushConversation(data));
+        await dispatch(pushConversation(data));
     }
 }
 export function setHistory(data) {
@@ -1245,7 +1245,7 @@ export function getSixbellOut(dispatch, data) {
                 // 'Authorization': `Bearer ${token}`,
                 "Content-Type": "application/json",
             }
-        }).then((response) => {
+        }).then(async(response) => {
             console.log('getSixbellOut:: ', response.data);
             const dataResponse = response.data;
 
@@ -1255,7 +1255,8 @@ export function getSixbellOut(dispatch, data) {
                 item.send = "from";
                 item.enabled = true;
                 // dispatch(updateConversation(item));
-                dispatch(messageResponse(dispatch, item));
+                // await dispatch(messageResponse(dispatch, item));
+                await dispatch(pushConversation(item))
             } else {
 
             }
