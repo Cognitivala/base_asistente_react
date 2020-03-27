@@ -679,6 +679,7 @@ async function messageResponse(dispatch, data) {
         dispatch(deleteHistory());
     } else if (data.agent === true) {
         await getSixbellIn(dispatch, data);
+        await getSixbellOut(dispatch, data);
         // await getSixbellOut(dispatch, data);
     } else {
         // console.log('data.general ', data)
@@ -690,7 +691,6 @@ async function messageResponse(dispatch, data) {
             if (data.general.integracion !== undefined) {
                 dispatch(setIntegracion(data.general.integracion))
             };
-            await getSixbellOut(dispatch, data);
         }
         dispatch(pushConversation(data));
     }
