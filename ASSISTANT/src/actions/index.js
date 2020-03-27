@@ -1254,7 +1254,7 @@ export function getSixbellOut(dispatch, data) {
                 let item = response.data;
                 item.send = "from";
                 item.enabled = true;
-                dispatch(updateConversation(item));
+                // dispatch(updateConversation(item));
             } else {
 
             }
