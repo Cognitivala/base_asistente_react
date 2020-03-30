@@ -394,9 +394,9 @@ export function closeAssistant() {
 
     clearInterval(interval);
 
-    return function action(dispatch) {
+    return async function action(dispatch, getState) {
 
-
+        await getSixbellEnd(getState);
 
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
