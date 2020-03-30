@@ -6,7 +6,7 @@ import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from 'react-device-detect';
 
 
-var asistantInterval = null;
+var interval = null;
 var inputMessage = null;
 
 //GENERAL
@@ -391,8 +391,8 @@ export function openAssistant() {
 }
 
 export function closeAssistant() {
-    debugger;
-    clearInterval(asistantInterval);
+
+    clearInterval(interval);
     return function action(dispatch) {
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
@@ -690,10 +690,8 @@ async function messageResponse(dispatch, data) {
         dispatch(deleteHistory());
     } else if (data.agent === true) {
         await getSixbellIn(dispatch, data, inputMessage);
-        await getSixbellOut(dispatch, data);
-        // await getSixbellOut(dispatch, data);
+        var sixbellOut = await getSixbellOut(dispatch, data);
     } else {
-        // console.log('data.general ', data)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -1246,7 +1244,7 @@ export function getSixbellOut(dispatch, data) {
     console.log('getSixbellOut: ', data);
     var ASISTANT_INTERVAL_TIMER = 5000;
 
-    asistantInterval = setInterval(function() {
+    interval = setInterval(function() {
         const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_out'
         const { general, msg, send, enabled } = data;
         let newData = { general, msg, send, enabled }
