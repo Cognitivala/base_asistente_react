@@ -5,6 +5,10 @@ import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from 'react-device-detect';
 
+
+var asistantInterval = null;
+var inputMessage = null;
+
 //GENERAL
 function defaultGeneral() {
     return {
@@ -385,7 +389,7 @@ export function openAssistant() {
         dispatch({ type: "OPEN_ASSISTANT" });
     };
 }
-var asistantInterval = null;
+
 export function closeAssistant() {
     clearInterval(asistantInterval);
     return function action(dispatch) {
@@ -585,7 +589,8 @@ function updateConversationError(data) {
 }
 // UPDATE CONVERSATION
 export function updateConversation(data) {
-    console.log('updateConversation:: ', data)
+    console.log('updateConversation:: ', data.msg[0]);
+    inputMessage = data.msg[0];
     return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -604,7 +609,7 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                // console.log('message updateConversation:: ', response.data);
+                console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
@@ -679,7 +684,7 @@ async function messageResponse(dispatch, data) {
         // dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
     } else if (data.agent === true) {
-        await getSixbellIn(dispatch, data);
+        await getSixbellIn(dispatch, data, inputMessage);
         await getSixbellOut(dispatch, data);
         // await getSixbellOut(dispatch, data);
     } else {
@@ -1192,7 +1197,7 @@ export function getUrlParams(getState, urlParam) {
 }
 
 //SIXBELL IN
-export const getSixbellIn = (dispatch, data) => {
+export const getSixbellIn = (dispatch, data, inputMessage) => {
     console.log('getSixbellIn DATA:: ', data)
     const {
         general,
@@ -1200,7 +1205,7 @@ export const getSixbellIn = (dispatch, data) => {
         send,
         enabled
     } = data;
-    let newData = { general, msg, send, enabled }
+    let newData = { general, msg: inputMessage, send, enabled }
     const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
     const token = sessionStorage.getItem("token");
 
