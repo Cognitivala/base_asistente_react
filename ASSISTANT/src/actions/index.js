@@ -1100,7 +1100,7 @@ export function sendForm(data, url, general) {
                     });
                     return request
                         .then(response => {
-                            // console.log('RESPONSE MENSAJE 5::');
+                            console.log('RESPONSE MENSAJE FORM::');
                             if (
                                 response.status === 200 &&
                                 response.data.estado.codigoEstado === 200
