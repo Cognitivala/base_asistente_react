@@ -1282,6 +1282,7 @@ export const getSixbellEnd = (getState) => {
     console.log(getState().generalStates.getIn(["url_params"]));
     console.log(getState().generalStates.getIn(["general"]));
     console.log(getState().generalStates.get(["general", "cid"]));
+    console.log(getState().generalStates.toJS());
 
     const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_end';
     let data = {
