@@ -620,8 +620,8 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-
-                    if (data.agent === true) {
+                    console.log('response.data.agent::: ', response.data.agent)
+                    if (response.data.agent === true) {
                         item.msg = [`${inputMessage}`];
                     }
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
@@ -1201,16 +1201,16 @@ export function getUrlParams(getState, urlParam) {
 }
 
 //SIXBELL IN
-export const getSixbellIn = (dispatch, data, inputMessage) => {
+export const getSixbellIn = (dispatch, data) => {
     console.log('getSixbellIn DATA:: ', data)
-    console.log('getSixbellIn inputMessage:: ', inputMessage)
+    console.log('getSixbellIn inputMessage:: ', data.msg)
     const {
         general,
         msg,
         send,
         enabled
     } = data;
-    let newData = { general, msg: inputMessage, send, enabled }
+    let newData = { general, msg, send, enabled }
     const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
     const token = sessionStorage.getItem("token");
 
