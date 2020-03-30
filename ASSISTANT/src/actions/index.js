@@ -393,7 +393,11 @@ export function openAssistant() {
 export function closeAssistant() {
 
     clearInterval(interval);
+
     return function action(dispatch) {
+
+
+
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
@@ -1226,11 +1230,7 @@ export const getSixbellIn = (dispatch, data) => {
             // item.send = "from";
             // item.enabled = true;
             console.log('item in', dataResponse);
-
             // dispatch(updateConversation(item));
-
-        } else {
-
         }
     }).catch((error) => {
         console.log(error);
@@ -1275,4 +1275,32 @@ export function getSixbellOut(dispatch, data) {
         });
 
     }, ASISTANT_INTERVAL_TIMER);
+}
+
+export const getSixbellEnd = (data) => {
+
+    console.log(getState().generalStates.getIn(["url_params", urlParam]));
+    console.log(getState().generalStates.getIn(["general", cid]));
+
+    const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_end';
+    let data = {
+        cid: 'cid'
+    };
+
+    const token = sessionStorage.getItem("token");
+
+    axios.post(urlApi, data, {
+        headers: {
+            // 'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+        }
+    }).then((response) => {
+        console.log('getSixbellEnd:: ', response.data);
+        const dataResponse = response.data;
+        if (dataResponse.estado.codigoEstado === 200) {
+            console.log('item in', dataResponse);
+        }
+    }).catch((error) => {
+        console.log(error);
+    });
 }
