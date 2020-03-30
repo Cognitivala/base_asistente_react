@@ -8,6 +8,7 @@ import { isMobile } from 'react-device-detect';
 
 var interval = null;
 var inputMessage = null;
+var setCid = null;
 
 //GENERAL
 function defaultGeneral() {
@@ -396,8 +397,7 @@ export function closeAssistant() {
 
     return async function action(dispatch, getState) {
 
-        await getSixbellEnd(getState);
-
+        await getSixbellEnd();
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
@@ -628,6 +628,7 @@ export function updateConversation(data) {
                     console.log('response.data.agent::: ', response.data.agent)
                     if (response.data.agent === true) {
                         item.msg = [`${inputMessage}`];
+                        setCid = response.data.general.cid;
                     }
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
 
@@ -694,7 +695,7 @@ async function messageResponse(dispatch, data) {
         dispatch(deleteHistory());
     } else if (data.agent === true) {
         await getSixbellIn(dispatch, data, inputMessage);
-        var sixbellOut = await getSixbellOut(dispatch, data);
+        await getSixbellOut(dispatch, data);
     } else {
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
@@ -1277,18 +1278,10 @@ export function getSixbellOut(dispatch, data) {
     }, ASISTANT_INTERVAL_TIMER);
 }
 
-export const getSixbellEnd = (getState) => {
-
-    console.log(getState().generalStates.getIn(["url_params"]));
-    console.log(getState().generalStates.getIn(["general"]));
-    console.log(getState().generalStates.get(["general", "cid"]));
-    console.log(getState().generalStates.toJS());
+export const getSixbellEnd = () => {
 
     const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_end';
-    let data = {
-        cid: 'cid'
-    };
-
+    let data = { cid: setCid };
     const token = sessionStorage.getItem("token");
 
     axios.post(urlApi, data, {
@@ -1300,7 +1293,7 @@ export const getSixbellEnd = (getState) => {
         console.log('getSixbellEnd:: ', response.data);
         const dataResponse = response.data;
         if (dataResponse.estado.codigoEstado === 200) {
-            console.log('item in', dataResponse);
+            console.log('item end', dataResponse);
         }
     }).catch((error) => {
         console.log(error);
