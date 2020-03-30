@@ -585,6 +585,7 @@ function updateConversationError(data) {
 }
 // UPDATE CONVERSATION
 export function updateConversation(data) {
+    console.log('updateConversation:: ', data)
     return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
