@@ -391,6 +391,7 @@ export function openAssistant() {
 }
 
 export function closeAssistant() {
+    debugger;
     clearInterval(asistantInterval);
     return function action(dispatch) {
         dispatch(defaultGeneral());
