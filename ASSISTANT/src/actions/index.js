@@ -590,7 +590,7 @@ function updateConversationError(data) {
 // UPDATE CONVERSATION
 export function updateConversation(data) {
     console.log('updateConversation:: ', data.msg[0]);
-    inputMessage = data.msg[0];
+    let inputMessage = data.msg[0];
     return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -620,6 +620,10 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
+
+                    if (data.agent === true) {
+                        item.msg = [`${inputMessage}`];
+                    }
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
 
                     messageResponse(dispatch, item);
@@ -1199,6 +1203,7 @@ export function getUrlParams(getState, urlParam) {
 //SIXBELL IN
 export const getSixbellIn = (dispatch, data, inputMessage) => {
     console.log('getSixbellIn DATA:: ', data)
+    console.log('getSixbellIn inputMessage:: ', inputMessage)
     const {
         general,
         msg,
