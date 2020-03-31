@@ -8,7 +8,6 @@ import { isMobile } from 'react-device-detect';
 
 var interval = null;
 var inputMessage = null;
-var setCid = null;
 
 //GENERAL
 function defaultGeneral() {
@@ -1291,10 +1290,6 @@ export const getSixbellEnd = () => {
         }
     }).then((response) => {
         console.log('getSixbellEnd:: ', response.data);
-        const dataResponse = response.data;
-        if (dataResponse.estado.codigoEstado === 200) {
-            console.log('item end', dataResponse);
-        }
     }).catch((error) => {
         console.log(error);
     });
