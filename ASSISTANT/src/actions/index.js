@@ -628,7 +628,7 @@ export function updateConversation(data) {
                     console.log('response.data.agent::: ', response.data.agent)
                     if (response.data.agent === true) {
                         item.msg = [`${inputMessage}`];
-                        setCid = response.data.general.cid;
+                        sessionStorage.setItem('cid', response.data.general.cid);
                     }
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
 
@@ -1281,7 +1281,7 @@ export function getSixbellOut(dispatch, data) {
 export const getSixbellEnd = () => {
 
     const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_end';
-    let data = { cid: setCid };
+    let data = { cid: JSON.stringify(sessionStorage.getItem('cid')) };
     const token = sessionStorage.getItem("token");
 
     axios.post(urlApi, data, {
