@@ -409,16 +409,16 @@ export function closeAssistant() {
 }
 export function toggleMinimizedAssistant(data) {
     return function action(dispatch) {
-        // dispatch({ type: "TOGGLE_MINIMIZED", data });
-        // dispatch({ type: "OPEN_LAUNCHER" });
+        dispatch({ type: "TOGGLE_MINIMIZED", data });
+        dispatch({ type: "OPEN_LAUNCHER" });
 
 
-        dispatch(defaultGeneral());
-        dispatch({ type: "DISABLED_INPUT" });
-        // dispatch({ type: "ENABLED_HELP" });
-        // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-        dispatch({ type: "SET_NOTIFICATION", data: null });
-        dispatch(deleteHistory());
+        // dispatch(defaultGeneral());
+        // dispatch({ type: "DISABLED_INPUT" });
+        // // dispatch({ type: "ENABLED_HELP" });
+        // // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        // dispatch({ type: "SET_NOTIFICATION", data: null });
+        // dispatch(deleteHistory());
 
     };
 }
