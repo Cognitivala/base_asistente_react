@@ -6,7 +6,7 @@ import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from 'react-device-detect';
 
 
-var interval = null;
+var interval;
 var inputMessage = null;
 
 //GENERAL
@@ -391,12 +391,10 @@ export function openAssistant() {
 }
 
 export function closeAssistant() {
-
-    clearInterval(interval);
-
     return async function action(dispatch, getState) {
 
         await getSixbellEnd();
+        clearInterval(interval);
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
@@ -1242,6 +1240,11 @@ export function getSixbellOut(dispatch, data) {
     // clearInterval(asistantInterval);
 
     console.log('getSixbellOut: ', data);
+
+    if (interval) {
+        clearInterval(interval);
+    }
+
     var ASISTANT_INTERVAL_TIMER = 5000;
 
     interval = setInterval(function() {
