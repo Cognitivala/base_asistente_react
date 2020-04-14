@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, createRef } from "react";
 import {connect} from 'react-redux';
 
 import {updateConversation} from '../../actions/index';
@@ -9,7 +9,10 @@ import './FormAsistencia.scss';
 class FormAsistencia extends Component {
 
     
+    messagesEnd;
     state = { usuarioAmsa: '', mensajeError: false }
+    
+    
 
     enviarAsistencia = async (e) =>{
         e.preventDefault();
@@ -60,28 +63,18 @@ class FormAsistencia extends Component {
 
     }
 
-
-    componentDidMount() {
-        this.scrollToBottom();
-        window.scrollTo(0, 0);
+    componentDidUpdate() {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
     }
-    
-      componentDidUpdate() {
-        this.scrollToBottom();
-      }
-
-    scrollToBottom() {
-        this.el.scrollIntoView({ behavior: 'smooth' });
-      }
     
     render() { 
         // let asistencia = document.querySelector('.boxAsistencia');
         // asistencia.classList.toggle('fade');
 
         return ( 
-            <div ref={el => { this.el = el; }}  className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
+            <div className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
             <div className='containerForm'>
-                <form autoComplete="off" onSubmit={this.enviarAsistencia}>
+                <form ref={(el) => { this.messagesEnd = el; }} autoComplete="off" onSubmit={this.enviarAsistencia}>
                     
                     <div className="headerForm">
                         <p>Ingrese el email de Usuario</p>
