@@ -229,7 +229,7 @@ export default class Assistant extends Component {
     }
   }
 
-  verAsistencia(value, referencia) {
+  verAsistencia(value) {
     console.log('Asistencia:: ', value);
     // console.log('State:: ', this.state);
 
@@ -238,11 +238,11 @@ export default class Assistant extends Component {
     // console.log('general:: ', general);
 
     this.setState({...this.state, asistencia: value, });
-    console.log(referencia);
+    const referencia = document.getElementById('scrollbottom');
     referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
     
     if(value === true){
-      referencia.scrollIntoView({ behavior: "smooth" });
+      referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
       window.scrollTo(0, 500);
     }
 

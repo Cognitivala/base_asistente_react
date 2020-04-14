@@ -64,7 +64,7 @@ class FormAsistencia extends Component {
 
         // await setUrlParams(this.state.usuarioAmsa);
         // CIERRA MODAL
-        this.props.getAsistencia(false, this.RefDiv);
+        this.props.getAsistencia(false);
 
     }
 
@@ -118,7 +118,7 @@ class FormAsistencia extends Component {
                 </div>
             </div>
 
-            <section ref={this.RefDiv} id='scrollbottom'> </section>
+            <section id='scrollbottom'> </section>
             </Fragment>
          );
     }
