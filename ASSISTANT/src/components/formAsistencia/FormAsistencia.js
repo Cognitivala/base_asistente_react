@@ -89,10 +89,6 @@ class FormAsistencia extends Component {
     render() { 
         // let asistencia = document.querySelector('.boxAsistencia');
         // asistencia.classList.toggle('fade');
-        if(this.props.asistencia) {
-            var element = document.getElementById("scrollbottom");
-            element.scrollIntoView({block: "end", behavior: "smooth"});
-        }
 
         return ( 
             <Fragment>
@@ -122,7 +118,7 @@ class FormAsistencia extends Component {
                 </div>
             </div>
 
-            <section id='scrollbottom'> </section>
+            <section ref={this.props.referencia} id='scrollbottom'> </section>
             </Fragment>
          );
     }
