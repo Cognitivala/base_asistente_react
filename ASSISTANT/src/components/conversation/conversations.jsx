@@ -35,6 +35,7 @@ export default class Conversations extends Component {
       this.setHistory();
       this.toggleEnabled();
     }
+
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,6 +48,7 @@ export default class Conversations extends Component {
     this.handleScroll();
     this.scrollToBottom();
     // this.scrollBottom();
+    console.log('this.props.asistencia:: ', this.props.asistencia);
   }
 
   scrollBottom () {
@@ -191,7 +193,7 @@ export default class Conversations extends Component {
     if (!this.props.ayudaStates.get("open")) {
       this.scrollTo(this.test.current, this.test.current.scrollHeight, 600);
     }
-    console.log('this.props.asistencia:: ', this.props.asistencia);
+    
     if(this.props.asistencia === true){
       this.scrollTo(this.test.current, this.test.current.scrollHeight, 500);
     }
@@ -462,7 +464,12 @@ export default class Conversations extends Component {
           else if ( this.props.asistencia === true) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
-              <FormAsistencia scroll={true} key={`${j} * ${j} * 535`} setUrlParams={this.props.setUrlParams} updateConversationButton={this.props.updateConversationButton} asistencia={this.props.asistencia} getAsistencia={this.props.getAsistencia} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormAsistencia scroll={true} key={`${j} * ${j} * 535`} setUrlParams={this.props.setUrlParams} 
+              updateConversationButton={this.props.updateConversationButton} 
+              asistencia={this.props.asistencia} 
+              getAsistencia={this.props.getAsistencia} 
+              generalStates={generalStates} 
+              sendValoracion={sendValoracion} />
             )
           }
           else if ( rating ) {
