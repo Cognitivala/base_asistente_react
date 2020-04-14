@@ -7,6 +7,9 @@ import InputEmoji from "./input-emoji";
 import InputHelp from "./input-help";
 import InputVoice from "./input-voice";
 
+import Scroll from 'react-scroll';
+var Link = Scroll.Link;
+
 export default class Input extends Component {
   constructor(props) {
     super(props);
@@ -256,11 +259,13 @@ export default class Input extends Component {
             {this.fillSend()}
             {
               ejecutivoAmsa.ejecutivo_amsa === 'true' && 
+              <Link activeClass="active" to="scrollbottom"  smooth={true} duration={250} containerId="containerElement" style={{ display: 'inline-block', margin: '20px' }}>
                 <button 
                   className={ mainCss.InputUserBtn + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
                   onClick={ () => this.props.getAsistencia(!this.props.asistencia)} id="buttonInputMessage">
                   <i style={{color: '#d3d3d3'}} className="fas fa-paperclip"  />
                 </button>
+              </Link>
             }
           </div>
         </IsFetching>

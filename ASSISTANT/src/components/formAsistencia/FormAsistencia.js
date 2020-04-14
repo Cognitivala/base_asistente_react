@@ -3,9 +3,12 @@ import {connect} from 'react-redux';
 
 import {updateConversation} from '../../actions/index';
 import {messageResponse} from '../../actions/index';
-import { Element } from "react-scroll";
+import { Scroll } from "react-scroll";
 
 import './FormAsistencia.scss';
+
+var Link = Scroll.Link;
+var Element = Scroll.Element;
 
 class FormAsistencia extends Component {
 
@@ -119,8 +122,15 @@ class FormAsistencia extends Component {
                 </div>
             </div>
 
-            <Element name="scrollbottom">
-                <section> </section>
+            <Element name="scrollbottom" style={{ marginBottom: '200px' }}>
+                <section ref={function (element){
+                    if (element) {
+                        this.messagesContainer = element;
+                    }
+                        let lastIndex = this.messagesContainer.length - 1;
+                        this.messagesContainer[lastIndex].scrollIntoView();
+                    }.bind(this)}>
+                </section>
             </Element>
             </Fragment>
          );
