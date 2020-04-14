@@ -14,7 +14,7 @@ class FormAsistencia extends Component {
     constructor(props) {
         super(props)
         this.state = { usuarioAmsa: '', mensajeError: false }
-        this.myRef = React.createRef();
+        // this.myRef = React.createRef();
     }
 
     
@@ -68,21 +68,21 @@ class FormAsistencia extends Component {
 
     }
 
-    componentDidMount() {
-        this.myRef.current.scrollTo(0, 500);
-        window.scrollTo(0, 500);
-        var objDiv = document.getElementById("scrollBottom");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    }
+    // componentDidMount() {
+    //     this.myRef.current.scrollTo(0, 500);
+    //     window.scrollTo(0, 500);
+    //     var objDiv = document.getElementById("scrollBottom");
+    //     objDiv.scrollTop = objDiv.scrollHeight;
+    // }
     
 
 
-    componentDidUpdate() {
-        this.myRef.current.scrollTo(0, 500);
-        window.scrollTo(0, 500);
-        var objDiv = document.getElementById("scrollBottom");
-        objDiv.scrollTop = objDiv.scrollHeight;
-    }
+    // componentDidUpdate() {
+    //     this.myRef.current.scrollTo(0, 500);
+    //     window.scrollTo(0, 500);
+    //     var objDiv = document.getElementById("scrollBottom");
+    //     objDiv.scrollTop = objDiv.scrollHeight;
+    // }
 
     
     

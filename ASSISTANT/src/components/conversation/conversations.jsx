@@ -26,6 +26,7 @@ export default class Conversations extends Component {
     // this.state = { asistencia: false }
     this.handleScroll = this.handleScroll.bind(this);
     // this.verAsistencia = this.verAsistencia.bind(this);
+    this.myRef = React.createRef();
   }
 
   componentDidUpdate(nextProps) {
@@ -45,7 +46,17 @@ export default class Conversations extends Component {
   componentDidMount() {
     this.handleScroll();
     this.scrollToBottom();
+    // this.scrollBottom();
   }
+
+  scrollBottom () {
+    this.myRef.current.scrollTo(0, 500);
+    window.scrollTo(0, 500);
+    var objDiv = document.getElementById("scrollBottom");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  }
+
+  
 
 
   componentWillMount(){
@@ -179,6 +190,10 @@ export default class Conversations extends Component {
   scrollToBottom() {
     if (!this.props.ayudaStates.get("open")) {
       this.scrollTo(this.test.current, this.test.current.scrollHeight, 600);
+    }
+
+    if(this.props.asistencia === true){
+      this.scrollTo(this.test.current, this.test.current.scrollHeight, 500);
     }
   }
 
