@@ -68,14 +68,12 @@ class FormAsistencia extends Component {
 
     }
 
-    componentDidMount() {
-        this.myRef.current.scrollTo(0, 500);
-        window.scrollTo(0, 500);
-        var objDiv = document.getElementById("scrollBottom");
-        objDiv.scrollTop = objDiv.scrollHeight;
-
-        document.getElementById("scrollBottom").addEventListener("click", function(){});
-    }
+    // componentDidMount() {
+    //     this.myRef.current.scrollTo(0, 500);
+    //     window.scrollTo(0, 500);
+    //     var objDiv = document.getElementById("scrollBottom");
+    //     objDiv.scrollTop = objDiv.scrollHeight;
+    // }
     
 
 
