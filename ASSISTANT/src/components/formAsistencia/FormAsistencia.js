@@ -14,7 +14,7 @@ class FormAsistencia extends Component {
     constructor(props) {
         super(props)
         this.state = { usuarioAmsa: '', mensajeError: false }
-        this.RefDiv = React.createRef();
+        // this.RefDiv = React.createRef();
     }
 
     
@@ -64,7 +64,7 @@ class FormAsistencia extends Component {
 
         // await setUrlParams(this.state.usuarioAmsa);
         // CIERRA MODAL
-        this.props.getAsistencia(false, document.getElementById('scrollbottom'));
+        this.props.getAsistencia(false);
 
     }
 

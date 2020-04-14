@@ -17,7 +17,6 @@ export default class Assistant extends Component {
       asistencia: false
     }
     this.divAssistant = React.createRef();
-    // this.divAsistencia = React.createRef();
     this.closeAssistant = this.closeAssistant.bind(this);
     this.closeEscape = this.closeEscape.bind(this);
     this.minimizedAssistant = this.minimizedAssistant.bind(this);
@@ -229,13 +228,10 @@ export default class Assistant extends Component {
     }
   }
 
-  verAsistencia(value, target) {
-    console.log('Asistencia:: ', value);
+  verAsistencia(value) {
     // console.log('State:: ', this.state);
-
     // const { generalStates } = this.props;
     // const general = generalStates.toJS();
-    // console.log('general:: ', general);
 
     this.setState({...this.state, asistencia: value, });
     // const referencia = document.getElementById('scrollbottom');
@@ -245,33 +241,6 @@ export default class Assistant extends Component {
     //   referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
     //   window.scrollTo(0, 500);
     // }
-
-    // var target = document.getElementById('scrollbottom');
-
-    window.smoothScroll = function(target) {
-
-      var scrollContainer = target;
-      do {
-          scrollContainer = scrollContainer.parentNode;
-          if (!scrollContainer) return;
-          scrollContainer.scrollTop += 1;
-      } while (scrollContainer.scrollTop === 0);
-      
-      var targetY = 0;
-      do {
-          if (target === scrollContainer) break;
-          targetY += target.offsetTop;
-      } while (target = target.offsetParent);
-      
-      var scroll = function(c, a, b, i) {
-          i++; if (i > 30) return;
-          c.scrollTop = a + (b - a) / 30 * i;
-          setTimeout(function(){ scroll(c, a, b, i); }, 20);
-      }
-      // start scrolling
-      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
-    }
-
   }
 
   content(assistantStates, conversationsStates, responsiveStates) {
