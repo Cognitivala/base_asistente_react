@@ -60,17 +60,26 @@ class FormAsistencia extends Component {
 
     }
 
-    componentDidMount(){
-        debugger;
+
+    componentDidMount() {
+        this.scrollToBottom();
         window.scrollTo(0, 0);
     }
+    
+      componentDidUpdate() {
+        this.scrollToBottom();
+      }
+
+    scrollToBottom() {
+        this.el.scrollIntoView({ behavior: 'smooth' });
+      }
     
     render() { 
         // let asistencia = document.querySelector('.boxAsistencia');
         // asistencia.classList.toggle('fade');
 
         return ( 
-            <div  className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
+            <div ref={el => { this.el = el; }}  className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
             <div className='containerForm'>
                 <form autoComplete="off" onSubmit={this.enviarAsistencia}>
                     
