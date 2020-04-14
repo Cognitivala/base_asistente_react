@@ -229,7 +229,7 @@ export default class Assistant extends Component {
     }
   }
 
-  verAsistencia(value) {
+  verAsistencia(value, target) {
     console.log('Asistencia:: ', value);
     // console.log('State:: ', this.state);
 
@@ -248,9 +248,7 @@ export default class Assistant extends Component {
 
     // var target = document.getElementById('scrollbottom');
 
-    window.smoothScroll = function() {
-
-      var target = document.getElementById('scrollbottom');
+    window.smoothScroll = function(target) {
 
       var scrollContainer = target;
       do {

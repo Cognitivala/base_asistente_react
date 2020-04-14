@@ -64,7 +64,7 @@ class FormAsistencia extends Component {
 
         // await setUrlParams(this.state.usuarioAmsa);
         // CIERRA MODAL
-        this.props.getAsistencia(false);
+        this.props.getAsistencia(false, document.getElementById('scrollbottom'));
 
     }
 
