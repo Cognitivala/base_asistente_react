@@ -68,12 +68,14 @@ class FormAsistencia extends Component {
 
     }
 
-    // componentDidMount() {
-    //     this.myRef.current.scrollTo(0, 500);
-    //     window.scrollTo(0, 500);
-    //     var objDiv = document.getElementById("scrollBottom");
-    //     objDiv.scrollTop = objDiv.scrollHeight;
-    // }
+    componentDidMount() {
+        this.myRef.current.scrollTo(0, 500);
+        window.scrollTo(0, 500);
+        var objDiv = document.getElementById("scrollBottom");
+        objDiv.scrollTop = objDiv.scrollHeight;
+
+        document.getElementById("scrollBottom").addEventListener("click", function(){});
+    }
     
 
 
@@ -89,9 +91,6 @@ class FormAsistencia extends Component {
     render() { 
         // let asistencia = document.querySelector('.boxAsistencia');
         // asistencia.classList.toggle('fade');
-
-        
-        
 
         return ( 
             <div className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
