@@ -239,7 +239,8 @@ export default class Assistant extends Component {
     this.setState({...this.state, asistencia: value, });
     
     if(this.props.asistencia === true){
-      this.scrollTo(this.test.current, this.test.current.scrollHeight, 500);
+      console.log('this.props.asistencia:: ', this.props.asistencia);
+      window.scrollTo(0, 500);
     }
 
   }
