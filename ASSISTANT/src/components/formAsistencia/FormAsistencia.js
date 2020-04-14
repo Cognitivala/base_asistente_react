@@ -18,7 +18,7 @@ class FormAsistencia extends Component {
         super(props)
         this.state = { usuarioAmsa: '', mensajeError: false }
         this.divRef = React.createRef();
-        setInterval(() => { this.divRef.current.scrollIntoView({behavior: 'smooth'})}, 500);
+        setInterval(() => { this.divRef.current.scrollIntoView({behavior: 'smooth'})}, 200);
     }
 
     
@@ -122,18 +122,7 @@ class FormAsistencia extends Component {
                 </div>
             </div>
 
-            {/* <Element name="scrollbottom" style={{ marginBottom: '200px' }}> */}
-                <section ref={this.divRef} 
-                    // ref={function (element){
-                    // if (element) {
-                    //     this.messagesContainer = element;
-                    // }
-                    //     let lastIndex = this.messagesContainer.length - 1;
-                    //     this.messagesContainer[lastIndex].scrollIntoView();
-                    // }.bind(this)}
-                    >
-                </section>
-            {/* </Element> */}
+            <section ref={this.divRef}> </section>
             </Fragment>
          );
     }
