@@ -238,6 +238,7 @@ export default class Assistant extends Component {
     // console.log('general:: ', general);
 
     this.setState({...this.state, asistencia: value, });
+    this.divAsistencia.scrollIntoView({block: 'end', behavior: 'smooth'});
     
     if(value === true){
       this.divAsistencia.scrollIntoView({ behavior: "smooth" });
