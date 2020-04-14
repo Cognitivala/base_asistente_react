@@ -72,11 +72,11 @@ class FormAsistencia extends Component {
     }
 
     componentDidUpdate() {
-        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+        this.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
     }
 
     componentDidMount() {
-        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+        this.messagesEnd.current.scrollIntoView({ behavior: "smooth" });
     }
 
     // componentDidMount() {
