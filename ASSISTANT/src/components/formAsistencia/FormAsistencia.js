@@ -2,7 +2,9 @@ import React, { Component, createRef, Fragment } from "react";
 import {connect} from 'react-redux';
 
 import {updateConversation} from '../../actions/index';
-import {messageResponse} from '../../actions/index';
+
+// import { Scroll } from "react-scroll";
+// import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import './FormAsistencia.scss';
 
@@ -15,10 +17,9 @@ class FormAsistencia extends Component {
         super(props)
         this.state = { usuarioAmsa: '', mensajeError: false }
         this.divRef = React.createRef();
-        setInterval(() => { this.divRef.current.scrollTo({behavior: 'smooth'})}, 200);
-        
+        this.messagesEnd = React.createRef();
+        // setInterval(() => { this.divRef.current.scrollIntoView({behavior: 'smooth'})}, 200);
     }
-
     
 
     enviarAsistencia = async (e) =>{
@@ -70,6 +71,14 @@ class FormAsistencia extends Component {
 
     }
 
+    componentDidUpdate() {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+
+    componentDidMount() {
+        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    }
+
     // componentDidMount() {
     //     this.myRef.current.scrollTo(0, 500);
     //     window.scrollTo(0, 500);
@@ -98,7 +107,7 @@ class FormAsistencia extends Component {
                 <div className='containerForm'>
                     <form  autoComplete="off" onSubmit={this.enviarAsistencia}>
                     
-                        <div ref={this.myRef} className="headerForm">
+                        <div ref={this.messagesEnd} className="headerForm">
                             <p>Ingrese el email de Usuario</p>
                         </div>   
                 
@@ -120,7 +129,7 @@ class FormAsistencia extends Component {
                 </div>
             </div>
 
-            <section ref={this.divRef}> </section>
+            <section ref={this.messagesEnd}> </section>
             </Fragment>
          );
     }
