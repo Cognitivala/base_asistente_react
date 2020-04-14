@@ -69,7 +69,8 @@ class FormAsistencia extends Component {
     }
 
     componentDidMount() {
-        this.myRef.current.scrollTo(0, 0);
+        this.myRef.current.scrollTo(0, 500);
+        window.scrollTo(0, 500);
     }
     
 
