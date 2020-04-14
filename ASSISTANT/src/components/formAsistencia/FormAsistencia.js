@@ -15,7 +15,7 @@ class FormAsistencia extends Component {
         super(props)
         this.state = { usuarioAmsa: '', mensajeError: false }
         this.divRef = React.createRef();
-        setInterval(() => { this.divRef.current.scrollIntoView({behavior: 'smooth'})}, 100);
+        setInterval(() => { this.divRef.current.scrollIntoView({behavior: 'smooth'})}, 180);
     }
 
     
