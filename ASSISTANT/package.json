@@ -16,7 +16,6 @@
         "react-geocode": "^0.1.2",
         "react-redux": "^5.0.6",
         "react-scripts": "2.1.1",
-        "react-scroll": "^1.7.16",
         "redux": "^4.0.0"
     },
     "scripts": {
