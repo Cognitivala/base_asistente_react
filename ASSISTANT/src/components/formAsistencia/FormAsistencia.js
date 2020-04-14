@@ -9,10 +9,9 @@ import './FormAsistencia.scss';
 class FormAsistencia extends Component {
 
     
-    messagesEnd;
+    scrollingElement = (document.scrollingElement || document.body);
+    
     state = { usuarioAmsa: '', mensajeError: false }
-    
-    
 
     enviarAsistencia = async (e) =>{
         e.preventDefault();
@@ -63,18 +62,32 @@ class FormAsistencia extends Component {
 
     }
 
-    componentDidUpdate() {
-        this.messagesEnd.scrollIntoView({ behavior: "smooth" });
+    componentDidMount () {
+        this.scrollToBottom();
     }
+
+    
+    scrollToBottom = () => {
+        this.scrollingElement.scrollTop = this.scrollingElement.scrollHeight;
+    }
+    
+
+
+    componentDidUpdate() {}
+
+    
     
     render() { 
         // let asistencia = document.querySelector('.boxAsistencia');
         // asistencia.classList.toggle('fade');
 
+        
+        
+
         return ( 
             <div className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
             <div className='containerForm'>
-                <form ref={(el) => { this.messagesEnd = el; }} autoComplete="off" onSubmit={this.enviarAsistencia}>
+                <form  autoComplete="off" onSubmit={this.enviarAsistencia}>
                     
                     <div className="headerForm">
                         <p>Ingrese el email de Usuario</p>
@@ -95,7 +108,7 @@ class FormAsistencia extends Component {
                             </legend>
                         }
 
-                    <fieldset>
+                    <fieldset ref={(el) => { this.messagesEnd = el; }}>
                         <button type="submit">Enviar</button>
                     </fieldset>
 
