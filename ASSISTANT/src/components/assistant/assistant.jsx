@@ -238,8 +238,8 @@ export default class Assistant extends Component {
 
     this.setState({...this.state, asistencia: value, });
     
-    if(value === true){
-      console.log('this.props.asistencia:: ', this.props.asistencia);
+    if(value ){
+      console.log('this.props.asistencia:: ', value);
       window.scrollTo(0, 500);
     }
 
@@ -299,6 +299,7 @@ export default class Assistant extends Component {
               positionHelp={positionHelp}
               toggleHeaderMore={this.toggleHeaderMore}
               moreHeader={this.state.moreHeader}
+              asistencia={this.state.asistencia} 
               saludo={saludoStates.getIn(['saludo','msg'])}
             />
             {this.fillHelp(ayuda)}

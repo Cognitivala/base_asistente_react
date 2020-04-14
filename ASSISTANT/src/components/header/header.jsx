@@ -11,7 +11,7 @@ export default class Header extends Component {
   }
 
   showMore() {
-    if (this.props.moreHeader) {
+    if (this.props.moreHeader || this.props.asistencia) {
       this.props.toggleHeaderMore(false);
     }else {
       this.props.toggleHeaderMore(true);
