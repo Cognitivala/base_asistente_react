@@ -10,6 +10,8 @@ import { KEY_ENCRYPT } from "../../actions/key-encrypt";
 import {isMobile} from 'react-device-detect';
 
 import { animateScroll as scroll} from "react-scroll";
+import { scroller } from "react-scroll";
+import { Element } from "react-scroll";
 
 export default class Assistant extends Component {
   constructor(props) {
@@ -237,6 +239,7 @@ export default class Assistant extends Component {
 
     this.setState({...this.state, asistencia: value, });
     scroll.scrollToBottom();
+    scroller.scrollTo((id + 1).toString(), scrollType);
   }
 
   content(assistantStates, conversationsStates, responsiveStates) {

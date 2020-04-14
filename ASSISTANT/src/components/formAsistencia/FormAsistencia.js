@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 
 import {updateConversation} from '../../actions/index';
 import {messageResponse} from '../../actions/index';
+import { Element } from "react-scroll";
 
 import './FormAsistencia.scss';
 
@@ -118,7 +119,9 @@ class FormAsistencia extends Component {
                 </div>
             </div>
 
-            <section id='scrollbottom'> </section>
+            <Element name="scrollbottom">
+                <section> </section>
+            </Element>
             </Fragment>
          );
     }
