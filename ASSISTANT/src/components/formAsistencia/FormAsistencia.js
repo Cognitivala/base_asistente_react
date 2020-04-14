@@ -10,8 +10,14 @@ class FormAsistencia extends Component {
 
     
     scrollingElement = (document.scrollingElement || document.body);
+
+    constructor(props) {
+        super(props)
+        this.state = { usuarioAmsa: '', mensajeError: false }
+        this.myRef = React.createRef();
+    }
+
     
-    state = { usuarioAmsa: '', mensajeError: false }
 
     enviarAsistencia = async (e) =>{
         e.preventDefault();
@@ -62,13 +68,8 @@ class FormAsistencia extends Component {
 
     }
 
-    componentDidMount () {
-        this.scrollToBottom();
-    }
-
-    
-    scrollToBottom = () => {
-        this.scrollingElement.scrollTop = this.scrollingElement.scrollHeight;
+    componentDidMount() {
+        this.myRef.current.scrollTo(0, 0);
     }
     
 
@@ -89,7 +90,7 @@ class FormAsistencia extends Component {
             <div className='containerForm'>
                 <form  autoComplete="off" onSubmit={this.enviarAsistencia}>
                     
-                    <div className="headerForm">
+                    <div ref={this.myRef} className="headerForm">
                         <p>Ingrese el email de Usuario</p>
                     </div>   
                 
@@ -108,7 +109,7 @@ class FormAsistencia extends Component {
                             </legend>
                         }
 
-                    <fieldset ref={(el) => { this.messagesEnd = el; }}>
+                    <fieldset>
                         <button type="submit">Enviar</button>
                     </fieldset>
 
