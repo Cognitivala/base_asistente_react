@@ -238,12 +238,40 @@ export default class Assistant extends Component {
     // console.log('general:: ', general);
 
     this.setState({...this.state, asistencia: value, });
-    const referencia = document.getElementById('scrollbottom');
-    referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
+    // const referencia = document.getElementById('scrollbottom');
+    // referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
     
-    if(value === true){
-      referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
-      window.scrollTo(0, 500);
+    // if(value === true){
+    //   referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
+    //   window.scrollTo(0, 500);
+    // }
+
+    // var target = document.getElementById('scrollbottom');
+
+    window.smoothScroll = function() {
+
+      var target = document.getElementById('scrollbottom');
+
+      var scrollContainer = target;
+      do {
+          scrollContainer = scrollContainer.parentNode;
+          if (!scrollContainer) return;
+          scrollContainer.scrollTop += 1;
+      } while (scrollContainer.scrollTop === 0);
+      
+      var targetY = 0;
+      do {
+          if (target === scrollContainer) break;
+          targetY += target.offsetTop;
+      } while (target = target.offsetParent);
+      
+      var scroll = function(c, a, b, i) {
+          i++; if (i > 30) return;
+          c.scrollTop = a + (b - a) / 30 * i;
+          setTimeout(function(){ scroll(c, a, b, i); }, 20);
+      }
+      // start scrolling
+      scroll(scrollContainer, scrollContainer.scrollTop, targetY, 0);
     }
 
   }
