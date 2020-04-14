@@ -9,6 +9,8 @@ import CryptoJS from "crypto-js";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
 import {isMobile} from 'react-device-detect';
 
+import { animateScroll as scroll} from "react-scroll";
+
 export default class Assistant extends Component {
   constructor(props) {
     super(props);
@@ -234,13 +236,7 @@ export default class Assistant extends Component {
     // const general = generalStates.toJS();
 
     this.setState({...this.state, asistencia: value, });
-    // const referencia = document.getElementById('scrollbottom');
-    // referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
-    
-    // if(value === true){
-    //   referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
-    //   window.scrollTo(0, 500);
-    // }
+    scroll.scrollToBottom();
   }
 
   content(assistantStates, conversationsStates, responsiveStates) {
