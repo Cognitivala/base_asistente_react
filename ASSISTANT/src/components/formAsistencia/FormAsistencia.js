@@ -4,11 +4,8 @@ import {connect} from 'react-redux';
 import {updateConversation} from '../../actions/index';
 import {messageResponse} from '../../actions/index';
 import { Scroll } from "react-scroll";
-
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import './FormAsistencia.scss';
-
-var Link = Scroll.Link;
-var Element = Scroll.Element;
 
 class FormAsistencia extends Component {
 
