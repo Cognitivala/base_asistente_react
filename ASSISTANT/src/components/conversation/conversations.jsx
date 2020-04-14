@@ -463,8 +463,7 @@ export default class Conversations extends Component {
                 asistencia={this.props.asistencia} 
                 getAsistencia={this.props.getAsistencia} 
                 generalStates={generalStates} 
-                sendValoracion={sendValoracion} 
-                referencia={this.props.referencia}
+                sendValoracion={sendValoracion}
               />
             )
           }

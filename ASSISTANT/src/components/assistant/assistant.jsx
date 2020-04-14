@@ -17,7 +17,7 @@ export default class Assistant extends Component {
       asistencia: false
     }
     this.divAssistant = React.createRef();
-    this.divAsistencia = React.createRef();
+    // this.divAsistencia = React.createRef();
     this.closeAssistant = this.closeAssistant.bind(this);
     this.closeEscape = this.closeEscape.bind(this);
     this.minimizedAssistant = this.minimizedAssistant.bind(this);
@@ -229,7 +229,7 @@ export default class Assistant extends Component {
     }
   }
 
-  verAsistencia(value) {
+  verAsistencia(value, referencia) {
     console.log('Asistencia:: ', value);
     // console.log('State:: ', this.state);
 
@@ -238,10 +238,11 @@ export default class Assistant extends Component {
     // console.log('general:: ', general);
 
     this.setState({...this.state, asistencia: value, });
-    this.divAsistencia.scrollIntoView({block: 'end', behavior: 'smooth'});
+    console.log(referencia);
+    referencia.scrollIntoView({block: 'end', behavior: 'smooth'});
     
     if(value === true){
-      this.divAsistencia.scrollIntoView({ behavior: "smooth" });
+      referencia.scrollIntoView({ behavior: "smooth" });
       window.scrollTo(0, 500);
     }
 
@@ -305,7 +306,7 @@ export default class Assistant extends Component {
               saludo={saludoStates.getIn(['saludo','msg'])}
             />
             {this.fillHelp(ayuda)}
-            <Conversations referencia={this.divAsistencia} asistencia={this.state.asistencia} getAsistencia={this.verAsistencia} {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
+            <Conversations asistencia={this.state.asistencia} getAsistencia={this.verAsistencia} {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
             <Input {...this.props} asistencia={this.state.asistencia} getAsistencia={this.verAsistencia} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
             <a href="https://www.cognitiva.la/" target="_blank" rel="noopener noreferrer" className={mainCss.LogoCognitiva}> </a>
           </div>
