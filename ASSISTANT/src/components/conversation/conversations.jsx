@@ -74,11 +74,6 @@ export default class Conversations extends Component {
       if(buttons || selects || multibuttons || datepicker || files || attach || like || withStars){
         disabledInput();
       }
-
-      console.log(this.props.asistencia);
-      if(this.props.asistencia === true){
-        this.scrollTo(this.test.current, this.test.current.scrollHeight, 500);
-      }
   }
 
   // verAsistencia(value) {
