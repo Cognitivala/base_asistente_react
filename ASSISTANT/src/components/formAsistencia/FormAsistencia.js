@@ -7,6 +7,8 @@ import {messageResponse} from '../../actions/index';
 import './FormAsistencia.scss';
 
 class FormAsistencia extends Component {
+
+    
     state = { usuarioAmsa: '', mensajeError: false }
 
     enviarAsistencia = async (e) =>{
@@ -63,7 +65,7 @@ class FormAsistencia extends Component {
         // let asistencia = document.querySelector('.boxAsistencia');
         // asistencia.classList.toggle('fade');
 
-        
+        window.scrollTo(0, 0);
 
 
         return ( 
