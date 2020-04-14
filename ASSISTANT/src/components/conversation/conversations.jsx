@@ -48,7 +48,6 @@ export default class Conversations extends Component {
     this.handleScroll();
     this.scrollToBottom();
     // this.scrollBottom();
-    console.log('this.props.asistencia:: ', this.props.asistencia);
   }
 
   scrollBottom () {
@@ -77,6 +76,9 @@ export default class Conversations extends Component {
       }
 
       console.log(this.props.asistencia);
+      if(this.props.asistencia === true){
+        this.scrollTo(this.test.current, this.test.current.scrollHeight, 500);
+      }
   }
 
   // verAsistencia(value) {
@@ -192,10 +194,6 @@ export default class Conversations extends Component {
   scrollToBottom() {
     if (!this.props.ayudaStates.get("open")) {
       this.scrollTo(this.test.current, this.test.current.scrollHeight, 600);
-    }
-    
-    if(this.props.asistencia === true){
-      this.scrollTo(this.test.current, this.test.current.scrollHeight, 500);
     }
   }
 
