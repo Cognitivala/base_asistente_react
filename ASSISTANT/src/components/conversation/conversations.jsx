@@ -58,8 +58,6 @@ export default class Conversations extends Component {
     objDiv.scrollTop = objDiv.scrollHeight;
   }
 
-  
-
 
   componentWillMount(){
     
@@ -77,6 +75,8 @@ export default class Conversations extends Component {
       if(buttons || selects || multibuttons || datepicker || files || attach || like || withStars){
         disabledInput();
       }
+
+      console.log(this.props.asistencia);
   }
 
   // verAsistencia(value) {
@@ -464,12 +464,14 @@ export default class Conversations extends Component {
           else if ( this.props.asistencia === true) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
-              <FormAsistencia scroll={true} key={`${j} * ${j} * 535`} setUrlParams={this.props.setUrlParams} 
-              updateConversationButton={this.props.updateConversationButton} 
-              asistencia={this.props.asistencia} 
-              getAsistencia={this.props.getAsistencia} 
-              generalStates={generalStates} 
-              sendValoracion={sendValoracion} />
+              <FormAsistencia scroll={true} key={`${j} * ${j} * 535`} 
+                setUrlParams={this.props.setUrlParams} 
+                updateConversationButton={this.props.updateConversationButton} 
+                asistencia={this.props.asistencia} 
+                getAsistencia={this.props.getAsistencia} 
+                generalStates={generalStates} 
+                sendValoracion={sendValoracion} 
+              />
             )
           }
           else if ( rating ) {

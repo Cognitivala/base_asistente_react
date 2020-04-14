@@ -92,36 +92,30 @@ class FormAsistencia extends Component {
 
         return ( 
             <div className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
-            <div className='containerForm'>
-                <form  autoComplete="off" onSubmit={this.enviarAsistencia}>
+                <div className='containerForm'>
+                    <form  autoComplete="off" onSubmit={this.enviarAsistencia}>
                     
-                    <div ref={this.myRef} className="headerForm">
-                        <p>Ingrese el email de Usuario</p>
-                    </div>   
+                        <div ref={this.myRef} className="headerForm">
+                            <p>Ingrese el email de Usuario</p>
+                        </div>   
                 
-                    <fieldset style={{ marginBottom: '1.5rem', marginTop: '1.5rem'}}>
-                        {/* <legend style={{fontWeight: 100, marginBottom: '0.8rem'}}>
-                            ¡Gracias por la valoración! Nos ayuda a seguir mejorando. Puedes dejar un mensaje adicional en el espacio siguiente
-                        </legend> */}
+                        <fieldset style={{ marginBottom: '1.5rem', marginTop: '1.5rem'}}>
+                            <input placeholder='Ej: juan@perez.cl' name="asistencia" onChange={(e) => this.setState({usuarioAmsa: e.target.value})} />
+                        </fieldset>
 
-                        <input placeholder='Ej: juan@perez.cl' name="asistencia" onChange={(e) => this.setState({usuarioAmsa: e.target.value})} />
-                    </fieldset>
+                            { this.state.mensajeError && 
+                                <legend style={{fontWeight: 100, color: 'red', marginBottom: '1.5rem'}}>
+                                    <b>*Debe ingresar un Email válido.</b>
+                                </legend>
+                            }
 
-                        {
-                            this.state.mensajeError && 
-                            <legend style={{fontWeight: 100, color: 'red', marginBottom: '1.5rem'}}>
-                                <b>*Debe ingresar un Email válido.</b>
-                            </legend>
-                        }
+                        <fieldset>
+                            <button type="submit">Enviar</button>
+                        </fieldset>
 
-                    <fieldset>
-                        <button type="submit">Enviar</button>
-                    </fieldset>
-
-                </form>
+                    </form>
+                </div>
             </div>
-            <div id="scrollBottom"></div>
-        </div>
          );
     }
 }

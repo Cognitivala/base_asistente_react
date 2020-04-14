@@ -229,14 +229,15 @@ export default class Assistant extends Component {
   }
 
   verAsistencia(value) {
-    // console.log('Asistencia:: ', value);
+    console.log('Asistencia:: ', value);
     // console.log('State:: ', this.state);
 
     // const { generalStates } = this.props;
     // const general = generalStates.toJS();
     // console.log('general:: ', general);
 
-    this.setState({...this.state, asistencia: value});
+    this.setState({...this.state, asistencia: value, });
+
   }
 
   content(assistantStates, conversationsStates, responsiveStates) {
@@ -298,8 +299,7 @@ export default class Assistant extends Component {
             {this.fillHelp(ayuda)}
             <Conversations asistencia={this.state.asistencia} getAsistencia={this.verAsistencia} {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
             <Input {...this.props} asistencia={this.state.asistencia} getAsistencia={this.verAsistencia} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
-            <a href="https://www.cognitiva.la/" target="_blank" rel="noopener noreferrer" className={mainCss.LogoCognitiva}>
-            </a>
+            <a href="https://www.cognitiva.la/" target="_blank" rel="noopener noreferrer" className={mainCss.LogoCognitiva}> </a>
           </div>
         );
       }
