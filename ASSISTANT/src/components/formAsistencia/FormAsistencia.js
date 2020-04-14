@@ -3,8 +3,10 @@ import {connect} from 'react-redux';
 
 import {updateConversation} from '../../actions/index';
 import {messageResponse} from '../../actions/index';
-import { Scroll } from "react-scroll";
-import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
+// import { Scroll } from "react-scroll";
+// import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 import './FormAsistencia.scss';
 
 class FormAsistencia extends Component {
@@ -15,7 +17,8 @@ class FormAsistencia extends Component {
     constructor(props) {
         super(props)
         this.state = { usuarioAmsa: '', mensajeError: false }
-        // this.RefDiv = React.createRef();
+        this.divRef = React.createRef();
+        setInterval(() => { this.divRef.current.scrollIntoView({behavior: 'smooth'})}, 500);
     }
 
     
@@ -119,16 +122,18 @@ class FormAsistencia extends Component {
                 </div>
             </div>
 
-            <Element name="scrollbottom" style={{ marginBottom: '200px' }}>
-                <section ref={function (element){
-                    if (element) {
-                        this.messagesContainer = element;
-                    }
-                        let lastIndex = this.messagesContainer.length - 1;
-                        this.messagesContainer[lastIndex].scrollIntoView();
-                    }.bind(this)}>
+            {/* <Element name="scrollbottom" style={{ marginBottom: '200px' }}> */}
+                <section ref={this.divRef} 
+                    // ref={function (element){
+                    // if (element) {
+                    //     this.messagesContainer = element;
+                    // }
+                    //     let lastIndex = this.messagesContainer.length - 1;
+                    //     this.messagesContainer[lastIndex].scrollIntoView();
+                    // }.bind(this)}
+                    >
                 </section>
-            </Element>
+            {/* </Element> */}
             </Fragment>
          );
     }
