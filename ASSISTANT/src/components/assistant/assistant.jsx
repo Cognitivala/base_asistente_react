@@ -237,7 +237,7 @@ export default class Assistant extends Component {
     // console.log('general:: ', general);
 
     this.setState({...this.state, asistencia: value, });
-    this.toggleHeaderMore(value);
+    this.toggleHeaderMore(!value);
     
     if(value ){
       console.log('this.props.asistencia:: ', value);
