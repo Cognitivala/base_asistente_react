@@ -238,6 +238,8 @@ export default class Assistant extends Component {
 
     this.setState({...this.state, asistencia: value, });
     
+    var objDiv = document.getElementById("scrollbottom");
+    objDiv.scrollTop = objDiv.scrollHeight;
     
     if(value){
       console.log('this.props.asistencia:: ', value);

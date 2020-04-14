@@ -1,4 +1,4 @@
-import React, { Component, createRef } from "react";
+import React, { Component, createRef, Fragment } from "react";
 import {connect} from 'react-redux';
 
 import {updateConversation} from '../../actions/index';
@@ -89,8 +89,13 @@ class FormAsistencia extends Component {
     render() { 
         // let asistencia = document.querySelector('.boxAsistencia');
         // asistencia.classList.toggle('fade');
+        if(this.props.asistencia) {
+            var element = document.getElementById("scrollbottom");
+            element.scrollIntoView({block: "end", behavior: "smooth"});
+        }
 
         return ( 
+            <Fragment>
             <div className={'conversationBubbleForm Send boxAsistencia ' + (this.props.asistencia ? 'fade' : '')}>
                 <div className='containerForm'>
                     <form  autoComplete="off" onSubmit={this.enviarAsistencia}>
@@ -116,6 +121,9 @@ class FormAsistencia extends Component {
                     </form>
                 </div>
             </div>
+
+            <section id='scrollbottom'> </section>
+            </Fragment>
          );
     }
 }
