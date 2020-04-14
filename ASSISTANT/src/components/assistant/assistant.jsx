@@ -239,7 +239,7 @@ export default class Assistant extends Component {
 
     this.setState({...this.state, asistencia: value, });
     scroll.scrollToBottom();
-    scroller.scrollTo((id + 1).toString(), scrollType);
+    // scroller.scrollTo((id + 1).toString(), scrollType);
   }
 
   content(assistantStates, conversationsStates, responsiveStates) {
