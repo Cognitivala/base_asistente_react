@@ -682,14 +682,16 @@ async function messageResponse(dispatch, data) {
 
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
-        dispatch(defaultGeneral());
-        // dispatch({ type: "CLOSE_ASSISTANT" });
-        dispatch({ type: "SET_NOTIFICATION", data: null });
-        // dispatch({ type: "ENABLED_INPUT" });
-        dispatch({ type: "ENABLED_HELP" });
-        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-        // dispatch({ type: "OPEN_LAUNCHER" });
-        dispatch(deleteHistory());
+        // dispatch(defaultGeneral());
+        //// dispatch({ type: "CLOSE_ASSISTANT" });
+        // dispatch({ type: "SET_NOTIFICATION", data: null });
+        //// dispatch({ type: "ENABLED_INPUT" });
+        // dispatch({ type: "ENABLED_HELP" });
+        // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        //// dispatch({ type: "OPEN_LAUNCHER" });
+        // dispatch(deleteHistory());
+
+
     } else if (data.agent === true) {
         await getSixbellIn(dispatch, data, inputMessage);
         await getSixbellOut(dispatch, data);
