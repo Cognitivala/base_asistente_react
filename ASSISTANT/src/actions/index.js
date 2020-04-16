@@ -675,21 +675,23 @@ async function messageResponse(dispatch, data) {
         // console.log('data: messageResponse', data)
         // console.log('data.end_conversation:: ', data.end_conversation)
 
+        // 
         dispatch(setEndConversation(data.end_conversation));
         const end_conversation = data.end_conversation;
         dispatch({ type: "SET_END_CONVERSATION", end_conversation });
-        // dispatch(setEndConversation(true));
-
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
-        dispatch(defaultGeneral());
+        // 
+
+        // dispatch(setEndConversation(true));
+        // dispatch(defaultGeneral());
         // dispatch({ type: "CLOSE_ASSISTANT" });
-        dispatch({ type: "SET_NOTIFICATION", data: null });
+        // dispatch({ type: "SET_NOTIFICATION", data: null });
         // dispatch({ type: "ENABLED_INPUT" });
-        dispatch({ type: "ENABLED_HELP" });
-        dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+        // dispatch({ type: "ENABLED_HELP" });
+        // dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         // dispatch({ type: "OPEN_LAUNCHER" });
-        dispatch(deleteHistory());
+        // dispatch(deleteHistory());
     } else if (data.agent === true) {
         await getSixbellIn(dispatch, data, inputMessage);
         await getSixbellOut(dispatch, data);
