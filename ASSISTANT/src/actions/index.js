@@ -242,7 +242,18 @@ export function getSaludo() {
             origen = 1;
         }
 
+        const queryString = window.location;
+        const queryString2 = window.location.href;
+        const queryString3 = window.location.href.toString();
+        const queryString4 = window.location.href.toString().split(window.location.host)[1];
+
+        console.log('queryString:: ', queryString)
+        console.log('queryString2:: ', queryString2)
+        console.log('queryString3:: ', queryString3)
+        console.log('queryString4:: ', queryString4)
+
         const data = {
+
                 general: {
                     cid: null,
                     id_cliente: "1",

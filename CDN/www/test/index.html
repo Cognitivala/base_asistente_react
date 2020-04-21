@@ -24,6 +24,7 @@
             window.CognitiveAssistantMain.init(
                 'https://' + url + '/asistente/?ejecutivo_amsa=true&rut=15259827-0'
             );
+            // window.CognitiveAssistantMain.init('http://localhost:3000/');
         });
     </script>
 </head>
@@ -35,7 +36,7 @@
 <script>
     const getUrl = async() => {
         const data = {
-            id_cliente: '1'
+            id_cliente: '1',
         };
 
         const apiUrl = 'https://qa-amsa.mycognitiva.io/mad/customize_param';
@@ -43,15 +44,15 @@
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                },
             })
-            .then(res => res.json())
-            .then(response => {
+            .then((res) => res.json())
+            .then((response) => {
                 // console.log('URL:: ', response.url);
                 document.getElementById('demo').src = response.url;
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log('Error:', error.message);
             });
     };
