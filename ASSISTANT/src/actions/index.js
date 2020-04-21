@@ -676,9 +676,9 @@ async function messageResponse(dispatch, data) {
         // console.log('data.end_conversation:: ', data.end_conversation)
 
         // 
-        dispatch(setEndConversation(data.end_conversation));
-        const end_conversation = data.end_conversation;
-        dispatch({ type: "SET_END_CONVERSATION", end_conversation });
+        // dispatch(setEndConversation(data.end_conversation));
+        // const end_conversation = data.end_conversation;
+        // dispatch({ type: "SET_END_CONVERSATION", end_conversation });
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
         // 
