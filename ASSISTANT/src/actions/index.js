@@ -244,9 +244,9 @@ export function getSaludo() {
 
         const queryString = window.location.href.toString().split(window.location.host)[1];
 
-        // console.log('queryString:: ', queryString);
+        console.log('queryString:: ', queryString);
 
-        let dataObj = {}
+        let dataObj = {};
         if (queryString === '/cdn/test/index.html') {
             dataObj = {
                 general: {
