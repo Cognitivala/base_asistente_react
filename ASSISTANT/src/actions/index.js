@@ -242,22 +242,17 @@ export function getSaludo() {
             origen = 1;
         }
 
-        const queryString = window.location.href.toString().split(window.location.host)[1];
+        const queryString = window.location;
+        const queryString2 = window.location.href;
+        const queryString3 = window.location.href.toString();
+        const queryString4 = window.location.href.toString().split(window.location.host)[1];
 
-        console.log('queryString:: ', queryString);
+        console.log('queryString:: ', queryString)
+        console.log('queryString2:: ', queryString2)
+        console.log('queryString3:: ', queryString3)
+        console.log('queryString4:: ', queryString4)
 
-        let dataObj = {};
-        if (queryString === '/cdn/test/index.html') {
-            dataObj = {
-                general: {
-                    cid: null,
-                    id_cliente: "1",
-                    origen: origen
-                },
-                msg: null,
-            }
-        } else {
-            dataObj = {
+        const data = {
                 general: {
                     cid: null,
                     id_cliente: "1",
@@ -268,38 +263,21 @@ export function getSaludo() {
                     ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
                 },
                 msg: null,
-            }
-        }
-
-        // const data = {
-        //     general: {
-        //         cid: null,
-        //         id_cliente: "1",
-        //         origen: origen,
-        //         rut: getUrlParams(getState, 'rut'),
-        //         user: getUrlParams(getState, 'user'),
-        //         clave: getUrlParams(getState, 'clave'),
-        //         ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
-        //     },
-        //     msg: null,
-        // };
-
-        const data = dataObj;
-
-        const request = axios({
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
             },
-            url: APIURL + "/message",
-            data: {
-                ...data,
-                // rut: getUrlParams(getState, 'rut'),
-                // user: getUrlParams(getState, 'user'),
-                // clave: getUrlParams(getState, 'clave'),
-                // ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
-            }
-        });
+            request = axios({
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                url: APIURL + "/message",
+                data: {
+                    ...data,
+                    rut: getUrlParams(getState, 'rut'),
+                    user: getUrlParams(getState, 'user'),
+                    clave: getUrlParams(getState, 'clave'),
+                    ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
+                }
+            });
         return request.then(
             response => {
                 if (response.status === 200) {
@@ -581,16 +559,6 @@ export function updateConversation(data) {
         dispatch(pushConversation(data));
 
         // console.log('updateConversation DATA:: ', data);
-        const queryString = window.location.href.toString().split(window.location.host)[1];
-        let dataObj = {};
-        if (queryString !== '/cdn/test/index.html') {
-            dataObj = {
-                rut: getUrlParams(getState, 'rut'),
-                user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave'),
-                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa'),
-            }
-        }
 
         const request = axios({
             method: "POST",
@@ -600,12 +568,10 @@ export function updateConversation(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                dataObj,
-                //  rut: getUrlParams(getState, 'rut'),
-                // user: getUrlParams(getState, 'user'),
-                // clave: getUrlParams(getState, 'clave'),
-                // ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa'),
-
+                rut: getUrlParams(getState, 'rut'),
+                user: getUrlParams(getState, 'user'),
+                clave: getUrlParams(getState, 'clave'),
+                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa'),
                 // emailUser,
                 // integracion: {
                 //     email_user: data.email_user
@@ -1020,17 +986,6 @@ export function updateConversationButton(data) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
 
-                const queryString = window.location.href.toString().split(window.location.host)[1];
-                let dataObj = {};
-                if (queryString !== '/cdn/test/index.html') {
-                    dataObj = {
-                        rut: getUrlParams(getState, 'rut'),
-                        user: getUrlParams(getState, 'user'),
-                        clave: getUrlParams(getState, 'clave'),
-                        ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
-                    }
-                }
-
                 const request = axios({
                     method: "POST",
                     headers: {
@@ -1039,11 +994,10 @@ export function updateConversationButton(data) {
                     url: APIURL + "/message",
                     data: {
                         ...data,
-                        dataObj,
-                        // rut: getUrlParams(getState, 'rut'),
-                        // user: getUrlParams(getState, 'user'),
-                        // clave: getUrlParams(getState, 'clave'),
-                        // ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
+                        rut: getUrlParams(getState, 'rut'),
+                        user: getUrlParams(getState, 'user'),
+                        clave: getUrlParams(getState, 'clave'),
+                        ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
                     }
                 });
                 return request.then(
@@ -1330,18 +1284,6 @@ export function closeForm(data) {
         dispatch({ type: "DISABLED_FORM" });
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
-
-        const queryString = window.location.href.toString().split(window.location.host)[1];
-        let dataObj = {};
-        if (queryString !== '/cdn/test/index.html') {
-            dataObj = {
-                rut: getUrlParams(getState, 'rut'),
-                user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave'),
-                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
-            }
-        }
-
         const request = axios({
             method: "POST",
             headers: {
@@ -1350,11 +1292,10 @@ export function closeForm(data) {
             url: APIURL + "/message",
             data: {
                 ...data,
-                dataObj,
-                // rut: getUrlParams(getState, 'rut'),
-                // user: getUrlParams(getState, 'user'),
-                // clave: getUrlParams(getState, 'clave'),
-                // ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
+                rut: getUrlParams(getState, 'rut'),
+                user: getUrlParams(getState, 'user'),
+                clave: getUrlParams(getState, 'clave'),
+                ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
             }
         });
         return request.then(
@@ -1408,18 +1349,6 @@ export function sendForm(data, url, general) {
                     item.general = general;
                     //updateConversation(item);
                     // messageResponse(dispatch, item);
-
-                    const queryString = window.location.href.toString().split(window.location.host)[1];
-                    let dataObj = {};
-                    if (queryString !== '/cdn/test/index.html') {
-                        dataObj = {
-                            rut: getUrlParams(getState, 'rut'),
-                            user: getUrlParams(getState, 'user'),
-                            clave: getUrlParams(getState, 'clave'),
-                            ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
-                        }
-                    }
-
                     dispatch({ type: "DISABLED_FORM" });
                     const request = axios({
                         method: "POST",
@@ -1429,11 +1358,10 @@ export function sendForm(data, url, general) {
                         url: APIURL + "/message",
                         data: {
                             ...item,
-                            dataObj
-                            // rut: getUrlParams(getState, 'rut'),
-                            // user: getUrlParams(getState, 'user'),
-                            // clave: getUrlParams(getState, 'clave'),
-                            // ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
+                            rut: getUrlParams(getState, 'rut'),
+                            user: getUrlParams(getState, 'user'),
+                            clave: getUrlParams(getState, 'clave'),
+                            ejecutivo_amsa: getUrlParams(getState, 'ejecutivo_amsa')
                         }
                     });
                     return request
