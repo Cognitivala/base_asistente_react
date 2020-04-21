@@ -210,21 +210,17 @@ export default class Conversations extends Component {
 
   fillConversation() {
     const {
-        updateConversation,
-        updateConversationButton,
-        conversationsStates,
-        customParamsStates,
-        generalStates,
-        mainCss
+        updateConversation, updateConversationButton,
+        conversationsStates, customParamsStates,
+        generalStates, mainCss
       } = this.props,
       sizeConversation = conversationsStates.get("conversations").size,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
       userImg = customParamsStates.getIn(["customParams", "userImg"]);
 
-    return conversationsStates.get("conversations").map((map, j) => {
-      const conversation = map,
-        enabled = conversation.get("enabled");
+    return React.Children.toArray (conversationsStates.get("conversations").map((map, j) => {
+      const conversation = map, enabled = conversation.get("enabled");
       let retorno = [];
       if (enabled !== undefined && enabled) {
         const buttons = conversation.get("buttons"),
@@ -246,7 +242,7 @@ export default class Conversations extends Component {
           
           retorno.push(
             <ConversationMsg
-              key={j*333}
+              // key={j*333}
               avatar={avatar}
               msgs={msg}
               animation={animation}
@@ -263,7 +259,7 @@ export default class Conversations extends Component {
         if (buttons !== undefined) {
           retorno.push(
             <ConversationButtons
-              key={j * 10}
+              // key={j * 10}
               buttons={buttons}
               animation={animation}
               send={send}
@@ -277,7 +273,7 @@ export default class Conversations extends Component {
         if (selects !== undefined) {
           retorno.push(
             <ConversationSelects
-              key={j * 20}
+              // key={j * 20}
               options={selects}
               animation={animation}
               send={send}
@@ -291,7 +287,7 @@ export default class Conversations extends Component {
         if (multibuttons !== undefined) {
           retorno.push(
             <ConversationMultiButtons
-              key={j * 30}
+              // key={j * 30}
               buttons={multibuttons}
               animation={animation}
               send={send}
@@ -306,7 +302,7 @@ export default class Conversations extends Component {
           const { updateConversationCalendar } = this.props;
           retorno.push(
             <ConversationCalendar
-              key={j * 40}
+              // key={j * 40}
               animation={animation}
               send={send}
               colorHeader={colorHeader}
@@ -326,7 +322,7 @@ export default class Conversations extends Component {
             <ConversationAttach
               attach={attach}
               attachFile={attachFile}
-              key={j * 40}
+              // key={j * 45}
               animation={animation}
               send={send}
               colorHeader={colorHeader}
@@ -339,7 +335,7 @@ export default class Conversations extends Component {
         if (files !== undefined) {
           retorno.push(
             <ConversationFiles
-              key={j * 24}
+              // key={j * 24}
               files={files}
               animation={animation}
               send={send}
@@ -373,7 +369,7 @@ export default class Conversations extends Component {
                   // debugger
                   retorno.push(
                     <Valoracion
-                      key={j}
+                      // key={j*777}
                       generalStates={generalStates}
                       setErrorValoracion={setErrorValoracion}
                       sendValoracion={sendValoracion}
@@ -409,7 +405,7 @@ export default class Conversations extends Component {
                 if (enabledFormulario) {
                   retorno.push(
                     <Formulario
-                      key={j}
+                      // key={j*345}
                       formularioStates={formularioStates}
                       form={form}
                       generalStates={generalStates}
@@ -435,7 +431,7 @@ export default class Conversations extends Component {
             const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
               <ConversationLikes
-                key={j * 33}
+                // key={j * 313}
                 conversationsStates={conversationsStates}
                 sendLike={sendLike}
                 colorHeader={colorHeader}
@@ -447,21 +443,25 @@ export default class Conversations extends Component {
           else if ( this.state.asistencia === true) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
-              <FormAsistencia key={`${j} * ${j} * 535`} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormAsistencia 
+              // key={`${j} * ${j} * 535`} 
+              generalStates={generalStates} sendValoracion={sendValoracion} />
             )
           }
           else if ( rating ) {
             const { sendValoracion, generalStates } = this.props;
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
-              <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormularioValoracion 
+              // key={`${j} * 55`} 
+              generalStates={generalStates} sendValoracion={sendValoracion} />
             );
           }
           
         }
       }
       return retorno;
-    });
+    }));
   }
 
   
@@ -471,10 +471,7 @@ export default class Conversations extends Component {
     const colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     let css = ayudaStates.get("open") ? " active" : "", cssHolder = inputStates.get("enabled") ? "" : " holder";
     return (
-      <IsFetching
-        isFetching={conversationsStates.get("isFetching")}
-        showChildren={true} colorHeader={colorHeader} mainCss={mainCss}
-      >
+      <IsFetching isFetching={conversationsStates.get("isFetching")} showChildren={true} colorHeader={colorHeader} mainCss={mainCss}>
         <section
           // onScroll={this.handleScroll}
           className={ mainCss.ConversationHolder + " " + css + cssHolder }

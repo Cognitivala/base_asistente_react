@@ -35,6 +35,18 @@ export default class Launcher extends Component {
       }
     }
   }
+  
+  componentWillMount(){
+    const src = window.location.search;
+    if(src === '?open=true'){
+      const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
+      closeLauncher();
+      this.openAssitantCDN();
+      openAssistant();
+      if (ayudaStates.get("open")) closeHelp();
+      if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
+    }
+  }
 
   closeAssistant() {
     const { closeAssistant } = this.props;
@@ -48,11 +60,9 @@ export default class Launcher extends Component {
   openAssitantCDN() {
     window.top.postMessage(
       {
-        test: [
-          {
+        test: [{
             msg: "assistant"
-          }
-        ]
+          }]
       },
       "*"
     );
