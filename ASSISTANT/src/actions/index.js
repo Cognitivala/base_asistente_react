@@ -591,7 +591,7 @@ function updateConversationError(data) {
 }
 // UPDATE CONVERSATION
 export function updateConversation(data) {
-    console.log('updateConversation:: ', data.msg[0]);
+    // console.log('updateConversation:: ', data.msg[0]);
     let inputMessage = data.msg[0];
     return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
@@ -611,7 +611,7 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                console.log('message updateConversation:: ', response.data);
+                // console.log('message updateConversation:: ', response.data);
                 // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
@@ -622,7 +622,7 @@ export function updateConversation(data) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    console.log('response.data.agent::: ', response.data.agent)
+                    // console.log('response.data.agent::: ', response.data.agent)
                     if (response.data.agent === true) {
                         item.msg = [`${inputMessage}`];
                         sessionStorage.setItem('cid', response.data.general.cid);
@@ -642,7 +642,7 @@ export function updateConversation(data) {
 }
 
 async function messageResponse(dispatch, data) {
-    console.log('messageResponse:: ', data);
+    // console.log('messageResponse:: ', data);
     // await getSixbellIn(data);
 
     if (data.liftUp !== undefined) {
@@ -805,7 +805,7 @@ export function updateConversationButton(data) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
-                            console.log('updateConversationButton Item:: ', item);
+                            // console.log('updateConversationButton Item:: ', item);
 
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
@@ -1113,7 +1113,7 @@ export function sendForm(data, url, general) {
                     });
                     return request
                         .then(response => {
-                            console.log('RESPONSE MENSAJE FORM::', response);
+                            // console.log('RESPONSE MENSAJE FORM::', response);
                             if (
                                 response.status === 200 &&
                                 response.data.estado.codigoEstado === 200
@@ -1205,8 +1205,8 @@ export function getUrlParams(getState, urlParam) {
 
 //SIXBELL IN
 export const getSixbellIn = (dispatch, data) => {
-    console.log('getSixbellIn DATA:: ', data)
-    console.log('getSixbellIn inputMessage:: ', data.msg)
+    // console.log('getSixbellIn DATA:: ', data)
+    // console.log('getSixbellIn inputMessage:: ', data.msg)
     const {
         general,
         msg,
@@ -1214,7 +1214,7 @@ export const getSixbellIn = (dispatch, data) => {
         enabled
     } = data;
     let newData = { general, msg, send, enabled }
-    const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
+    const urlApi = APIURL + '/sixbell_purecloud_in'
     const token = sessionStorage.getItem("token");
 
     axios.post(urlApi, newData, {
@@ -1223,13 +1223,13 @@ export const getSixbellIn = (dispatch, data) => {
             "Content-Type": "application/json",
         }
     }).then((response) => {
-        console.log('response.data getSixbellIn:: ', response.data);
+        // console.log('response.data getSixbellIn:: ', response.data);
         const dataResponse = response.data;
         if (dataResponse.estado.codigoEstado === 200) {
             // let item = response.data;
             // item.send = "from";
             // item.enabled = true;
-            console.log('item in', dataResponse);
+            // console.log('item in', dataResponse);
             // dispatch(updateConversation(item));
         }
     }).catch((error) => {
@@ -1241,7 +1241,7 @@ export const getSixbellIn = (dispatch, data) => {
 export function getSixbellOut(dispatch, data) {
     // clearInterval(asistantInterval);
 
-    console.log('getSixbellOut: ', data);
+    // console.log('getSixbellOut: ', data);
 
     if (interval) {
         clearInterval(interval);
@@ -1250,7 +1250,7 @@ export function getSixbellOut(dispatch, data) {
     var ASISTANT_INTERVAL_TIMER = 5000;
 
     interval = setInterval(function() {
-        const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_out'
+        const urlApi = APIURL + '/sixbell_purecloud_out'
         const { general, msg, send, enabled } = data;
         let newData = { general, msg, send, enabled }
         const token = sessionStorage.getItem("token");
@@ -1261,7 +1261,7 @@ export function getSixbellOut(dispatch, data) {
                 "Content-Type": "application/json",
             }
         }).then(async(response) => {
-            console.log('getSixbellOut:: ', response.data);
+            // console.log('getSixbellOut:: ', response.data);
             const dataResponse = response.data;
 
             if (dataResponse.estado.codigoEstado === 200) {
@@ -1284,7 +1284,7 @@ export function getSixbellOut(dispatch, data) {
 
 export const getSixbellEnd = () => {
 
-    const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_end';
+    const urlApi = APIURL + '/sixbell_purecloud_end';
     let data = { cid: JSON.stringify(sessionStorage.getItem('cid')) };
     const token = sessionStorage.getItem("token");
 
@@ -1294,7 +1294,7 @@ export const getSixbellEnd = () => {
             "Content-Type": "application/json",
         }
     }).then((response) => {
-        console.log('getSixbellEnd:: ', response.data);
+        // console.log('getSixbellEnd:: ', response.data);
     }).catch((error) => {
         console.log(error);
     });
