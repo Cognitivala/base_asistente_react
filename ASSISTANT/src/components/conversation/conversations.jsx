@@ -67,7 +67,7 @@ export default class Conversations extends Component {
   }
 
   verAsistencia(value) {
-    console.log('Asistencia:: ', value);
+    // console.log('Asistencia:: ', value);
     this.setState({asistencia: value});
   }
 
