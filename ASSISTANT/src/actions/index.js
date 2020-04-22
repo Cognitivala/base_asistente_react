@@ -242,15 +242,15 @@ export function getSaludo() {
             origen = 1;
         }
 
-        const queryString = window.location;
-        const queryString2 = window.location.href;
-        const queryString3 = window.location.href.toString();
-        const queryString4 = window.location.href.toString().split(window.location.host)[1];
+        // const queryString = window.location;
+        // const queryString2 = window.location.href;
+        // const queryString3 = window.location.href.toString();
+        // const queryString4 = window.location.href.toString().split(window.location.host)[1];
 
-        console.log('queryString:: ', queryString)
-        console.log('queryString2:: ', queryString2)
-        console.log('queryString3:: ', queryString3)
-        console.log('queryString4:: ', queryString4)
+        // console.log('queryString:: ', queryString)
+        // console.log('queryString2:: ', queryString2)
+        // console.log('queryString3:: ', queryString3)
+        // console.log('queryString4:: ', queryString4)
 
         const data = {
                 general: {
@@ -545,15 +545,19 @@ export function updateConversation(data) {
         // console.log('updateConversation DATA.GENERAL:: ', data.general);
 
         // SE AGREGA VARIABLE email_user 
-        data.general.integracion = {
-            ...data.general.integracion,
-            email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+        const queryString = window.location.href.toString().split(window.location.host)[1];
+        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+            data.general.integracion = {
+                ...data.general.integracion,
+                email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+            }
+
+            data.general.url_params = {
+                ...data.general.url_params,
+                email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+            }
         }
 
-        data.general.url_params = {
-            ...data.general.url_params,
-            email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
-        }
 
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -596,10 +600,13 @@ export function updateConversation(data) {
                     // item.email_user = response.data.email_user
 
                     if (localStorage.getItem('email_user') !== null) {
-                        const email_user = localStorage.getItem('email_user');
-                        item.general.integracion = {
-                            ...data.general.integracion,
-                            email_user: email_user
+                        const queryString = window.location.href.toString().split(window.location.host)[1];
+                        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                            const email_user = localStorage.getItem('email_user');
+                            item.general.integracion = {
+                                ...data.general.integracion,
+                                email_user: email_user
+                            }
                         }
                     }
 
@@ -973,14 +980,17 @@ export function updateConversationButton(data) {
             return function action(dispatch, getState) {
 
                 // SE AGREGA VARIABLE email_user 
-                data.general.integracion = {
-                    ...data.general.integracion,
-                    email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
-                }
+                const queryString = window.location.href.toString().split(window.location.host)[1];
+                if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                    data.general.integracion = {
+                        ...data.general.integracion,
+                        email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+                    }
 
-                data.general.url_params = {
-                    ...data.general.url_params,
-                    email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+                    data.general.url_params = {
+                        ...data.general.url_params,
+                        email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+                    }
                 }
 
                 dispatch(setGeneral(data.general));
@@ -1008,10 +1018,13 @@ export function updateConversationButton(data) {
                             item.send = "from";
                             item.enabled = true;
                             if (localStorage.getItem('email_user') !== null) {
-                                const email_user = localStorage.getItem('email_user');
-                                item.general.integracion = {
-                                    ...data.general.integracion,
-                                    email_user: email_user
+                                const queryString = window.location.href.toString().split(window.location.host)[1];
+                                if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                                    const email_user = localStorage.getItem('email_user');
+                                    item.general.integracion = {
+                                        ...data.general.integracion,
+                                        email_user: email_user
+                                    }
                                 }
                             }
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
@@ -1271,15 +1284,19 @@ export function closeForm(data) {
     return function action(dispatch, getState) {
 
         // SE AGREGA VARIABLE email_user 
-        data.general.integracion = {
-            ...data.general.integracion,
-            email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+        const queryString = window.location.href.toString().split(window.location.host)[1];
+        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+            data.general.integracion = {
+                ...data.general.integracion,
+                email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+            }
+
+            data.general.url_params = {
+                ...data.general.url_params,
+                email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
+            }
         }
 
-        data.general.url_params = {
-            ...data.general.url_params,
-            email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
-        }
 
         dispatch({ type: "DISABLED_FORM" });
         dispatch(setGeneral(data.general));
@@ -1308,10 +1325,13 @@ export function closeForm(data) {
                     item.send = "from";
                     item.enabled = true;
                     if (localStorage.getItem('email_user') !== null) {
-                        const email_user = localStorage.getItem('email_user');
-                        item.general.integracion = {
-                            ...data.general.integracion,
-                            email_user: email_user
+                        const queryString = window.location.href.toString().split(window.location.host)[1];
+                        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                            const email_user = localStorage.getItem('email_user');
+                            item.general.integracion = {
+                                ...data.general.integracion,
+                                email_user: email_user
+                            }
                         }
                     }
                     dispatch(setNodoId(item.msg[item.msg.length - 1]));
@@ -1376,10 +1396,13 @@ export function sendForm(data, url, general) {
                                 item.send = "from";
                                 item.enabled = true;
                                 if (localStorage.getItem('email_user') !== null) {
-                                    const email_user = localStorage.getItem('email_user');
-                                    item.general.integracion = {
-                                        ...data.general.integracion,
-                                        email_user: email_user
+                                    const queryString = window.location.href.toString().split(window.location.host)[1];
+                                    if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                                        const email_user = localStorage.getItem('email_user');
+                                        item.general.integracion = {
+                                            ...data.general.integracion,
+                                            email_user: email_user
+                                        }
                                     }
                                 }
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
