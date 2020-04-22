@@ -546,7 +546,7 @@ export function updateConversation(data) {
 
         // SE AGREGA VARIABLE email_user 
         const queryString = window.location.href.toString().split(window.location.host)[1];
-        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 11) {
             data.general.integracion = {
                 ...data.general.integracion,
                 email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
@@ -601,7 +601,7 @@ export function updateConversation(data) {
 
                     if (localStorage.getItem('email_user') !== null) {
                         const queryString = window.location.href.toString().split(window.location.host)[1];
-                        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 11) {
                             const email_user = localStorage.getItem('email_user');
                             item.general.integracion = {
                                 ...data.general.integracion,
@@ -981,7 +981,7 @@ export function updateConversationButton(data) {
 
                 // SE AGREGA VARIABLE email_user 
                 const queryString = window.location.href.toString().split(window.location.host)[1];
-                if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 11) {
                     data.general.integracion = {
                         ...data.general.integracion,
                         email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
@@ -1019,7 +1019,7 @@ export function updateConversationButton(data) {
                             item.enabled = true;
                             if (localStorage.getItem('email_user') !== null) {
                                 const queryString = window.location.href.toString().split(window.location.host)[1];
-                                if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                                if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 11) {
                                     const email_user = localStorage.getItem('email_user');
                                     item.general.integracion = {
                                         ...data.general.integracion,
@@ -1285,7 +1285,7 @@ export function closeForm(data) {
 
         // SE AGREGA VARIABLE email_user 
         const queryString = window.location.href.toString().split(window.location.host)[1];
-        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 11) {
             data.general.integracion = {
                 ...data.general.integracion,
                 email_user: localStorage.getItem('email_user') !== null ? localStorage.getItem('email_user') : null
@@ -1326,7 +1326,7 @@ export function closeForm(data) {
                     item.enabled = true;
                     if (localStorage.getItem('email_user') !== null) {
                         const queryString = window.location.href.toString().split(window.location.host)[1];
-                        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                        if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 11) {
                             const email_user = localStorage.getItem('email_user');
                             item.general.integracion = {
                                 ...data.general.integracion,
@@ -1397,7 +1397,7 @@ export function sendForm(data, url, general) {
                                 item.enabled = true;
                                 if (localStorage.getItem('email_user') !== null) {
                                     const queryString = window.location.href.toString().split(window.location.host)[1];
-                                    if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 10) {
+                                    if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 11) {
                                         const email_user = localStorage.getItem('email_user');
                                         item.general.integracion = {
                                             ...data.general.integracion,
