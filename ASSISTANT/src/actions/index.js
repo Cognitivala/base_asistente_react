@@ -250,7 +250,7 @@ export function getSaludo() {
         console.log('queryString:: ', queryString)
         console.log('queryString2:: ', queryString2)
         console.log('queryString3:: ', queryString3)
-        console.log('queryString4:: ', queryString4)
+        console.log('queryString4:: ', queryString4.length)
 
         const data = {
                 general: {
