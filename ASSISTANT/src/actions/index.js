@@ -861,6 +861,8 @@ function messageResponse(dispatch, data, general) {
         // SE COMENTA PARA REVISAR INIT DE LYNN
         dispatch(LynnInit(data, general));
 
+    } else if (data.previous_input.length > 0) {
+        console.log('data.previous_input: ', data.previous_input);
     } else {
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
