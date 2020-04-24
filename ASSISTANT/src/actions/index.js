@@ -8,7 +8,7 @@ import { isMobile } from 'react-device-detect';
 const LYNN_ENDPOINT = '/lynn_in';
 const ASISTANT_INTERVAL_TIMER = 4000;
 
-export var previous_input = '';
+export var previous_input = [];
 
 //GENERAL
 function defaultGeneral() {
@@ -256,7 +256,7 @@ export function getSaludo() {
                     user: getUrlParams(getState, 'user'),
                     clave: getUrlParams(getState, 'clave')
                 },
-                msg: previous_input !== '' ? previous_input : null,
+                msg: previous_input !== [] ? previous_input : null,
             },
             request = axios({
                 method: "POST",
@@ -1190,7 +1190,7 @@ export function updateConversationButton(data) {
                             item.enabled = true;
 
                             if (response.data.previous_input) {
-                                previous_input = response.data.previous_input;
+                                previous_input = [response.data.previous_input];
                                 console.log(response.data.previous_input);
                                 item.msg = [response.data.previous_input];
                                 // messageResponse(dispatch, item);
