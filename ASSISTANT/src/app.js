@@ -104,7 +104,12 @@ export class App extends Component {
         const avatar = customParamsStates.getIn(["customParams", "avatar"]),
             estado = customParamsStates.getIn(["customParams", "estado"]);
         if (avatar && estado !== 0) {
-            window.top.postMessage({ responsiveFunc: true, previous_input: sessionStorage.getItem('previous_input') }, "*");
+            if(sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null){
+                window.top.postMessage({ responsiveFunc: true, previous_input: sessionStorage.getItem('previous_input') }, "*");
+            } else{
+                window.top.postMessage({ responsiveFunc: true, }, "*");
+            }
+            
             return ( 
             <div>
                 <Launcher {...this.props }/> 

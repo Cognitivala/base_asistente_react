@@ -8,8 +8,6 @@ import { isMobile } from 'react-device-detect';
 const LYNN_ENDPOINT = '/lynn_in';
 const ASISTANT_INTERVAL_TIMER = 4000;
 
-var getPreviousInput = sessionStorage.getItem('previous_input');
-
 //GENERAL
 function defaultGeneral() {
     return {
@@ -868,10 +866,12 @@ function messageResponse(dispatch, data, general) {
         // SE COMENTA PARA REVISAR INIT DE LYNN
         dispatch(LynnInit(data, general));
 
-    } else if (data.previous_input) {
-        console.log('data.previous_input: ', data.previous_input);
-        dispatch(pushConversation(data));
-    } else {
+    }
+    // else if (data.previous_input) {
+    //     console.log('data.previous_input: ', data.previous_input);
+    //     dispatch(pushConversation(data));
+    // } 
+    else {
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -1185,16 +1185,11 @@ export function updateConversationButton(data) {
                             item.enabled = true;
 
                             if (response.data.previous_input) {
-                                console.log(response.data.previous_input);
-                                // messageResponse(dispatch, item);
-                                // sendInputValue(dispatch, item);
                                 localStorage.setItem('previous_input', response.data.previous_input);
                                 sessionStorage.setItem('previous_input', response.data.previous_input);
 
                                 console.log(localStorage.getItem('previous_input'));
                                 console.log(sessionStorage.getItem('previous_input'));
-                                // dispatch(updateConversation(item));
-                                // messageResponse(dispatch, item);
                             } else {
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                                 messageResponse(dispatch, item);

@@ -33,10 +33,11 @@
                 if (e.data.test !== undefined) {
                     const mensaje = e.data.test[0].msg;
                     this.styleIframe(mensaje);
-                } else if (e.data.previous_input !== undefined) {
-                    sessionStorage.setItem('previous_input', e.data.previous_input);
                 } else if (e.data.responsiveFunc !== undefined) {
                     this.responsiveFunc();
+                    if (e.data.previous_input !== undefined || e.data.previous_input !== null) {
+                        sessionStorage.setItem('previous_input', e.data.previous_input);
+                    }
                 }
             };
         }
