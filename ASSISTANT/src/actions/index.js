@@ -289,7 +289,6 @@ export function getSaludo() {
                     item.send = "from";
                     item.enabled = true;
 
-                    //GETSALUD()
                     if (previous_input) {
                         console.log('previous_input:: ', previous_input);
                         item.msg = previous_input;
