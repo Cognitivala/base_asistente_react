@@ -1170,7 +1170,7 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
-                        // console.log('RESPONSE MENSAJE 3::');
+                        console.log('RESPONSE MENSAJE 3::', response);
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
@@ -1416,6 +1416,7 @@ export function closeForm(data) {
         });
         return request.then(
             response => {
+                console.log('RESPONSE MENSAJE 4::', response);
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1474,7 +1475,7 @@ export function sendForm(data, url, general) {
                     });
                     return request
                         .then(response => {
-                            // console.log('RESPONSE MENSAJE 5::');
+                            console.log('RESPONSE MENSAJE 5::', response);
                             if (
                                 response.status === 200 &&
                                 response.data.estado.codigoEstado === 200
