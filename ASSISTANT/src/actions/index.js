@@ -292,7 +292,7 @@ export function getSaludo() {
                     //GETSALUD()
                     if (previous_input) {
                         console.log('previous_input:: ', previous_input);
-                        item.previous_input = previous_input;
+                        item.msg = previous_input;
                         dispatch(updateConversation(item));
                     }
 
