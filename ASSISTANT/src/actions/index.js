@@ -1181,7 +1181,7 @@ export function updateConversationButton(data) {
                                 console.log(response.data.previous_input.length);
                                 item.previous_input = response.data.previous_input;
                                 // messageResponse(dispatch, item);
-                                sendInputValue(item);
+                                sendInputValue(dispatch, item);
                             } else {
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                                 messageResponse(dispatch, item);
@@ -1593,29 +1593,30 @@ export function addLynnData(data) {
     }
 }
 
-export function sendInputValue(data) {
+export function sendInputValue(dispatch, data) {
     console.log('sendInputValue:: ', data)
-    return function action(dispatch) {
-        dispatch(setGeneral(data.general));
-        dispatch(pushConversation(data));
-        const request = axios({
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            url: APIURL + "/message",
-            data: { data }
-        });
-        return request.then(
-            response => {
-                console.log('RESPONSE sendInputValue::', response);
-                if (response.status === 200) {
-                    console.log('RESPONSE DATA sendInputValue', response.data)
-                }
-            },
-            err => {
-                dispatch(updateConversationError(err.response.data.msg));
+
+    dispatch(setGeneral(data.general));
+    dispatch(pushConversation(data));
+    const request = axios({
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        url: APIURL + "/message",
+        data: { data }
+    });
+    return request.then(
+        response => {
+            console.log('RESPONSE sendInputValue::', response);
+            if (response.status === 200) {
+                console.log('RESPONSE DATA sendInputValue', response.data);
+                // dispatch(pushConversation(data));
             }
-        );
-    };
+        },
+        err => {
+            dispatch(updateConversationError(err.response.data.msg));
+        }
+    );
+
 }
