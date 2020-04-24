@@ -256,7 +256,7 @@ export function getSaludo() {
                     user: getUrlParams(getState, 'user'),
                     clave: getUrlParams(getState, 'clave')
                 },
-                msg: previous_input !== null ? previous_input : null,
+                msg: null,
             },
             request = axios({
                 method: "POST",
@@ -1189,13 +1189,18 @@ export function updateConversationButton(data) {
                             item.send = "from";
                             item.enabled = true;
 
-                            if (response.data.previous_input) {
-                                previous_input = [response.data.previous_input];
+                            if (response.data.previous_input !== '') {
+                                // previous_input = [response.data.previous_input];
                                 console.log(response.data.previous_input);
+                                localStorage.setItem('previous_input', response.data.previous_input);
+                                sessionStorage.setItem('previous_input', response.data.previous_input);
+
+                                console.log(localStorage.getItem('previous_input'));
+                                console.log(sessionStorage.getItem('previous_input'));
                                 // item.msg = [response.data.previous_input];
                                 // messageResponse(dispatch, item);
                                 // sendInputValue(dispatch, item);
-                                dispatch(updateConversation(item));
+                                // dispatch(updateConversation(item));
                             } else {
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                                 messageResponse(dispatch, item);
