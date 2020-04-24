@@ -1177,8 +1177,6 @@ export function updateConversationButton(data) {
                             item.send = "from";
                             item.enabled = true;
 
-                            console.log(item.msg[item.msg.length - 1]);
-
                             if (response.data.previous_input) {
                                 console.log(response.data.previous_input.length);
                                 item.previous_input = response.data.previous_input;
@@ -1596,9 +1594,10 @@ export function addLynnData(data) {
 }
 
 export function sendInputValue(data) {
+    console.log('sendInputValue:: ', data)
     return function action(dispatch) {
         // dispatch(setGeneral(data.general));
-        // dispatch(pushConversation(data));
+        dispatch(pushConversation(data));
         const request = axios({
             method: "POST",
             headers: {
