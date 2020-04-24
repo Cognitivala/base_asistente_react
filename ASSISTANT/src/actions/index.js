@@ -546,11 +546,13 @@ export function updateConversation(conversationData) {
                     token: getState().generalStates.getIn(["token"]),
                 }
             }
-        } else if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
-            data = {
-                ...conversationData,
-            }
-        } else {
+        }
+        // else if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
+        //     data = {
+        //         ...conversationData,
+        //     }
+        // } 
+        else {
             data = {
                 ...conversationData,
                 rut: getUrlParams(getState, 'rut'),
