@@ -567,6 +567,7 @@ export function updateConversation(conversationData) {
         });
         return request
             .then(response => {
+                console.log('updateConversation(item): ', response.data)
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
