@@ -861,11 +861,10 @@ function messageResponse(dispatch, data, general) {
         // SE COMENTA PARA REVISAR INIT DE LYNN
         dispatch(LynnInit(data, general));
 
-    }
-    // else if (data.previous_input.length > 0) {
-    //     console.log('data.previous_input: ', data.previous_input);
-    // } 
-    else {
+    } else if (data.previous_input) {
+        console.log('data.previous_input: ', data.previous_input);
+        dispatch(pushConversation(data));
+    } else {
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -1184,11 +1183,10 @@ export function updateConversationButton(data) {
                                 console.log(response.data.previous_input.length);
                                 item.previous_input = response.data.previous_input;
                                 messageResponse(dispatch, item);
+                            } else {
+                                dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                                messageResponse(dispatch, item);
                             }
-                            // else {
-                            dispatch(setNodoId(item.msg[item.msg.length - 1]));
-                            messageResponse(dispatch, item);
-                            // }
                         } else {
                             dispatch(updateConversationError(response.statusText));
                         }
