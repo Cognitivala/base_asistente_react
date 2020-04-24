@@ -533,6 +533,7 @@ function updateConversationError(data) {
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(conversationData) {
+    console.log('updateConversation: ', conversationData)
     return function action(dispatch, getState) {
         const useLynn = getState().assistantStates.getIn(["useLynn"]);
         const url = useLynn ? LYNN_ENDPOINT : "/message"
@@ -546,6 +547,8 @@ export function updateConversation(conversationData) {
                     token: getState().generalStates.getIn(["token"]),
                 }
             }
+        } else if (conversationData.previous_input) {
+            data = { conversationData }
         } else {
             data = {
                 ...conversationData,
