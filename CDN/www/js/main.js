@@ -28,7 +28,6 @@
             document.body.appendChild(div);
             this.basicStylesSetUp();
             window.onmessage = e => {
-                console.log('e.data:: ', e.data);
 
                 if (e.data.test !== undefined) {
                     const mensaje = e.data.test[0].msg;

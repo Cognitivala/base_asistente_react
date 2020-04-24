@@ -80,7 +80,8 @@ export class App extends Component {
             
             if (e.data.previous_input !== undefined){
                 console.log('previous_input desde el CDN', e.data.previous_input);
-            } else if (e.data.colorBtn !== undefined) {
+            }
+            if (e.data.colorBtn !== undefined) {
                 _this.props.updateCustomColorBtn(e.data.colorBtn);
             } else if (e.data.title !== undefined) {
                 _this.props.updateCustomTitle(e.data.title);
@@ -107,7 +108,7 @@ export class App extends Component {
             if(sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null){
                 window.top.postMessage({ responsiveFunc: true, previous_input: sessionStorage.getItem('previous_input') }, "*");
             } else{
-                window.top.postMessage({ responsiveFunc: true, }, "*");
+                window.top.postMessage({ responsiveFunc: true,}, "*");
             }
             
             return ( 

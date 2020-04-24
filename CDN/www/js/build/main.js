@@ -46,8 +46,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.basicStylesSetUp();
 
         window.onmessage = function (e) {
-          console.log('e.data:: ', e.data);
-
           if (e.data.test !== undefined) {
             var mensaje = e.data.test[0].msg;
 
