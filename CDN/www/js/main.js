@@ -34,10 +34,10 @@
                     console.log(object)
                     const mensaje = e.data.test[0].msg;
                     this.styleIframe(mensaje);
+                } else if (e.data.previous_input !== undefined) {
+                    sessionStorage.setItem('previous_input', e.data.previous_input);
                 } else if (e.data.responsiveFunc !== undefined) {
                     this.responsiveFunc();
-                } else if (e.data.previous_input) {
-                    sessionStorage.setItem('previous_input', e.data.previous_input);
                 }
             };
         }
