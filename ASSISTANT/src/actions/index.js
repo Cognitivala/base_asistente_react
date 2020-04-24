@@ -8,7 +8,14 @@ import { isMobile } from 'react-device-detect';
 const LYNN_ENDPOINT = '/lynn_in';
 const ASISTANT_INTERVAL_TIMER = 4000;
 
-export var previous_input = {};
+export var previous_input = {
+    general: {
+        cid: null,
+        id_cliente: "1",
+        origen: 1,
+    },
+    msg: null,
+};
 
 //GENERAL
 function defaultGeneral() {
