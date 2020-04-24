@@ -1179,7 +1179,7 @@ export function updateConversationButton(data) {
 
                             if (response.data.previous_input) {
                                 console.log(response.data.previous_input.length);
-                                item.msg = response.data.previous_input;
+                                item.msg = [response.data.previous_input];
                                 // messageResponse(dispatch, item);
                                 // sendInputValue(dispatch, item);
                                 localStorage.setItem('previous_input', response.data.previous_input);
