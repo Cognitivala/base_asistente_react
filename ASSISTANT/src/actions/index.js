@@ -1596,7 +1596,7 @@ export function addLynnData(data) {
 export function sendInputValue(data) {
     console.log('sendInputValue:: ', data)
     return function action(dispatch) {
-        // dispatch(setGeneral(data.general));
+        dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
             method: "POST",
