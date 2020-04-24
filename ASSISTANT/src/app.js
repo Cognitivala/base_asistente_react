@@ -76,6 +76,8 @@ export class App extends Component {
     onMessageFunc() {
         const _this = this;
         window.onmessage = e => {
+            
+            console.log('previous_input desde el CDN', e.data.previous_input);
             if (e.data.colorBtn !== undefined) {
                 _this.props.updateCustomColorBtn(e.data.colorBtn);
             } else if (e.data.title !== undefined) {
@@ -100,7 +102,7 @@ export class App extends Component {
         const avatar = customParamsStates.getIn(["customParams", "avatar"]),
             estado = customParamsStates.getIn(["customParams", "estado"]);
         if (avatar && estado !== 0) {
-            window.top.postMessage({ responsiveFunc: true }, "*");
+            window.top.postMessage({ responsiveFunc: true, previous_input: sessionStorage.getItem('previous_input') }, "*");
             return ( 
             <div>
                 <Launcher {...this.props }/> 

@@ -28,11 +28,16 @@
             document.body.appendChild(div);
             this.basicStylesSetUp();
             window.onmessage = e => {
+                console.log('e.data:: ', e.data);
+
                 if (e.data.test !== undefined) {
+                    console.log(object)
                     const mensaje = e.data.test[0].msg;
                     this.styleIframe(mensaje);
                 } else if (e.data.responsiveFunc !== undefined) {
                     this.responsiveFunc();
+                } else if (e.data.previous_input) {
+                    sessionStorage.setItem('previous_input', e.data.previous_input);
                 }
             };
         }
@@ -103,7 +108,14 @@
             const iframe = document.getElementById("ifrm-assitant");
             const contentWindow = iframe ? iframe.contentWindow : null;
             if (contentWindow) {
-                contentWindow.postMessage({ responsive: this.responsive }, "*");
+
+                if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
+                    contentWindow.postMessage({ responsive: this.responsive, previous_input: sessionStorage.getItem('previous_input') }, "*");
+                } else {
+                    contentWindow.postMessage({ responsive: this.responsive }, "*");
+                }
+
+
             } else {
                 setTimeout(() => {
                     this.styleIframeMessage();
