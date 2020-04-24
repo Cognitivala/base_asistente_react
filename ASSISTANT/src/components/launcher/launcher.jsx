@@ -26,12 +26,10 @@ export default class Launcher extends Component {
       "keep_conversation"
     ]);
     const hc = localStorage.getItem("hc");
-
-    
     
     if (!keep_conversation) {
       this.props.getSaludo();
-    }else {
+    } else {
       if (!hc) {
         this.props.getSaludo();
       }

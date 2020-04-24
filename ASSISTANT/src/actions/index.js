@@ -8,8 +8,6 @@ import { isMobile } from 'react-device-detect';
 const LYNN_ENDPOINT = '/lynn_in';
 const ASISTANT_INTERVAL_TIMER = 4000;
 
-export var previous_input = null;
-
 //GENERAL
 function defaultGeneral() {
     return {
@@ -288,7 +286,6 @@ export function getSaludo() {
                     msg_inicial ? item = msg_inicial : item.msg = ["¿Qué puedo hacer por ti?"];
                     item.send = "from";
                     item.enabled = true;
-
                     dispatch(pushConversation(item));
                     dispatch(setNodoId(item.msg[item.msg.length - 1]));
                 } else {
@@ -535,9 +532,7 @@ function updateConversationError(data) {
     }
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
-// updateConversation
 export function updateConversation(conversationData) {
-    console.log('updateConversation: ', conversationData)
     return function action(dispatch, getState) {
         const useLynn = getState().assistantStates.getIn(["useLynn"]);
         const url = useLynn ? LYNN_ENDPOINT : "/message"
@@ -551,11 +546,7 @@ export function updateConversation(conversationData) {
                     token: getState().generalStates.getIn(["token"]),
                 }
             }
-        }
-        // else if (conversationData.previous_input) {
-        //     data = {...conversationData }
-        // } 
-        else {
+        } else {
             data = {
                 ...conversationData,
                 rut: getUrlParams(getState, 'rut'),
@@ -576,7 +567,6 @@ export function updateConversation(conversationData) {
         });
         return request
             .then(response => {
-                console.log('updateConversation(item): ', response.data)
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -871,12 +861,10 @@ function messageResponse(dispatch, data, general) {
         // SE COMENTA PARA REVISAR INIT DE LYNN
         dispatch(LynnInit(data, general));
 
-    }
-    // else if (data.previous_input) {
-    //     console.log('data.previous_input: ', data.previous_input);
-    //     dispatch(pushConversation(data));
-    // } 
-    else {
+    } else if (data.previous_input) {
+        console.log('data.previous_input: ', data.previous_input);
+        dispatch(pushConversation(data));
+    } else {
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -1189,18 +1177,17 @@ export function updateConversationButton(data) {
                             item.send = "from";
                             item.enabled = true;
 
-                            if (response.data.previous_input !== '') {
-                                // previous_input = [response.data.previous_input];
-                                console.log(response.data.previous_input);
+                            if (response.data.previous_input) {
+                                console.log(response.data.previous_input.length);
+                                // item.previous_input = response.data.previous_input;
+                                // messageResponse(dispatch, item);
+                                // sendInputValue(dispatch, item);
                                 localStorage.setItem('previous_input', response.data.previous_input);
                                 sessionStorage.setItem('previous_input', response.data.previous_input);
 
                                 console.log(localStorage.getItem('previous_input'));
                                 console.log(sessionStorage.getItem('previous_input'));
-                                // item.msg = [response.data.previous_input];
-                                // messageResponse(dispatch, item);
-                                // sendInputValue(dispatch, item);
-                                // dispatch(updateConversation(item));
+                                dispatch(updateConversation(item));
                             } else {
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                                 messageResponse(dispatch, item);
