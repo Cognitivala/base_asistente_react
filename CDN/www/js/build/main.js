@@ -49,7 +49,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           console.log('e.data:: ', e.data);
 
           if (e.data.test !== undefined) {
-            console.log(object);
             var mensaje = e.data.test[0].msg;
 
             _this.styleIframe(mensaje);

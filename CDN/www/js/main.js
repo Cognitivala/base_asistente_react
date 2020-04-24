@@ -31,7 +31,6 @@
                 console.log('e.data:: ', e.data);
 
                 if (e.data.test !== undefined) {
-                    console.log(object)
                     const mensaje = e.data.test[0].msg;
                     this.styleIframe(mensaje);
                 } else if (e.data.previous_input !== undefined) {
