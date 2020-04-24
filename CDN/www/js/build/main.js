@@ -125,16 +125,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         var contentWindow = iframe ? iframe.contentWindow : null;
 
         if (contentWindow) {
-          if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
-            contentWindow.postMessage({
-              responsive: this.responsive,
-              previous_input: sessionStorage.getItem('previous_input')
-            }, "*");
-          } else {
-            contentWindow.postMessage({
-              responsive: this.responsive
-            }, "*");
-          }
+          // if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
+          //     contentWindow.postMessage({ responsive: this.responsive, previous_input: sessionStorage.getItem('previous_input') }, "*");
+          // } else {
+          //     contentWindow.postMessage({ responsive: this.responsive }, "*");
+          // }
+          contentWindow.postMessage({
+            responsive: this.responsive
+          }, "*");
         } else {
           setTimeout(function () {
             _this2.styleIframeMessage();
@@ -145,6 +143,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "responsiveFunc",
       value: function responsiveFunc() {
         if (window.outerWidth <= 767) {
+          console.log('window.outerWidth:: ', window.outerWidth);
+
           if (this.responsive !== "mobile") {
             this.responsive = "mobile";
             this.styleIframeMessage();

@@ -15,27 +15,13 @@ export class App extends Component {
         this.onMessageFunc();
         moment.updateLocale("en", {
             months: [
-                "Enero",
-                "Febrero",
-                "Marzo",
-                "Abril",
-                "Mayo",
-                "Junio",
-                "Julio",
-                "Agosto",
-                "Septiembre",
-                "Octubre",
-                "Noviembre",
-                "Diciembre"
+                "Enero", "Febrero", "Marzo", "Abril", 
+                "Mayo", "Junio", "Julio", "Agosto", 
+                "Septiembre", "Octubre", "Noviembre", "Diciembre"
             ],
             weekdays: [
-                "Lunes",
-                "Martes",
-                "Miercoles",
-                "Jueves",
-                "Viernes",
-                "Sabado",
-                "Domingo"
+                "Lunes", "Martes", "Miercoles", "Jueves",
+                "Viernes", "Sabado", "Domingo"
             ],
             weekdaysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
             weekdaysMin: ["Do", "Lu", "Ma", "Mi", "Ju", "Vi", "Sa"]
@@ -78,9 +64,9 @@ export class App extends Component {
         window.onmessage = e => {
             
             
-            if (e.data.previous_input !== undefined){
-                console.log('previous_input desde el CDN', e.data.previous_input);
-            }
+            // if (e.data.previous_input !== undefined){
+            //     console.log('previous_input desde el CDN', e.data.previous_input);
+            // }
             if (e.data.colorBtn !== undefined) {
                 _this.props.updateCustomColorBtn(e.data.colorBtn);
             } else if (e.data.title !== undefined) {
@@ -105,11 +91,13 @@ export class App extends Component {
         const avatar = customParamsStates.getIn(["customParams", "avatar"]),
             estado = customParamsStates.getIn(["customParams", "estado"]);
         if (avatar && estado !== 0) {
-            if(sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null){
-                window.top.postMessage({ responsiveFunc: true, previous_input: sessionStorage.getItem('previous_input') }, "*");
-            } else{
-                window.top.postMessage({ responsiveFunc: true,}, "*");
-            }
+            // if(sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null){
+            //     window.top.postMessage({ responsiveFunc: true, previous_input: sessionStorage.getItem('previous_input') }, "*");
+            // } else{
+            //     window.top.postMessage({ responsiveFunc: true,}, "*");
+            // }
+
+            window.top.postMessage({ responsiveFunc: true,}, "*");
             
             return ( 
             <div>
