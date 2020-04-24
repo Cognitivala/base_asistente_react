@@ -1179,7 +1179,7 @@ export function updateConversationButton(data) {
 
                             if (response.data.previous_input) {
                                 console.log(response.data.previous_input.length);
-                                // item.previous_input = response.data.previous_input;
+                                item.msg = response.data.previous_input;
                                 // messageResponse(dispatch, item);
                                 // sendInputValue(dispatch, item);
                                 localStorage.setItem('previous_input', response.data.previous_input);
@@ -1187,7 +1187,8 @@ export function updateConversationButton(data) {
 
                                 console.log(localStorage.getItem('previous_input'));
                                 console.log(sessionStorage.getItem('previous_input'));
-                                dispatch(updateConversation(item));
+                                // dispatch(updateConversation(item));
+                                messageResponse(dispatch, item);
                             } else {
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                                 messageResponse(dispatch, item);
