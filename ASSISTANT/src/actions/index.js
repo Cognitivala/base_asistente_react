@@ -256,7 +256,7 @@ export function getSaludo() {
                     user: getUrlParams(getState, 'user'),
                     clave: getUrlParams(getState, 'clave')
                 },
-                msg: null,
+                msg: previous_input !== '' ? previous_input : null,
             },
             request = axios({
                 method: "POST",
@@ -288,12 +288,6 @@ export function getSaludo() {
                     msg_inicial ? item = msg_inicial : item.msg = ["¿Qué puedo hacer por ti?"];
                     item.send = "from";
                     item.enabled = true;
-
-                    if (previous_input) {
-                        console.log('previous_input:: ', previous_input);
-                        item.msg = previous_input;
-                        dispatch(updateConversation(item));
-                    }
 
                     dispatch(pushConversation(item));
                     dispatch(setNodoId(item.msg[item.msg.length - 1]));
