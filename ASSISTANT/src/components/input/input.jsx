@@ -147,7 +147,7 @@ export default class Input extends Component {
 
     const divStyle = {
       'display': 'flex',
-      'flex-direction': 'row',
+      'flexDirection': 'row',
     };
       
     if (voice) {
