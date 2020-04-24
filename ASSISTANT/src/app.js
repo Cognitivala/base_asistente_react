@@ -77,8 +77,10 @@ export class App extends Component {
         const _this = this;
         window.onmessage = e => {
             
-            console.log('previous_input desde el CDN', e.data.previous_input);
-            if (e.data.colorBtn !== undefined) {
+            
+            if (e.data.previous_input !== undefined){
+                console.log('previous_input desde el CDN', e.data.previous_input);
+            } else if (e.data.colorBtn !== undefined) {
                 _this.props.updateCustomColorBtn(e.data.colorBtn);
             } else if (e.data.title !== undefined) {
                 _this.props.updateCustomTitle(e.data.title);
