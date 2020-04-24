@@ -1181,7 +1181,8 @@ export function updateConversationButton(data) {
                                 console.log(response.data.previous_input.length);
                                 item.previous_input = response.data.previous_input;
                                 // messageResponse(dispatch, item);
-                                sendInputValue(dispatch, item);
+                                // sendInputValue(dispatch, item);
+                                dispatch(updateConversation(item));
                             } else {
                                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                                 messageResponse(dispatch, item);
