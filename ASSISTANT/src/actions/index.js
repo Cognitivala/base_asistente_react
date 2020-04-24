@@ -548,7 +548,7 @@ export function updateConversation(conversationData) {
                     token: getState().generalStates.getIn(["token"]),
                 }
             }
-        } else if (getPreviousInput) {
+        } else if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
             data = {
                 ...conversationData,
             }
