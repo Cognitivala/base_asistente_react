@@ -547,9 +547,11 @@ export function updateConversation(conversationData) {
                     token: getState().generalStates.getIn(["token"]),
                 }
             }
-        } else if (conversationData.previous_input) {
-            data = { conversationData }
-        } else {
+        }
+        // else if (conversationData.previous_input) {
+        //     data = {...conversationData }
+        // } 
+        else {
             data = {
                 ...conversationData,
                 rut: getUrlParams(getState, 'rut'),
