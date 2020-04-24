@@ -1180,7 +1180,7 @@ export function updateConversationButton(data) {
 
                             console.log(item.msg[item.msg.length - 1]);
 
-                            if (response.data.previous_input.length > 0) {
+                            if (response.data.previous_input) {
                                 console.log(response.data.previous_input.length);
                                 item.previous_input = response.data.previous_input;
                                 messageResponse(dispatch, item);
