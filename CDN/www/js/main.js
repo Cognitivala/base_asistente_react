@@ -107,6 +107,7 @@
             const iframe = document.getElementById("ifrm-assitant");
             const contentWindow = iframe ? iframe.contentWindow : null;
             if (contentWindow) {
+                console.log('outerWidth:: ', window.outerWidth);
 
                 // if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
                 //     contentWindow.postMessage({ responsive: this.responsive, previous_input: sessionStorage.getItem('previous_input') }, "*");

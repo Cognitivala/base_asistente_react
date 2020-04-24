@@ -124,11 +124,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         var contentWindow = iframe ? iframe.contentWindow : null;
 
         if (contentWindow) {
-          // if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
+          console.log('outerWidth:: ', window.outerWidth); // if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
           //     contentWindow.postMessage({ responsive: this.responsive, previous_input: sessionStorage.getItem('previous_input') }, "*");
           // } else {
           //     contentWindow.postMessage({ responsive: this.responsive }, "*");
           // }
+
           contentWindow.postMessage({
             responsive: this.responsive
           }, "*");
