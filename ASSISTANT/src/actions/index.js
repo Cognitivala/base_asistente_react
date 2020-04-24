@@ -1177,8 +1177,18 @@ export function updateConversationButton(data) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
+
+                            console.log(item.msg[item.msg.length - 1]);
+
+                            if (response.data.previous_input.length > 0) {
+                                console.log(response.data.previous_input.length);
+                                item.previous_input = response.data.previous_input;
+                                messageResponse(dispatch, item);
+                            }
+                            // else {
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
+                            // }
                         } else {
                             dispatch(updateConversationError(response.statusText));
                         }
@@ -1418,7 +1428,7 @@ export function closeForm(data) {
         });
         return request.then(
             response => {
-                console.log('RESPONSE MENSAJE 4::', response);
+                // console.log('RESPONSE MENSAJE 4::', response);
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1477,7 +1487,7 @@ export function sendForm(data, url, general) {
                     });
                     return request
                         .then(response => {
-                            console.log('RESPONSE MENSAJE 5::', response);
+                            // console.log('RESPONSE MENSAJE 5::', response);
                             if (
                                 response.status === 200 &&
                                 response.data.estado.codigoEstado === 200
