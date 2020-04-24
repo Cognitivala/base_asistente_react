@@ -5,6 +5,7 @@ import NotificationCircle from "./notification-circle";
 import PropTypes from "prop-types";
 
 import "./Launcher.scss";
+import { previous_input } from "../../actions";
 
 export default class Launcher extends Component {
   constructor(props) {
@@ -29,7 +30,11 @@ export default class Launcher extends Component {
     
     if (!keep_conversation) {
       this.props.getSaludo();
-    } else {
+    } else if(previous_input){
+      console.log('previous_input:: ', previous_input);
+      this.props.updateConversation(previous_input);
+    }
+    else {
       if (!hc) {
         this.props.getSaludo();
       }

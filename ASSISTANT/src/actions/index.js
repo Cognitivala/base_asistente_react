@@ -8,6 +8,8 @@ import { isMobile } from 'react-device-detect';
 const LYNN_ENDPOINT = '/lynn_in';
 const ASISTANT_INTERVAL_TIMER = 4000;
 
+export var previous_input = {};
+
 //GENERAL
 function defaultGeneral() {
     return {
@@ -1185,6 +1187,7 @@ export function updateConversationButton(data) {
                             item.enabled = true;
 
                             if (response.data.previous_input) {
+                                previous_input = {...response.data, previous_input: response.data.previous_input };
                                 console.log(response.data.previous_input);
                                 item.previous_input = response.data.previous_input;
                                 // messageResponse(dispatch, item);
