@@ -8,6 +8,8 @@ import { isMobile } from 'react-device-detect';
 const LYNN_ENDPOINT = '/lynn_in';
 const ASISTANT_INTERVAL_TIMER = 4000;
 
+var getPreviousInput = sessionStorage.getItem('previous_input');
+
 //GENERAL
 function defaultGeneral() {
     return {
@@ -546,6 +548,10 @@ export function updateConversation(conversationData) {
                     token: getState().generalStates.getIn(["token"]),
                 }
             }
+        } else if (getPreviousInput) {
+            data = {
+                ...conversationData,
+            }
         } else {
             data = {
                 ...conversationData,
@@ -567,6 +573,7 @@ export function updateConversation(conversationData) {
         });
         return request
             .then(response => {
+                console.log('response.data', response.data);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
