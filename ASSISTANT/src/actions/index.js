@@ -8,14 +8,7 @@ import { isMobile } from 'react-device-detect';
 const LYNN_ENDPOINT = '/lynn_in';
 const ASISTANT_INTERVAL_TIMER = 4000;
 
-export var previous_input = {
-    general: {
-        cid: null,
-        id_cliente: "1",
-        origen: 1,
-    },
-    msg: null,
-};
+export var previous_input = '';
 
 //GENERAL
 function defaultGeneral() {
@@ -295,6 +288,14 @@ export function getSaludo() {
                     msg_inicial ? item = msg_inicial : item.msg = ["¿Qué puedo hacer por ti?"];
                     item.send = "from";
                     item.enabled = true;
+
+                    //GETSALUD()
+                    if (previous_input) {
+                        console.log('previous_input:: ', previous_input);
+                        item.previous_input = previous_input;
+                        dispatch(updateConversation(item));
+                    }
+
                     dispatch(pushConversation(item));
                     dispatch(setNodoId(item.msg[item.msg.length - 1]));
                 } else {
@@ -877,10 +878,12 @@ function messageResponse(dispatch, data, general) {
         // SE COMENTA PARA REVISAR INIT DE LYNN
         dispatch(LynnInit(data, general));
 
-    } else if (data.previous_input) {
-        console.log('data.previous_input: ', data.previous_input);
-        dispatch(pushConversation(data));
-    } else {
+    }
+    // else if (data.previous_input) {
+    //     console.log('data.previous_input: ', data.previous_input);
+    //     dispatch(pushConversation(data));
+    // } 
+    else {
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -1194,7 +1197,7 @@ export function updateConversationButton(data) {
                             item.enabled = true;
 
                             if (response.data.previous_input) {
-                                previous_input = {...response.data, previous_input: response.data.previous_input };
+                                previous_input = response.data.previous_input;
                                 console.log(response.data.previous_input);
                                 item.previous_input = response.data.previous_input;
                                 // messageResponse(dispatch, item);
