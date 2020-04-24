@@ -46,10 +46,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.basicStylesSetUp();
 
         window.onmessage = function (e) {
+          console.log('e.data:: ', e.data);
+
           if (e.data.test !== undefined) {
+            console.log(object);
             var mensaje = e.data.test[0].msg;
 
             _this.styleIframe(mensaje);
+          } else if (e.data.previous_input !== undefined) {
+            sessionStorage.setItem('previous_input', e.data.previous_input);
           } else if (e.data.responsiveFunc !== undefined) {
             _this.responsiveFunc();
           }
@@ -121,9 +126,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         var contentWindow = iframe ? iframe.contentWindow : null;
 
         if (contentWindow) {
-          contentWindow.postMessage({
-            responsive: this.responsive
-          }, "*");
+          if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
+            contentWindow.postMessage({
+              responsive: this.responsive,
+              previous_input: sessionStorage.getItem('previous_input')
+            }, "*");
+          } else {
+            contentWindow.postMessage({
+              responsive: this.responsive
+            }, "*");
+          }
         } else {
           setTimeout(function () {
             _this2.styleIframeMessage();
