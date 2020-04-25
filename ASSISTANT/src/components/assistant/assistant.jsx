@@ -20,7 +20,8 @@ export default class Assistant extends Component {
     this.closeEscape = this.closeEscape.bind(this);
     this.minimizedAssistant = this.minimizedAssistant.bind(this);
     this.toggleHeaderMore = this.toggleHeaderMore.bind(this);
-    // console.log('PROPS ASISTENTE:: ', props);
+    console.log('PROPS ASISTENTE:: ', props);
+
   }
 
   componentDidMount() {
@@ -48,6 +49,10 @@ export default class Assistant extends Component {
     const { customParamsStates, toggleMinimizedAssistant, openAssistant, setHistory, closeLauncher, getSaludoEnd } = this.props;
     const keep_conversation = customParamsStates.getIn(["customParams", "settings", "keep_conversation"]);
     const hcAES = localStorage.getItem("hc");
+
+    console.log('keep_conversation:: ', keep_conversation);
+    console.log('hcAES:: ', hcAES);
+    
 
     //Si mantiene conversacion y tiene historial guardado
     //Lo abrirá y luego si tiene minimizado lo minimizará
