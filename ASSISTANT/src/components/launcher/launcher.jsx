@@ -31,7 +31,7 @@ export default class Launcher extends Component {
     console.log('src:: ', src);
     console.log('urlParams:: ', urlParams);
 
-    if(src === ''){
+    if(src === '?open=true'){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
       this.openAssitantCDN();
