@@ -19,8 +19,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     _createClass(mainHandlers, [{
       key: "init",
       value: function init(src, origin) {
-        console.log('src:: ', src);
-        console.log('origin:: ', origin);
+        // console.log('src:: ', src);
+        // console.log('origin:: ', origin);
         this.src = src;
         this.origin = origin;
         this.responsive = "";

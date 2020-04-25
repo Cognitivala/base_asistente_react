@@ -16,6 +16,7 @@ export default class Launcher extends Component {
   }
 
   componentDidMount(){
+    console.log('componentDidMount');
     const { openAssistant, closeLauncher} = this.props;
     if(window.outerWidth <= 767){
       openAssistant();
