@@ -15,14 +15,14 @@ export default class Launcher extends Component {
     this.launcher = React.createRef();
   }
 
-  componentDidMount(){
-    // console.log('componentDidMount');
-    const { openAssistant, closeLauncher} = this.props;
-    if(window.outerWidth <= 767){
-      openAssistant();
-      closeLauncher();
-    }
-  }
+  // componentDidMount(){
+  //   // console.log('componentDidMount');
+  //   const { openAssistant, closeLauncher} = this.props;
+  //   if(window.outerWidth <= 767){
+  //     openAssistant();
+  //     closeLauncher();
+  //   }
+  // }
 
   callAsyncData() {
     this.saludar();
