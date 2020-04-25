@@ -66,7 +66,7 @@ export class App extends Component {
             // if (e.data.previous_input !== undefined){
             //     console.log('previous_input desde el CDN', e.data.previous_input);
             // }
-            console.log('e.data.responsive:: ', e.data.responsive);
+            // console.log('e.data.responsive:: ', e.data.responsive);
             if (e.data.colorBtn !== undefined) {
                 _this.props.updateCustomColorBtn(e.data.colorBtn);
             } else if (e.data.title !== undefined) {
@@ -93,9 +93,9 @@ export class App extends Component {
 
 
         // console.log('avatar:: ', avatar);
-        console.log('estado:: ', estado);
-        console.log('window.location:: ', window.location);
-        console.log('window.location:: ', window.location.href);
+        // console.log('estado:: ', estado);
+        // console.log('window.location:: ', window.location);
+        // console.log('window.location:: ', window.location.href);
         if (avatar && estado !== 0) {
             // if(sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null){
             //     window.top.postMessage({ responsiveFunc: true, previous_input: sessionStorage.getItem('previous_input') }, "*");
@@ -103,7 +103,7 @@ export class App extends Component {
             //     window.top.postMessage({ responsiveFunc: true,}, "*");
             // }
 
-            window.top.postMessage({ responsiveFunc: false,}, "*");
+            window.top.postMessage({ responsiveFunc: true }, "*");
             
             return (
                 <div>

@@ -16,7 +16,7 @@ export default class Launcher extends Component {
   }
 
   componentDidMount(){
-    console.log('componentDidMount');
+    // console.log('componentDidMount');
     const { openAssistant, closeLauncher} = this.props;
     if(window.outerWidth <= 767){
       openAssistant();
@@ -109,7 +109,7 @@ export default class Launcher extends Component {
   }
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
-    console.log('responsive content:: ', responsiveStates.get("responsive"));
+    // console.log('responsive content:: ', responsiveStates.get("responsive"));
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
@@ -138,7 +138,7 @@ export default class Launcher extends Component {
           </Fragment>
         );
       } else if (responsiveStates.get("responsive") === "desktop") {
-        console.log('responsive:: ', responsiveStates.get("responsive"));
+        // console.log('responsive:: ', responsiveStates.get("responsive"));
         return (
             <div className={mainCss.MainLauncher}>
               <button ref={this.launcher} className={mainCss.LauncherButton + " " + mainCss.Close} onClick={this.closeAssistant}>

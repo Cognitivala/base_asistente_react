@@ -9,7 +9,7 @@
             this.src = src;
             this.origin = origin;
             this.responsive = "";
-            console.log('responsive:: ', this.responsive);
+            // console.log('responsive:: ', this.responsive);
             this.createIframe();
         }
 
@@ -107,10 +107,8 @@
         styleIframeMessage() {
             const iframe = document.getElementById("ifrm-assitant");
             const contentWindow = iframe ? iframe.contentWindow : null;
-            console.log('window.outerWidth:: ', window.outerWidth);
-            console.log('contentWindow:: ', contentWindow);
             if (contentWindow) {
-                console.log('outerWidth:: ', window.outerWidth);
+                // console.log('outerWidth:: ', window.outerWidth);
 
                 // if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
                 //     contentWindow.postMessage({ responsive: this.responsive, previous_input: sessionStorage.getItem('previous_input') }, "*");
@@ -130,7 +128,7 @@
 
         responsiveFunc() {
             if (window.outerWidth <= 767) {
-                console.log('window.outerWidth:: ', window.outerWidth)
+                // console.log('window.outerWidth:: ', window.outerWidth);
                 if (this.responsive !== "mobile") {
                     this.responsive = "mobile";
                     this.styleIframeMessage();

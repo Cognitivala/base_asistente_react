@@ -23,8 +23,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         // console.log('origin:: ', origin);
         this.src = src;
         this.origin = origin;
-        this.responsive = "";
-        console.log('responsive:: ', this.responsive);
+        this.responsive = ""; // console.log('responsive:: ', this.responsive);
+
         this.createIframe();
       }
     }, {
@@ -123,16 +123,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         var iframe = document.getElementById("ifrm-assitant");
         var contentWindow = iframe ? iframe.contentWindow : null;
-        console.log('window.outerWidth:: ', window.outerWidth);
-        console.log('contentWindow:: ', contentWindow);
 
         if (contentWindow) {
-          console.log('outerWidth:: ', window.outerWidth); // if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
+          // console.log('outerWidth:: ', window.outerWidth);
+          // if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
           //     contentWindow.postMessage({ responsive: this.responsive, previous_input: sessionStorage.getItem('previous_input') }, "*");
           // } else {
           //     contentWindow.postMessage({ responsive: this.responsive }, "*");
           // }
-
           contentWindow.postMessage({
             responsive: this.responsive
           }, "*");
@@ -146,8 +144,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       key: "responsiveFunc",
       value: function responsiveFunc() {
         if (window.outerWidth <= 767) {
-          console.log('window.outerWidth:: ', window.outerWidth);
-
+          // console.log('window.outerWidth:: ', window.outerWidth);
           if (this.responsive !== "mobile") {
             this.responsive = "mobile";
             this.styleIframeMessage();
