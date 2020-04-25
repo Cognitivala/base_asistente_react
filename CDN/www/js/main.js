@@ -4,17 +4,18 @@
         constructor() {}
 
         init(src, origin) {
-            // console.log('src:: ', src);
-            // console.log('origin:: ', origin);
+            console.log('src:: ', src);
+            console.log('origin:: ', origin);
             this.src = src;
             this.origin = origin;
             this.responsive = "";
+            console.log('responsive:: ', this.responsive);
             this.createIframe();
         }
 
         createIframe() {
-            var div = document.createElement("div"),
-                ifrm = document.createElement("iframe");
+            var div = document.createElement("div");
+            var ifrm = document.createElement("iframe");
 
             ifrm.setAttribute("id", "ifrm-assitant");
             ifrm.classList.add("iframe-cognitive-assistant-container");
@@ -27,8 +28,8 @@
             div.appendChild(ifrm);
             document.body.appendChild(div);
             this.basicStylesSetUp();
-            window.onmessage = e => {
 
+            window.onmessage = e => {
                 if (e.data.test !== undefined) {
                     const mensaje = e.data.test[0].msg;
                     this.styleIframe(mensaje);
@@ -106,6 +107,8 @@
         styleIframeMessage() {
             const iframe = document.getElementById("ifrm-assitant");
             const contentWindow = iframe ? iframe.contentWindow : null;
+            console.log('window.outerWidth:: ', window.outerWidth);
+            console.log('contentWindow:: ', contentWindow);
             if (contentWindow) {
                 console.log('outerWidth:: ', window.outerWidth);
 

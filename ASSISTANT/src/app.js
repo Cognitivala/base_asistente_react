@@ -88,8 +88,14 @@ export class App extends Component {
     }
 
     getContent(customParamsStates) {
-        const avatar = customParamsStates.getIn(["customParams", "avatar"]),
-            estado = customParamsStates.getIn(["customParams", "estado"]);
+        const avatar = customParamsStates.getIn(["customParams", "avatar"]);
+        const estado = customParamsStates.getIn(["customParams", "estado"]);
+
+
+        // console.log('avatar:: ', avatar);
+        console.log('estado:: ', estado);
+        console.log('window.location:: ', window.location);
+        console.log('window.location:: ', window.location.href);
         if (avatar && estado !== 0) {
             // if(sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null){
             //     window.top.postMessage({ responsiveFunc: true, previous_input: sessionStorage.getItem('previous_input') }, "*");
@@ -97,13 +103,13 @@ export class App extends Component {
             //     window.top.postMessage({ responsiveFunc: true,}, "*");
             // }
 
-            window.top.postMessage({ responsiveFunc: true,}, "*");
+            window.top.postMessage({ responsiveFunc: false,}, "*");
             
-            return ( 
-            <div>
-                <Launcher {...this.props }/> 
-                <Assistant {...this.props }/> 
-            </div >
+            return (
+                <div>
+                    <Launcher {...this.props }/> 
+                    <Assistant {...this.props }/> 
+                </div >
             );
         } else {
             return null;

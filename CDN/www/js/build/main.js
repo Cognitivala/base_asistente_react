@@ -19,11 +19,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     _createClass(mainHandlers, [{
       key: "init",
       value: function init(src, origin) {
-        // console.log('src:: ', src);
-        // console.log('origin:: ', origin);
+        console.log('src:: ', src);
+        console.log('origin:: ', origin);
         this.src = src;
         this.origin = origin;
         this.responsive = "";
+        console.log('responsive:: ', this.responsive);
         this.createIframe();
       }
     }, {
@@ -31,8 +32,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function createIframe() {
         var _this = this;
 
-        var div = document.createElement("div"),
-            ifrm = document.createElement("iframe");
+        var div = document.createElement("div");
+        var ifrm = document.createElement("iframe");
         ifrm.setAttribute("id", "ifrm-assitant");
         ifrm.classList.add("iframe-cognitive-assistant-container");
         ifrm.classList.add("active");
@@ -122,6 +123,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         var iframe = document.getElementById("ifrm-assitant");
         var contentWindow = iframe ? iframe.contentWindow : null;
+        console.log('window.outerWidth:: ', window.outerWidth);
+        console.log('contentWindow:: ', contentWindow);
 
         if (contentWindow) {
           console.log('outerWidth:: ', window.outerWidth); // if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {

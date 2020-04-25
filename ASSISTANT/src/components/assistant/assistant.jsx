@@ -45,20 +45,9 @@ export default class Assistant extends Component {
   }
 
   getBehaviors() {
-    const {
-        customParamsStates,
-        toggleMinimizedAssistant,
-        openAssistant,
-        setHistory,
-        closeLauncher,
-        getSaludoEnd,
-      } = this.props,
-      keep_conversation = customParamsStates.getIn([
-        "customParams",
-        "settings",
-        "keep_conversation"
-      ]),
-      hcAES = localStorage.getItem("hc");
+    const { customParamsStates, toggleMinimizedAssistant, openAssistant, setHistory, closeLauncher, getSaludoEnd } = this.props;
+    const keep_conversation = customParamsStates.getIn(["customParams", "settings", "keep_conversation"]);
+    const hcAES = localStorage.getItem("hc");
 
     //Si mantiene conversacion y tiene historial guardado
     //Lo abrirá y luego si tiene minimizado lo minimizará
@@ -88,7 +77,9 @@ export default class Assistant extends Component {
 
   //ORIGEN
   getOrigen() {
+    console.log('getOrigen:: ', isMobile);
     if (isMobile) {
+      
       // this.props.setOrigen("mobile");
       this.props.setOrigen(1);
     } else {
