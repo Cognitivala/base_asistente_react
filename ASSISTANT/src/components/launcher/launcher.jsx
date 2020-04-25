@@ -24,6 +24,23 @@ export default class Launcher extends Component {
   //   }
   // }
 
+  componentWillMount(){
+    const src = window.location.search;
+    const urlParams = window.location;
+    
+    console.log('src:: ', src);
+    console.log('urlParams:: ', urlParams);
+
+    if(src === ''){
+      const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
+      closeLauncher();
+      this.openAssitantCDN();
+      openAssistant();
+      if (ayudaStates.get("open")) closeHelp();
+      if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
+    }
+  }
+
   callAsyncData() {
     this.saludar();
   }
