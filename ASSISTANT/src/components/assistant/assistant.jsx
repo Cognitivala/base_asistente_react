@@ -227,10 +227,7 @@ export default class Assistant extends Component {
   }
 
   content(assistantStates, conversationsStates, responsiveStates) {
-    if (
-      assistantStates.get("active") &&
-      conversationsStates.get("conversations").size > 0
-    ) {
+    if ( assistantStates.get("active") && conversationsStates.get("conversations").size > 0) {
       const { customParamsStates, mainCss, saludoStates } = this.props,
       ayuda = customParamsStates
       .get("customParams")
@@ -241,7 +238,7 @@ export default class Assistant extends Component {
       cssClass = responsiveStates.get("responsive") === "mobile" ? mainCss.Mobile : "",
       cssClass2 = this.state.moreHeader?mainCss.HeaderMore:"",
       positionHelp = customParamsStates.getIn(["customParams","settings","position_help"]);
-
+      
       if (minimized) {
         return (
           <React.Fragment/>

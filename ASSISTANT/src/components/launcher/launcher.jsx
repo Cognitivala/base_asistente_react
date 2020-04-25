@@ -48,6 +48,11 @@ export default class Launcher extends Component {
   
   componentWillMount(){
     const src = window.location.search;
+    const urlParams = window.location;
+    
+    console.log('src:: ', src);
+    console.log('urlParams:: ', urlParams);
+
     if(src === '?open=true'){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
