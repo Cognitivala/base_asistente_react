@@ -17,10 +17,10 @@ export default class Launcher extends Component {
 
   componentWillMount(){
     // const urlParams = window.location;
-    // const pathname = window.location.pathname;
+    const pathname = window.location.pathname;
     const src = window.location.search;
 
-    if(src === '?open=true' && window.outerWidth <= 767){
+    if( (pathname === '/asistente' || src === '?open=true') && window.outerWidth <= 767){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
       this.openAssitantCDN();
