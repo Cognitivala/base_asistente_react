@@ -47,13 +47,15 @@ export default class Launcher extends Component {
   }
   
   componentWillMount(){
+    // const urlParams = window.location;
     const src = window.location.search;
-    const urlParams = window.location;
+    // const pathname = window.location.pathname;
     
-    console.log('src:: ', src);
-    console.log('urlParams:: ', urlParams);
+    // console.log('urlParams:: ', urlParams);
+    // console.log('src:: ', src);
+    // console.log('pathname:: ', pathname);
 
-    if(src === '?open=true'){
+    if(src === '?open=true' && window.outerWidth <= 767){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
       this.openAssitantCDN();
