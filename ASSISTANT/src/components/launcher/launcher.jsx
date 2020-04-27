@@ -51,6 +51,8 @@ export default class Launcher extends Component {
     const pathname = window.location.pathname;
     const src = window.location.search;
 
+    console.log('pathname: ', pathname);
+
     if( (pathname === '/asistente/' || src === '?open=true') && window.outerWidth <= 767){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
