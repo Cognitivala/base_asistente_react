@@ -24,7 +24,7 @@
             window.CognitiveAssistantMain.init(
                 'https://' +
                 url +
-                '/asistente/?rut=16746695&user=Marcela%20Quiroz%20MUÑOZ%20PEREZ%20Y&clave=1'
+                '/asistente/?user=Marcela%20Quiroz%20MUÑOZ%20PEREZ%20Y&clave=1'
                 // 'https://dev-sura.mycognitiva.io/asistente/'
                 // 'http://localhost:3000/asistente/?rut=16746695&user=PSANTI&clave=1'
                 // 'http://localhost:3000/asistente/?origen=' + origen
@@ -40,22 +40,22 @@
 <script>
     const getUrl = async() => {
         const data = {
-            id_cliente: '1'
+            id_cliente: '1',
         };
         const apiUrl = 'https://qa-sura.mycognitiva.io/mad/customize_param';
         await fetch(apiUrl, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
-                    'Content-Type': 'application/json'
-                }
+                    'Content-Type': 'application/json',
+                },
             })
-            .then(res => res.json())
-            .then(response => {
+            .then((res) => res.json())
+            .then((response) => {
                 // console.log('URL:: ', response.url);
                 document.getElementById('demo').src = response.url;
             })
-            .catch(error => {
+            .catch((error) => {
                 console.log('Error:', error.message);
             });
     };
