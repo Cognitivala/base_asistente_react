@@ -53,7 +53,7 @@ export default class Launcher extends Component {
 
     console.log('pathname: ', pathname);
 
-    if( (pathname === '/asistente/' || src === '?open=true') && window.outerWidth <= 767){
+    if((pathname === '/asistente/' && window.outerWidth <= 767) || (src === '?open=true' && window.outerWidth <= 767)){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
       this.openAssitantCDN();
