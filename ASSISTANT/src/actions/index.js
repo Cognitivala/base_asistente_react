@@ -357,6 +357,8 @@ export function closeAssistant() {
         dispatch({ type: "ENABLED_HELP" });
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
         dispatch({ type: "OPEN_LAUNCHER" });
+
+        dispatch({ type: "SET_INTEGRACION", data: {} });
         dispatch(deleteHistory());
     };
 }
