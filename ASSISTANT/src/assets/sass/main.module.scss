@@ -274,7 +274,8 @@ textarea {
         transition: all 200ms ease;
         background-image: url("../images/logoH.svg");
         grid-column: 1 / 3; // background-image: url("../images/nodos.svg"), linear-gradient(45deg, #004ecb 2%, #0957d6 61%, #2979ff 97%);
-        background-image: url("../images/nodos.svg"), linear-gradient(45deg, var(--first) 2%, var(--gradient-medium) 61%, var(--gradient-dark) 97%);
+        // background-image: url("../images/nodos.svg"), linear-gradient(45deg, var(--first) 2%, var(--gradient-medium) 61%, var(--gradient-dark) 97%);
+        background-image: url("../images/fondo-mesa.svg"), linear-gradient(45deg, var(--first) 2%, var(--gradient-medium) 61%, var(--gradient-dark) 97%);
         display: grid;
         grid-template: {
             columns: 6rem auto 5rem;
