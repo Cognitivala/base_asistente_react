@@ -285,7 +285,7 @@ export default class Assistant extends Component {
             {this.fillHelp(ayuda)}
             <Conversations {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
             <Input {...this.props} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
-            <p rel="noopener noreferrer" className={mainCss.LogoCognitiva}></p>
+            <p className={mainCss.LogoCognitiva}></p>
           </div>
         );
       }
