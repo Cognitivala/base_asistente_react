@@ -1212,7 +1212,7 @@ export const getSixbellIn = (dispatch, data) => {
         enabled
     } = data;
     let newData = { general, msg, send, enabled }
-    const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_in'
+    const urlApi = APIURL + '/sixbell_purecloud_in'
     const token = sessionStorage.getItem("token");
 
     axios.post(urlApi, newData, {
@@ -1248,7 +1248,7 @@ export function getSixbellOut(dispatch, data) {
     var ASISTANT_INTERVAL_TIMER = 5000;
 
     interval = setInterval(function() {
-        const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_out'
+        const urlApi = APIURL + '/sixbell_purecloud_out'
         const { general, msg, send, enabled } = data;
         let newData = { general, msg, send, enabled }
         const token = sessionStorage.getItem("token");
@@ -1282,7 +1282,7 @@ export function getSixbellOut(dispatch, data) {
 
 export const getSixbellEnd = () => {
 
-    const urlApi = 'https://minsal.mycognitiva.io/mad/sixbell_purecloud_end';
+    const urlApi = APIURL + '/sixbell_purecloud_end';
     let data = { cid: JSON.stringify(sessionStorage.getItem('cid')) };
     const token = sessionStorage.getItem("token");
 
