@@ -353,8 +353,10 @@ export function closeAssistant() {
         dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-        dispatch({ type: "OPEN_LAUNCHER" });
+        dispatch({ type: "OPEN_LAUNCHER" });        
         dispatch(deleteHistory());
+        //close assistant
+        dispatch(closeChattigo());
     };
 }
 export function toggleMinimizedAssistant(data) {
@@ -1001,7 +1003,8 @@ export function startChattigo() {
 
 export function closeChattigo() {
     return function action(dispatch) {
-        dispatch({ type: "USE_CHATTIGO", data: false })
+        dispatch({ type: "USE_CHATTIGO", data: false });
+        dispatch(closeChattigo());
     }
 }
 
