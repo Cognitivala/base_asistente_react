@@ -240,7 +240,8 @@ export default class Conversations extends Component {
           rating = conversation.get("rating"),
           last = j + 1 === sizeConversation ? true : false,
           withStars = conversation.get("withStars"),
-          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" "; //Si es la última conversa
+          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" ", //Si es la última conversa
+          animationSinBloqueo = "animated-av fadeInUp-av "; //Si es la última conversa
         if (msg !== undefined) {
           const { sendLike } = this.props;
           
@@ -249,7 +250,7 @@ export default class Conversations extends Component {
               // key={j*333}
               avatar={avatar}
               msgs={msg}
-              animation={animation}
+              animation={animationSinBloqueo}
               send={send}
               userImg={userImg}
               like={like}
