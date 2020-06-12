@@ -241,7 +241,7 @@ export default class Conversations extends Component {
           last = j + 1 === sizeConversation ? true : false,
           withStars = conversation.get("withStars"),
           animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" ", //Si es la última conversa
-          animationSinBloqueo = "animated-av fadeInUp-av "; //Si es la última conversa
+          animationSinBloqueo = "animated-av fadeInUp-av ";
         if (msg !== undefined) {
           const { sendLike } = this.props;
           
