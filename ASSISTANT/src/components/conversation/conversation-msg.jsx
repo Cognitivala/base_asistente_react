@@ -7,50 +7,55 @@ export default class ConversationMsg extends Component {
   render() {
     const { msgs, animation, send, avatar, mainCss} = this.props,
     to = send==="to"?true:false;
-    return msgs.map((map, i) => {
-      if(msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
-        return null;
-      }
-      else if(to){
-        return (
-          <div
-            key={i}
-            className={
-              mainCss.ConversationBubble + " " + animation + " " + mainCss.To
-            }
-          >
-            <div/>
-            <ConversationBubble msg={map} send={send} mainCss={mainCss}/>
-            {/* <img
-              className="rounded-img"
-              src={send==="to"?userImg:avatar}
-              alt="Respuesta"
-            /> */}
-          </div>
-        );
-      }else{
-        return (
-          <div
-            key={i}
-            className={
-              mainCss.ConversationBubble + " " + animation + " " + mainCss.Send
-            }
-          >
-            {/* <img
-              className={mainCss.RoundedImg}
-              src={send==="to"?userImg:avatar}
-              alt=""
-            /> */}
-            <img
-              className={mainCss.RoundedImg}
-              src={avatar}
-              alt=""
-            />
-            <ConversationBubble msg={map} send={send} mainCss={mainCss}/>
-          </div>
-        );
-      }
-    });
+    // console.log('msgs:: ', msgs._tail);
+    if (msgs._tail === undefined) {
+      return null;
+    } else {
+      return msgs.map((map, i) => {
+        if(msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
+          return null;
+        }
+        else if(to){
+          return (
+            <div
+              key={i}
+              className={
+                mainCss.ConversationBubble + " " + animation + " " + mainCss.To
+              }
+            >
+              <div/>
+              <ConversationBubble msg={map} send={send} mainCss={mainCss}/>
+              {/* <img
+                className="rounded-img"
+                src={send==="to"?userImg:avatar}
+                alt="Respuesta"
+              /> */}
+            </div>
+          );
+        }else{
+          return (
+            <div
+              key={i}
+              className={
+                mainCss.ConversationBubble + " " + animation + " " + mainCss.Send
+              }
+            >
+              {/* <img
+                className={mainCss.RoundedImg}
+                src={send==="to"?userImg:avatar}
+                alt=""
+              /> */}
+              <img
+                className={mainCss.RoundedImg}
+                src={avatar}
+                alt=""
+              />
+              <ConversationBubble msg={map} send={send} mainCss={mainCss}/>
+            </div>
+          );
+        }
+      });
+    }
   }
 }
 
