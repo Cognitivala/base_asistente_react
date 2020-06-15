@@ -5,11 +5,18 @@ import PropTypes from "prop-types";
 export default class ConversationMsg extends Component {
 
   render() {
-    const { msgs, animation, send, avatar, mainCss} = this.props,
-    to = send==="to"?true:false;
+    const { msgs, animation, send, avatar, mainCss, tipoExtencion} = this.props,
+    to = send === "to" ? true : false;
+
     return msgs.map((map, i) => {
+
+      // console.log('msgs:: ', map);
+      // // const extension = map.split('.').pop();
+      // const extension = map.split('.');
+      // const extensionDoc = extension[3];
+
       if(msgs._tail.array[0] === "exito_formulario" || msgs._tail.array[0] === "error_formulario" || msgs._tail.array[0] === ''){
-        console.log("valoración");
+        return null;
       }
       else if(to){
         return (
@@ -29,24 +36,19 @@ export default class ConversationMsg extends Component {
           </div>
         );
       }else{
+        
         return (
-          <div
-            key={i}
-            className={
-              mainCss.ConversationBubble + " " + animation + " " + mainCss.Send
-            }
-          >
+          <div key={i} className={mainCss.ConversationBubble + " " + animation + " " + mainCss.Send}>
             {/* <img
               className={mainCss.RoundedImg}
               src={send==="to"?userImg:avatar}
               alt=""
             /> */}
-            <img
-              className={mainCss.RoundedImg}
-              src={avatar}
-              alt=""
-            />
-            <ConversationBubble msg={map} send={send} mainCss={mainCss}/>
+            <img className={mainCss.RoundedImg} src={avatar} alt="" />
+              <ConversationBubble 
+              // extensionDoc={extensionDoc} // Valida si un texto viene como URL
+              tipoExtencion={tipoExtencion}
+              msg={map} send={send} mainCss={mainCss}/>
           </div>
         );
       }

@@ -353,10 +353,10 @@ export function closeAssistant() {
         dispatch({ type: "ENABLED_INPUT" });
         dispatch({ type: "ENABLED_HELP" });
         dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-        dispatch({ type: "OPEN_LAUNCHER" });        
+        dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
         //close assistant
-        dispatch(closeChattigo());
+        // dispatch(closeChattigo());
     };
 }
 export function toggleMinimizedAssistant(data) {
@@ -539,10 +539,10 @@ export function updateConversation(conversationData, general) {
     return function action(dispatch, getState) {
         const useChattigo = getState().assistantStates.getIn(["useChattigo"]);
         console.log("USELYNN: ", useChattigo)
-        const url =  useChattigo ? CHATTIGO_ENDPOINT : "/message"
+        const url = useChattigo ? CHATTIGO_ENDPOINT : "/message"
         let data = {};
 
-        if(useChattigo){
+        if (useChattigo) {
             data = {
                 ...conversationData,
                 general: {
@@ -550,7 +550,7 @@ export function updateConversation(conversationData, general) {
                     token: getState().generalStates.getIn(["token"]),
                 }
             }
-        }else {
+        } else {
             data = {
                 ...conversationData,
                 rut: getUrlParams(getState, 'rut'),
@@ -559,7 +559,7 @@ export function updateConversation(conversationData, general) {
             };
         }
 
-        console.log("TOKEN ",data)
+        // console.log("TOKEN ", data)
 
 
 
@@ -573,15 +573,15 @@ export function updateConversation(conversationData, general) {
             url: APIURL + url,
             data,
             // {
-                // data,
-                // rut: getUrlParams(getState, 'rut'),
-                // user: getUrlParams(getState, 'user'),
-                // clave: getUrlParams(getState, 'clave')
+            // data,
+            // rut: getUrlParams(getState, 'rut'),
+            // user: getUrlParams(getState, 'user'),
+            // clave: getUrlParams(getState, 'clave')
             // }
         });
         return request
             .then(response => {
-                console.log("RESP::", response);
+                // console.log("RESP::", response);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -593,8 +593,7 @@ export function updateConversation(conversationData, general) {
                     item.enabled = true;
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
-                } 
-                 else if(response.data.estado.codigoEstado === 304){
+                } else if (response.data.estado.codigoEstado === 304) {
 
                     const newData = {
                         ...data,
@@ -611,12 +610,12 @@ export function updateConversation(conversationData, general) {
             })
             .catch(err => {
                 dispatch(updateConversationError(err.response.data.msg));
-        });
+            });
     };
 }
 
 function messageResponse(dispatch, data, general) {
-    console.log("DATAAAA", data)
+    // console.log("DATAAAA", data)
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -641,7 +640,7 @@ function messageResponse(dispatch, data, general) {
             default:
                 break;
         }
-    }   else {
+    } else {
         // console.log('data.general ', data)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
@@ -656,8 +655,8 @@ function messageResponse(dispatch, data, general) {
     }
 }
 
-function chattigoInit(data, general){
-    return function action(dispatch){
+function chattigoInit(data, general) {
+    return function action(dispatch) {
         const request = axios({
             method: "POST",
             headers: {
@@ -668,9 +667,9 @@ function chattigoInit(data, general){
         });
         return request.then(
             response => {
-                if(response.status === 200){
+                if (response.status === 200) {
                     dispatch(startChattigo());
-                     // Intervalo para buscar posibles respuestas de Lynn
+                    // Intervalo para buscar posibles respuestas de Lynn
                     dispatch(chattigoOutInterval(data, general));
                 }
             }
@@ -678,8 +677,8 @@ function chattigoInit(data, general){
     }
 }
 
-function chattigoOutInterval(data){
-    return function action(dispatch, getState){
+function chattigoOutInterval(data) {
+    return function action(dispatch, getState) {
         const asistantInterval = setInterval(function() {
             const request = axios({
                 method: "POST",
@@ -691,38 +690,56 @@ function chattigoOutInterval(data){
             });
             return request.then(
                 response => {
-                    console.log("LYNN! OUT", response)
+                    console.log("LYNN! OUT", response.data);
+                    // console.log("response.data.data[0].text", response.data.data[0].text);
                     let item = {};
                     item.send = "from";
                     item.enabled = true;
                     item.general = getState().assistantStates.getIn(["chattigoData"]);
-                    item.msg = response.data.textos
+                    if (response.data.data.length > 0) {
+
+                        const respuestaChattigo = response.data.data.map(item => {
+                            if (item.type === 'media') {
+                                return item.url;
+                            } else {
+                                return item.text;
+                            }
+                        });
+                        const respuestaChattigoType = response.data.data.map(item => {
+                            console.log('item.type: ', item.type);
+                            return item.type
+                        });
+
+                        item.msg = respuestaChattigo;
+                        item.tipoExtension = respuestaChattigoType[0];
+                    }
                     dispatch(pushConversation(item));
 
-                    if(response.data.textos[0] === "chatConversationEnd"){
-                        console.log("LYNEND");
-                        const request = axios({
-                            method: "POST",
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            url: APIURL + "/lynn_end",
-                            data: data,
-                        });
-                        return request.then(
-                            response => {
-                                if(response.status === 200){
-                                    dispatch({ type: "DISABLED_INPUT" });
-                                    clearInterval(asistantInterval);
-                                    dispatch(closeChattigo());
-                                    return;
-                                }
-                            }
-                        )  
-                    }
+                    // if (response.data.textos[0] === "chatConversationEnd") {
+                    //     console.log("LYNEND");
+                    //     const request = axios({
+                    //         method: "POST",
+                    //         headers: {
+                    //             "Content-Type": "application/json"
+                    //         },
+                    //         url: APIURL + "/lynn_end",
+                    //         data: data,
+                    //     });
+                    //     return request.then(
+                    //         response => {
+                    //             if (response.status === 200) {
+                    //                 dispatch({ type: "DISABLED_INPUT" });
+                    //                 clearInterval(asistantInterval);
+                    //                 dispatch(closeChattigo());
+                    //                 return;
+                    //             }
+                    //         }
+                    //     )
+                    // }
+
                 }
             )
-        }, CHATTIGO_INTERVAL_TIMER);  
+        }, CHATTIGO_INTERVAL_TIMER);
     }
 }
 

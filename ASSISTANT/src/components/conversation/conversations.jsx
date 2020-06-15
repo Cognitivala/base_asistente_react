@@ -209,14 +209,16 @@ export default class Conversations extends Component {
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
       userImg = customParamsStates.getIn(["customParams", "userImg"]);
 
-    return conversationsStates.get("conversations").map((map, j) => {
+    return React.Children.toArray(conversationsStates.get("conversations").map((map, j) => {
       const conversation = map,
         enabled = conversation.get("enabled");
       let retorno = [];
       if (enabled !== undefined && enabled) {
+        
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
+          tipoExtencion = conversation.get("tipoExtension"),
           send = conversation.get("send"),
           multibuttons = conversation.get("multibuttons"),
           datepicker = conversation.get("datepicker"),
@@ -227,16 +229,18 @@ export default class Conversations extends Component {
           rating = conversation.get("rating"),
           last = j + 1 === sizeConversation ? true : false,
           withStars = conversation.get("withStars"),
-          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" "; //Si es la última conversa
+          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" ", //Si es la última conversa
+          animationSinBloqueo = "animated-av fadeInUp-av "; 
         if (msg !== undefined) {
           const { sendLike } = this.props;
           
           retorno.push(
             <ConversationMsg
-              key={j}
+              // key={j}
+              tipoExtencion={tipoExtencion}
               avatar={avatar}
               msgs={msg}
-              animation={animation}
+              animation={animationSinBloqueo}
               send={send}
               userImg={userImg}
               like={like}
@@ -250,7 +254,7 @@ export default class Conversations extends Component {
         if (buttons !== undefined) {
           retorno.push(
             <ConversationButtons
-              key={j * 10}
+              // key={j * 10}
               buttons={buttons}
               animation={animation}
               send={send}
@@ -264,7 +268,7 @@ export default class Conversations extends Component {
         if (selects !== undefined) {
           retorno.push(
             <ConversationSelects
-              key={j * 20}
+              // key={j * 20}
               options={selects}
               animation={animation}
               send={send}
@@ -278,7 +282,7 @@ export default class Conversations extends Component {
         if (multibuttons !== undefined) {
           retorno.push(
             <ConversationMultiButtons
-              key={j * 30}
+              // key={j * 30}
               buttons={multibuttons}
               animation={animation}
               send={send}
@@ -293,7 +297,7 @@ export default class Conversations extends Component {
           const { updateConversationCalendar } = this.props;
           retorno.push(
             <ConversationCalendar
-              key={j * 40}
+              // key={j * 40}
               animation={animation}
               send={send}
               colorHeader={colorHeader}
@@ -313,7 +317,7 @@ export default class Conversations extends Component {
             <ConversationAttach
               attach={attach}
               attachFile={attachFile}
-              key={j * 40}
+              // key={j * 40}
               animation={animation}
               send={send}
               colorHeader={colorHeader}
@@ -326,7 +330,7 @@ export default class Conversations extends Component {
         if (files !== undefined) {
           retorno.push(
             <ConversationFiles
-              key={j * 24}
+              // key={j * 24}
               files={files}
               animation={animation}
               send={send}
@@ -360,7 +364,7 @@ export default class Conversations extends Component {
                   // debugger
                   retorno.push(
                     <Valoracion
-                      key={j}
+                      // key={j}
                       generalStates={generalStates}
                       setErrorValoracion={setErrorValoracion}
                       sendValoracion={sendValoracion}
@@ -396,7 +400,7 @@ export default class Conversations extends Component {
                 if (enabledFormulario) {
                   retorno.push(
                     <Formulario
-                      key={j}
+                      // key={j}
                       formularioStates={formularioStates}
                       form={form}
                       generalStates={generalStates}
@@ -422,7 +426,7 @@ export default class Conversations extends Component {
             const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
               <ConversationLikes
-                key={j * 33}
+                // key={j * 33}
                 conversationsStates={conversationsStates}
                 sendLike={sendLike}
                 colorHeader={colorHeader}
@@ -436,13 +440,15 @@ export default class Conversations extends Component {
             const { sendValoracion, generalStates } = this.props;
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
-              <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormularioValoracion 
+              // key={`${j} * 55`} 
+              generalStates={generalStates} sendValoracion={sendValoracion} />
             );
           }
         }
       }
       return retorno;
-    });
+    }));
   }
 
   render() {
