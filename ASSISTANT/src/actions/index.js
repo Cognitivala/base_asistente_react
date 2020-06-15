@@ -356,7 +356,7 @@ export function closeAssistant() {
         dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
         //close assistant
-        // dispatch(closeChattigo());
+        dispatch(closeChattigo());
     };
 }
 export function toggleMinimizedAssistant(data) {
@@ -538,7 +538,7 @@ function updateConversationError(data) {
 export function updateConversation(conversationData, general) {
     return function action(dispatch, getState) {
         const useChattigo = getState().assistantStates.getIn(["useChattigo"]);
-        console.log("USELYNN: ", useChattigo)
+        // console.log("USELYNN: ", useChattigo)
         const url = useChattigo ? CHATTIGO_ENDPOINT : "/message"
         let data = {};
 
@@ -677,6 +677,7 @@ function chattigoInit(data, general) {
     }
 }
 
+
 function chattigoOutInterval(data) {
     return function action(dispatch, getState) {
         const asistantInterval = setInterval(function() {
@@ -696,6 +697,7 @@ function chattigoOutInterval(data) {
                     item.send = "from";
                     item.enabled = true;
                     item.general = getState().assistantStates.getIn(["chattigoData"]);
+
                     if (response.data.data.length > 0) {
 
                         const respuestaChattigo = response.data.data.map(item => {
@@ -705,15 +707,27 @@ function chattigoOutInterval(data) {
                                 return item.text;
                             }
                         });
+
                         const respuestaChattigoType = response.data.data.map(item => {
-                            console.log('item.type: ', item.type);
+                            // console.log('item.type: ', item.type);
                             return item.type
                         });
 
                         item.msg = respuestaChattigo;
                         item.tipoExtension = respuestaChattigoType[0];
+
+                        if (response.data.end_conversation === true) {
+                            // console.log('end_conversation: ', response.data.end_conversation);
+                            dispatch(closeChattigo());
+                            clearInterval(asistantInterval);
+                            dispatch({ type: "DISABLED_INPUT" });
+                        };
                     }
+
                     dispatch(pushConversation(item));
+                    if (response.data.end_conversation === true) {
+                        dispatch({ type: "DISABLED_INPUT" });
+                    };
 
                     // if (response.data.textos[0] === "chatConversationEnd") {
                     //     console.log("LYNEND");
@@ -1021,7 +1035,6 @@ export function startChattigo() {
 export function closeChattigo() {
     return function action(dispatch) {
         dispatch({ type: "USE_CHATTIGO", data: false });
-        dispatch(closeChattigo());
     }
 }
 
