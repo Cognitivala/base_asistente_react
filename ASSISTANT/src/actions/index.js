@@ -356,6 +356,7 @@ export function closeAssistant() {
         dispatch({ type: "OPEN_LAUNCHER" });
         dispatch(deleteHistory());
         //close assistant
+        // console.log('closeChattigo');
         dispatch(closeChattigo());
     };
 }
@@ -591,10 +592,10 @@ export function updateConversation(conversationData, general) {
                     let item = response.data;
                     item.send = "from";
                     item.enabled = true;
-                    // dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                    dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else if (response.data.estado.codigoEstado === 304) {
-
+                    console.log('codigoEstado:: ', response.data.estado.codigoEstado)
                     const newData = {
                         ...data,
                         general: {
@@ -887,13 +888,25 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
-                        // console.log('RESPONSE MENSAJE 3::');
-                        if (response.status === 200) {
+                        // console.log('RESPONSE MENSAJE BOTONES::', response.data);
+                        if (response.data.estado.codigoEstado === 200) {
+                            // console.log('codigoEstado 200::', response.data);
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
-                            dispatch(setNodoId(item.msg[item.msg.length - 1]));
+                            // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
+                        } else if (response.data.estado.codigoEstado === 304) {
+                            // console.log('codigoEstado 304:: ', response.data.estado.codigoEstado);
+                            const newData = {
+                                ...data,
+                                general: {
+                                    ...data.general,
+                                    ...response.data.general,
+                                }
+                            }
+                            dispatch(addChattigoData(response.data.general));
+                            dispatch(chattigoInit(newData, data.general))
                         } else {
                             dispatch(updateConversationError(response.statusText));
                         }
