@@ -560,7 +560,7 @@ export function updateConversation(conversationData, general) {
             };
         }
 
-        // console.log("TOKEN ", data)
+
 
 
 
@@ -595,7 +595,7 @@ export function updateConversation(conversationData, general) {
                     dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else if (response.data.estado.codigoEstado === 304) {
-                    console.log('codigoEstado:: ', response.data.estado.codigoEstado)
+                    // console.log('codigoEstado:: ', response.data.estado.codigoEstado)
                     const newData = {
                         ...data,
                         general: {
@@ -692,7 +692,7 @@ function chattigoOutInterval(data) {
             });
             return request.then(
                 response => {
-                    console.log("LYNN! OUT", response.data);
+                    // console.log("LYNN! OUT", response.data);
                     // console.log("response.data.data[0].text", response.data.data[0].text);
                     let item = {};
                     item.send = "from";
