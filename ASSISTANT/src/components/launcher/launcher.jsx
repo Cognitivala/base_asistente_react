@@ -35,6 +35,18 @@ class Launcher extends Component {
     console.log('src:: ', src);
     console.log('urlParams:: ', urlParams);
     
+    if(localStorage.getItem('previous_input')) {
+      const { generalStates } = this.props;
+      const general = generalStates.toJS();
+      const msg = localStorage.getItem('previous_input');
+      const conversation = {
+            general,
+            msg: [msg],
+            send: "to",
+            enabled: true
+          };
+        this.props.updateConversation(conversation);
+    }
 
     if(src === '?open=true'){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;

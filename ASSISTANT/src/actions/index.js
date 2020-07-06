@@ -549,7 +549,7 @@ export function updateConversation(conversationData) {
                 }
             }
         }
-        else if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
+        else if (sessionStorage.getItem('previous_input') || sessionStorage.getItem('previous_input')) {
             console.log('conversationData:: ', conversationData);
             data = {
                 ...conversationData,
