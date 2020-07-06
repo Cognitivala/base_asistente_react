@@ -5,11 +5,12 @@ import NotificationCircle from "./notification-circle";
 import PropTypes from "prop-types";
 
 // import { store } from '../../store/store';
+import { connect } from "react-redux";
 import {updateConversation} from '../../actions/index';
 
 import "./Launcher.scss";
 
-export default class Launcher extends Component {
+class Launcher extends Component {
   constructor(props) {
     super(props);
     this.closeLauncher = this.closeLauncher.bind(this);
@@ -33,15 +34,7 @@ export default class Launcher extends Component {
     
     console.log('src:: ', src);
     console.log('urlParams:: ', urlParams);
-    const { customParamsStates } = this.props;
-    const keep_conversation = customParamsStates.getIn([
-      "keep_conversation"
-    ]);
-    console.log('keep_conversation__ ', keep_conversation);
-    if(localStorage.getItem('previous_input')) {
-      console.log('previous_input:: ', localStorage.getItem('previous_input'));
-      this.props.store.dispatch(updateConversation('previous_input'));
-    }
+    
 
     if(src === '?open=true'){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
@@ -52,6 +45,19 @@ export default class Launcher extends Component {
       if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
     }
   }
+
+  // componentDidMount(){
+  //   const { customParamsStates } = this.props;
+  //   const keep_conversation = customParamsStates.getIn([
+  //     "keep_conversation"
+  //   ]);
+  //   console.log('this.props.store: ', this.props.updateConversation);
+    
+  //   if(localStorage.getItem('previous_input')) {
+  //     console.log('previous_input:: ', localStorage.getItem('previous_input'));
+  //     this.props.updateConversation('previous_input');
+  //   }
+  // }
 
   callAsyncData() {
     this.saludar();
@@ -215,3 +221,5 @@ Launcher.propTypes = {
   launcherStates: PropTypes.any.isRequired,
   generalStates: PropTypes.any.isRequired
 };
+
+export default connect(null, {updateConversation})(Launcher);

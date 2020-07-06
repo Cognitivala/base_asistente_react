@@ -535,6 +535,7 @@ function updateConversationError(data) {
 export function updateConversation(conversationData) {
     console.log('conversationData:: ', conversationData);
     return function action(dispatch, getState) {
+        
         const useLynn = getState().assistantStates.getIn(["useLynn"]);
         const url = useLynn ? LYNN_ENDPOINT : "/message"
         let data = {};
@@ -548,11 +549,12 @@ export function updateConversation(conversationData) {
                 }
             }
         }
-        // else if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
-        //     data = {
-        //         ...conversationData,
-        //     }
-        // } 
+        else if (sessionStorage.getItem('previous_input') !== undefined || sessionStorage.getItem('previous_input') !== null) {
+            console.log('conversationData:: ', conversationData);
+            data = {
+                ...conversationData,
+            }
+        } 
         else {
             data = {
                 ...conversationData,
