@@ -37,7 +37,7 @@ export default class Launcher extends Component {
       "keep_conversation"
     ]);
     console.log('keep_conversation__ ', keep_conversation);
-    if(localStorage.getItem('previous_input') && keep_conversation) {
+    if(localStorage.getItem('previous_input')) {
       updateConversation('previous_input');
     }
 
