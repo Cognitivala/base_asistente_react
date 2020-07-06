@@ -533,7 +533,7 @@ function updateConversationError(data) {
     return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
 }
 export function updateConversation(conversationData) {
-    console.log('conversationData:: ', conversationData);
+    // console.log('conversationData:: ', conversationData);
     return function action(dispatch, getState) {
         
         const useLynn = getState().assistantStates.getIn(["useLynn"]);

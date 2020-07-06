@@ -45,6 +45,7 @@ class Launcher extends Component {
             send: "to",
             enabled: true
           };
+        console.log('Desde previous_input: ', msg);
         this.props.updateConversation(conversation);
     }
 
