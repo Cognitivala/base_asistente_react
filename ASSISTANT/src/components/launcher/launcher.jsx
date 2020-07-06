@@ -4,6 +4,8 @@ import Notification from "./notification";
 import NotificationCircle from "./notification-circle";
 import PropTypes from "prop-types";
 
+import {updateConversation} from '../../actions/index';
+
 import "./Launcher.scss";
 
 export default class Launcher extends Component {
@@ -30,6 +32,14 @@ export default class Launcher extends Component {
     
     console.log('src:: ', src);
     console.log('urlParams:: ', urlParams);
+    const { customParamsStates } = this.props;
+    const keep_conversation = customParamsStates.getIn([
+      "keep_conversation"
+    ]);
+    console.log('keep_conversation__ ', keep_conversation);
+    if(localStorage.getItem('previous_input') && keep_conversation) {
+      updateConversation('previous_input');
+    }
 
     if(src === '?open=true'){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
