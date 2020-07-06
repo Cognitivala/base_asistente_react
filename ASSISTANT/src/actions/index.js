@@ -564,6 +564,8 @@ export function updateConversation(conversationData) {
             };
         }
 
+        console.log('DATA PARA updateConversation', data);
+
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
