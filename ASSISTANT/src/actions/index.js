@@ -342,7 +342,7 @@ export function openAssistant() {
 var asistantInterval = null;
 
 export function closeAssistant() {
-    return function action(dispatch) {
+    return function action(dispatch, getState) {
         dispatch(defaultGeneral());
         dispatch({ type: "CLOSE_ASSISTANT" });
         dispatch({ type: "SET_NOTIFICATION", data: null });
@@ -353,7 +353,7 @@ export function closeAssistant() {
         dispatch(deleteHistory());
         dispatch(closeLynn());
         clearInterval(asistantInterval);
-        lynnEnd();
+        lynnEnd(dispatch, getState);
     };
 }
 export function toggleMinimizedAssistant(data) {
@@ -925,6 +925,9 @@ function LynnInit(data, general) {
 
 function lynnEnd(dispatch, getState) {
 
+    // if() {
+
+    // }
     const data = {
         cid: getState().assistantStates.getIn(["lynnData", "cid"]),
         sid: getState().assistantStates.getIn(["lynnData", "sid"]),
