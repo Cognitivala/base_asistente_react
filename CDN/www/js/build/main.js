@@ -106,7 +106,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         css += ".iframe-cognitive-assistant-container.minimized{ height: 100px;width: 100%;max-width: 100px;right: 10px;bottom: 0px;}";
         css += ".cognitive-iframe {height: 100%;width: 100%;border: 0 none;}";
         css += "@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.assistant{ border-radius: 0px; height: 100% ; top: 0; left: 0; right: 0; bottom: 0; max-width:100%; } ";
-        css += ".iframe-cognitive-assistant-container.minimized{max-width: none; bottom:0; left:0; right:0;} }";
+        css += ".iframe-cognitive-assistant-container.minimized{max-width: none; bottom:0; left:0; right:0;} ";
+        css += ".iframe-cognitive-assistant-container.notification {max-height: 180px; width: 305px!important;} }";
         css += "@media screen and (min-width: 1000px) and (max-width: 1200px){ .iframe-cognitive-assistant-container.assistant{ width: 45% }  }";
         style.type = "text/css";
         style.appendChild(document.createTextNode(css));
@@ -136,11 +137,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         if (window.outerWidth <= 767) {
           if (this.responsive !== "mobile") {
             this.responsive = "mobile";
+            console.log('Mobile');
             this.styleIframeMessage();
           }
         } else {
           if (this.responsive !== "desktop") {
             this.responsive = "desktop";
+            console.log('desktop');
             this.styleIframeMessage();
           }
         }
