@@ -115,11 +115,13 @@
             if (window.outerWidth <= 767) {
                 if (this.responsive !== "mobile") {
                     this.responsive = "mobile";
+                    console.log('Mobile');
                     this.styleIframeMessage();
                 }
             } else {
                 if (this.responsive !== "desktop") {
                     this.responsive = "desktop";
+                    console.log('Desktop');
                     this.styleIframeMessage();
                 }
             }
