@@ -36,9 +36,27 @@ export default class Launcher extends Component {
     }
   }
   
+  // componentWillMount(){
+  //   const src = window.location.search;
+  //   if(src === '?open=true'){
+  //     const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
+  //     closeLauncher();
+  //     this.openAssitantCDN();
+  //     openAssistant();
+  //     if (ayudaStates.get("open")) closeHelp();
+  //     if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
+  //   }
+  // }
+
   componentWillMount(){
+    // const urlParams = window.location;
+    const pathname = window.location.pathname;
     const src = window.location.search;
-    if(src === '?open=true'){
+
+    console.log(pathname);
+    console.log(src);
+
+    if( (pathname === '/asistente/' && window.outerWidth <= 767) || (src === '?open=true' && window.outerWidth <= 767) ){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
       this.openAssitantCDN();
