@@ -1205,6 +1205,7 @@ export function disabledVoice() {
 export function getUrlParams(getState, urlParam) {
     
     const paramValue = getState().generalStates.getIn(["url_params", urlParam]);
+    console.log('paramValue:: ', paramValue);
     if (paramValue === "null") return null;
     return paramValue;
 }
