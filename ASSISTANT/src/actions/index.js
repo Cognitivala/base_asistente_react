@@ -295,6 +295,9 @@ export function getSaludo() {
             origen = 1;
         }
 
+        console.log('id_usuario:: ', getUrlParams(getState, 'id_usuario'));
+        console.log('id_asistente:: ', getUrlParams(getState, 'id_asistente'));
+
         const data = {
                 general: {
                     cid: null,
@@ -302,7 +305,9 @@ export function getSaludo() {
                     origen: origen,
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
-                    clave: getUrlParams(getState, 'clave')
+                    clave: getUrlParams(getState, 'clave'),
+                    id_usuario: getUrlParams(getState, 'id_usuario'),
+                    id_asistente: getUrlParams(getState, 'id_asistente')
                 },
                 msg: null,
                 end_conversation: false
@@ -1198,7 +1203,7 @@ export function disabledVoice() {
 
 // getUrlParams
 export function getUrlParams(getState, urlParam) {
-    console.log('urlParam:: ', urlParam);
+    
     const paramValue = getState().generalStates.getIn(["url_params", urlParam]);
     if (paramValue === "null") return null;
     return paramValue;
