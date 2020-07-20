@@ -322,7 +322,9 @@ export function getSaludo() {
                     ...data,
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
-                    clave: getUrlParams(getState, 'clave')
+                    clave: getUrlParams(getState, 'clave'),
+                    id_usuario: getUrlParams(getState, 'id_usuario'),
+                    id_asistente: getUrlParams(getState, 'id_asistente')
                 }
             });
         return request.then(
@@ -611,7 +613,9 @@ export function updateConversation(data) {
                 ...data,
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
+                clave: getUrlParams(getState, 'clave'),
+                id_usuario: getUrlParams(getState, 'id_usuario'),
+                id_asistente: getUrlParams(getState, 'id_asistente')
             }
         });
         return request
@@ -800,7 +804,9 @@ export function updateConversationButton(data) {
                         ...data,
                         rut: getUrlParams(getState, 'rut'),
                         user: getUrlParams(getState, 'user'),
-                        clave: getUrlParams(getState, 'clave')
+                        clave: getUrlParams(getState, 'clave'),
+                        id_usuario: getUrlParams(getState, 'id_usuario'),
+                        id_asistente: getUrlParams(getState, 'id_asistente')
                     }
                 });
 
@@ -1055,7 +1061,9 @@ export function closeForm(data) {
                 ...data,
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
-                clave: getUrlParams(getState, 'clave')
+                clave: getUrlParams(getState, 'clave'),
+                id_usuario: getUrlParams(getState, 'id_usuario'),
+                id_asistente: getUrlParams(getState, 'id_asistente')
             }
         });
         return request.then(
@@ -1113,7 +1121,9 @@ export function sendForm(data, url, general) {
                             ...item,
                             rut: getUrlParams(getState, 'rut'),
                             user: getUrlParams(getState, 'user'),
-                            clave: getUrlParams(getState, 'clave')
+                            clave: getUrlParams(getState, 'clave'),
+                            id_usuario: getUrlParams(getState, 'id_usuario'),
+                            id_asistente: getUrlParams(getState, 'id_asistente')
                         }
                     });
                     return request
