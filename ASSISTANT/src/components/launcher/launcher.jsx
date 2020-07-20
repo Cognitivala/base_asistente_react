@@ -53,6 +53,8 @@ export default class Launcher extends Component {
     const pathname = window.location.pathname;
     const src = window.location.search;
 
+    console.log('window:: ', window)
+    console.log('window.location:: ', window.location)
     console.log(pathname);
     console.log(src);
 
