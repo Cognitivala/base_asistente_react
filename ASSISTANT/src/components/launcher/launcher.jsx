@@ -59,6 +59,8 @@ export default class Launcher extends Component {
     console.log(src);
 
     console.log('window screen width:: ', window.screen.width);
+    console.log('window outerWidth:: ', window.outerWidth);
+    console.log('window innerWidth:: ', window.innerWidth);
     
 
     // if( (pathname === '/asistente/' && (window.outerWidth <= 767 || window.innerWidth <= 767) ) || (src === '?open=true' && window.outerWidth <= 767) ){
