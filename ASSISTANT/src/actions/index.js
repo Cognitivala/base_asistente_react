@@ -711,6 +711,7 @@ async function messageResponse(dispatch, data) {
                 dispatch(setRegion(data.general.region))
             };
             if (data.general.integracion !== undefined) {
+                console.log('data.general:: ', data.general);
                 dispatch(setIntegracion(data.general.integracion))
             };
         }
