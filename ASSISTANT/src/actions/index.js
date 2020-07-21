@@ -302,9 +302,9 @@ export function getSaludo() {
                     cid: null,
                     id_cliente: "1",
                     origen: origen,
-                    rut: getUrlParams(getState, 'rut'),
-                    user: getUrlParams(getState, 'user'),
-                    clave: getUrlParams(getState, 'clave'),
+                    // rut: getUrlParams(getState, 'rut'),
+                    // user: getUrlParams(getState, 'user'),
+                    // clave: getUrlParams(getState, 'clave'),
                     id_usuario: getUrlParams(getState, 'id_usuario'),
                     id_asistente: getUrlParams(getState, 'id_asistente')
                 },
@@ -322,8 +322,8 @@ export function getSaludo() {
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
                     clave: getUrlParams(getState, 'clave'),
-                    id_usuario: getUrlParams(getState, 'id_usuario'),
-                    id_asistente: getUrlParams(getState, 'id_asistente')
+                    // id_usuario: getUrlParams(getState, 'id_usuario'),
+                    // id_asistente: getUrlParams(getState, 'id_asistente')
                 }
             });
         return request.then(
@@ -597,11 +597,14 @@ function updateConversationError(data) {
 }
 // UPDATE CONVERSATION
 export function updateConversation(data) {
-    // console.log('updateConversation:: ', data.msg[0]);
+    console.log('updateConversation msg:: ', data.msg[0]);
+    console.log('updateConversation data:: ', data.msg[0]);
     let inputMessage = data.msg[0];
     return function action(dispatch, getState) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
+        
+        
         const request = axios({
             method: "POST",
             headers: {
@@ -750,6 +753,12 @@ export function setModal(data) {
 export function updateConversationButton(data) {
     console.log('updateConversationButton:: ', data);
 
+    // data.general = {
+    //     ...data.general,
+    //     id_usuario: getUrlParams(getState, 'id_usuario'),
+    //     id_asistente: getUrlParams(getState, 'id_asistente'),
+    // }
+
     switch (data.msg[0]) {
         case "siValorar":
             return function action(dispatch) {
@@ -791,13 +800,13 @@ export function updateConversationButton(data) {
             };
         default:
             return function action(dispatch, getState) {
-                
-                console.log('data.general:: ', data.general);
 
+                console.log('getState:: ', getState);
+                
                 data.general.id_usuario = getUrlParams(getState, 'id_usuario');
                 data.general.id_asistente = getUrlParams(getState, 'id_asistente');
 
-                console.log('data.general::: ', data.general);
+                console.log('dataGeneral::: ', data.general);
 
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
@@ -1225,7 +1234,7 @@ export function disabledVoice() {
 
 // getUrlParams
 export function getUrlParams(getState, urlParam) {
-    
+    // console.log('getUrlParams:: ', getState, urlParam);
     const paramValue = getState().generalStates.getIn(["url_params", urlParam]);
     console.log('paramValue:: ', paramValue);
     if (paramValue === "null") return null;
