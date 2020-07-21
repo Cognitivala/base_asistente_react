@@ -323,8 +323,8 @@ export function getSaludo() {
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
                     clave: getUrlParams(getState, 'clave'),
-                    id_usuario: getUrlParams(getState, 'id_usuario'),
-                    id_asistente: getUrlParams(getState, 'id_asistente')
+                    // id_usuario: getUrlParams(getState, 'id_usuario'),
+                    // id_asistente: getUrlParams(getState, 'id_asistente')
                 }
             });
         return request.then(
@@ -614,8 +614,8 @@ export function updateConversation(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                id_usuario: getUrlParams(getState, 'id_usuario'),
-                id_asistente: getUrlParams(getState, 'id_asistente')
+                // id_usuario: getUrlParams(getState, 'id_usuario'),
+                // id_asistente: getUrlParams(getState, 'id_asistente')
             }
         });
         return request
@@ -805,8 +805,8 @@ export function updateConversationButton(data) {
                         rut: getUrlParams(getState, 'rut'),
                         user: getUrlParams(getState, 'user'),
                         clave: getUrlParams(getState, 'clave'),
-                        id_usuario: getUrlParams(getState, 'id_usuario'),
-                        id_asistente: getUrlParams(getState, 'id_asistente')
+                        // id_usuario: getUrlParams(getState, 'id_usuario'),
+                        // id_asistente: getUrlParams(getState, 'id_asistente')
                     }
                 });
 
@@ -1062,8 +1062,8 @@ export function closeForm(data) {
                 rut: getUrlParams(getState, 'rut'),
                 user: getUrlParams(getState, 'user'),
                 clave: getUrlParams(getState, 'clave'),
-                id_usuario: getUrlParams(getState, 'id_usuario'),
-                id_asistente: getUrlParams(getState, 'id_asistente')
+                // id_usuario: getUrlParams(getState, 'id_usuario'),
+                // id_asistente: getUrlParams(getState, 'id_asistente')
             }
         });
         return request.then(
@@ -1122,8 +1122,8 @@ export function sendForm(data, url, general) {
                             rut: getUrlParams(getState, 'rut'),
                             user: getUrlParams(getState, 'user'),
                             clave: getUrlParams(getState, 'clave'),
-                            id_usuario: getUrlParams(getState, 'id_usuario'),
-                            id_asistente: getUrlParams(getState, 'id_asistente')
+                            // id_usuario: getUrlParams(getState, 'id_usuario'),
+                            // id_asistente: getUrlParams(getState, 'id_asistente')
                         }
                     });
                     return request
