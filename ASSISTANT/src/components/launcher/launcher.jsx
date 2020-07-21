@@ -58,7 +58,19 @@ export default class Launcher extends Component {
     console.log(pathname);
     console.log(src);
 
-    if( (pathname === '/asistente/' && (window.outerWidth <= 767 || window.innerWidth <= 767) ) || (src === '?open=true' && window.outerWidth <= 767) ){
+    console.log('window screen width:: ', window.screen.width);
+    
+
+    // if( (pathname === '/asistente/' && (window.outerWidth <= 767 || window.innerWidth <= 767) ) || (src === '?open=true' && window.outerWidth <= 767) ){
+    //   const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
+    //   closeLauncher();
+    //   this.openAssitantCDN();
+    //   openAssistant();
+    //   if (ayudaStates.get("open")) closeHelp();
+    //   if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
+    // }
+
+    if( (pathname === '/asistente/' || (window.outerWidth <= 767 || window.innerWidth <= 767) )){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
       this.openAssitantCDN();
@@ -66,6 +78,8 @@ export default class Launcher extends Component {
       if (ayudaStates.get("open")) closeHelp();
       if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
     }
+
+
   }
 
   closeAssistant() {
