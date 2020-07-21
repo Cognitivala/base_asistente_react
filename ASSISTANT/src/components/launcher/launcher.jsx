@@ -53,14 +53,15 @@ export default class Launcher extends Component {
     const pathname = window.location.pathname;
     const src = window.location.search;
 
-    console.log('window:: ', window)
-    console.log('window.location:: ', window.location)
-    console.log(pathname);
-    console.log(src);
+    // console.log('window:: ', window)
+    // console.log('window.location:: ', window.location)
+    // console.log(pathname);
+    // console.log(src);
 
     console.log('window screen width:: ', window.screen.width);
     console.log('window outerWidth:: ', window.outerWidth);
     console.log('window innerWidth:: ', window.innerWidth);
+    console.log('this.props:: ', this.props.responsive);
     
 
     // if( (pathname === '/asistente/' && (window.outerWidth <= 767 || window.innerWidth <= 767) ) || (src === '?open=true' && window.outerWidth <= 767) ){
@@ -73,7 +74,9 @@ export default class Launcher extends Component {
     // }
 
     if( (pathname === '/asistente/' && window.innerWidth <= 767) ){
-      const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
+      
+      const { closeLauncher, closeHelp, openAssistant, ayudaStates, responsive } = this.props;
+      responsive("mobile")
       closeLauncher();
       this.openAssitantCDN();
       openAssistant();
@@ -144,6 +147,8 @@ export default class Launcher extends Component {
   }
 
   content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
+
+    console.log(responsiveStates.get("responsive"));
     
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&

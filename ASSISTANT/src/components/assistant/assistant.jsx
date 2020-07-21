@@ -237,6 +237,8 @@ export default class Assistant extends Component {
       .get("settings")
       .get("help");
 
+      console.log(responsiveStates.get("responsive"));
+
       const minimized = assistantStates.get("minimized"),
       cssClass = responsiveStates.get("responsive") === "mobile" ? mainCss.Mobile : "",
       cssClass2 = this.state.moreHeader?mainCss.HeaderMore:"",

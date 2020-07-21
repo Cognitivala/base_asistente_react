@@ -76,6 +76,7 @@ export class App extends Component {
     onMessageFunc() {
         const _this = this;
         window.onmessage = e => {
+            console.log(e.data.responsive);
             if (e.data.colorBtn !== undefined) {
                 _this.props.updateCustomColorBtn(e.data.colorBtn);
             } else if (e.data.title !== undefined) {
