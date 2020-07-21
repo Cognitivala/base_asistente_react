@@ -306,8 +306,8 @@ export function getSaludo() {
                     rut: getUrlParams(getState, 'rut'),
                     user: getUrlParams(getState, 'user'),
                     clave: getUrlParams(getState, 'clave'),
-                    id_usuario: getUrlParams(getState, 'id_usuario'),
-                    id_asistente: getUrlParams(getState, 'id_asistente')
+                    id_usuario: parseInt(getUrlParams(getState, 'id_usuario')),
+                    id_asistente: parseInt(getUrlParams(getState, 'id_asistente'))
                 },
                 msg: null,
                 end_conversation: false
