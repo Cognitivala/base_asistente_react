@@ -295,8 +295,7 @@ export function getSaludo() {
             origen = 1;
         }
 
-        console.log('id_usuario:: ', parseInt(getUrlParams(getState, 'id_usuario')));
-        console.log('id_asistente:: ', Number(getUrlParams(getState, 'id_asistente')));
+        
 
         const data = {
                 general: {
@@ -749,6 +748,7 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
+    console.log('updateConversationButton:: ', data);
 
     switch (data.msg[0]) {
         case "siValorar":
