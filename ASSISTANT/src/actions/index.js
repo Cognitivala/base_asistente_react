@@ -791,6 +791,14 @@ export function updateConversationButton(data) {
             };
         default:
             return function action(dispatch, getState) {
+                
+                console.log('data.general:: ', data.general);
+
+                data.general.id_usuario = getUrlParams(getState, 'id_usuario');
+                data.general.id_asistente = getUrlParams(getState, 'id_asistente');
+
+                console.log('data.general::: ', data.general);
+
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
                 // console.log('data updateConversationButton:: ', data)
@@ -803,11 +811,11 @@ export function updateConversationButton(data) {
                     url: APIURL + "/message",
                     data: {
                         ...data,
-                        general: {
-                            ...data.general,
-                            id_usuario: getUrlParams(getState, 'id_usuario'),
-                            id_asistente: getUrlParams(getState, 'id_asistente')
-                        },
+                        // general: {
+                        //     ...data.general,
+                        //     id_usuario: getUrlParams(getState, 'id_usuario'),
+                        //     id_asistente: getUrlParams(getState, 'id_asistente')
+                        // },
                         rut: getUrlParams(getState, 'rut'),
                         user: getUrlParams(getState, 'user'),
                         clave: getUrlParams(getState, 'clave'),
@@ -815,7 +823,7 @@ export function updateConversationButton(data) {
                 });
 
                 return request.then(async(response) => {
-                        // console.log('RESPONSE MENSAJE updateConversationButton::', response);
+                        console.log('RESPONSE MENSAJE updateConversationButton::', response);
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
