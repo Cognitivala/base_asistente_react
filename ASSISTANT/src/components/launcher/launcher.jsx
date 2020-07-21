@@ -72,7 +72,7 @@ export default class Launcher extends Component {
     //   if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
     // }
 
-    if( (pathname === '/asistente/' || (window.outerWidth <= 767 || window.innerWidth <= 767) )){
+    if( (pathname === '/asistente/' && window.innerWidth <= 767) ){
       const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
       closeLauncher();
       this.openAssitantCDN();
