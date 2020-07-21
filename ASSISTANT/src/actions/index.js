@@ -651,7 +651,7 @@ export function updateConversation(data) {
 }
 
 async function messageResponse(dispatch, data) {
-    // console.log('messageResponse:: ', data);
+    console.log('messageResponse:: ', data);
     // await getSixbellIn(data);
 
     if (data.liftUp !== undefined) {
@@ -711,7 +711,7 @@ async function messageResponse(dispatch, data) {
                 dispatch(setRegion(data.general.region))
             };
             if (data.general.integracion !== undefined) {
-                console.log('data.general:: ', data.general);
+                // console.log('data.general:: ', data.general);
                 dispatch(setIntegracion(data.general.integracion))
             };
         }
