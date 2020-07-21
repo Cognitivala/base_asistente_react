@@ -803,11 +803,14 @@ export function updateConversationButton(data) {
                     url: APIURL + "/message",
                     data: {
                         ...data,
+                        general: {
+                            ...data.general,
+                            id_usuario: getUrlParams(getState, 'id_usuario'),
+                            id_asistente: getUrlParams(getState, 'id_asistente')
+                        },
                         rut: getUrlParams(getState, 'rut'),
                         user: getUrlParams(getState, 'user'),
                         clave: getUrlParams(getState, 'clave'),
-                        id_usuario: getUrlParams(getState, 'id_usuario'),
-                        id_asistente: getUrlParams(getState, 'id_asistente')
                     }
                 });
 
