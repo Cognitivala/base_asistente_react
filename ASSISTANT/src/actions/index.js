@@ -295,8 +295,8 @@ export function getSaludo() {
             origen = 1;
         }
 
-        console.log('id_usuario:: ', getUrlParams(getState, 'id_usuario'));
-        console.log('id_asistente:: ', getUrlParams(getState, 'id_asistente'));
+        // console.log('id_usuario:: ', getUrlParams(getState, 'id_usuario'));
+        // console.log('id_asistente:: ', getUrlParams(getState, 'id_asistente'));
 
         const data = {
                 general: {
