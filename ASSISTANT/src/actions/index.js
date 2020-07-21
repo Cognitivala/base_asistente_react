@@ -295,8 +295,8 @@ export function getSaludo() {
             origen = 1;
         }
 
-        // console.log('id_usuario:: ', getUrlParams(getState, 'id_usuario'));
-        // console.log('id_asistente:: ', getUrlParams(getState, 'id_asistente'));
+        console.log('id_usuario:: ', parseInt(getUrlParams(getState, 'id_usuario')));
+        console.log('id_asistente:: ', Number(getUrlParams(getState, 'id_asistente')));
 
         const data = {
                 general: {
@@ -307,7 +307,7 @@ export function getSaludo() {
                     user: getUrlParams(getState, 'user'),
                     clave: getUrlParams(getState, 'clave'),
                     id_usuario: parseInt(getUrlParams(getState, 'id_usuario')),
-                    id_asistente: parseInt(getUrlParams(getState, 'id_asistente'))
+                    id_asistente: Number(getUrlParams(getState, 'id_asistente'))
                 },
                 msg: null,
                 end_conversation: false
