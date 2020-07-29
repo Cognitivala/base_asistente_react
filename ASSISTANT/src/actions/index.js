@@ -846,6 +846,8 @@ export function updateConversation(conversationData) {
 function messageResponse(dispatch, data, general) {
   // liftUp LLAMA FORMULARIO FORM
 
+  console.log("messageResponse:: ", data);
+
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -1202,8 +1204,8 @@ export function updateConversationButton(data) {
                   response.data.previous_input
                 );
 
-                console.log(localStorage.getItem("previous_input"));
-                console.log(sessionStorage.getItem("previous_input"));
+                // console.log(localStorage.getItem("previous_input"));
+                // console.log(sessionStorage.getItem("previous_input"));
 
                 item.msg = response.data.msg;
                 messageResponse(dispatch, item);
