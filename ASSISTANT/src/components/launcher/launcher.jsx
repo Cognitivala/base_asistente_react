@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 
 // import { store } from '../../store/store';
 import { connect } from "react-redux";
-import {updateConversation} from '../../actions/index';
+import { updateConversation } from "../../actions/index";
 
 import "./Launcher.scss";
 
@@ -28,29 +28,36 @@ class Launcher extends Component {
   //   }
   // }
 
-  componentWillMount(){
+  componentWillMount() {
     const src = window.location.search;
     const urlParams = window.location;
-    
-    console.log('src:: ', src);
-    console.log('urlParams:: ', urlParams);
-    
-    if(localStorage.getItem('previous_input')) {
+    const polizasSitioPrivado = window.location.search;
+
+    // console.log('src:: ', src);
+    console.log("urlParams:: ", urlParams);
+    // console.log("polizasSitioPrivado:: ", polizasSitioPrivado);
+
+    if (localStorage.getItem("previous_input") && polizasSitioPrivado) {
       const { generalStates } = this.props;
       const general = generalStates.toJS();
-      const msg = localStorage.getItem('previous_input');
+      const msg = localStorage.getItem("previous_input");
       const conversation = {
-            general,
-            msg: [msg],
-            send: "to",
-            enabled: true
-          };
-        console.log('Desde previous_input: ', msg);
-        this.props.updateConversation(conversation);
+        general,
+        msg: [msg],
+        send: "to",
+        enabled: true,
+      };
+      console.log("Desde previous_input: ", msg);
+      this.props.updateConversation(conversation);
     }
 
-    if(src === '?open=true'){
-      const { closeLauncher, closeHelp, openAssistant, ayudaStates } = this.props;
+    if (src === "?open=true") {
+      const {
+        closeLauncher,
+        closeHelp,
+        openAssistant,
+        ayudaStates,
+      } = this.props;
       closeLauncher();
       this.openAssitantCDN();
       openAssistant();
@@ -65,7 +72,7 @@ class Launcher extends Component {
   //     "keep_conversation"
   //   ]);
   //   console.log('this.props.store: ', this.props.updateConversation);
-    
+
   //   if(localStorage.getItem('previous_input')) {
   //     console.log('previous_input:: ', localStorage.getItem('previous_input'));
   //     this.props.updateConversation('previous_input');
@@ -81,10 +88,10 @@ class Launcher extends Component {
     const keep_conversation = customParamsStates.getIn([
       "customParams",
       "settings",
-      "keep_conversation"
+      "keep_conversation",
     ]);
     const hc = localStorage.getItem("hc");
-    
+
     if (!keep_conversation) {
       this.props.getSaludo();
     } else {
@@ -99,7 +106,7 @@ class Launcher extends Component {
     this.notificationCDN();
     localStorage.removeItem("hcm");
     localStorage.removeItem("hc");
-    
+
     // console.log('closeAssistant:: ', closeAssistant);
     closeAssistant();
   }
@@ -109,9 +116,9 @@ class Launcher extends Component {
       {
         test: [
           {
-            msg: "assistant"
-          }
-        ]
+            msg: "assistant",
+          },
+        ],
       },
       "*"
     );
@@ -122,9 +129,9 @@ class Launcher extends Component {
       {
         test: [
           {
-            msg: "notification"
-          }
-        ]
+            msg: "notification",
+          },
+        ],
       },
       "*"
     );
@@ -140,59 +147,88 @@ class Launcher extends Component {
   }
 
   notification(launcherStates, mainCss, bubble_logo, bubble) {
-
-    if (bubble){
+    if (bubble) {
       if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
         return (
-          <Notification saludo={launcherStates.get("notification")} mainCss={mainCss} bubbleLogo={bubble_logo} />
+          <Notification
+            saludo={launcherStates.get("notification")}
+            mainCss={mainCss}
+            bubbleLogo={bubble_logo}
+          />
         );
       } else if (launcherStates.get("circle")) {
-        return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
+        return (
+          <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />
+        );
       } else {
-        return null
+        return null;
       }
     } else {
       return null;
     }
   }
 
-  content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
+  content(
+    customParamsStates,
+    launcherStates,
+    conversationsStates,
+    mainCss,
+    responsiveStates
+  ) {
     // console.log('responsive content:: ', responsiveStates.get("responsive"));
     if (
       customParamsStates.get(["customParams", "status"]) !== 0 &&
       conversationsStates.get("conversations").size > 0
     ) {
       if (launcherStates.get("active")) {
-        const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
-        const bubble = customParamsStates.getIn([ "customParams", "settings", "bubble" ]);
+        const bubble_logo = customParamsStates.getIn([
+          "customParams",
+          "bubble_logo",
+        ]);
+        const bubble = customParamsStates.getIn([
+          "customParams",
+          "settings",
+          "bubble",
+        ]);
 
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
-            
-            {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
+              {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
 
-              { bubble_logo.length > 0 ? (
+              {bubble_logo.length > 0 ? (
                 <div className="boxBubbleLogo">
-                  <img className="imgBubbleLogo" onClick={this.closeLauncher} src={`${bubble_logo}`} alt="Avatar Img" />
+                  <img
+                    className="imgBubbleLogo"
+                    onClick={this.closeLauncher}
+                    src={`${bubble_logo}`}
+                    alt="Avatar Img"
+                  />
                 </div>
               ) : (
-                <button ref={this.launcher} className={mainCss.LauncherButton} onClick={this.closeLauncher}>
+                <button
+                  ref={this.launcher}
+                  className={mainCss.LauncherButton}
+                  onClick={this.closeLauncher}
+                >
                   <i className={mainCss.IconLauncher} />
                 </button>
               )}
-              
             </div>
           </Fragment>
         );
       } else if (responsiveStates.get("responsive") === "desktop") {
         // console.log('responsive:: ', responsiveStates.get("responsive"));
         return (
-            <div className={mainCss.MainLauncher}>
-              <button ref={this.launcher} className={mainCss.LauncherButton + " " + mainCss.Close} onClick={this.closeAssistant}>
-                <i className={mainCss.IconClose} />
-              </button>
-            </div>
+          <div className={mainCss.MainLauncher}>
+            <button
+              ref={this.launcher}
+              className={mainCss.LauncherButton + " " + mainCss.Close}
+              onClick={this.closeAssistant}
+            >
+              <i className={mainCss.IconClose} />
+            </button>
+          </div>
         );
       }
     }
@@ -205,7 +241,7 @@ class Launcher extends Component {
         launcherStates,
         conversationsStates,
         mainCss,
-        responsiveStates
+        responsiveStates,
       } = this.props,
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
 
@@ -232,7 +268,7 @@ Launcher.propTypes = {
   customParamsStates: PropTypes.any.isRequired,
   saludoStates: PropTypes.any.isRequired,
   launcherStates: PropTypes.any.isRequired,
-  generalStates: PropTypes.any.isRequired
+  generalStates: PropTypes.any.isRequired,
 };
 
-export default connect(null, {updateConversation})(Launcher);
+export default connect(null, { updateConversation })(Launcher);
