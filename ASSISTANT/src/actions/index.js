@@ -1092,6 +1092,7 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
+  console.log("updateConversationButton:: ", data);
   // return function action(dispatch) {
   //   dispatch(setGeneral(data.general));
   //   dispatch(pushConversation(data));
@@ -1123,6 +1124,7 @@ export function updateConversationButton(data) {
   //     }
   //   );
   // };
+  console.log(data.msg[0]);
   switch (data.msg[0]) {
     case "siValorar":
       return function action(dispatch) {
@@ -1203,10 +1205,8 @@ export function updateConversationButton(data) {
                 console.log(localStorage.getItem("previous_input"));
                 console.log(sessionStorage.getItem("previous_input"));
 
-                if (polizasSitioPrivado) {
-                  item.msg = response.data.msg;
-                  messageResponse(dispatch, item);
-                }
+                item.msg = response.data.msg;
+                messageResponse(dispatch, item);
               } else {
                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                 messageResponse(dispatch, item);
