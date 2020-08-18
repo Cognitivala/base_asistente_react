@@ -1454,6 +1454,8 @@ export function getUrlParams(getState, urlParam) {
   return paramValue;
 }
 
+// INTEGRACIÓN LYNN
+
 export function addLynnData(data) {
   return function action(dispatch) {
     dispatch({ type: "USERLIKE_DATA", data: data });
@@ -1576,3 +1578,103 @@ function userlikeOutInterval(data) {
     }, ASISTANT_INTERVAL_TIMER);
   };
 }
+
+// FIN INTEGRACIÓN LYNN
+
+//SIXBELL IN
+export const getSixbellIn = (dispatch, data) => {
+  console.log("getSixbellIn DATA:: ", data);
+  console.log("getSixbellIn inputMessage:: ", data.msg);
+  const { general, msg, send, enabled } = data;
+  let newData = { general, msg, send, enabled };
+  const urlApi = APIURL + "/sixbell_purecloud_in";
+  const token = sessionStorage.getItem("token");
+
+  axios
+    .post(urlApi, newData, {
+      headers: {
+        // 'Authorization': `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      console.log("response.data getSixbellIn:: ", response.data);
+      const dataResponse = response.data;
+      if (dataResponse.estado.codigoEstado === 200) {
+        // let item = response.data;
+        // item.send = "from";
+        // item.enabled = true;
+        console.log("item in", dataResponse);
+        // dispatch(updateConversation(item));
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+//SIXBELL OUT
+export function getSixbellOut(dispatch, data) {
+  // clearInterval(asistantInterval);
+
+  console.log("getSixbellOut: ", data);
+
+  if (interval) {
+    clearInterval(interval);
+  }
+
+  var ASISTANT_INTERVAL_TIMER = 5000;
+
+  interval = setInterval(function() {
+    const urlApi = APIURL + "/sixbell_purecloud_out";
+    const { general, msg, send, enabled } = data;
+    let newData = { general, msg, send, enabled };
+    const token = sessionStorage.getItem("token");
+
+    axios
+      .post(urlApi, newData, {
+        headers: {
+          // 'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      .then(async (response) => {
+        console.log("getSixbellOut:: ", response.data);
+        const dataResponse = response.data;
+
+        if (dataResponse.estado.codigoEstado === 200) {
+          // dispatch(updateConversation(response.data.msg));
+          let item = response.data;
+          item.send = "from";
+          item.enabled = true;
+          // dispatch(updateConversation(item));
+          // await dispatch(messageResponse(dispatch, item));
+          await dispatch(pushConversation(item));
+        } else {
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, ASISTANT_INTERVAL_TIMER);
+}
+
+export const getSixbellEnd = () => {
+  const urlApi = APIURL + "/sixbell_purecloud_end";
+  let data = { cid: JSON.stringify(sessionStorage.getItem("cid")) };
+  const token = sessionStorage.getItem("token");
+
+  axios
+    .post(urlApi, data, {
+      headers: {
+        // 'Authorization': `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {
+      console.log("getSixbellEnd:: ", response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
