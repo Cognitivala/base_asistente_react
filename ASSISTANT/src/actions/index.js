@@ -346,8 +346,7 @@ export function openAssistant() {
   };
 }
 export function closeAssistant() {
-  return function action(dispatch) {
-    
+  return async function action(dispatch) {
     await getSixbellEnd();
     localStorage.removeItem("email_user");
     dispatch(defaultGeneral());
@@ -1596,12 +1595,13 @@ function userlikeOutInterval(data) {
 // FIN INTEGRACIÓN LYNN
 
 //SIXBELL IN
-export const getSixbellIn = (dispatch, data) => {
+export const getSixbellIn = (dispatch, data, inputMessage) => {
   console.log("getSixbellIn DATA:: ", data);
   console.log("getSixbellIn inputMessage:: ", data.msg);
+
   const { general, msg, send, enabled } = data;
   let newData = { general, msg, send, enabled };
-  const urlApi = APIURL + "/sixbell_purecloud_in";
+  const urlApi = APIURL + "/live_message_in";
   const token = sessionStorage.getItem("token");
 
   axios
@@ -1640,7 +1640,7 @@ export function getSixbellOut(dispatch, data) {
   var ASISTANT_INTERVAL_TIMER = 5000;
 
   interval = setInterval(function() {
-    const urlApi = APIURL + "/sixbell_purecloud_out";
+    const urlApi = APIURL + "/live_message_out";
     const { general, msg, send, enabled } = data;
     let newData = { general, msg, send, enabled };
     const token = sessionStorage.getItem("token");
@@ -1674,7 +1674,7 @@ export function getSixbellOut(dispatch, data) {
 }
 
 export const getSixbellEnd = () => {
-  const urlApi = APIURL + "/sixbell_purecloud_end";
+  const urlApi = APIURL + "/live_message_end";
   let data = { cid: JSON.stringify(sessionStorage.getItem("cid")) };
   const token = sessionStorage.getItem("token");
 
