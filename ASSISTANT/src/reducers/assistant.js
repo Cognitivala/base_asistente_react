@@ -6,6 +6,8 @@ export function assistantStates(
     error: "",
     active: false,
     minimized: false,
+    useUserlike: false,
+    userlikeData: null,
   }),
   action
 ) {
@@ -29,10 +31,10 @@ export function assistantStates(
       return state.withMutations((map) => {
         map.set("isFetching", false).set("error", action.error);
       });
-    case "USE_LYNN":
-      return state.set("useLynn", action.data);
-    case "LYNN_DATA":
-      return state.set("lynnData", action.data);
+    case "USE_USERLIKE":
+      return state.set("useUserlike", action.data);
+    case "USERLIKE":
+      return state.set("userlikeData", action.data);
     default:
       return state;
   }
