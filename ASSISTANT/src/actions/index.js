@@ -1506,3 +1506,54 @@ function lynnEnd(dispatch, getState) {
     }
   });
 }
+
+function LynnOutInterval(data) {
+  return function action(dispatch, getState) {
+    // MÉTODO PARA ESCUCHAR LOS POSIBLES MENSAJES DEL EJECUTIVO LYNN
+    asistantInterval = setInterval(function() {
+      const request = axios({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        url: APIURL + "/lynn_out",
+        data: data,
+      });
+      return request.then((response) => {
+        // console.log("LYNN! OUT", response)
+        let item = {};
+        item.send = "from";
+        item.enabled = true;
+        item.general = getState().assistantStates.getIn(["lynnData"]);
+        if (response.data.textos[0] === "Inicio") {
+          delete item.msg;
+        } else {
+          item.msg = response.data.textos;
+        }
+
+        dispatch(pushConversation(item));
+
+        // SE MANDA POST A LYNEND
+        if (response.data.eventos[0] === "conversationEnd") {
+          // console.log("LYNEND", data);
+          const request = axios({
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            url: APIURL + "/lynn_end",
+            data: data,
+          });
+          return request.then((response) => {
+            if (response.status === 200) {
+              dispatch({ type: "DISABLED_INPUT" });
+              dispatch(closeLynn());
+              clearInterval(asistantInterval);
+              return;
+            }
+          });
+        }
+      });
+    }, ASISTANT_INTERVAL_TIMER);
+  };
+}
