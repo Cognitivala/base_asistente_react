@@ -5,6 +5,9 @@ import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from "react-device-detect";
 
+const USERLIKE_ENDPOINT = "/lynn_in";
+const ASISTANT_INTERVAL_TIMER = 4000;
+
 //GENERAL
 function defaultGeneral() {
   return {
@@ -533,7 +536,7 @@ export function updateConversation(data) {
     // SE AGREGA VARIABLE email_user
     const queryString = window.location.href.toString().split(window.location.host)[1];
     const useUserlike = getState().assistantStates.getIn(["useUserlike"]);
-    const url = useUserlike ? LYNN_ENDPOINT : "/message";
+    const url = useUserlike ? USERLIKE_ENDPOINT : "/message";
     let data = {};
 
     if (useUserlike) {
