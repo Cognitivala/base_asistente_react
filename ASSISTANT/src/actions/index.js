@@ -5,7 +5,7 @@ import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from "react-device-detect";
 
-const USERLIKE_ENDPOINT = "/lynn_in";
+// const USERLIKE_ENDPOINT = "/lynn_in";
 const ASISTANT_INTERVAL_TIMER = 4000;
 
 var interval;
@@ -347,6 +347,8 @@ export function openAssistant() {
 }
 export function closeAssistant() {
   return async function action(dispatch) {
+    clearInterval(interval);
+
     await getSixbellEnd();
     localStorage.removeItem("email_user");
     dispatch(defaultGeneral());
@@ -360,9 +362,9 @@ export function closeAssistant() {
     dispatch({ type: "SET_INTEGRACION", data: {} });
     dispatch(deleteHistory());
 
-    dispatch(closeLynn());
-    clearInterval(asistantInterval);
-    userlikeEnd(dispatch, getState);
+    // dispatch(closeLynn());
+    // clearInterval(asistantInterval);
+    // userlikeEnd(dispatch, getState);
   };
 }
 export function toggleMinimizedAssistant(data) {
@@ -545,19 +547,22 @@ export function updateConversation(data) {
 
     // SE AGREGA VARIABLE email_user
     const queryString = window.location.href.toString().split(window.location.host)[1];
-    const useUserlike = getState().assistantStates.getIn(["useUserlike"]);
-    const url = useUserlike ? USERLIKE_ENDPOINT : "/message";
-    let data = {};
 
-    if (useUserlike) {
-      data = {
-        ...conversationData,
-        general: {
-          ...getState().assistantStates.getIn(["userlikeData"]),
-          token: getState().generalStates.getIn(["token"]),
-        },
-      };
-    } else if (queryString === "/asistente/?ejecutivo_amsa=true" || queryString.length > 11) {
+    // const useUserlike = getState().assistantStates.getIn(["useUserlike"]);
+    // const url = useUserlike ? USERLIKE_ENDPOINT : "/message";
+    // let data = {};
+
+    // if (useUserlike) {
+    //   data = {
+    //     ...conversationData,
+    //     general: {
+    //       ...getState().assistantStates.getIn(["userlikeData"]),
+    //       token: getState().generalStates.getIn(["token"]),
+    //     },
+    //   };
+    // } else
+
+    if (queryString === "/asistente/?ejecutivo_amsa=true" || queryString.length > 11) {
       data.general.integracion = {
         ...data.general.integracion,
         email_user: localStorage.getItem("email_user") !== null ? localStorage.getItem("email_user") : null,
@@ -898,11 +903,13 @@ async function messageResponse(dispatch, data) {
   } else if (data.end_conversation === true) {
     dispatch(pushConversation(data));
     dispatch({ type: "DISABLED_INPUT" });
-  } else if (data.estado.codigoEstado === 303) {
-    dispatch(addLynnData(data.general));
-    // SE COMENTA PARA REVISAR INIT DE LYNN
-    dispatch(userlikeInit(data, general));
-  } else if (data.agent === true) {
+  }
+  // else if (data.estado.codigoEstado === 303) {
+  //   dispatch(addLynnData(data.general));
+  //   // SE COMENTA PARA REVISAR INIT DE LYNN
+  //   dispatch(userlikeInit(data, general));
+  // }
+  else if (data.agent === true) {
     await getSixbellIn(dispatch, data, inputMessage);
     await getSixbellOut(dispatch, data);
   } else {
@@ -1535,7 +1542,7 @@ function userlikeEnd(dispatch, getState) {
     if (response.status === 200) {
       dispatch({ type: "DISABLED_INPUT" });
       dispatch(closeLynn());
-      clearInterval(asistantInterval);
+      // clearInterval(asistantInterval);
       return;
     }
   });
