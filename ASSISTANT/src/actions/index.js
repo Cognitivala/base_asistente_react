@@ -1441,6 +1441,18 @@ export function addLynnData(data) {
   };
 }
 
+export function startLynn() {
+  return function action(dispatch) {
+    dispatch({ type: "USE_USERLIKE", data: true });
+  };
+}
+
+export function closeLynn() {
+  return function action(dispatch) {
+    dispatch({ type: "USE_USERLIKE", data: false });
+  };
+}
+
 function LynnInit(data, general) {
   const newData = {
     ...data,
