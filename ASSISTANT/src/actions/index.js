@@ -8,6 +8,9 @@ import { isMobile } from "react-device-detect";
 const USERLIKE_ENDPOINT = "/lynn_in";
 const ASISTANT_INTERVAL_TIMER = 4000;
 
+var interval;
+var inputMessage = null;
+
 //GENERAL
 function defaultGeneral() {
   return {
