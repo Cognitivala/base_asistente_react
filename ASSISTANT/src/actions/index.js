@@ -345,6 +345,9 @@ export function openAssistant() {
     dispatch({ type: "OPEN_ASSISTANT" });
   };
 }
+
+var asistantInterval = null;
+
 export function closeAssistant() {
   return async function action(dispatch) {
     clearInterval(interval);
@@ -909,7 +912,7 @@ async function messageResponse(dispatch, data) {
   //   // SE COMENTA PARA REVISAR INIT DE LYNN
   //   dispatch(userlikeInit(data, general));
   // }
-  else if (data.agent === true) {
+  else if (data.deriva_userlike === true) {
     await getSixbellIn(dispatch, data, inputMessage);
     await getSixbellOut(dispatch, data);
   } else {
@@ -1608,6 +1611,7 @@ export const getSixbellIn = (dispatch, data, inputMessage) => {
 
   const { general, msg, send, enabled } = data;
   let newData = { general, msg, send, enabled };
+
   const urlApi = APIURL + "/live_message_in";
   const token = sessionStorage.getItem("token");
 
@@ -1699,3 +1703,5 @@ export const getSixbellEnd = () => {
       console.log(error);
     });
 };
+
+// derivar_userlike
