@@ -603,7 +603,11 @@ export function updateConversation(data) {
           item.enabled = true;
           // item.email_user = response.data.email_user
 
-          if (localStorage.getItem("email_user") !== null) {
+          console.log("response.data.agent::: ", response.data.agent);
+          if (response.data.agent === true) {
+            item.msg = [`${inputMessage}`];
+            sessionStorage.setItem("cid", response.data.general.cid);
+          } else if (localStorage.getItem("email_user") !== null) {
             const queryString = window.location.href.toString().split(window.location.host)[1];
             if (queryString === "/asistente/?ejecutivo_amsa=true" || queryString.length > 11) {
               const email_user = localStorage.getItem("email_user");
