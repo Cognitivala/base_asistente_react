@@ -355,6 +355,10 @@ export function closeAssistant() {
 
     dispatch({ type: "SET_INTEGRACION", data: {} });
     dispatch(deleteHistory());
+
+    dispatch(closeLynn());
+    clearInterval(asistantInterval);
+    userlikeEnd(dispatch, getState);
   };
 }
 export function toggleMinimizedAssistant(data) {
@@ -887,7 +891,7 @@ function messageResponse(dispatch, data) {
   } else if (data.estado.codigoEstado === 303) {
     dispatch(addLynnData(data.general));
     // SE COMENTA PARA REVISAR INIT DE LYNN
-    dispatch(LynnInit(data, general));
+    dispatch(userlikeInit(data, general));
   } else {
     // console.log('data.general ', data)
     if (data.general !== undefined) {
@@ -1468,7 +1472,7 @@ export function closeLynn() {
   };
 }
 
-function LynnInit(data, general) {
+function userlikeInit(data, general) {
   const newData = {
     ...data,
     msg: [".... Iniciando Comunicación con Ejecutivo ...."],
@@ -1488,13 +1492,13 @@ function LynnInit(data, general) {
         dispatch(startLynn());
         dispatch(pushConversation(data));
         // Intervalo para buscar posibles respuestas de Lynn
-        dispatch(LynnOutInterval(data, general));
+        dispatch(userlikeOutInterval(data, general));
       }
     });
   };
 }
 
-function lynnEnd(dispatch, getState) {
+function userlikeEnd(dispatch, getState) {
   // if() {
 
   // }
@@ -1522,7 +1526,7 @@ function lynnEnd(dispatch, getState) {
   });
 }
 
-function LynnOutInterval(data) {
+function userlikeOutInterval(data) {
   return function action(dispatch, getState) {
     // MÉTODO PARA ESCUCHAR LOS POSIBLES MENSAJES DEL EJECUTIVO LYNN
     asistantInterval = setInterval(function() {
