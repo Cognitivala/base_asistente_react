@@ -532,7 +532,19 @@ export function updateConversation(data) {
 
     // SE AGREGA VARIABLE email_user
     const queryString = window.location.href.toString().split(window.location.host)[1];
-    if (queryString === "/asistente/?ejecutivo_amsa=true" || queryString.length > 11) {
+    const useUserlike = getState().assistantStates.getIn(["useUserlike"]);
+    const url = useUserlike ? LYNN_ENDPOINT : "/message";
+    let data = {};
+
+    if (useUserlike) {
+      data = {
+        ...conversationData,
+        general: {
+          ...getState().assistantStates.getIn(["userlikeData"]),
+          token: getState().generalStates.getIn(["token"]),
+        },
+      };
+    } else if (queryString === "/asistente/?ejecutivo_amsa=true" || queryString.length > 11) {
       data.general.integracion = {
         ...data.general.integracion,
         email_user: localStorage.getItem("email_user") !== null ? localStorage.getItem("email_user") : null,
@@ -1484,9 +1496,9 @@ function lynnEnd(dispatch, getState) {
 
   // }
   const data = {
-    cid: getState().assistantStates.getIn(["lynnData", "cid"]),
-    sid: getState().assistantStates.getIn(["lynnData", "sid"]),
-    token: getState().assistantStates.getIn(["lynnData", "token"]),
+    cid: getState().assistantStates.getIn(["userlikeData", "cid"]),
+    sid: getState().assistantStates.getIn(["userlikeData", "sid"]),
+    token: getState().assistantStates.getIn(["userlikeData", "token"]),
   };
 
   const request = axios({
@@ -1524,7 +1536,7 @@ function LynnOutInterval(data) {
         let item = {};
         item.send = "from";
         item.enabled = true;
-        item.general = getState().assistantStates.getIn(["lynnData"]);
+        item.general = getState().assistantStates.getIn(["userlikeData"]);
         if (response.data.textos[0] === "Inicio") {
           delete item.msg;
         } else {
