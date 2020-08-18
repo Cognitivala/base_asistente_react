@@ -347,6 +347,8 @@ export function openAssistant() {
 }
 export function closeAssistant() {
   return function action(dispatch) {
+    
+    await getSixbellEnd();
     localStorage.removeItem("email_user");
     dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
