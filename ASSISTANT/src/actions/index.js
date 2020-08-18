@@ -859,7 +859,7 @@ export function updateConversation(data) {
   };
 }
 
-function messageResponse(dispatch, data) {
+async function messageResponse(dispatch, data) {
   // console.log('messageResponse:: ', data);
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
@@ -892,6 +892,9 @@ function messageResponse(dispatch, data) {
     dispatch(addLynnData(data.general));
     // SE COMENTA PARA REVISAR INIT DE LYNN
     dispatch(userlikeInit(data, general));
+  } else if (data.agent === true) {
+    await getSixbellIn(dispatch, data, inputMessage);
+    await getSixbellOut(dispatch, data);
   } else {
     // console.log('data.general ', data)
     if (data.general !== undefined) {
