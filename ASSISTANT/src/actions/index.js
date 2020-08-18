@@ -1435,6 +1435,12 @@ export function getUrlParams(getState, urlParam) {
   return paramValue;
 }
 
+export function addLynnData(data) {
+  return function action(dispatch) {
+    dispatch({ type: "LYNN_DATA", data: data });
+  };
+}
+
 function LynnInit(data, general) {
   const newData = {
     ...data,
