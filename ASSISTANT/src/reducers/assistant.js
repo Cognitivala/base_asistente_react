@@ -7,7 +7,7 @@ export function assistantStates(
     active: false,
     minimized: false,
     useUserlike: false,
-    userlikeData: null,
+    userlikeData: {},
   }),
   action
 ) {
@@ -33,7 +33,7 @@ export function assistantStates(
       });
     case "USE_USERLIKE":
       return state.set("useUserlike", action.data);
-    case "USERLIKE":
+    case "USERLIKE_DATA":
       return state.set("userlikeData", action.data);
     default:
       return state;

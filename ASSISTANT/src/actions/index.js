@@ -1437,7 +1437,7 @@ export function getUrlParams(getState, urlParam) {
 
 export function addLynnData(data) {
   return function action(dispatch) {
-    dispatch({ type: "LYNN_DATA", data: data });
+    dispatch({ type: "USERLIKE_DATA", data: data });
   };
 }
 
