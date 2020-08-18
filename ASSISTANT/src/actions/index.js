@@ -1487,3 +1487,57 @@ export function getUrlParams(getState, urlParam) {
     if (paramValue === "null") return null;
     return paramValue;
 }
+
+function LynnInit(data, general) {
+  const newData = {
+    ...data,
+    msg: [".... Iniciando Comunicación con Ejecutivo ...."],
+  };
+  return function action(dispatch) {
+    const request = axios({
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      url: APIURL + "/lynn_in",
+      data: newData,
+    });
+    return request.then((response) => {
+      // console.log('RESPONSE LYNN', response);
+      if (response.status === 200) {
+        dispatch(startLynn());
+        dispatch(pushConversation(data));
+        // Intervalo para buscar posibles respuestas de Lynn
+        dispatch(LynnOutInterval(data, general));
+      }
+    });
+  };
+}
+
+function lynnEnd(dispatch, getState) {
+  // if() {
+
+  // }
+  const data = {
+    cid: getState().assistantStates.getIn(["lynnData", "cid"]),
+    sid: getState().assistantStates.getIn(["lynnData", "sid"]),
+    token: getState().assistantStates.getIn(["lynnData", "token"]),
+  };
+
+  const request = axios({
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    url: APIURL + "/lynn_end",
+    data: data,
+  });
+  return request.then((response) => {
+    if (response.status === 200) {
+      dispatch({ type: "DISABLED_INPUT" });
+      dispatch(closeLynn());
+      clearInterval(asistantInterval);
+      return;
+    }
+  });
+}
