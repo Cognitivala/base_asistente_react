@@ -352,7 +352,7 @@ export function closeAssistant() {
   return async function action(dispatch) {
     clearInterval(interval);
 
-    await getSixbellEnd();
+    await getUserlikeEnd();
     localStorage.removeItem("email_user");
     dispatch(defaultGeneral());
     dispatch({ type: "CLOSE_ASSISTANT" });
@@ -913,8 +913,8 @@ async function messageResponse(dispatch, data) {
   //   dispatch(userlikeInit(data, general));
   // }
   else if (data.deriva_userlike === true) {
-    await getSixbellIn(dispatch, data, inputMessage);
-    await getSixbellOut(dispatch, data);
+    await getUserlikeIn(dispatch, data, inputMessage);
+    await getUserlikeOut(dispatch, data);
   } else {
     // console.log('data.general ', data)
     if (data.general !== undefined) {
@@ -1605,9 +1605,9 @@ function userlikeOutInterval(data) {
 // FIN INTEGRACIÓN LYNN
 
 //SIXBELL IN
-export const getSixbellIn = (dispatch, data, inputMessage) => {
-  console.log("getSixbellIn DATA:: ", data);
-  console.log("getSixbellIn inputMessage:: ", data.msg);
+export const getUserlikeIn = (dispatch, data, inputMessage) => {
+  console.log("getUserlikeIn DATA:: ", data);
+  console.log("getUserlikeIn inputMessage:: ", data.msg);
 
   const { general, msg, send, enabled } = data;
   let newData = { general, msg, send, enabled };
@@ -1623,14 +1623,21 @@ export const getSixbellIn = (dispatch, data, inputMessage) => {
       },
     })
     .then((response) => {
-      console.log("response.data getSixbellIn:: ", response.data);
+      console.log("response.data getUserlikeIn:: ", response);
       const dataResponse = response.data;
-      if (dataResponse.estado.codigoEstado === 200) {
+
+      if (response.status === 200 && dataResponse.estado.codigoEstado === 200) {
         // let item = response.data;
         // item.send = "from";
         // item.enabled = true;
         console.log("item in", dataResponse);
         // dispatch(updateConversation(item));
+      } else {
+        let item = dataResponse;
+        item.enabled = false;
+        item.msg = ["Nuestro ejecutivo no está disponible, favor inténtelo más tarde."];
+        dispatch(updateConversation(item));
+        clearInterval(interval);
       }
     })
     .catch((error) => {
@@ -1639,10 +1646,10 @@ export const getSixbellIn = (dispatch, data, inputMessage) => {
 };
 
 //SIXBELL OUT
-export function getSixbellOut(dispatch, data) {
+export function getUserlikeOut(dispatch, data) {
   // clearInterval(asistantInterval);
 
-  console.log("getSixbellOut: ", data);
+  console.log("getUserlikeOut: ", data);
 
   if (interval) {
     clearInterval(interval);
@@ -1664,7 +1671,7 @@ export function getSixbellOut(dispatch, data) {
         },
       })
       .then(async (response) => {
-        console.log("getSixbellOut:: ", response.data);
+        console.log("getUserlikeOut:: ", response.data);
         const dataResponse = response.data;
 
         if (dataResponse.estado.codigoEstado === 200) {
@@ -1684,7 +1691,7 @@ export function getSixbellOut(dispatch, data) {
   }, ASISTANT_INTERVAL_TIMER);
 }
 
-export const getSixbellEnd = () => {
+export const getUserlikeEnd = () => {
   const urlApi = APIURL + "/live_message_end";
   let data = { cid: JSON.stringify(sessionStorage.getItem("cid")) };
   const token = sessionStorage.getItem("token");
@@ -1697,7 +1704,7 @@ export const getSixbellEnd = () => {
       },
     })
     .then((response) => {
-      console.log("getSixbellEnd:: ", response.data);
+      console.log("getUserlikeEnd:: ", response.data);
     })
     .catch((error) => {
       console.log(error);
