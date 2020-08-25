@@ -591,7 +591,6 @@ export function updateConversation(data) {
     dispatch(pushConversation(data));
 
     console.log("updateConversation DATA:: ", data);
-    console.log(localStorage.getItem("deriva_userlike"));
 
     if (localStorage.getItem("deriva_userlike") === "true") {
       console.log("ENVIAR DATA A USERLIKE!!");
@@ -941,7 +940,6 @@ async function messageResponse(dispatch, data) {
     console.log("inputMessage:: ", inputMessage);
     localStorage.setItem("deriva_userlike", true);
     await getUserlikeIn(dispatch, data, inputMessage);
-    await getUserlikeOut(dispatch, data);
   } else {
     // console.log('data.general ', data)
     if (data.general !== undefined) {
@@ -1676,12 +1674,14 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
         let item = dataResponse;
         item.enabled = false;
         item.msg = [""];
-        dispatch(updateConversation(item));
-        clearInterval(interval);
+        // dispatch(updateConversation(item));
+        getUserlikeOut(dispatch, data);
+        // clearInterval(interval);
       }
     })
     .catch((error) => {
       console.log(error);
+      localStorage.removeItem("deriva_userlike");
     });
 };
 
@@ -1739,6 +1739,7 @@ export function getUserlikeOut(dispatch, data) {
       })
       .catch((error) => {
         console.log(error);
+        localStorage.removeItem("deriva_userlike");
       });
   }, ASISTANT_INTERVAL_TIMER);
 }
@@ -1762,6 +1763,7 @@ export const getUserlikeEnd = () => {
     })
     .catch((error) => {
       console.log(error);
+      localStorage.removeItem("deriva_userlike");
     });
 };
 
