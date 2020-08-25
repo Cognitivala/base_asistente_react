@@ -1654,30 +1654,31 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
       console.log("response.data getUserlikeIn:: ", response);
       const dataResponse = response.data;
 
-      if (response.status === 200 && dataResponse.estado.codigoEstado === 200) {
-        console.log("item in", dataResponse);
+      // if (response.status === 200 && dataResponse.estado.codigoEstado === 200) {
+      console.log("item in", dataResponse);
 
-        if (dataResponse.end_conversation === true) {
-          clearInterval(interval);
-          let item = dataResponse;
-          item.enabled = false;
-          item.msg = ["userlike_off"];
-
-          localStorage.removeItem("deriva_userlike");
-          dispatch(updateConversation(item));
-        }
-
-        // let item = response.data;
-        // item.send = "from";
-        // item.enabled = true;
-        // dispatch(updateConversation(item));
-      } else {
+      if (dataResponse.end_conversation === true) {
+        clearInterval(interval);
         let item = dataResponse;
         item.enabled = false;
-        item.msg = ["Nuestro ejecutivo no está disponible, favor inténtelo más tarde."];
+        item.msg = ["userlike_off"];
+
+        localStorage.removeItem("deriva_userlike");
         dispatch(updateConversation(item));
-        clearInterval(interval);
+      } else {
+        let item = response.data;
+        item.send = "from";
+        item.enabled = true;
+        dispatch(updateConversation(item));
       }
+
+      // else {
+      //   let item = dataResponse;
+      //   item.enabled = false;
+      //   item.msg = [""];
+      //   dispatch(updateConversation(item));
+      //   clearInterval(interval);
+      // }
     })
     .catch((error) => {
       console.log(error);
