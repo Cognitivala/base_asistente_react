@@ -351,7 +351,7 @@ var asistantInterval = null;
 export function closeAssistant() {
   return async function action(dispatch) {
     clearInterval(interval);
-
+    localStorage.removeItem("deriva_userlike");
     await getUserlikeEnd();
     localStorage.removeItem("email_user");
     dispatch(defaultGeneral());
@@ -543,6 +543,8 @@ function updateConversationError(data) {
 }
 
 export function updateConversation(data) {
+  console.log("updateConversation:: ", data);
+
   let inputMessage = data.msg[0];
 
   return function action(dispatch, getState) {
@@ -577,67 +579,83 @@ export function updateConversation(data) {
       };
     }
 
+    data.general = {
+      ...data.general,
+      id_cliente: "1",
+      origen: 1,
+      token: null,
+      // token: getState().assistantStates.getIn(["userlikeData", "token"]),
+    };
+
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
 
-    // console.log('updateConversation DATA:: ', data);
+    console.log("updateConversation DATA:: ", data);
+    console.log(localStorage.getItem("deriva_userlike"));
 
-    const request = axios({
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      url: APIURL + "/message",
-      data: {
-        ...data,
-        rut: getUrlParams(getState, "rut"),
-        user: getUrlParams(getState, "user"),
-        clave: getUrlParams(getState, "clave"),
-        ejecutivo_amsa: getUrlParams(getState, "ejecutivo_amsa"),
-        // emailUser,
-        // integracion: {
-        //     email_user: data.email_user
-        // }
-        // general: {...data.general.integracion, email_user: data.email_user }
-        // email_user: data.email_user
-      },
-    });
-    return request
-      .then((response) => {
-        console.log("message updateConversation:: ", response.data);
-        // console.log('message updateConversation MSG:: ', response.data.msg);
-        if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
-          let item = response.data;
-          item.send = "from";
-          item.enabled = true;
-          // item.email_user = response.data.email_user
-
-          console.log("response.data.agent::: ", response.data.agent);
-          if (response.data.agent === true) {
-            item.msg = [`${inputMessage}`];
-            sessionStorage.setItem("cid", response.data.general.cid);
-          } else if (localStorage.getItem("email_user") !== null) {
-            const queryString = window.location.href.toString().split(window.location.host)[1];
-            if (queryString === "/asistente/?ejecutivo_amsa=true" || queryString.length > 11) {
-              const email_user = localStorage.getItem("email_user");
-              item.general.integracion = {
-                ...data.general.integracion,
-                email_user: email_user,
-              };
-            }
-          }
-
-          console.log("updateConversation Item:: ", item);
-
-          // dispatch(setNodoId(item.msg[item.msg.length - 1]));
-          messageResponse(dispatch, item);
-        } else {
-          dispatch(updateConversationError(response.statusText));
-        }
-      })
-      .catch((err) => {
-        dispatch(updateConversationError(err.response.data.msg));
+    if (localStorage.getItem("deriva_userlike") === "true") {
+      console.log("ENVIAR DATA A USERLIKE!!");
+      console.log("DATA ENVIAR DATA A USERLIKE!!", data);
+      console.log("inputMessage ENVIAR DATA A USERLIKE!!", inputMessage);
+      getUserlikeIn(dispatch, data, inputMessage);
+    } else {
+      const request = axios({
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        url: APIURL + "/message",
+        data: {
+          ...data,
+          rut: getUrlParams(getState, "rut"),
+          user: getUrlParams(getState, "user"),
+          clave: getUrlParams(getState, "clave"),
+          ejecutivo_amsa: getUrlParams(getState, "ejecutivo_amsa"),
+          // emailUser,
+          // integracion: {
+          //     email_user: data.email_user
+          // }
+          // general: {...data.general.integracion, email_user: data.email_user }
+          // email_user: data.email_user
+        },
       });
+      return request
+        .then((response) => {
+          console.log("message updateConversation:: ", response.data);
+          // console.log('message updateConversation MSG:: ', response.data.msg);
+          if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
+            let item = response.data;
+            item.send = "from";
+            item.enabled = true;
+            // item.email_user = response.data.email_user
+
+            console.log("response.data.agent::: ", response.data.agent);
+            if (response.data.agent === true) {
+              item.msg = [`${inputMessage}`];
+              sessionStorage.setItem("cid", response.data.general.cid);
+            } else if (localStorage.getItem("email_user") !== null) {
+              const queryString = window.location.href.toString().split(window.location.host)[1];
+              if (queryString === "/asistente/?ejecutivo_amsa=true" || queryString.length > 11) {
+                const email_user = localStorage.getItem("email_user");
+                item.general.integracion = {
+                  ...data.general.integracion,
+                  email_user: email_user,
+                };
+              }
+            }
+
+            console.log("updateConversation Item:: ", item);
+
+            // dispatch(setNodoId(item.msg[item.msg.length - 1]));
+            messageResponse(dispatch, item);
+          } else {
+            dispatch(updateConversationError(response.statusText));
+          }
+        })
+        .catch((err) => {
+          dispatch(updateConversationError(err.response.data.msg));
+        });
+    }
 
     //Respuesta
     // const msg = parseInt(data.msg[0]);
@@ -878,6 +896,13 @@ export function updateConversation(data) {
 }
 
 async function messageResponse(dispatch, data) {
+  console.log("messageResponse:: ", data);
+
+  data.general = {
+    ...data.general,
+    id_cliente: "1",
+  };
+
   // console.log('messageResponse:: ', data);
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
@@ -913,6 +938,8 @@ async function messageResponse(dispatch, data) {
   //   dispatch(userlikeInit(data, general));
   // }
   else if (data.deriva_userlike === true) {
+    console.log("inputMessage:: ", inputMessage);
+    localStorage.setItem("deriva_userlike", true);
     await getUserlikeIn(dispatch, data, inputMessage);
     await getUserlikeOut(dispatch, data);
   } else {
@@ -929,6 +956,7 @@ async function messageResponse(dispatch, data) {
     dispatch(pushConversation(data));
   }
 }
+
 export function setHistory(data) {
   return function action(dispatch) {
     const lastConversation = data[data.length - 1],
@@ -1031,9 +1059,10 @@ export function updateConversationButton(data) {
             ejecutivo_amsa: getUrlParams(getState, "ejecutivo_amsa"),
           },
         });
+
         return request.then(
           (response) => {
-            // console.log('RESPONSE MENSAJE 3::');
+            console.log("RESPONSE MENSAJE 3::");
             if (response.status === 200) {
               let item = response.data;
               item.send = "from";
@@ -1604,10 +1633,12 @@ function userlikeOutInterval(data) {
 
 // FIN INTEGRACIÓN LYNN
 
-//SIXBELL IN
+//USERLIKE IN
 export const getUserlikeIn = (dispatch, data, inputMessage) => {
   console.log("getUserlikeIn DATA:: ", data);
-  console.log("getUserlikeIn inputMessage:: ", data.msg);
+  console.log("getUserlikeIn MSG:: ", data.msg);
+  console.log("getUserlikeIn inputMessage:: ", inputMessage);
+  console.log("DATA GENERAL getUserlikeIn", data);
 
   const { general, msg, send, enabled } = data;
   let newData = { general, msg, send, enabled };
@@ -1617,20 +1648,28 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
 
   axios
     .post(urlApi, newData, {
-      headers: {
-        // 'Authorization': `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
     })
     .then((response) => {
       console.log("response.data getUserlikeIn:: ", response);
       const dataResponse = response.data;
 
       if (response.status === 200 && dataResponse.estado.codigoEstado === 200) {
+        console.log("item in", dataResponse);
+
+        if (dataResponse.end_conversation === true) {
+          clearInterval(interval);
+          let item = dataResponse;
+          item.enabled = false;
+          item.msg = ["userlike_off"];
+
+          localStorage.removeItem("deriva_userlike");
+          dispatch(updateConversation(item));
+        }
+
         // let item = response.data;
         // item.send = "from";
         // item.enabled = true;
-        console.log("item in", dataResponse);
         // dispatch(updateConversation(item));
       } else {
         let item = dataResponse;
@@ -1645,7 +1684,7 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
     });
 };
 
-//SIXBELL OUT
+//USERLIKE OUT
 export function getUserlikeOut(dispatch, data) {
   // clearInterval(asistantInterval);
 
@@ -1676,14 +1715,26 @@ export function getUserlikeOut(dispatch, data) {
 
         if (dataResponse.estado.codigoEstado === 200) {
           // dispatch(updateConversation(response.data.msg));
-          let item = response.data;
-          item.send = "from";
-          item.enabled = true;
-          // dispatch(updateConversation(item));
-          // await dispatch(messageResponse(dispatch, item));
-          await dispatch(pushConversation(item));
-        } else {
+
+          if (dataResponse.end_conversation) {
+            // getUserlikeEnd();
+            clearInterval(interval);
+            let item = dataResponse;
+            item.enabled = false;
+            item.msg = ["userlike_end"];
+            localStorage.removeItem("deriva_userlike");
+            dispatch(updateConversation(item));
+          } else {
+            let item = response.data;
+            item.send = "from";
+            item.enabled = true;
+            // dispatch(updateConversation(item));
+            // await dispatch(messageResponse(dispatch, item));
+            await dispatch(pushConversation(item));
+          }
         }
+        // else {
+        // }
       })
       .catch((error) => {
         console.log(error);
@@ -1691,6 +1742,7 @@ export function getUserlikeOut(dispatch, data) {
   }, ASISTANT_INTERVAL_TIMER);
 }
 
+//USERLIKE END
 export const getUserlikeEnd = () => {
   const urlApi = APIURL + "/live_message_end";
   let data = { cid: JSON.stringify(sessionStorage.getItem("cid")) };
@@ -1704,7 +1756,8 @@ export const getUserlikeEnd = () => {
       },
     })
     .then((response) => {
-      console.log("getUserlikeEnd:: ", response.data);
+      // console.log("getUserlikeEnd:: ", response.data);
+      localStorage.removeItem("deriva_userlike");
     })
     .catch((error) => {
       console.log(error);
