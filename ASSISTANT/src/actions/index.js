@@ -1665,12 +1665,13 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
 
         localStorage.removeItem("deriva_userlike");
         dispatch(updateConversation(item));
-      } else {
-        let item = response.data;
-        item.send = "from";
-        item.enabled = true;
-        dispatch(updateConversation(item));
       }
+      // else {
+      //   let item = response.data;
+      //   item.send = "from";
+      //   item.enabled = true;
+      //   dispatch(updateConversation(item));
+      // }
 
       // else {
       //   let item = dataResponse;
