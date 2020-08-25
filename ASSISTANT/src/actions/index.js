@@ -1672,14 +1672,13 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
       //   item.enabled = true;
       //   dispatch(updateConversation(item));
       // }
-
-      // else {
-      //   let item = dataResponse;
-      //   item.enabled = false;
-      //   item.msg = [""];
-      //   dispatch(updateConversation(item));
-      //   clearInterval(interval);
-      // }
+      else {
+        let item = dataResponse;
+        item.enabled = false;
+        item.msg = [""];
+        dispatch(updateConversation(item));
+        clearInterval(interval);
+      }
     })
     .catch((error) => {
       console.log(error);
