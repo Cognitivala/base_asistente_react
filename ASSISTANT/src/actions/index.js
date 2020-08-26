@@ -249,10 +249,10 @@ export function getSaludo() {
     const queryString3 = window.location.href.toString();
     const queryString4 = window.location.href.toString().split(window.location.host)[1];
 
-    console.log("queryString:: ", queryString);
-    console.log("queryString2:: ", queryString2);
-    console.log("queryString3:: ", queryString3);
-    console.log("queryString4:: ", queryString4.length);
+    // console.log("queryString:: ", queryString);
+    // console.log("queryString2:: ", queryString2);
+    // console.log("queryString3:: ", queryString3);
+    // console.log("queryString4:: ", queryString4.length);
 
     const data = {
         general: {
@@ -543,7 +543,7 @@ function updateConversationError(data) {
 }
 
 export function updateConversation(data) {
-  console.log("updateConversation:: ", data);
+  // console.log("updateConversation:: ", data);
 
   let inputMessage = data.msg[0];
 
@@ -590,12 +590,12 @@ export function updateConversation(data) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
 
-    console.log("updateConversation DATA:: ", data);
+    // console.log("updateConversation DATA:: ", data);
 
     if (localStorage.getItem("deriva_userlike") === "true") {
-      console.log("ENVIAR DATA A USERLIKE!!");
-      console.log("DATA ENVIAR DATA A USERLIKE!!", data);
-      console.log("inputMessage ENVIAR DATA A USERLIKE!!", inputMessage);
+      // console.log("ENVIAR DATA A USERLIKE!!");
+      // console.log("DATA ENVIAR DATA A USERLIKE!!", data);
+      // console.log("inputMessage ENVIAR DATA A USERLIKE!!", inputMessage);
       getUserlikeIn(dispatch, data, inputMessage);
     } else {
       const request = axios({
@@ -620,7 +620,7 @@ export function updateConversation(data) {
       });
       return request
         .then((response) => {
-          console.log("message updateConversation:: ", response.data);
+          // console.log("message updateConversation:: ", response.data);
           // console.log('message updateConversation MSG:: ', response.data.msg);
           if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
             let item = response.data;
@@ -628,7 +628,7 @@ export function updateConversation(data) {
             item.enabled = true;
             // item.email_user = response.data.email_user
 
-            console.log("response.data.agent::: ", response.data.agent);
+            // console.log("response.data.agent::: ", response.data.agent);
             if (response.data.agent === true) {
               item.msg = [`${inputMessage}`];
               sessionStorage.setItem("cid", response.data.general.cid);
@@ -643,7 +643,7 @@ export function updateConversation(data) {
               }
             }
 
-            console.log("updateConversation Item:: ", item);
+            // console.log("updateConversation Item:: ", item);
 
             // dispatch(setNodoId(item.msg[item.msg.length - 1]));
             messageResponse(dispatch, item);
@@ -895,7 +895,7 @@ export function updateConversation(data) {
 }
 
 async function messageResponse(dispatch, data) {
-  console.log("messageResponse:: ", data);
+  // console.log("messageResponse:: ", data);
 
   data.general = {
     ...data.general,
@@ -937,7 +937,7 @@ async function messageResponse(dispatch, data) {
   //   dispatch(userlikeInit(data, general));
   // }
   else if (data.deriva_userlike === true) {
-    console.log("inputMessage:: ", inputMessage);
+    // console.log("inputMessage:: ", inputMessage);
     localStorage.setItem("deriva_userlike", true);
     await getUserlikeIn(dispatch, data, inputMessage);
   } else {
@@ -986,7 +986,7 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-  console.log("updateConversationButton:: ", data);
+  // console.log("updateConversationButton:: ", data);
 
   switch (data.msg[0]) {
     case "siValorar":
@@ -1060,7 +1060,7 @@ export function updateConversationButton(data) {
 
         return request.then(
           (response) => {
-            console.log("RESPONSE MENSAJE 3::");
+            // console.log("RESPONSE MENSAJE 3::");
             if (response.status === 200) {
               let item = response.data;
               item.send = "from";
@@ -1227,7 +1227,7 @@ export function sendValoracion(data, general) {
           dispatch(updateConversation(item));
           dispatch({ type: "GET_CONVERSATIONS_END" });
 
-          console.log("ITEM GENERAL:: ", item.general);
+          // console.log("ITEM GENERAL:: ", item.general);
         } else {
           let msg = ["error_formulario"];
           dispatch(updateConversationError(msg));
@@ -1249,8 +1249,8 @@ export function closeValoracion(data) {
 
 //LIKE
 export function sendLike(data, general) {
-  console.log("sendLike:: ", data);
-  console.log("sendLike:: ", general);
+  // console.log("sendLike:: ", data);
+  // console.log("sendLike:: ", general);
 
   data.id_data_canal = 123;
   data.input = "www";
@@ -1283,7 +1283,7 @@ export function sendLike(data, general) {
     });
     return request.then(
       (response) => {
-        console.log("sendLike response:: ", response);
+        // console.log("sendLike response:: ", response);
 
         if (response.status === 200 && response.data.estado.codigoEstado === 200) {
           let item = {};
@@ -1293,7 +1293,7 @@ export function sendLike(data, general) {
           item.general = general;
           item.msg = ["exito_formulario"];
 
-          console.log("sendLike:: ", item.general);
+          // console.log("sendLike:: ", item.general);
           dispatch(updateConversation(item));
           // dispatch({ type: "GET_CONVERSATIONS_END" });
 
@@ -1633,10 +1633,10 @@ function userlikeOutInterval(data) {
 
 //USERLIKE IN
 export const getUserlikeIn = (dispatch, data, inputMessage) => {
-  console.log("getUserlikeIn DATA:: ", data);
-  console.log("getUserlikeIn MSG:: ", data.msg);
-  console.log("getUserlikeIn inputMessage:: ", inputMessage);
-  console.log("DATA GENERAL getUserlikeIn", data);
+  // console.log("getUserlikeIn DATA:: ", data);
+  // console.log("getUserlikeIn MSG:: ", data.msg);
+  // console.log("getUserlikeIn inputMessage:: ", inputMessage);
+  // console.log("DATA GENERAL getUserlikeIn", data);
 
   const { general, msg, send, enabled } = data;
   let newData = { general, msg, send, enabled };
@@ -1649,11 +1649,11 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
       headers: { "Content-Type": "application/json" },
     })
     .then((response) => {
-      console.log("response.data getUserlikeIn:: ", response);
+      // console.log("response.data getUserlikeIn:: ", response);
       const dataResponse = response.data;
 
       // if (response.status === 200 && dataResponse.estado.codigoEstado === 200) {
-      console.log("item in", dataResponse);
+      // console.log("item in", dataResponse);
 
       if (dataResponse.end_conversation === true) {
         clearInterval(interval);
@@ -1689,8 +1689,6 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
 export function getUserlikeOut(dispatch, data) {
   // clearInterval(asistantInterval);
 
-  console.log("getUserlikeOut: ", data);
-
   if (interval) {
     clearInterval(interval);
   }
@@ -1711,7 +1709,7 @@ export function getUserlikeOut(dispatch, data) {
         },
       })
       .then(async (response) => {
-        console.log("getUserlikeOut:: ", response.data);
+        // console.log("", response.data);
         const dataResponse = response.data;
 
         if (dataResponse.estado.codigoEstado === 200) {
