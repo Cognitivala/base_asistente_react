@@ -13,7 +13,7 @@ export default class Header extends Component {
   showMore() {
     if (this.props.moreHeader) {
       this.props.toggleHeaderMore(false);
-    }else {
+    } else {
       this.props.toggleHeaderMore(true);
     }
   }
@@ -36,11 +36,7 @@ export default class Header extends Component {
 
   fillCloseButton(mainCss, responsive) {
     if (responsive === "mobile") {
-      return (
-        <button onClick={this.props.closeAssistant}
-          className={ mainCss.CloseButton + " " + mainCss.Btn + " " + mainCss.BtnTransparent }
-        />
-      );
+      return <button onClick={this.props.closeAssistant} className={mainCss.CloseButton + " " + mainCss.Btn + " " + mainCss.BtnTransparent} />;
     }
   }
 
@@ -56,40 +52,30 @@ export default class Header extends Component {
               : mainCss.HeaderHelpDown + " " + cssClass + " " + mainCss.HeaderMore
           }
         >
-          <div/>
-            <img
-              className={mainCss.HeaderImage}
-              src={this.props.logo}
-              // src={logo}
-              alt={"Logo"}
-            />
-            <button
-              className={mainCss.Btn + " " + mainCss.BtnTransparent}
-              onClick={this.props.minimizedAssistant}
-            >
-              <i
-                className={mainCss.IconMinimized}
-                onClick={this.props.minimizedAssistant}
-              />
-            </button>
-            {this.fillCloseButton(mainCss, responsive)}
-            <div className={mainCss.HeaderText} onClick={this.showMore}>
-              <h3>¡Hola!</h3>
-              <p dangerouslySetInnerHTML={{ __html: this.props.saludo }}>
-  
+          <div />
+          <img
+            className={mainCss.HeaderImage}
+            src={this.props.logo}
+            // src={logo}
+            alt={"Logo"}
+          />
+          <button className={mainCss.Btn + " " + mainCss.BtnTransparent} onClick={this.props.minimizedAssistant}>
+            <i className={mainCss.IconMinimized} onClick={this.props.minimizedAssistant} />
+          </button>
+          {this.fillCloseButton(mainCss, responsive)}
+          <div className={mainCss.HeaderText} onClick={this.showMore}>
+            {/* <h3>¡Hola!</h3> */}
+            <p dangerouslySetInnerHTML={{ __html: this.props.saludo }}>
               {/* Hola soy el Asistente Digital de DUOC Educación Continua y estoy aquí para ayudarte a dar respuestas a tus preguntas sobre: Cursos, Cursos/SAP o Diplomados. */}
-                </p>
-            </div>
+            </p>
+          </div>
         </div>
       );
     } else {
       return (
-        <div ref={this.div}
-          className={
-            positionHelp === "top"
-              ? mainCss.Header + " " + mainCss.HeaderHelpUp
-              : mainCss.HeaderHelpDown + " " + cssClass
-          }
+        <div
+          ref={this.div}
+          className={positionHelp === "top" ? mainCss.Header + " " + mainCss.HeaderHelpUp : mainCss.HeaderHelpDown + " " + cssClass}
           // style={style}
         >
           <img
@@ -103,14 +89,8 @@ export default class Header extends Component {
             <p>{this.props.subtitulo}</p>
           </div>
           {this.fillHelp(this.props.ayuda, this.props.minimized, positionHelp)}
-          <button
-            className={mainCss.Btn + " " + mainCss.BtnTransparent}
-            onClick={this.props.minimizedAssistant}
-          >
-            <i
-              className={mainCss.IconMinimized}
-              onClick={this.props.minimizedAssistant}
-            />
+          <button className={mainCss.Btn + " " + mainCss.BtnTransparent} onClick={this.props.minimizedAssistant}>
+            <i className={mainCss.IconMinimized} onClick={this.props.minimizedAssistant} />
           </button>
           {this.fillCloseButton(mainCss, responsive)}
         </div>
@@ -120,12 +100,12 @@ export default class Header extends Component {
 
   render() {
     const { mainCss, responsive, positionHelp } = this.props;
-      // style = {
-      //   backgroundImage: "url(" + imgBackHeader + ")",
-      //   background:
-      //     "linear-gradient(45deg, #004ecb 2%, #0957d6 61%, #2979ff 97%)",
-      //   backgroundColor: this.props.colorHeader
-      // };
+    // style = {
+    //   backgroundImage: "url(" + imgBackHeader + ")",
+    //   background:
+    //     "linear-gradient(45deg, #004ecb 2%, #0957d6 61%, #2979ff 97%)",
+    //   backgroundColor: this.props.colorHeader
+    // };
     return this.content(mainCss, responsive, positionHelp);
   }
 }
@@ -146,5 +126,5 @@ Header.propTypes = {
   minimized: PropTypes.bool.isRequired,
   mainCss: PropTypes.any.isRequired,
   responsive: PropTypes.string,
-  positionHelp: PropTypes.string.isRequired
+  positionHelp: PropTypes.string.isRequired,
 };
