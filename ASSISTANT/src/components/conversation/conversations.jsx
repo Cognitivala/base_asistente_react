@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import * as Immutable from "immutable";
 import IsFetching from "../modules/is-fetching";
 import ConversationMsg from "./conversation-msg";
@@ -30,16 +30,15 @@ export default class Conversations extends Component {
   }
 
   componentDidUpdate(nextProps) {
-    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)){
+    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)) {
       this.scrollToBottom();
       this.setHistory();
       this.toggleEnabled();
     }
-
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)){
+    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)) {
       this.handleScroll();
     }
   }
@@ -50,18 +49,16 @@ export default class Conversations extends Component {
     // this.scrollBottom();
   }
 
-  scrollBottom () {
+  scrollBottom() {
     this.myRef.current.scrollTo(0, 500);
     window.scrollTo(0, 500);
     var objDiv = document.getElementById("scrollBottom");
     objDiv.scrollTop = objDiv.scrollHeight;
   }
 
-
-  componentWillMount(){
-    
+  componentWillMount() {
     const { conversationsStates, disabledInput } = this.props,
-      conversations = conversationsStates.get('conversations'),
+      conversations = conversationsStates.get("conversations"),
       conversation = conversations.get(-1),
       buttons = conversation.get("buttons"),
       selects = conversation.get("selects"),
@@ -71,9 +68,9 @@ export default class Conversations extends Component {
       attach = conversation.get("attach"),
       like = conversation.get("like"),
       withStars = conversation.get("withStars");
-      if(buttons || selects || multibuttons || datepicker || files || attach || like || withStars){
-        disabledInput();
-      }
+    if (buttons || selects || multibuttons || datepicker || files || attach || like || withStars) {
+      disabledInput();
+    }
   }
 
   // verAsistencia(value) {
@@ -86,21 +83,16 @@ export default class Conversations extends Component {
       sizeConv = conversationsStates.get("conversations").size;
     if (sizeConv > 1) {
       toggleHeaderMore(false);
-    } else if(sizeConv===1) {
-      toggleHeaderMore(true)
-    } else if(moreHeader) {
+    } else if (sizeConv === 1) {
+      toggleHeaderMore(true);
+    } else if (moreHeader) {
       toggleHeaderMore(true);
     }
   }
 
   toggleEnabled() {
-    const {
-        ayudaStates,
-        inputStates,
-        customParamsStates,
-        conversationsStates
-      } = this.props;
-      // console.log(customParamsStates.getIn(["customParams"]) );
+    const { ayudaStates, inputStates, customParamsStates, conversationsStates } = this.props;
+    // console.log(customParamsStates.getIn(["customParams"]) );
 
     const sizeConv = conversationsStates.get("conversations").size;
     if (sizeConv > 1) {
@@ -114,6 +106,7 @@ export default class Conversations extends Component {
         liftUp = lastConversation.get("liftUp"),
         like = lastConversation.get("like"),
         rating = lastConversation.get("rating");
+
       if (
         buttons !== undefined ||
         selects !== undefined ||
@@ -122,13 +115,13 @@ export default class Conversations extends Component {
         datepicker !== undefined ||
         attach !== undefined ||
         (like !== undefined && like) ||
-         (rating !== undefined && rating)
+        (rating !== undefined && rating)
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
-        if ((help && ayudaStates.get("enabled"))) this.props.disabledHelp();
+        if (help && ayudaStates.get("enabled")) this.props.disabledHelp();
         if (inputStates.get("enabled")) this.props.disabledInput();
       } else {
-        if ((help && !ayudaStates.get("enabled"))) this.props.enabledHelp();
+        if (help && !ayudaStates.get("enabled")) this.props.enabledHelp();
         if (!inputStates.get("enabled")) this.props.enabledInput();
       }
     }
@@ -138,48 +131,40 @@ export default class Conversations extends Component {
   setHistory() {
     const { conversationsStates, customParamsStates } = this.props,
       conversations = conversationsStates.get("conversations");
-    if (
-      customParamsStates.getIn([
-        "customParams",
-        "settings",
-        "keep_conversation"
-      ]) &&
-      conversations.size > 1
-    ) {
+    if (customParamsStates.getIn(["customParams", "settings", "keep_conversation"]) && conversations.size > 1) {
       let hc = [],
         largo = conversations.size - 1;
-      conversations.forEach((conversation,i) => {
+      conversations.forEach((conversation, i) => {
         const buttons = conversation.get("buttons"),
-        multibuttons = conversation.get("multibuttons"),
-        selects = conversation.get("selects"),
-        msg = conversation.get("msg"),
-        send = conversation.get("send"),
-        liftUp = conversation.get("liftUp"),
-        enabled = conversation.get("enabled"),
-        form = conversation.get("form"),
-        datepicker = conversation.get("datepicker"),
-        files = conversation.get("files"),
-        attach = conversation.get("attach"),
-        like = conversation.get("like"),
-        withStars = conversation.get("withStars"),
-        map = {
-          buttons: buttons !== undefined ? buttons.toJS() : buttons,
-          selects: selects !== undefined ? selects.toJS() : selects,
-          multibuttons:
-            multibuttons !== undefined ? multibuttons.toJS() : multibuttons,
-          msg: msg !== undefined ? msg.toJS() : msg,
-          send: send !== undefined ? send : send,
-          liftUp: liftUp !== undefined ? liftUp : liftUp,
-          enabled: enabled !== undefined ? enabled : enabled,
-          form: form !== undefined ? form : form,
-          datepicker: datepicker !== undefined ? datepicker : datepicker,
-          files: files !== undefined ? files : files,
-          attach: attach !== undefined ? attach.toJS() : attach,
-          like: like !== undefined ? like : like,
-          withStars: withStars !== undefined ? withStars : withStars
-        };
-      if (largo === i) map.general = conversation.get("general").toJS();
-      hc.push(map);
+          multibuttons = conversation.get("multibuttons"),
+          selects = conversation.get("selects"),
+          msg = conversation.get("msg"),
+          send = conversation.get("send"),
+          liftUp = conversation.get("liftUp"),
+          enabled = conversation.get("enabled"),
+          form = conversation.get("form"),
+          datepicker = conversation.get("datepicker"),
+          files = conversation.get("files"),
+          attach = conversation.get("attach"),
+          like = conversation.get("like"),
+          withStars = conversation.get("withStars"),
+          map = {
+            buttons: buttons !== undefined ? buttons.toJS() : buttons,
+            selects: selects !== undefined ? selects.toJS() : selects,
+            multibuttons: multibuttons !== undefined ? multibuttons.toJS() : multibuttons,
+            msg: msg !== undefined ? msg.toJS() : msg,
+            send: send !== undefined ? send : send,
+            liftUp: liftUp !== undefined ? liftUp : liftUp,
+            enabled: enabled !== undefined ? enabled : enabled,
+            form: form !== undefined ? form : form,
+            datepicker: datepicker !== undefined ? datepicker : datepicker,
+            files: files !== undefined ? files : files,
+            attach: attach !== undefined ? attach.toJS() : attach,
+            like: like !== undefined ? like : like,
+            withStars: withStars !== undefined ? withStars : withStars,
+          };
+        if (largo === i) map.general = conversation.get("general").toJS();
+        hc.push(map);
       });
       let str_md5v = AES.encrypt(JSON.stringify(hc), KEY_ENCRYPT).toString();
       localStorage.setItem("hc", str_md5v);
@@ -219,14 +204,7 @@ export default class Conversations extends Component {
   //Fin Scroll Bottom
 
   fillConversation() {
-    const {
-        updateConversation,
-        updateConversationButton,
-        conversationsStates,
-        customParamsStates,
-        generalStates,
-        mainCss
-      } = this.props,
+    const { updateConversation, updateConversationButton, conversationsStates, customParamsStates, generalStates, mainCss } = this.props,
       sizeConversation = conversationsStates.get("conversations").size,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
@@ -250,10 +228,10 @@ export default class Conversations extends Component {
           rating = conversation.get("rating"),
           last = j + 1 === sizeConversation ? true : false,
           withStars = conversation.get("withStars"),
-          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" "; //Si es la última conversa
+          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued + " "; //Si es la última conversa
         if (msg !== undefined) {
           const { sendLike } = this.props;
-          
+
           retorno.push(
             <ConversationMsg
               key={j}
@@ -348,14 +326,7 @@ export default class Conversations extends Component {
 
         if (files !== undefined) {
           retorno.push(
-            <ConversationFiles
-              key={j * 24}
-              files={files}
-              animation={animation}
-              send={send}
-              generalStates={generalStates}
-              mainCss={mainCss}
-            />
+            <ConversationFiles key={j * 24} files={files} animation={animation} send={send} generalStates={generalStates} mainCss={mainCss} />
           );
         }
 
@@ -378,7 +349,7 @@ export default class Conversations extends Component {
                     updateConversationButton,
                     generalStates,
                     disabledHelp,
-                    disabledInput
+                    disabledInput,
                   } = this.props;
                   // debugger
                   retorno.push(
@@ -404,15 +375,7 @@ export default class Conversations extends Component {
                 }
                 break;
               case "form":
-                const {
-                    formularioStates,
-                    closeForm,
-                    generalStates,
-                    attachFileForm,
-                    sendForm,
-                    deleteFileForm,
-                    customParamsStates
-                  } = this.props,
+                const { formularioStates, closeForm, generalStates, attachFileForm, sendForm, deleteFileForm, customParamsStates } = this.props,
                   enabledFormulario = formularioStates.get("enabled"),
                   form = conversation.get("form");
 
@@ -438,10 +401,9 @@ export default class Conversations extends Component {
               default:
                 break;
             }
-          } 
-          
-          if (like !== undefined && like) {
+          }
 
+          if (like !== undefined && like) {
             const { sendLike, conversationsStates, generalStates } = this.props;
             retorno.push(
               <ConversationLikes
@@ -453,49 +415,79 @@ export default class Conversations extends Component {
                 mainCss={mainCss}
               />
             );
-          } 
-          else if ( this.props.asistencia === true) {
+          } else if (this.props.asistencia === true) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
-              <FormAsistencia scroll={true} key={`${j} * ${j} * 535`} 
-                setUrlParams={this.props.setUrlParams} 
-                updateConversationButton={this.props.updateConversationButton} 
-                asistencia={this.props.asistencia} 
-                getAsistencia={this.props.getAsistencia} 
-                generalStates={generalStates} 
+              <FormAsistencia
+                scroll={true}
+                key={`${j} * ${j} * 535`}
+                setUrlParams={this.props.setUrlParams}
+                updateConversationButton={this.props.updateConversationButton}
+                asistencia={this.props.asistencia}
+                getAsistencia={this.props.getAsistencia}
+                generalStates={generalStates}
                 sendValoracion={sendValoracion}
               />
-            )
-          }
-          else if ( rating ) {
+            );
+          } else if (rating) {
             const { sendValoracion, generalStates } = this.props;
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
+            retorno.push(<FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />);
+          } else if (this.props.verificar) {
+            const { mainCss, customParamsStates } = this.props;
+            const avatar = customParamsStates.getIn(["customParams", "avatar"]);
             retorno.push(
-              <FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />
+              <Fragment key={`${j} * 57`}>
+                <div className={mainCss.ConversationBubble + " " + animation + " " + mainCss.Send}>
+                  <img className={mainCss.RoundedImg} src={avatar} alt="" />
+
+                  <div className={mainCss.Bubble + " " + animation}>
+                    <span className={mainCss.BubbleText} dangerouslySetInnerHTML={{ __html: "¿Te gustaría evaluar esta conversación?" }} />
+                  </div>
+                </div>
+                <div className={mainCss.ConversationBubble + " " + mainCss.Buttons + " " + animation + " " + mainCss.Send}>
+                  <button className={mainCss.Btn} type="button" data-msg="Sí" onClick={() => this.props.handleOpenForm(true)}>
+                    Si
+                  </button>
+
+                  <button className={mainCss.Btn} type="button" data-msg="Sí" onClick={this.props.cerrarAsistente}>
+                    No
+                  </button>
+                </div>
+              </Fragment>
+            );
+          } else if (this.props.openForm) {
+            const { sendValoracion, generalStates } = this.props;
+            retorno.push(
+              <FormularioValoracion
+                handleOpenForm={this.props.handleOpenForm}
+                key={`${j} * 59`}
+                generalStates={generalStates}
+                sendValoracion={sendValoracion}
+              />
             );
           }
-          
         }
       }
       return retorno;
     });
   }
 
-  
-
   render() {
     const { ayudaStates, inputStates, conversationsStates, customParamsStates, mainCss } = this.props;
     const colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
-    let css = ayudaStates.get("open") ? " active" : "", cssHolder = inputStates.get("enabled") ? "" : " holder";
+
+    let css = ayudaStates.get("open") ? " active" : "";
+    let cssHolder = inputStates.get("enabled") ? "" : " holder";
+
     return (
-      <IsFetching
-        isFetching={conversationsStates.get("isFetching")}
-        showChildren={true} colorHeader={colorHeader} mainCss={mainCss}
-      >
+      <IsFetching isFetching={conversationsStates.get("isFetching")} showChildren={true} colorHeader={colorHeader} mainCss={mainCss}>
         <section
           // onScroll={this.handleScroll}
-          className={ mainCss.ConversationHolder + " " + css + cssHolder }
-          data-conversation="" ref={this.test}
+          className={mainCss.ConversationHolder + " " + css + cssHolder}
+          data-conversation=""
+          ref={this.test}
+          id="conversacion"
         >
           {this.fillConversation()}
           {/* <div style={{textAlign: 'right'}}>

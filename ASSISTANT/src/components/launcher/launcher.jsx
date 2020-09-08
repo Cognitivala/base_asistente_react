@@ -11,28 +11,39 @@ export default class Launcher extends Component {
     super(props);
     this.closeLauncher = this.closeLauncher.bind(this);
     this.closeAssistant = this.closeAssistant.bind(this);
+    this.valorarAsistente = this.valorarAsistente.bind(this);
     this.callAsyncData();
     this.launcher = React.createRef();
   }
+
   callAsyncData() {
     this.saludar();
   }
 
   saludar() {
     const { customParamsStates } = this.props;
-    const keep_conversation = customParamsStates.getIn([
-      "customParams",
-      "settings",
-      "keep_conversation"
-    ]);
+    const keep_conversation = customParamsStates.getIn(["customParams", "settings", "keep_conversation"]);
     const hc = localStorage.getItem("hc");
-    
+
     if (!keep_conversation) {
       this.props.getSaludo();
     } else {
       if (!hc) {
         this.props.getSaludo();
       }
+    }
+  }
+
+  valorarAsistente() {
+    const { customParamsStates, conversationsStates } = this.props;
+    const valorarCierreAsistente = customParamsStates.getIn(["customParams", "settings", "valorarCierreAsistente"]);
+    const mensajeInicial = conversationsStates.get("conversations").size;
+
+    if (valorarCierreAsistente && mensajeInicial > 1) {
+      this.props.handleVerificar(true);
+    } else {
+      this.props.handleVerificar(false);
+      this.closeAssistant();
     }
   }
 
@@ -50,9 +61,9 @@ export default class Launcher extends Component {
       {
         test: [
           {
-            msg: "assistant"
-          }
-        ]
+            msg: "assistant",
+          },
+        ],
       },
       "*"
     );
@@ -63,9 +74,9 @@ export default class Launcher extends Component {
       {
         test: [
           {
-            msg: "notification"
-          }
-        ]
+            msg: "notification",
+          },
+        ],
       },
       "*"
     );
@@ -81,39 +92,32 @@ export default class Launcher extends Component {
   }
 
   notification(launcherStates, mainCss, bubble_logo, bubble) {
-
-    if (bubble){
+    if (bubble) {
       if (launcherStates.get("notification") && !localStorage.getItem("hc")) {
-        return (
-          <Notification saludo={ launcherStates.get("notification") } mainCss={mainCss} bubbleLogo={bubble_logo} />
-        );
+        return <Notification saludo={launcherStates.get("notification")} mainCss={mainCss} bubbleLogo={bubble_logo} />;
       } else if (launcherStates.get("circle")) {
         return <NotificationCircle mainCss={mainCss} bubbleLogo={bubble_logo} />;
       } else {
-        return null
+        return null;
       }
     } else {
       return null;
     }
   }
 
-  content( customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
-    
-    if (
-      customParamsStates.get(["customParams", "status"]) !== 0 &&
-      conversationsStates.get("conversations").size > 0
-    ) {
+  content(customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates) {
+    if (customParamsStates.get(["customParams", "status"]) !== 0 && conversationsStates.get("conversations").size > 0) {
       if (launcherStates.get("active")) {
-        const bubble_logo = customParamsStates.getIn([ "customParams", "bubble_logo" ]);
-        const bubble = customParamsStates.getIn([ "customParams", "settings", "bubble" ]);
+        const bubble_logo = customParamsStates.getIn(["customParams", "bubble_logo"]);
+        const bubble = customParamsStates.getIn(["customParams", "settings", "bubble"]);
         // console.log('bubble_logo:: ', bubble_logo);
 
         return (
           <Fragment>
             <div className={mainCss.MainLauncher}>
-            {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
-              
-              { bubble_logo !== '' ? (
+              {this.notification(launcherStates, mainCss, bubble_logo, bubble)}
+
+              {bubble_logo !== "" ? (
                 <div className="boxBubbleLogo">
                   <img className="imgBubbleLogo" onClick={this.closeLauncher} src={`${bubble_logo}`} alt="Avatar Img" />
                 </div>
@@ -122,18 +126,17 @@ export default class Launcher extends Component {
                   <i className={mainCss.IconLauncher} />
                 </button>
               )}
-              
             </div>
           </Fragment>
         );
       } else if (responsiveStates.get("responsive") === "desktop") {
         // console.log(responsiveStates.get("responsive"));
         return (
-            <div className={mainCss.MainLauncher}>
-              <button ref={this.launcher} className={mainCss.LauncherButton + " " + mainCss.Close} onClick={this.closeAssistant}>
-                <i className={mainCss.IconClose} />
-              </button>
-            </div>
+          <div className={mainCss.MainLauncher}>
+            <button ref={this.launcher} className={mainCss.LauncherButton + " " + mainCss.Close} onClick={this.valorarAsistente}>
+              <i className={mainCss.IconClose} />
+            </button>
+          </div>
         );
       }
     }
@@ -141,29 +144,12 @@ export default class Launcher extends Component {
   }
 
   render() {
-    const {
-        customParamsStates,
-        launcherStates,
-        conversationsStates,
-        mainCss,
-        responsiveStates
-      } = this.props,
+    const { customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates } = this.props,
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
 
     return (
-      <IsFetching
-        isFetching={customParamsStates.get("isFetching")}
-        showChildren={true}
-        colorHeader={colorHeader}
-        mainCss={mainCss}
-      >
-        {this.content(
-          customParamsStates,
-          launcherStates,
-          conversationsStates,
-          mainCss,
-          responsiveStates
-        )}
+      <IsFetching isFetching={customParamsStates.get("isFetching")} showChildren={true} colorHeader={colorHeader} mainCss={mainCss}>
+        {this.content(customParamsStates, launcherStates, conversationsStates, mainCss, responsiveStates)}
       </IsFetching>
     );
   }
@@ -173,5 +159,5 @@ Launcher.propTypes = {
   customParamsStates: PropTypes.any.isRequired,
   saludoStates: PropTypes.any.isRequired,
   launcherStates: PropTypes.any.isRequired,
-  generalStates: PropTypes.any.isRequired
+  generalStates: PropTypes.any.isRequired,
 };
