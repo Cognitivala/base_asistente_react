@@ -182,7 +182,6 @@ export default class Assistant extends Component {
   }
 
   verAsistencia(value) {
-    // console.log('State:: ', this.state);
     // const { generalStates } = this.props;
     // const general = generalStates.toJS();
 
@@ -272,8 +271,6 @@ export default class Assistant extends Component {
   render() {
     const { assistantStates, conversationsStates, customParamsStates, responsiveStates, mainCss } = this.props,
       colorHeader = customParamsStates.getIn(["customParams", "color_header"]);
-
-    // console.log('customParamsStates:: ', customParamsStates);
 
     return (
       <IsFetching colorHeader={colorHeader} isFetching={assistantStates.get("isFetching")} showChildren={true} mainCss={mainCss}>

@@ -89,7 +89,9 @@ export class App extends Component {
   scrollToBottom() {
     if (!this.props.ayudaStates.get("open")) {
       var elem = document.getElementById("conversacion");
-      this.scrollTo(elem, elem.scrollHeight, 600);
+      if (elem !== null) {
+        this.scrollTo(elem, elem.scrollHeight, 600);
+      }
     }
   }
 
@@ -143,24 +145,32 @@ export class App extends Component {
   }
 
   handleOpenForm(value) {
-    if (value) {
-      this.setState({
-        openForm: value,
-        verificar: false,
-      });
-      this.scrollToBottom();
-    } else {
-      this.setState({
-        openForm: value,
-        verificar: false,
-      });
-    }
+    // if (value) {
+    //   this.setState({
+    //     openForm: value,
+    //     verificar: false,
+    //   });
+    //   this.scrollToBottom();
+    // } else {
+    //   this.setState({
+    //     openForm: value,
+    //     verificar: false,
+    //   });
+    // }
+
+    this.setState({
+      openForm: value,
+      verificar: value,
+    });
+
+    this.scrollToBottom();
 
     // this.props.closeAssistant();
   }
 
   cerrarAsistente() {
     this.setState({
+      openForm: false,
       verificar: false,
     });
     this.props.closeAssistant();

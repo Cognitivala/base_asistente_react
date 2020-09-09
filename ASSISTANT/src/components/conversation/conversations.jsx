@@ -35,6 +35,8 @@ export default class Conversations extends Component {
       this.setHistory();
       this.toggleEnabled();
     }
+
+    // if (nextProps.openForm !== this.props.openForm) {}
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,7 +76,6 @@ export default class Conversations extends Component {
   }
 
   // verAsistencia(value) {
-  //   console.log('Asistencia:: ', value);
   //   this.setState({asistencia: value});
   // }
 
@@ -92,7 +93,6 @@ export default class Conversations extends Component {
 
   toggleEnabled() {
     const { ayudaStates, inputStates, customParamsStates, conversationsStates } = this.props;
-    // console.log(customParamsStates.getIn(["customParams"]) );
 
     const sizeConv = conversationsStates.get("conversations").size;
     if (sizeConv > 1) {
@@ -434,7 +434,7 @@ export default class Conversations extends Component {
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(<FormularioValoracion key={`${j} * 55`} generalStates={generalStates} sendValoracion={sendValoracion} />);
           } else if (this.props.verificar) {
-            const { mainCss, customParamsStates } = this.props;
+            const { mainCss, customParamsStates, sendValoracion } = this.props;
             const avatar = customParamsStates.getIn(["customParams", "avatar"]);
             retorno.push(
               <Fragment key={`${j} * 57`}>
@@ -446,7 +446,13 @@ export default class Conversations extends Component {
                   </div>
                 </div>
                 <div className={mainCss.ConversationBubble + " " + mainCss.Buttons + " " + animation + " " + mainCss.Send}>
-                  <button className={mainCss.Btn} type="button" data-msg="Sí" onClick={() => this.props.handleOpenForm(true)}>
+                  <button
+                    disabled={this.props.openForm}
+                    className={mainCss.Btn}
+                    type="button"
+                    data-msg="Sí"
+                    onClick={() => this.props.handleOpenForm(true)}
+                  >
                     Si
                   </button>
 
@@ -454,19 +460,29 @@ export default class Conversations extends Component {
                     No
                   </button>
                 </div>
+
+                {this.props.openForm && (
+                  <FormularioValoracion
+                    handleOpenForm={this.props.handleOpenForm}
+                    key={`${j} * 59`}
+                    generalStates={generalStates}
+                    sendValoracion={sendValoracion}
+                  />
+                )}
               </Fragment>
             );
-          } else if (this.props.openForm) {
-            const { sendValoracion, generalStates } = this.props;
-            retorno.push(
-              <FormularioValoracion
-                handleOpenForm={this.props.handleOpenForm}
-                key={`${j} * 59`}
-                generalStates={generalStates}
-                sendValoracion={sendValoracion}
-              />
-            );
           }
+          // else if (this.props.openForm) {
+          //   const { sendValoracion, generalStates } = this.props;
+          //   retorno.push(
+          //     <FormularioValoracion
+          //       handleOpenForm={this.props.handleOpenForm}
+          //       key={`${j} * 59`}
+          //       generalStates={generalStates}
+          //       sendValoracion={sendValoracion}
+          //     />
+          //   );
+          // }
         }
       }
       return retorno;
