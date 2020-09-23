@@ -642,7 +642,7 @@ export function updateConversation(data) {
 }
 
 async function messageResponse(dispatch, data) {
-    console.log('messageResponse:: ', data);
+    //console.log('messageResponse:: ', data);
     // await getSixbellIn(data);
 
     if (data.liftUp !== undefined) {
@@ -803,7 +803,7 @@ export function updateConversationButton(data) {
                             let item = response.data;
                             item.send = "from";
                             item.enabled = true;
-                            console.log('updateConversationButton Item:: ', item);
+                            //console.log('updateConversationButton Item:: ', item);
 
                             dispatch(setNodoId(item.msg[item.msg.length - 1]));
                             messageResponse(dispatch, item);
