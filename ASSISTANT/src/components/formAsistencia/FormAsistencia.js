@@ -10,7 +10,7 @@ class FormAsistencia extends Component {
         const data = {
             usuarioAmsa: this.state.inputAsistencia,
         }
-        console.log('DATA VALORACIÓN:: ', data);
+        //console.log('DATA VALORACIÓN:: ', data);
         // sendValoracion(data, general);
     }
 

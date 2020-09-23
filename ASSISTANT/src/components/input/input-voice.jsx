@@ -11,9 +11,9 @@ if(isChrome){
   window.SpeechRecognition =
     window.webkitSpeechRecognition || window.SpeechRecognition;
   if ("SpeechRecognition" in window) {
-    console.log("Supported");
+    //console.log("Supported");
   } else {
-    console.log("Not Supported");
+    //console.log("Not Supported");
   }
   recognition = new window.SpeechRecognition();
   recognition.continous = false;

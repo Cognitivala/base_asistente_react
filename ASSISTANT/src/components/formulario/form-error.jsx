@@ -7,7 +7,7 @@ export default class FormError extends Component {
       return (
         <div class={mainCss.ErrorMsg}>
           <p>
-            <strong>Ups! Tenemos un problema</strong>
+            <strong>Tenemos un problema</strong>
           </p>
           <p>Favor verifique sus datos e intente nuevamente.</p>
         </div>

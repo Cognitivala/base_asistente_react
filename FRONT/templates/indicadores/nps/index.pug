@@ -222,7 +222,7 @@ html(lang="es-CL" dir="ltr" xmlns:og="http://opengraphprotocol.org/schema/" xmln
           createCSV(response.csv, 'nps');
           
           if (response.respuesta.promotores > 0 || response.respuesta.detractores > 0 || response.respuesta.neutros > 0){
-            console.log("ola ke ase");
+            //console.log("ola ke ase");
             var totalAssessment = response.respuesta.detractores + response.respuesta.neutros + response.respuesta.promotores;
             var totalISN = ((response.respuesta.promotores - response.respuesta.detractores) / totalAssessment) * 100;
             var getPromoters = (100 * response.respuesta.promotores) / totalAssessment;
