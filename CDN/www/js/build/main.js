@@ -102,7 +102,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         css += ".iframe-cognitive-assistant-container {overflow: hidden;border: none;position: fixed;bottom: 10px;right: 10px;background-color: transparent;opacity: 0;transform: translate3d(0,100%,0);transition: transform opacity height 350ms ease;pointer-events: none;transition-timing-function: cubic-bezier(0.56, 1.19, 0.2, 1.05);z-index: 99999999;border-radius: 5px;}";
         css += ".iframe-cognitive-assistant-container.active {opacity: 1;transform: translate3d(0,0,0);pointer-events: auto;}";
         css += ".iframe-cognitive-assistant-container.notification{ height: 200px; width: 250px; max-width: 365px;box-shadow: none;right: 0;bottom: 0; }";
-        css += ".iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%; max-width: 100%;right: 0px;bottom: 0px; }";
+        css += ".iframe-cognitive-assistant-container.assistant{ height: 100vh; width: 350px; max-width: 100%;right: 0px;bottom: 0px; }";
         css += ".iframe-cognitive-assistant-container.minimized{ height: 100px;width: 100%;max-width: 100px;right: 10px;bottom: 0px;}";
         css += ".cognitive-iframe {height: 100%;width: 100%;border: 0 none;}";
         css += "@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.assistant{ border-radius: 0px; height: 100% ; top: 0; left: 0; right: 0; bottom: 0; max-width:100%; } ";

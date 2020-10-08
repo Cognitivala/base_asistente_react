@@ -43,7 +43,7 @@ export default class Launcher extends Component {
     //   if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
     // }
 
-    if (pathname === "/asistente/" && window.innerWidth <= 767) {
+    if (window.outerWidth <= 767 || window.innerWidth <= 767) {
       const { closeLauncher, closeHelp, openAssistant, ayudaStates, responsive } = this.props;
       responsive("mobile");
       closeLauncher();
