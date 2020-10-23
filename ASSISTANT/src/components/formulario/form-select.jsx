@@ -47,6 +47,8 @@ export default class FormSelect extends Component {
         retorno.push(
           <div
             key={i}
+            className={'selectClass ' + name}
+            id={name}
             data-value={map.get("value")}
             onClick={this.activeSelect}
           >

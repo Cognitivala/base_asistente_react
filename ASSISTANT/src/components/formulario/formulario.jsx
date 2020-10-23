@@ -106,10 +106,27 @@ export default class Formulario extends Component {
     } else {
       //let arrayOut = [];
       for (let i = 0; i < fieldsDOM.length; i++) {
-        let input = fieldsDOM[i].elements[0],
-          value = input.value,
-          name = input.name;
-        dataForm[name] = value;
+
+        if(fieldsDOM[i].elements.length > 0){
+            let input = fieldsDOM[i].elements[0],
+                value = input.value,
+                name = input.name;
+                dataForm[name] = value;
+        }else{
+            //los select no tienen id por lo que con su clase sacaremos el ID y luego el Value
+            let slides = document.getElementsByClassName("selectClass");
+            let uno = document.getElementsByClassName('selectClass')[0].id;
+            //let dos = document.querySelector('.select').id;
+
+            let article = document.getElementById(uno);
+                console.log(article.dataset.value);
+
+                dataForm[uno] = article.dataset.value;
+
+            //for (var i = 0; i < slides.length; i++) {
+            //  Distribute(slides.item(i));
+            //}
+        }
         //arrayOut.push({ name, value });
       }
       sendForm(dataForm, url, general);
@@ -304,6 +321,8 @@ export default class Formulario extends Component {
 
         <div className={mainCss.ContainerForm}>
           <form autoComplete="off">
+
+            {/*
             <div className={mainCss.closeFormContainer}>
               <button
                 className={mainCss.closeFormButton}
@@ -313,6 +332,9 @@ export default class Formulario extends Component {
                 x
               </button>
             </div>
+            */
+            }
+
             {this.fillHeader(header)}
             <p className={mainCss.Red}>{bajada}</p>
             {this.fillContent(fields)}

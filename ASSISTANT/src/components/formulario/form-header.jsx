@@ -29,8 +29,14 @@ export default class FormHeader extends Component {
             <i className="fas fa-times" data-msg={closeMsg} />
           </button>
         </div> */}
-        <div className={mainCss.Icon}>
-        </div>
+        
+        {
+          /*
+          <div className={mainCss.Icon}>
+          </div>
+          */
+        }
+
         <p>
           {textA !== undefined ? textA : null}{" "}
           <strong>{textStrong !== undefined ? textStrong : null}</strong>{" "}
