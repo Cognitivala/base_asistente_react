@@ -360,6 +360,9 @@ export function closeAssistant() {
     dispatch({ type: "OPEN_LAUNCHER" });
     dispatch(deleteHistory());
     dispatch(closeLynn());
+    // if(asistantInterval) {
+    //   lynnEnd(dispatch, getState);
+    // }
     clearInterval(asistantInterval);
     lynnEnd(dispatch, getState);
   };
@@ -946,7 +949,8 @@ function lynnEnd(dispatch, getState) {
   });
   return request.then((response) => {
     if (response.status === 200) {
-      dispatch({ type: "DISABLED_INPUT" });
+      // Se comenta por bloquear INPUT
+      // dispatch({ type: "DISABLED_INPUT" });
       dispatch(closeLynn());
       clearInterval(asistantInterval);
       return;
