@@ -167,8 +167,7 @@ export function getCustomParams() {
       response => {
         if (response.status === 200) {
           //UPDATE COLORS
-          console.log('response.data.colorHeader::: ', response.data.color_header)
-          setColors(response.data.color_header);
+          setColors(response.data.colorHeader);
           dispatch(getCustomParamsEnd(response.data));
           let str_md5v = AES.encrypt(JSON.stringify(response.data),KEY_ENCRYPT).toString();
           localStorage.setItem("customParams", str_md5v);
