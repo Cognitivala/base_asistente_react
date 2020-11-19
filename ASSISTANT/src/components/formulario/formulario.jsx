@@ -52,30 +52,40 @@ export default class Formulario extends Component {
   validateAll(fields, fieldsDOM) {
     const { mainCss } = this.props;
     let arr = [];
+
+    
     for (let i = 0; i < fieldsDOM.length; i++) {
-      const map = fieldsDOM[i],
-        field = fields.get(i);
-      const name = field.get("name"),
-        validates = field.get("validate"),
-        typesValidate = validates.get("types");
-      let input = map.elements[0],
-        error = false,
-        required = typesValidate.filter(item => item === "required");
-      required = required.size > 0;
+
+      const map = fieldsDOM[i];
+      const field = fields.get(i);
+
+    
+      // let name = field.get("name");
+      // let validates = field.get("validate");
+      // let typesValidate = validates.get("types");
+
+      let input = map.elements[0];
+      let error = false;
+      // let required = typesValidate.filter(item => item === "required");
+      // required = required.size > 0;
+      
       input =
         input !== undefined
           ? input
           : map.getElementsByClassName(mainCss.Options)[0];
 
-      arr = arr.filter(item => item !== name);
-      typesValidate.forEach(map => {
-        if (!Validator[map](input, validates, required)) error = true;
-      });
+      // arr = arr.filter(item => item !== name);
+      // typesValidate.forEach(map => {
+      //   if (!Validator[map](input, validates, required)) error = true;
+      // });
 
-      if (error) {
-        arr.push(name);
-      }
+      // if (error) {
+      //   arr.push(name);
+      // }
     }
+
+   
+
     return arr;
   }
 
@@ -92,13 +102,25 @@ export default class Formulario extends Component {
   }
 
   sendDataForm(e) {
-    const { form, sendForm, generalStates } = this.props,
-      general = generalStates.toJS(),
-      fields = form.get("fields"),
-      fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset"),
-      arr = this.validateAll(fields, fieldsDOM),
-      url = form.get("url");
+    const { form, sendForm, generalStates } = this.props;
+
+    console.log('form:: ', form);
+    console.log('sendForm:: ', sendForm);
+    console.log('generalStates:: ', generalStates);
+      
+    
+    const general = generalStates.toJS();
+    const fieldsDOM = e.target.closest("form").getElementsByTagName("fieldset");
+
+    const fields = form.get("fields");
+    console.log('fields:: ', fields);
+
+    const arr = this.validateAll(fields, fieldsDOM);
+    const url = form.get("url");
+    
     let dataForm = {};
+
+
     if (arr.length > 0) {
       this.setState({
         invalidFiels: arr
@@ -129,6 +151,9 @@ export default class Formulario extends Component {
         }
         //arrayOut.push({ name, value });
       }
+
+      console.log('dataForm:: ', dataForm);
+
       sendForm(dataForm, url, general);
     }
   }
@@ -164,6 +189,9 @@ export default class Formulario extends Component {
   }
 
   fillContent(fields) {
+
+    console.log('fields:: ', fields)
+
     const { mainCss } = this.props;
     if (fields.size > 0) {
       const retorno = [];
@@ -192,6 +220,7 @@ export default class Formulario extends Component {
             retorno.push(
               <fieldset key={i + map.get("name")}>
                 <legend>{map.get("legend")}</legend>
+                
                 <FormSelect
                   name={map.get("name")}
                   validateFunc={this.validate}

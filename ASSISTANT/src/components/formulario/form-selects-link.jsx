@@ -92,6 +92,7 @@ export default class FormSelectsLink extends Component {
         return (
           <fieldset className={mainCss.SelectsLink}>
             <legend>{parent.get("legend")}</legend>
+
             <FormSelectLink
               name={parent.get("name")}
               validateFunc={validateFunc}
@@ -115,6 +116,8 @@ export default class FormSelectsLink extends Component {
         return (
           <fieldset className={mainCss.SelectsLink}>
             <legend>{parent.get("legend")}</legend>
+            
+            
             <FormSearchLink
               name={parent.get("name")}
               validateFunc={validateFunc}
