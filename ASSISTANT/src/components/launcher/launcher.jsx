@@ -12,6 +12,23 @@ export default class Launcher extends Component {
     this.callAsyncData();
     this.launcher = React.createRef();
   }
+
+  componentWillMount() {
+    // const pathname = window.location.pathname;
+    // const src = window.location.search;
+
+    if (window.outerWidth <= 767 || window.innerWidth <= 767) {
+      const { closeLauncher, closeHelp, openAssistant, ayudaStates, responsive } = this.props;
+      responsive("mobile");
+      closeLauncher();
+      this.openAssitantCDN();
+      openAssistant();
+      if (ayudaStates.get("open")) closeHelp();
+      if (localStorage.getItem("hcm")) localStorage.removeItem("hcm");
+    }
+  }
+
+
   callAsyncData() {
     this.saludar();
   }
