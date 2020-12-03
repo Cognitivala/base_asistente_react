@@ -20,13 +20,13 @@
     <script id="mainJS" type="text/javascript"></script>
     <script id="preJS" type="text/javascript">
       var f = Date.now();
-      document.getElementById("mainJS").setAttribute("src", "js/build/main.js?v=" + f);
-      document.getElementById("preJS").remove();
+      document.getElementById('mainJS').setAttribute('src', 'js/build/main.js?v=' + f);
+      document.getElementById('preJS').remove();
     </script>
     <script>
-      window.addEventListener("load", function () {
-        var url = "URL_A_CAMBIAR";
-        window.CognitiveAssistantMain.init("https://" + url + "/asistente/");
+      window.addEventListener('load', function () {
+        var url = 'URL_A_CAMBIAR';
+        window.CognitiveAssistantMain.init('https://' + url + '/asistente/');
         // window.CognitiveAssistantMain.init("http://localhost:3000/assistant/");
       });
     </script>
