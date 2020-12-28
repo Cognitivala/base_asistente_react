@@ -172,10 +172,14 @@ export default class Input extends Component {
   }
 
   fillHelp(positionHelp) {
-    const { mainCss, ayudaStates, openHelp, closeHelp, showWarningHelp, hideWarningHelp, inputStates } = this.props;
+    const { mainCss, ayudaStates, openHelp, closeHelp, showWarningHelp, hideWarningHelp, inputStates, customParamsStates } = this.props;
+
+    const help = customParamsStates.getIn(['customParams', 'settings', 'help']);
+
     if (positionHelp === 'bottom') {
       return (
         <InputHelp
+          help={help}
           ayudaStates={ayudaStates}
           openHelp={openHelp}
           closeHelp={closeHelp}
@@ -224,7 +228,10 @@ export default class Input extends Component {
     } else {
       const { customParamsStates, mainCss } = this.props,
         colorHeader = customParamsStates.getIn(['customParams', 'colorHeader']),
-        positionHelp = customParamsStates.getIn(['customParams', 'settings', 'position_help']);
+        positionHelp = customParamsStates.getIn(['customParams', 'settings', 'position_help']),
+        help = customParamsStates.getIn(['customParams', 'settings', 'help']);
+
+      console.log('HELP!', help);
 
       return (
         <IsFetching isFetching={this.props.inputStates.get('isFetching')} showChildren={true} colorHeader={colorHeader} mainCss={mainCss}>

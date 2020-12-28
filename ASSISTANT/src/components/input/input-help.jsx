@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class InputHelp extends Component {
   constructor(props) {
@@ -18,48 +18,53 @@ export default class InputHelp extends Component {
   }
   toggleHelper(e) {
     //Ver si está deshabilitada para enviar mensaje
-    const {mainCss} = this.props;
-    if (!this.props.ayudaStates.get("enabled")) {
-      const showWarning = this.props.ayudaStates.get("showWarning"),
+    const { mainCss } = this.props;
+    if (!this.props.ayudaStates.get('enabled')) {
+      const showWarning = this.props.ayudaStates.get('showWarning'),
         inTransitionWarning = this.state.inTransitionWarning;
-      if (!showWarning){
-        if(!inTransitionWarning){
+      if (!showWarning) {
+        if (!inTransitionWarning) {
           this.props.showWarningHelp();
-          this.setState({inTransitionWarning:true});
+          this.setState({ inTransitionWarning: true });
           setTimeout(() => {
             this.props.hideWarningHelp();
-            this.setState({inTransitionWarning:false});
+            this.setState({ inTransitionWarning: false });
           }, 3000);
         }
       }
     } else {
       this.desactivarIndex();
-      if(this.props.ayudaStates.get("open")){
+      if (this.props.ayudaStates.get('open')) {
         const divHelp = document.getElementsByClassName(mainCss.AssistantHelper)[0];
         divHelp.classList.remove(mainCss.Active);
         this.button.current.classList.remove(mainCss.Active);
         setTimeout(() => {
           this.props.closeHelp();
         }, 300);
-      }else{
+      } else {
         this.button.current.classList.add(mainCss.Active);
         this.props.openHelp();
       }
     }
   }
   render() {
-      const {mainCss, inputStates} = this.props,
-      enabled = inputStates.get("enabledHelp");
-      return (
-        <button
-        type="button"
-        className={`${mainCss.InputUserBtn} ${mainCss.Btn} ${mainCss.BtnTransparent} ${enabled?'':mainCss.Disabled}`}
+    const { mainCss, inputStates, help } = this.props,
+      enabled = inputStates.get('enabledHelp');
+
+    if (!help) {
+      return null;
+    }
+
+    return (
+      <button
+        type='button'
+        className={`${mainCss.InputUserBtn} ${mainCss.Btn} ${mainCss.BtnTransparent} ${enabled ? '' : mainCss.Disabled}`}
         onClick={this.toggleHelper}
         ref={this.button}
       >
-        <i className={mainCss.IconHelp}/>
+        <i className={mainCss.IconHelp} />
       </button>
-      );
+    );
   }
 }
 
@@ -70,5 +75,5 @@ InputHelp.propTypes = {
   showWarningHelp: PropTypes.func.isRequired,
   hideWarningHelp: PropTypes.func.isRequired,
   mainCss: PropTypes.any.isRequired,
-  inputStates: PropTypes.object.isRequired
+  inputStates: PropTypes.object.isRequired,
 };
