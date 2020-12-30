@@ -10,10 +10,12 @@ const ASISTANT_INTERVAL_TIMER = 4000;
 
 var interval;
 var inputMessage = null;
+var intervalFreshChat = null;
 
 //GENERAL
 function defaultGeneral() {
   return {
+    
     type: "DEFAULT_GENERAL",
   };
 }
@@ -659,14 +661,14 @@ export function updateConversation(data) {
 }
 
 async function messageResponse(dispatch, data) {
-  // console.log("messageResponse:: ", data);
-
+   /* console.log("messageResponse:: ", data); */
   data.general = {
     ...data.general,
     id_cliente: "1",
   };
 
-  // console.log('messageResponse:: ', data);
+  data.freshChat = true;//Probando flujo, (BORRAR)
+
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -691,6 +693,9 @@ async function messageResponse(dispatch, data) {
       default:
         break;
     }
+  } 
+  else if (data.freshChat){
+    showMessageResponse(dispatch, data)
   } else if (data.end_conversation === true) {
     dispatch(pushConversation(data));
     dispatch({ type: "DISABLED_INPUT" });
@@ -705,6 +710,7 @@ async function messageResponse(dispatch, data) {
     localStorage.setItem("deriva_userlike", true);
     await getUserlikeIn(dispatch, data, inputMessage);
   } else {
+    clearInterval(intervalFreshChat)
     // console.log('data.general ', data)
     if (data.general !== undefined) {
       dispatch(setGeneral(data.general));
@@ -1413,6 +1419,7 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
 
   const { general, msg, send, enabled } = data;
   let newData = { general, msg, send, enabled };
+  console.log(newData);
 
   const urlApi = APIURL + "/live_message_in";
   const token = sessionStorage.getItem("token");
@@ -1461,7 +1468,6 @@ export const getUserlikeIn = (dispatch, data, inputMessage) => {
 //USERLIKE OUT
 export function getUserlikeOut(dispatch, data) {
   // clearInterval(asistantInterval);
-
   if (interval) {
     clearInterval(interval);
   }
@@ -1469,11 +1475,12 @@ export function getUserlikeOut(dispatch, data) {
   var ASISTANT_INTERVAL_TIMER = 5000;
 
   interval = setInterval(function() {
+    /* console.log(data); */
     const urlApi = APIURL + "/live_message_out";
     const { general, msg, send, enabled } = data;
     let newData = { general, msg, send, enabled };
     const token = sessionStorage.getItem("token");
-
+    
     axios
       .post(urlApi, newData, {
         headers: {
@@ -1539,3 +1546,47 @@ export const getUserlikeEnd = () => {
 };
 
 // derivar_userlike
+
+//Funcion para determinar termino de converzacion
+export const showMessageResponse = (dispatch, data) => {
+  if (intervalFreshChat) {
+    clearInterval(intervalFreshChat);
+  } 
+  intervalFreshChat = setInterval(function() {
+    const urlApi = APIURL + "/freshchat_endpoint";
+    const { general, msg } = data;
+    delete general.nodo_id;
+    delete general.tipo;
+    general.origen = 1
+
+    let newData = { general, msg: [] };
+
+    axios
+      .post(urlApi, newData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then(async (response) => {
+        const dataResponse = response.data;
+        //TODO: confirmar variable que contiene el mensaje
+        if (dataResponse.estado.codigoEstado === 200) {
+          // dispatch(updateConversation(response.data.msg));
+          let item = dataResponse;
+          item.enabled = false;
+          item.msg = [dataResponse];
+          dispatch(updateConversation(item));
+        } 
+      })
+      .catch((error) => {
+        if (error.response.status === 500) {
+          let item = {};
+          item.enabled = false;
+          item.msg = ["Nuestro sistema presenta problemas, intentelo mas tarde"];
+          dispatch(updateConversation(item));
+        }
+        console.log(error);
+        localStorage.removeItem("deriva_userlike");
+      });
+  }, 4000);
+}
