@@ -667,8 +667,8 @@ async function messageResponse(dispatch, data) {
     id_cliente: "1",
   };
 
-  data.freshChat = true;//Probando flujo, (BORRAR)
-
+  /* data.freshchat = true;Probando flujo, (BORRAR) */
+console.log("MENSAJE: ", data.freshchat);
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -693,8 +693,8 @@ async function messageResponse(dispatch, data) {
       default:
         break;
     }
-  } 
-  else if (data.freshChat){
+  }
+  else if (data.freshchat){
     showMessageResponse(dispatch, data)
   } else if (data.end_conversation === true) {
     dispatch(pushConversation(data));
@@ -1569,22 +1569,26 @@ export const showMessageResponse = (dispatch, data) => {
       })
       .then(async (response) => {
         const dataResponse = response.data;
+        console.log(dataResponse);
         //TODO: confirmar variable que contiene el mensaje
         if (dataResponse.estado.codigoEstado === 200) {
-          // dispatch(updateConversation(response.data.msg));
-          let item = dataResponse;
-          item.enabled = false;
-          item.msg = [dataResponse];
-          dispatch(updateConversation(item));
-        } 
+          if (!dataResponse.freshchat) {
+            let item = dataResponse;
+            item.enabled = false;
+            item.msg = [];
+            dispatch(updateConversation(item));
+          clearInterval(intervalFreshChat);
+          }else {
+            let item = dataResponse;
+            item.enabled = false;
+            dataResponse.msg.map(res => (
+              item.msg = [res]
+            ))
+            dispatch(updateConversation(item));
+          }
+        }
       })
       .catch((error) => {
-        if (error.response.status === 500) {
-          let item = {};
-          item.enabled = false;
-          item.msg = ["Nuestro sistema presenta problemas, intentelo mas tarde"];
-          dispatch(updateConversation(item));
-        }
         console.log(error);
         localStorage.removeItem("deriva_userlike");
       });
