@@ -530,7 +530,7 @@ export function updateConversation(data) {
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
 
-    console.log('updateConversation DATA:: ', data);
+    // console.log('updateConversation DATA:: ', data);
 
     if (localStorage.getItem('deriva_userlike') === 'true') {
       // console.log("ENVIAR DATA A USERLIKE!!");

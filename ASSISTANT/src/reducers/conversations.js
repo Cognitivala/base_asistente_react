@@ -44,8 +44,6 @@ export function conversationsStates(
       return state.setIn(['conversations', (state.get('conversations').size - 1).toString(), 'datepicker'], Immutable.fromJS(action.data.datepicker));
     case 'PUSH_CONVERSATION':
       return state.withMutations((map) => {
-        console.log('action.data:: ', action.data);
-
         const conversation = Immutable.fromJS(action.data);
         action.data.send === 'to' ? map.set('loading', true) : map.set('loading', false);
         map.update('conversations', (list) => list.push(conversation));
