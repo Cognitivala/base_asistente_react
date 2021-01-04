@@ -1492,14 +1492,13 @@ export const showMessageResponse = (dispatch, data) => {
     const { general, msg } = data;
     general.origen = 1;
 
-    let newData = { general, msg };
+    const newData = { general, msg };
+    const configHeaders = {
+      headers: { 'Content-Type': 'application/json' },
+    };
 
     axios
-      .post(urlApi, newData, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .post(urlApi, newData, configHeaders)
       .then(async (response) => {
         const dataResponse = response.data;
 
