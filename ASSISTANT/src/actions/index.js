@@ -1503,10 +1503,16 @@ export const showMessageResponse = (dispatch, data) => {
         const dataResponse = response.data;
 
         if (dataResponse.estado.codigoEstado === 200) {
-          let item = data;
-          item.msg = dataResponse.msg;
-          // console.log('ITEM MENSAJE:: ', item);
-          dispatch(pushConversation(data));
+          if (!dataResponse.freshchat) {
+            let item = data;
+            item.msg = dataResponse.msg;
+            dispatch(pushConversation(data));
+            clearInterval(intervalFreshChat);
+          } else {
+            let item = data;
+            item.msg = dataResponse.msg;
+            dispatch(pushConversation(data));
+          }
         }
       })
       .catch((error) => {
