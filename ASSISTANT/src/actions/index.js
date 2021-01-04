@@ -483,7 +483,7 @@ function updateConversationError(data) {
 }
 
 export function updateConversation(data) {
-  console.log('updateConversation:: 1 ', data);
+  // console.log('updateConversation:: 1 ', data);
 
   let inputMessage = data.msg[0];
 
@@ -560,7 +560,7 @@ export function updateConversation(data) {
       });
       return request
         .then((response) => {
-          console.log('message updateConversation:: ', response.data);
+          // console.log('message updateConversation:: ', response.data);
           // console.log('message updateConversation MSG:: ', response.data.msg);
           if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
             let item = response.data;
@@ -582,7 +582,7 @@ export function updateConversation(data) {
                 };
               }
             }
-            console.log('updateConversation Item:: ', item);
+            // console.log('updateConversation Item:: ', item);
 
             // dispatch(setNodoId(item.msg[item.msg.length - 1]));
             messageResponse(dispatch, item);
@@ -598,13 +598,12 @@ export function updateConversation(data) {
 }
 
 async function messageResponse(dispatch, data) {
-  console.log('messageResponse:: 1 ', data);
+  // console.log('messageResponse:: 1 ', data);
   data.general = {
     ...data.general,
     id_cliente: '1',
   };
 
-  /* data.freshchat = true;Probando flujo, (BORRAR) */
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -633,7 +632,6 @@ async function messageResponse(dispatch, data) {
     dispatch(pushConversation(data));
     dispatch({ type: 'DISABLED_INPUT' });
   } else if (data.freshchat) {
-    console.log('MENSAJE: ', data);
     await showMessageResponse(dispatch, data);
   }
   // else if (data.estado.codigoEstado === 303) {
@@ -1508,7 +1506,7 @@ export const showMessageResponse = (dispatch, data) => {
         if (dataResponse.estado.codigoEstado === 200) {
           let item = data;
           item.msg = dataResponse.msg;
-          console.log('ITEM MENSAJE:: ', item);
+          // console.log('ITEM MENSAJE:: ', item);
           dispatch(pushConversation(data));
         }
       })
