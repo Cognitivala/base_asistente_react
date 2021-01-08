@@ -127,7 +127,7 @@ textarea {
     animation-name: cognitive-assistant-fade-in-up;
     animation-duration: 1s;
     animation-fill-mode: both; // box-shadow: 0 0 1rem 0 rgba(175, 27, 27, 0.83);
-    transition: all 200ms linear;
+    transition: all 200ms linear; 
     .LauncherButton {
         border: 0 none;
         width: 6rem;
@@ -211,6 +211,7 @@ textarea {
         animation: notification 2s infinite linear;
         border-radius: 2.4rem 2.4rem 0 2.4rem;
         line-height: 1.8rem;
+        @media (max-width: 400px) { display: none; }
         span {
             color: #6b6a6f;
             font-size: 14px;
