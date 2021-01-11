@@ -184,7 +184,7 @@ export default class Conversations extends Component {
       increment = 20,
       _this = this;
 
-    var animateScroll = function() {
+    var animateScroll = function () {
       currentTime += increment;
       var val = _this.easeInOutQuad(currentTime, start, change, duration);
       element.scrollTop = val;
@@ -460,7 +460,6 @@ export default class Conversations extends Component {
                     No
                   </button>
                 </div>
-
                 {this.props.openForm && (
                   <FormularioValoracion
                     handleOpenForm={this.props.handleOpenForm}

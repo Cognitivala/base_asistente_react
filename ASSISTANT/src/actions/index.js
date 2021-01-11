@@ -483,7 +483,7 @@ function updateConversationError(data) {
 }
 
 export function updateConversation(data) {
-  // console.log('updateConversation:: 1 ', data);
+  console.log('updateConversation:: 1 ', data);
 
   let inputMessage = data.msg[0];
 
@@ -1501,13 +1501,17 @@ export const showMessageResponse = (dispatch, data) => {
       .post(urlApi, newData, configHeaders)
       .then(async (response) => {
         const dataResponse = response.data;
-
         if (dataResponse.estado.codigoEstado === 200) {
           if (!dataResponse.freshchat) {
             let item = data;
             item.msg = dataResponse.msg;
-            dispatch(pushConversation(data));
+            await dispatch(pushConversation(data));
+            setTimeout(async () => {
+                item.msg = [""];
+                await dispatch(updateConversation(item))
+            }, 500);
             clearInterval(intervalFreshChat);
+
           } else {
             let item = data;
             item.msg = dataResponse.msg;
