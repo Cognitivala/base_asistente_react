@@ -51,6 +51,11 @@ export function conversationsStates(
                     map.set("loading", false);
                 map.update("conversations", list => list.push(conversation));
             });
+        case "OPEN_FORM_EJECUTIVO":
+            return state.withMutations(map => {
+                console.log("OPEN_FORM_EJECUTIVO_PRUEBA");
+                map.setIn(["conversations", "encuesta_ejecutivo"], Immutable.fromJS(action.data));
+            })
         case "PUSH_CONVERSATIONS_ERROR":
             const general = state.getIn(['conversations', -1, 'general']).toJS();
             action.data.general = general;

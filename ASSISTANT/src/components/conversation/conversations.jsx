@@ -211,8 +211,9 @@ export default class Conversations extends Component {
       userImg = customParamsStates.getIn(["customParams", "userImg"]);
 
     return React.Children.toArray(conversationsStates.get("conversations").map((map, j) => {
-      const conversation = map,
-        enabled = conversation.get("enabled");
+      const conversation = map;
+      const enabled = conversation.get("enabled");
+      console.log("CONVERSATION DATA :", conversation.get("end_conversation"))
       let retorno = [];
       if (enabled !== undefined && enabled) {
 
@@ -228,7 +229,7 @@ export default class Conversations extends Component {
           attach = conversation.get("attach"),
           like = conversation.get("like"),
           rating = conversation.get("rating"),
-          variable = conversation.get("variable"),
+          end_conversation = conversation.get("end_conversation"),
           last = j + 1 === sizeConversation ? true : false,
           withStars = conversation.get("withStars"),
           animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued + " ", //Si es la última conversa
@@ -448,7 +449,7 @@ export default class Conversations extends Component {
             );
           }
 
-          else if (variable) {
+          else if (end_conversation) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
               <FormularioValoracionEjecutivo

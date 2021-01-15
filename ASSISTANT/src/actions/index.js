@@ -560,10 +560,6 @@ export function updateConversation(conversationData, general) {
             };
         }
 
-
-
-
-
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
@@ -582,7 +578,7 @@ export function updateConversation(conversationData, general) {
         });
         return request
             .then(response => {
-                // console.log("RESP::", response);
+                 console.log("updateConversation::", response);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -616,6 +612,7 @@ export function updateConversation(conversationData, general) {
 }
 
 function messageResponse(dispatch, data, general) {
+    console.log("messageResponse", data);
     // console.log("DATAAAA", data)
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
@@ -642,7 +639,7 @@ function messageResponse(dispatch, data, general) {
                 break;
         }
     } else {
-        // console.log('data.general ', data)
+        console.log('data.general ', data)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -692,7 +689,7 @@ function chattigoOutInterval(data) {
             });
             return request.then(
                 response => {
-                    // console.log("LYNN! OUT", response.data);
+                    console.log("CHATTIGO OUT", response.data);
                     // console.log("response.data.data[0].text", response.data.data[0].text);
                     let item = {};
                     item.send = "from";
@@ -716,13 +713,21 @@ function chattigoOutInterval(data) {
 
                         item.msg = respuestaChattigo;
                         item.tipoExtension = respuestaChattigoType[0];
-
+                        console.log("DATA_PRUEBA", response.data);
                         if (response.data.end_conversation === true) {
-                            // console.log('end_conversation: ', response.data.end_conversation);
+                            console.log("END_CONVERSATION", response.data);
                             dispatch(closeChattigo());
                             clearInterval(asistantInterval);
                             dispatch({ type: "DISABLED_INPUT" });
-                        };
+                            dispatch({ type: "OPEN_FORM_EJECUTIVO", data: true });
+                        }
+                        else if (response.data.encuesta_ejecutivo === true) {
+                            console.log("ENCUESTA EJECUTIVO", response.data);
+                            dispatch(closeChattigo());
+                            clearInterval(asistantInterval);
+                            dispatch({ type: "OPEN_FORM_EJECUTIVO", data: true });
+                            dispatch({ type: "DISABLED_INPUT" });
+                        }
                     }
 
                     dispatch(pushConversation(item));
@@ -790,6 +795,7 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
+    console.log("updateConversationButton", data);
     // return function action(dispatch) {
     //   dispatch(setGeneral(data.general));
     //   dispatch(pushConversation(data));
@@ -827,7 +833,7 @@ export function updateConversationButton(data) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
                 setTimeout(() => {
-                    let _data = {
+                    let _data = { 
                         general: data.general,
                         send: "from",
                         enabled: true,
@@ -864,15 +870,12 @@ export function updateConversationButton(data) {
             return function action(dispatch, getState) {
                 dispatch(setGeneral(data.general));
                 dispatch(pushConversation(data));
-
                 // console.log('data.msg[0]:: ', data.msg[0]);
 
                 // if (data.msg[0] !== 'SI' || data.msg[0] !== 'NO') {
                 //     const buttonLarge = document.querySelector('.buttonLarge');
                 //     buttonLarge.style.width = '100%';
                 // }
-
-
                 const request = axios({
                     method: "POST",
                     headers: {
