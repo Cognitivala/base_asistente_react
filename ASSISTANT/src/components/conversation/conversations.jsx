@@ -429,7 +429,7 @@ export default class Conversations extends Component {
   finEjecutivo() {
     const { conversationsStates, generalStates, sendValoracion } = this.props;
     const encuesta_ejecutivo = conversationsStates.get('encuesta_ejecutivo');
-    console.log('encuesta_ejecutivo', encuesta_ejecutivo);
+    /* console.log('encuesta_ejecutivo', encuesta_ejecutivo); */
 
     if (encuesta_ejecutivo) {
       return <FormularioValoracionEjecutivo generalStates={generalStates} sendValoracion={sendValoracion} />;

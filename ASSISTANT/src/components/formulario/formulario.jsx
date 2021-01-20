@@ -209,9 +209,9 @@ export default class Formulario extends Component {
             retorno.push(
               <FormSelectsLink
                 key={i}
-                selects={map} 
+                selects={map}
                 withErrorParent={withErrorParent}
-                withErrorChildren={withErrorChildren} 
+                withErrorChildren={withErrorChildren}
                 validateFunc={this.validate}
                 mainCss={mainCss}
               />
@@ -331,7 +331,7 @@ export default class Formulario extends Component {
   }
 
   render() {
-    const { formularioStates, customParamsStates,mainCss } = this.props,
+    const { formularioStates, customParamsStates, mainCss } = this.props,
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]);
     return (
       <IsFetching
