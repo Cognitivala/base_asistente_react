@@ -525,8 +525,12 @@ function updateConversationError(data) {
 }
 export function updateConversation(conversationData, general) {
   return function action(dispatch, getState) {
+ /*if (conversationData.finConversacion) {
+      
+    } */
+
     const useChattigo = getState().assistantStates.getIn(['useChattigo']);
-    // console.log("USELYNN: ", useChattigo)
+    console.log("USE_CHATTIGO: ", useChattigo)
     const url = useChattigo ? CHATTIGO_ENDPOINT : '/message';
     let data = {};
 
@@ -566,6 +570,7 @@ export function updateConversation(conversationData, general) {
     return request
       .then((response) => {
         // console.log('updateConversation::', response);
+        console.log('codigoEstado: ', response.data.estado.codigoEstado)
         if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = 'from';
@@ -573,7 +578,7 @@ export function updateConversation(conversationData, general) {
           dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
         } else if (response.data.estado.codigoEstado === 304) {
-          // console.log('codigoEstado:: ', response.data.estado.codigoEstado)
+          /* console.log('codigoEstado:: ', response.data.estado.codigoEstado) */
           const newData = {
             ...data,
             general: {
@@ -694,14 +699,14 @@ function chattigoOutInterval(data) {
             clearInterval(asistantInterval);
             dispatch(sendValoracionEjecutivo());
             dispatch({ type: 'DISABLED_INPUT' });
-          } else if (response.data.encuesta_ejecutivo === true) {
-            // console.log('ENCUESTA EJECUTIVO', response.data);
+          } /* else if (response.data.encuesta_ejecutivo === true) {
             dispatch(closeChattigo());
             clearInterval(asistantInterval);
             dispatch({ type: 'OPEN_FORM_VALORACION_EJECUTIVO', data: true });
             dispatch({ type: 'DISABLED_INPUT' });
-          }
+          } */
         }
+
 
         dispatch(pushConversation(item));
         if (response.data.end_conversation === true) {
@@ -1030,6 +1035,12 @@ export function sendValoracionEjecutivo() {
   };
 }
 
+export function removeValoracionEjecutivo() {
+  return function action(dispatch) {
+    dispatch({ type: 'REMOVE_FORM_VALORACION_EJECUTIVO' });
+  };
+}
+
 export function sendValoracion(data, general) {
   return function action(dispatch) {
     dispatch({ type: 'GET_CONVERSATIONS_START' });
@@ -1049,8 +1060,10 @@ export function sendValoracion(data, general) {
           item.enabled = true;
           item.general = general;
           item.msg = ['exito_formulario'];
+          item.finConversacion = true;
           dispatch(updateConversation(item));
           dispatch({ type: 'GET_CONVERSATIONS_END' });
+          dispatch(removeValoracionEjecutivo());
         } else {
           let msg = ['error_formulario'];
           dispatch(updateConversationError(msg));
