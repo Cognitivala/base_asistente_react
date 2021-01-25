@@ -274,15 +274,16 @@ export function getSaludo() {
           dispatch(getSaludoEnd(item));
 
           // PROCESO PARA AGREGAR TAG <BR/> EN SALUDO INICIAL
-          var cutString = response.data.notification.split('!');
-          var concatString = cutString.join('! <br>');
-          let newNotificacion = concatString;
-          // console.log('notificacionFinal:: ', newNotificacion);
-
-          //Si tiene notificación, la envía
-          if (response.data.notification) {
-            // dispatch(sendNotification(response.data.notification));
-            dispatch(sendNotification(newNotificacion));
+          if(response.data.notification) {
+            var cutString = response.data.notification.split('!');
+            var concatString = cutString.join('! <br>');
+            let newNotificacion = concatString;
+            // console.log('notificacionFinal:: ', newNotificacion);
+            //Si tiene notificación, la envía
+            if (response.data.notification) {
+              // dispatch(sendNotification(response.data.notification));
+              dispatch(sendNotification(newNotificacion));
+            }
           }
           //PRIMER MENSAJE
           const msg_inicial = response.data.msg_inicial;
