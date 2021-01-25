@@ -7,7 +7,7 @@ import IsFetching from "../modules/is-fetching";
 import AES from "crypto-js/aes";
 import CryptoJS from "crypto-js";
 import { KEY_ENCRYPT } from "../../actions/key-encrypt";
-import {isMobile} from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 
 export default class Assistant extends Component {
   constructor(props) {
@@ -27,8 +27,8 @@ export default class Assistant extends Component {
     this.getBehaviors();
   }
 
-  toggleHeaderMore(more){
-    this.setState({moreHeader:more})
+  toggleHeaderMore(more) {
+    this.setState({ moreHeader: more })
   }
 
   setGeneralStates() {
@@ -45,13 +45,13 @@ export default class Assistant extends Component {
 
   getBehaviors() {
     const {
-        customParamsStates,
-        toggleMinimizedAssistant,
-        openAssistant,
-        setHistory,
-        closeLauncher,
-        getSaludoEnd,
-      } = this.props,
+      customParamsStates,
+      toggleMinimizedAssistant,
+      openAssistant,
+      setHistory,
+      closeLauncher,
+      getSaludoEnd,
+    } = this.props,
       keep_conversation = customParamsStates.getIn([
         "customParams",
         "settings",
@@ -120,20 +120,20 @@ export default class Assistant extends Component {
       navigator.userAgent.indexOf("IEMobile") !== -1
     );
   }
-  
+
   //END ORIGEN
 
   focus() {
     setTimeout(() => {
       const hrefLocal = window.location.origin;
-      if(hrefLocal!=="http://localhost:3000"){
+      if (hrefLocal !== "http://localhost:3000") {
         const href = window.top.location.href,
           hrefLast = href.substring(href.length - 13, href.length),
           input = document.documentElement.getElementsByClassName('input-user')[0];
-      if(hrefLast!=="personalizar/" && hrefLast !== "/personalizar")
-        if(input !== null) input.focus();
-      }else{
-        if(document.documentElement.getElementsByClassName('input-user')[0] !== null) document.documentElement.getElementsByClassName('input-user')[0].focus();
+        if (hrefLast !== "personalizar/" && hrefLast !== "/personalizar")
+          if (input !== null) input.focus();
+      } else {
+        if (document.documentElement.getElementsByClassName('input-user')[0] !== null) document.documentElement.getElementsByClassName('input-user')[0].focus();
       }
     }, 300);
   }
@@ -189,10 +189,10 @@ export default class Assistant extends Component {
 
   minimizedAssistant() {
     const {
-        assistantStates,
-        toggleMinimizedAssistant,
-        customParamsStates
-      } = this.props,
+      assistantStates,
+      toggleMinimizedAssistant,
+      customParamsStates
+    } = this.props,
       minimized = assistantStates.get("minimized"),
       keep_conversation = customParamsStates.getIn([
         "customParams",
@@ -232,19 +232,19 @@ export default class Assistant extends Component {
       conversationsStates.get("conversations").size > 0
     ) {
       const { customParamsStates, mainCss, saludoStates } = this.props,
-      ayuda = customParamsStates
-      .get("customParams")
-      .get("settings")
-      .get("help");
+        ayuda = customParamsStates
+          .get("customParams")
+          .get("settings")
+          .get("help");
 
       const minimized = assistantStates.get("minimized"),
-      cssClass = responsiveStates.get("responsive") === "mobile" ? mainCss.Mobile : "",
-      cssClass2 = this.state.moreHeader?mainCss.HeaderMore:"",
-      positionHelp = customParamsStates.getIn(["customParams","settings","position_help"]);
+        cssClass = responsiveStates.get("responsive") === "mobile" ? mainCss.Mobile : "",
+        cssClass2 = this.state.moreHeader ? mainCss.HeaderMore : "",
+        positionHelp = customParamsStates.getIn(["customParams", "settings", "position_help"]);
 
       if (minimized) {
         return (
-          <React.Fragment/>
+          <React.Fragment />
         );
       } else {
         return (
@@ -252,7 +252,7 @@ export default class Assistant extends Component {
             className={mainCss.MainAssistant + " " + cssClass + " " + cssClass2 + " " + mainCss.Show}
             onKeyUp={this.closeEscape}
             ref={this.divAssistant}
-            //tabIndex="1"
+          //tabIndex="1"
           >
             <Header
               logo={customParamsStates.get("customParams").get("logo")}
@@ -280,10 +280,10 @@ export default class Assistant extends Component {
               positionHelp={positionHelp}
               toggleHeaderMore={this.toggleHeaderMore}
               moreHeader={this.state.moreHeader}
-              saludo={saludoStates.getIn(['saludo','msg'])}
+              saludo={saludoStates.getIn(['saludo', 'msg'])}
             />
             {this.fillHelp(ayuda)}
-            <Conversations {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader}/>
+            <Conversations {...this.props} toggleHeaderMore={this.toggleHeaderMore} moreHeader={this.state.moreHeader} />
             <Input {...this.props} moreHeader={this.state.moreHeader} toggleHeaderMore={this.toggleHeaderMore} />
             <a href="https://www.cognitiva.la/" target="_blank" rel="noopener noreferrer" className={mainCss.LogoCognitiva}>
             </a>
@@ -296,8 +296,8 @@ export default class Assistant extends Component {
   }
 
   render() {
-    const { assistantStates, conversationsStates ,customParamsStates, responsiveStates, mainCss } = this.props,
-    colorHeader = customParamsStates.getIn(["customParams","color_header"]);
+    const { assistantStates, conversationsStates, customParamsStates, responsiveStates, mainCss } = this.props,
+      colorHeader = customParamsStates.getIn(["customParams", "color_header"]);
     return (
       <IsFetching
         colorHeader={colorHeader}

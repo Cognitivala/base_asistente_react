@@ -235,9 +235,9 @@ export function getSaludo() {
     let origen = null;
 
     if (isMobile) {
-      origen = 5;
-    } else {
       origen = 1;
+    } else {
+      origen = 5;
     }
 
     const data = {
@@ -274,7 +274,7 @@ export function getSaludo() {
           dispatch(getSaludoEnd(item));
 
           // PROCESO PARA AGREGAR TAG <BR/> EN SALUDO INICIAL
-          if(response.data.notification) {
+          if (response.data.notification) {
             var cutString = response.data.notification.split('!');
             var concatString = cutString.join('! <br>');
             let newNotificacion = concatString;
@@ -285,6 +285,7 @@ export function getSaludo() {
               dispatch(sendNotification(newNotificacion));
             }
           }
+         
           //PRIMER MENSAJE
           const msg_inicial = response.data.msg_inicial;
           msg_inicial ? (item = msg_inicial) : (item.msg = ['¿Qué puedo hacer por ti?']);
