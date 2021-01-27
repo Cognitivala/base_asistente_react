@@ -235,9 +235,9 @@ export function getSaludo() {
     let origen = null;
 
     if (isMobile) {
-      origen = 5;
-    } else {
       origen = 1;
+    } else {
+      origen = 5;
     }
 
     const data = {
@@ -274,16 +274,18 @@ export function getSaludo() {
           dispatch(getSaludoEnd(item));
 
           // PROCESO PARA AGREGAR TAG <BR/> EN SALUDO INICIAL
-          var cutString = response.data.notification.split('!');
-          var concatString = cutString.join('! <br>');
-          let newNotificacion = concatString;
-          // console.log('notificacionFinal:: ', newNotificacion);
-
-          //Si tiene notificación, la envía
           if (response.data.notification) {
-            // dispatch(sendNotification(response.data.notification));
-            dispatch(sendNotification(newNotificacion));
+            var cutString = response.data.notification.split('!');
+            var concatString = cutString.join('! <br>');
+            let newNotificacion = concatString;
+            // console.log('notificacionFinal:: ', newNotificacion);
+            //Si tiene notificación, la envía
+            if (response.data.notification) {
+              // dispatch(sendNotification(response.data.notification));
+              dispatch(sendNotification(newNotificacion));
+            }
           }
+         
           //PRIMER MENSAJE
           const msg_inicial = response.data.msg_inicial;
           msg_inicial ? (item = msg_inicial) : (item.msg = ['¿Qué puedo hacer por ti?']);
@@ -526,10 +528,8 @@ function updateConversationError(data) {
 export function updateConversation(conversationData, general) {
   return function action(dispatch, getState) {
     const useChattigo = getState().assistantStates.getIn(['useChattigo']);
-    // console.log("USELYNN: ", useChattigo)
     const url = useChattigo ? CHATTIGO_ENDPOINT : '/message';
     let data = {};
-
     if (useChattigo) {
       data = {
         ...conversationData,
@@ -546,7 +546,6 @@ export function updateConversation(conversationData, general) {
         clave: getUrlParams(getState, 'clave'),
       };
     }
-
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
     const request = axios({
@@ -566,6 +565,7 @@ export function updateConversation(conversationData, general) {
     return request
       .then((response) => {
         // console.log('updateConversation::', response);
+        console.log('codigoEstado: ', response.data.estado.codigoEstado)
         if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = 'from';
@@ -573,7 +573,7 @@ export function updateConversation(conversationData, general) {
           dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
         } else if (response.data.estado.codigoEstado === 304) {
-          // console.log('codigoEstado:: ', response.data.estado.codigoEstado)
+          /* console.log('codigoEstado:: ', response.data.estado.codigoEstado) */
           const newData = {
             ...data,
             general: {
@@ -582,7 +582,7 @@ export function updateConversation(conversationData, general) {
             },
           };
           dispatch(addChattigoData(response.data.general));
-          dispatch(chattigoInit(newData, general));
+          /* dispatch(chattigoInit(newData, general)); */
         } else {
           dispatch(updateConversationError(response.statusText));
         }
@@ -594,8 +594,6 @@ export function updateConversation(conversationData, general) {
 }
 
 function messageResponse(dispatch, data, general) {
-//   console.log('messageResponse', data);
-  // console.log("DATAAAA", data)
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -666,7 +664,6 @@ function chattigoOutInterval(data) {
         data: data,
       });
       return request.then((response) => {
-        // console.log('CHATTIGO OUT', response.data);
         // console.log("response.data.data[0].text", response.data.data[0].text);
         let item = {};
         item.send = 'from';
@@ -694,14 +691,14 @@ function chattigoOutInterval(data) {
             clearInterval(asistantInterval);
             dispatch(sendValoracionEjecutivo());
             dispatch({ type: 'DISABLED_INPUT' });
-          } else if (response.data.encuesta_ejecutivo === true) {
-            // console.log('ENCUESTA EJECUTIVO', response.data);
+          } /* else if (response.data.encuesta_ejecutivo === true) {
             dispatch(closeChattigo());
             clearInterval(asistantInterval);
             dispatch({ type: 'OPEN_FORM_VALORACION_EJECUTIVO', data: true });
             dispatch({ type: 'DISABLED_INPUT' });
-          }
+          } */
         }
+
 
         dispatch(pushConversation(item));
         if (response.data.end_conversation === true) {
@@ -1030,6 +1027,12 @@ export function sendValoracionEjecutivo() {
   };
 }
 
+export function removeValoracionEjecutivo() {
+  return function action(dispatch) {
+    dispatch({ type: 'REMOVE_FORM_VALORACION_EJECUTIVO' });
+  };
+}
+
 export function sendValoracion(data, general) {
   return function action(dispatch) {
     dispatch({ type: 'GET_CONVERSATIONS_START' });
@@ -1048,9 +1051,12 @@ export function sendValoracion(data, general) {
           item.send = 'from';
           item.enabled = true;
           item.general = general;
-          item.msg = ['exito_formulario'];
+          /* item.msg = ['exito_formulario']; */
+          item.msg = [response.data.respuesta]
           dispatch(updateConversation(item));
           dispatch({ type: 'GET_CONVERSATIONS_END' });
+          dispatch(removeValoracionEjecutivo());
+          dispatch({ type: 'DISABLED_INPUT' });
         } else {
           let msg = ['error_formulario'];
           dispatch(updateConversationError(msg));
@@ -1181,7 +1187,6 @@ export function sendForm(data, url, general) {
           });
           return request
             .then((response) => {
-              // console.log('RESPONSE MENSAJE 5::');
               if (response.status === 200 && response.data.estado.codigoEstado === 200) {
                 dispatch({ type: 'SEND_FORM_END' });
                 let item = response.data;

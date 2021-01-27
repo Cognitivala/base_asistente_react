@@ -19,8 +19,8 @@ const totalStars = 5;
 class FormularioValoracionEjecutivo extends Component {
   state = {
     respuesta: null,
-    starsSelected: 0,
-    starsSelected2: 0,
+    starsSelectedAtencion: 0,
+    starsSelectedEjecutivo: 0,
     mensajeAdicional: ""
   };
 
@@ -37,7 +37,8 @@ class FormularioValoracionEjecutivo extends Component {
     e.preventDefault();
     if (
       this.state.respuesta === null ||
-      this.state.starsSelected === 0 ||
+      this.state.starsSelectedAtencion === 0 ||
+      this.state.starsSelectedEjecutivo === 0 ||
       this.state.mensajeAdicional === ""
     ) {
       return false;
@@ -60,11 +61,13 @@ class FormularioValoracionEjecutivo extends Component {
       id_data_canal: 123,
       id_canal: 1,
       resolvio: resolvio,
-      valoracion: this.state.starsSelected,
+      valoracion: this.state.starsSelectedAtencion,
+      valoracionEjecutivo : this.state.starsSelectedEjecutivo,
       comentario: this.state.mensajeAdicional
     };
     // sendLike(data, general);
-    await sendValoracion(data, general);
+   await sendValoracion(data, general)
+   
   };
 
   render() {
@@ -105,7 +108,7 @@ class FormularioValoracionEjecutivo extends Component {
             <div className="star-rating">
             <div style={style.boxStar}>
               {[...Array(totalStars)].map((n, i) => (
-                <Star key={i} selected={i < this.state.starsSelected} onClick={() => this.setState({ starsSelected: i + 1 })} />
+                <Star key={i} selected={i < this.state.starsSelectedAtencion} onClick={() => this.setState({ starsSelectedAtencion: i + 1 })} />
               ))}
             </div>
 
@@ -113,11 +116,11 @@ class FormularioValoracionEjecutivo extends Component {
             {/*   {this.state.starsSelected === 0 && (
                 <p>Selecciona tu valoración</p>
               )} */}
-              {this.state.starsSelected === 1 && ( <p> Muy insatisfecho <span role="img" aria-label=""> 😡</span></p> )}
-              {this.state.starsSelected === 2 && ( <p>No fue de mucha ayuda <span role="img" aria-label=""> 😞</span></p> )}
-              {this.state.starsSelected === 3 && ( <p>Me ayudó, pero necesita mejorar <span role="img" aria-label=""> 😐</span></p> )}
-              {this.state.starsSelected === 4 && ( <p>¡Buen servicio! <span role="img" aria-label=""> 🙂</span></p> )}
-              {this.state.starsSelected === 5 && ( <p>¡Excelente servicio! <span role="img" aria-label=""> 😃</span></p> )}
+              {this.state.starsSelectedAtencion === 1 && ( <p> Muy insatisfecho <span role="img" aria-label=""> 😡</span></p> )}
+              {this.state.starsSelectedAtencion === 2 && ( <p>No fue de mucha ayuda <span role="img" aria-label=""> 😞</span></p> )}
+              {this.state.starsSelectedAtencion === 3 && ( <p>Me ayudó, pero necesita mejorar <span role="img" aria-label=""> 😐</span></p> )}
+              {this.state.starsSelectedAtencion === 4 && ( <p>¡Buen servicio! <span role="img" aria-label=""> 🙂</span></p> )}
+              {this.state.starsSelectedAtencion === 5 && ( <p>¡Excelente servicio! <span role="img" aria-label=""> 😃</span></p> )}
             </div>
           </div>
           </fieldset>
@@ -127,7 +130,7 @@ class FormularioValoracionEjecutivo extends Component {
           <div className="star-rating">
           <div style={style.boxStar}>
             {[...Array(totalStars)].map((n, i) => (
-              <Star key={i} selected={i < this.state.starsSelected2} onClick={() => this.setState({ starsSelected2: i + 1 })} />
+              <Star key={i} selected={i < this.state.starsSelectedEjecutivo} onClick={() => this.setState({ starsSelectedEjecutivo: i + 1 })} />
             ))}
           </div>
 
@@ -135,11 +138,11 @@ class FormularioValoracionEjecutivo extends Component {
           {/*   {this.state.starsSelected === 0 && (
               <p>Selecciona tu valoración</p>
             )} */}
-            {this.state.starsSelected2 === 1 && ( <p> Muy insatisfecho <span role="img" aria-label=""> 😡</span></p> )}
-            {this.state.starsSelected2 === 2 && ( <p>No fue de mucha ayuda <span role="img" aria-label=""> 😞</span></p> )}
-            {this.state.starsSelected2 === 3 && ( <p>Me ayudó, pero necesita mejorar <span role="img" aria-label=""> 😐</span></p> )}
-            {this.state.starsSelected2 === 4 && ( <p>¡Buen servicio! <span role="img" aria-label=""> 🙂</span></p> )}
-            {this.state.starsSelected2 === 5 && ( <p>¡Excelente servicio! <span role="img" aria-label=""> 😃</span></p> )}
+            {this.state.starsSelectedEjecutivo === 1 && ( <p> Muy insatisfecho <span role="img" aria-label=""> 😡</span></p> )}
+            {this.state.starsSelectedEjecutivo === 2 && ( <p>No fue de mucha ayuda <span role="img" aria-label=""> 😞</span></p> )}
+            {this.state.starsSelectedEjecutivo === 3 && ( <p>Me ayudó, pero necesita mejorar <span role="img" aria-label=""> 😐</span></p> )}
+            {this.state.starsSelectedEjecutivo === 4 && ( <p>¡Buen servicio! <span role="img" aria-label=""> 🙂</span></p> )}
+            {this.state.starsSelectedEjecutivo === 5 && ( <p>¡Excelente servicio! <span role="img" aria-label=""> 😃</span></p> )}
           </div>
           </div>
               </fieldset>

@@ -51,6 +51,8 @@ export function conversationsStates(
       });
     case 'OPEN_FORM_VALORACION_EJECUTIVO':
       return state.set('encuesta_ejecutivo', true);
+    case 'REMOVE_FORM_VALORACION_EJECUTIVO':
+        return state.set('encuesta_ejecutivo', false);
     case 'PUSH_CONVERSATIONS_ERROR':
       const general = state.getIn(['conversations', -1, 'general']).toJS();
       action.data.general = general;

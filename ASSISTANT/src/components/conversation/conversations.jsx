@@ -17,8 +17,7 @@ import ConversationLikes from './conversation-likes';
 import AES from 'crypto-js/aes';
 import { KEY_ENCRYPT } from '../../actions/key-encrypt';
 import FormularioValoracion from '../formValoracion/FormularioValoracion';
-import FormularioValoracionEjecutivo from '../formValoracion Ejecutivo/FormularioValoracionEjecutivo';
-
+import FormularioValoracionEjecutivo from '../formValoracionEjecutivo/FormularioValoracionEjecutivo';
 export default class Conversations extends Component {
   constructor(props) {
     super(props);
@@ -164,7 +163,7 @@ export default class Conversations extends Component {
       increment = 20,
       _this = this;
 
-    var animateScroll = function() {
+    var animateScroll = function () {
       currentTime += increment;
       var val = _this.easeInOutQuad(currentTime, start, change, duration);
       element.scrollTop = val;
@@ -430,7 +429,7 @@ export default class Conversations extends Component {
   finEjecutivo() {
     const { conversationsStates, generalStates, sendValoracion } = this.props;
     const encuesta_ejecutivo = conversationsStates.get('encuesta_ejecutivo');
-    console.log('encuesta_ejecutivo', encuesta_ejecutivo);
+    /* console.log('encuesta_ejecutivo', encuesta_ejecutivo); */
 
     if (encuesta_ejecutivo) {
       return <FormularioValoracionEjecutivo generalStates={generalStates} sendValoracion={sendValoracion} />;
