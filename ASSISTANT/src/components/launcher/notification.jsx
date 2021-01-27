@@ -7,10 +7,10 @@ export default class Notification extends Component {
     const { saludo, mainCss, bubbleLogo } = this.props;
     return (
       <React.Fragment>
-        <NotificationCircle mainCss={mainCss} bubbleLogo={bubbleLogo} />
         <div className={mainCss.Notification}>
           <span dangerouslySetInnerHTML={{ __html: saludo }} />
         </div>
+        <NotificationCircle mainCss={mainCss} bubbleLogo={bubbleLogo} />
       </React.Fragment>
     );
   }
