@@ -237,7 +237,7 @@ export function getSaludo() {
     if (isMobile) {
       origen = 1;
     } else {
-      origen = 5;
+      origen = 1;
     }
 
     const data = {
