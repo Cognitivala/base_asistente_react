@@ -274,7 +274,7 @@ export default class Formulario extends Component {
                 <FormInput
                   type={map.get('type')}
                   name={map.get('name')}
-                  placeholder={map.get('placeholder')}
+                  placeholder={!map.get('placeholder') ? '' : map.get('placeholder')}
                   autocomplete={map.get('autocomplete')}
                   validateFunc={this.validate}
                   validate={map.get('validate')}

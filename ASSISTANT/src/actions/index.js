@@ -543,7 +543,7 @@ export function updateConversation(conversationData) {
       sessionStorage.getItem('previous_input')
       // && Object.keys(conversationData.general.url_params).length > 0)
     ) {
-      console.log('conversationData:: ', conversationData);
+      // console.log('conversationData:: ', conversationData);
       data = {
         ...conversationData,
       };
@@ -556,7 +556,7 @@ export function updateConversation(conversationData) {
       };
     }
 
-    console.log('DATA PARA updateConversation', data);
+    // console.log('DATA PARA updateConversation', data);
 
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
@@ -570,7 +570,7 @@ export function updateConversation(conversationData) {
     });
     return request
       .then((response) => {
-        console.log('response.data', response.data);
+        // console.log('response.data', response.data);
         if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = 'from';
@@ -1066,7 +1066,7 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-  console.log('updateConversationButton:: ', data);
+  // console.log('updateConversationButton:: ', data);
   // return function action(dispatch) {
   //   dispatch(setGeneral(data.general));
   //   dispatch(pushConversation(data));
@@ -1098,7 +1098,7 @@ export function updateConversationButton(data) {
   //     }
   //   );
   // };
-  console.log(data.msg[0]);
+  // console.log(data.msg[0]);
   switch (data.msg[0]) {
     case 'siValorar':
       return function action(dispatch) {
@@ -1154,14 +1154,14 @@ export function updateConversationButton(data) {
         });
         return request.then(
           (response) => {
-            console.log('RESPONSE MENSAJE 3::', response);
+            // console.log('RESPONSE MENSAJE 3::', response);
             if (response.status === 200) {
               let item = response.data;
               item.send = 'from';
               item.enabled = true;
 
               const polizasSitioPrivado = window.location.search;
-              console.log('polizasSitioPrivado:: ', polizasSitioPrivado);
+              // console.log('polizasSitioPrivado:: ', polizasSitioPrivado);
 
               if (response.data.previous_input) {
                 localStorage.setItem('previous_input', response.data.previous_input);
@@ -1558,7 +1558,7 @@ export function addLynnData(data) {
 }
 
 export function sendInputValue(dispatch, data) {
-  console.log('sendInputValue:: ', data);
+  // console.log('sendInputValue:: ', data);
 
   dispatch(setGeneral(data.general));
   dispatch(pushConversation(data));
@@ -1572,9 +1572,9 @@ export function sendInputValue(dispatch, data) {
   });
   return request.then(
     (response) => {
-      console.log('RESPONSE sendInputValue::', response);
+      // console.log('RESPONSE sendInputValue::', response);
       if (response.status === 200) {
-        console.log('RESPONSE DATA sendInputValue', response.data);
+        // console.log('RESPONSE DATA sendInputValue', response.data);
         // dispatch(pushConversation(data));
       }
     },
