@@ -10,22 +10,6 @@
       p {
         font-size: 20px !important;
       }
-      @media only screen and (min-device-width : 320px) and (max-device-width : 375px) { 
-        .iframe-cognitive-assistant-container.active{ 
-          max-width : 332px !important;
-        }
-        .iframe-cognitive-assistant-container active assistant{
-          max-width : 332px !important;
-        }
-        input[type="text"],
-        input[type="number"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="password"] {
-            font-size: 16px !important;
-        }
-      }
-
     </style>
   </head>
 
@@ -42,8 +26,8 @@
     <script>
       window.addEventListener('load', function () {
         var url = 'URL_A_CAMBIAR';
-         window.CognitiveAssistantMain.init('https://' + url + '/asistente/');
-         //window.CognitiveAssistantMain.init('http://localhost:3000/assistant/');
+          window.CognitiveAssistantMain.init('https://' + url + '/asistente/');
+          //window.CognitiveAssistantMain.init('http://localhost:3000/assistant/');
       });
     </script>
   </body>
