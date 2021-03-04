@@ -79,8 +79,8 @@
         
         
         css += '.iframe-cognitive-assistant-container.active {opacity: 1;transform: translate3d(0,0,0);pointer-events: auto;}';
-        //css += '@media screen and (max-width: 328px){ .iframe-cognitive-assistant-container.active{ max-width : 328px !important; nput[type="text"],input[type="number"],input[type="email"],input[type="tel"],input[type="password"] {font-size: 16px !important;} } ';
-        css += '@media only screen and (min-device-width : 320px) and (max-device-width : 374px) { .iframe-cognitive-assistant-container.active{ max-width : 328px !important; nput[type="text"],input[type="number"],input[type="email"],input[type="tel"],input[type="password"] {font-size: 16px !important;} }'
+
+        css += '@media only screen and (min-device-width : 320px) and (max-device-width : 374px) { .iframe-cognitive-assistant-container.active{ max-width : 332px !important;} .iframe-cognitive-assistant-container active assistant{ max-width : 332px !important; } input[type="text"],input[type="number"],input[type="email"],input[type="tel"],input[type="password"] {font-size: 16px !important;}}';
 
         css += '.iframe-cognitive-assistant-container.notification{ height: 100px; width: 100%; max-width: 100px; box-shadow: none;right: 0;bottom: 55px; }';
         css += '.iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%;max-width: 375px !important;right: 0px;bottom: 0px; }';
