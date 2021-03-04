@@ -15,10 +15,12 @@ export default class formSelect extends Component {
   };
 
   render() {
-    const { name, options } = this.props;
+    const { name, options, withError, mainCss } = this.props;
+
+    let cssClassError = withError ? ' ' + mainCss.Error : '';
 
     return (
-      <select name={name} onChange={this.handleOnChange} value={this.state.selected}>
+      <select name={name} onChange={this.handleOnChange} value={this.state.selected} className={cssClassError}>
         <option value=''>Seleccionar Categoría</option>
         {options.map((item) => {
           return (

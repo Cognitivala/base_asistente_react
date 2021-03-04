@@ -1,5 +1,6 @@
 export function required(input, validates, required) {
   //Verificar tipo de input
+
   switch (input.tagName) {
     case 'INPUT':
       if (input.type === 'checkbox') {
@@ -9,13 +10,15 @@ export function required(input, validates, required) {
       } else {
         return input.value.length !== 0;
       }
-    case 'DIV': //Select
+    case 'DIV': //Select con DIV
       const opt = input.classList[0];
       if (opt.includes('Options')) {
-        return select(input, validates, required);
+        return selectWithDiv(input, validates, required);
       } else {
         break;
       }
+    case 'SELECT':
+      return select(input.value, validates, required);
     case 'TEXTAREA':
       return !input.value.length === 0;
     default:
@@ -179,6 +182,17 @@ export function formatRut(rut) {
 }
 
 export function select(value, validates, required) {
+  let optionSelected = !value ? -1 : value;
+
+  if (required) {
+    return optionSelected !== -1;
+  } else if (optionSelected !== -1) {
+    return optionSelected !== -1;
+  }
+  return true;
+}
+
+export function selectWithDiv(value, validates, required) {
   let optionSelected = value.dataset.valor === undefined ? -1 : value.dataset.valor;
   if (required) {
     return optionSelected !== -1;

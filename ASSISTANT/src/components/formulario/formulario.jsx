@@ -33,7 +33,6 @@ export default class Formulario extends Component {
 
   validate(validates, name, e) {
     const typesValidate = validates.get('types');
-    // console.log('typesValidate:: ', typesValidate);
     let error = false;
     let input = e.target === undefined ? e : e.target;
     let arr = this.state.invalidFiels;
@@ -43,8 +42,8 @@ export default class Formulario extends Component {
     let required = typesValidate.filter((item) => item === 'required');
     required = required.size > 0;
 
-    typesValidate.forEach((map) => {
-      if (!Validator[map](input, validates, required)) error = true;
+    typesValidate.forEach((item) => {
+      if (!Validator[item](input, validates, required)) error = true;
     });
 
     if (error) {
@@ -102,9 +101,6 @@ export default class Formulario extends Component {
       arr = this.validateAll(fields, fieldsDOM),
       url = form.get('url');
 
-    // console.log('fieldsDOM:: ', fieldsDOM);
-    // console.log('arr:: ', arr);
-
     let dataForm = {};
     if (arr.length > 0) {
       this.setState({
@@ -119,9 +115,6 @@ export default class Formulario extends Component {
         dataForm[name] = value;
         //arrayOut.push({ name, value });
       }
-      // console.log(dataForm);
-      // console.log(url);
-      // console.log(general);
 
       sendForm(dataForm, url, general);
     }
@@ -197,9 +190,9 @@ export default class Formulario extends Component {
                 <FormSelect
                   name={map.get('name')}
                   options={map.get('options')}
-                  validateFunc={this.validate}
                   validate={map.get('validate')}
-                  // withError={withError}
+                  validateFunc={this.validate}
+                  withError={withError}
                   mainCss={mainCss}
                 />
                 {this.fillError(withError, map.getIn(['validate', 'error']))}
