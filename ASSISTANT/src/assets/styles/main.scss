@@ -17,8 +17,8 @@
 
 .row {
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: auto !important;
+    margin-right: auto !important;
 } //Generador de grilla
 @include grid-generator(12, 20, 1450, grid);
 /*------------------------------------------------------------------------------Auxiliares */
@@ -2043,6 +2043,13 @@ table {
     }
     .cognitive-iframe {
         height: calc(100% - 80px);
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+        font-size: 16px;
     }
 }
 
