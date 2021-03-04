@@ -1,30 +1,30 @@
-import axios from "axios";
-import Geocode from "react-geocode";
-import { APIURL } from "./constans";
-import AES from "crypto-js/aes";
-import { KEY_ENCRYPT } from "./key-encrypt";
-import { isMobile } from "react-device-detect";
+import axios from 'axios';
+import Geocode from 'react-geocode';
+import { APIURL } from './constans';
+import AES from 'crypto-js/aes';
+import { KEY_ENCRYPT } from './key-encrypt';
+import { isMobile } from 'react-device-detect';
 
-const LYNN_ENDPOINT = "/lynn_in";
+const LYNN_ENDPOINT = '/lynn_in';
 const ASISTANT_INTERVAL_TIMER = 4000;
 
 //GENERAL
 function defaultGeneral() {
   return {
-    type: "DEFAULT_GENERAL",
+    type: 'DEFAULT_GENERAL',
   };
 }
 
 function setGeneral(data) {
   return {
-    type: "SET_GENERAL",
+    type: 'SET_GENERAL',
     data,
   };
 }
 
 function setNodoId(data) {
   return {
-    type: "SET_NODO_ID",
+    type: 'SET_NODO_ID',
     data,
   };
 }
@@ -33,7 +33,7 @@ export function getLocation() {
     const geolocation = navigator.geolocation;
     const location = new Promise((resolve, reject) => {
       if (!geolocation) {
-        reject(new Error("Not Supported"));
+        reject(new Error('Not Supported'));
       }
 
       geolocation.getCurrentPosition(
@@ -41,7 +41,7 @@ export function getLocation() {
           resolve(position);
         },
         () => {
-          console.log("Permiso denegado");
+          console.log('Permiso denegado');
           //reject(new Error("Permission denied"));
         }
       );
@@ -49,7 +49,7 @@ export function getLocation() {
 
     location
       .then((res) => {
-        const keyGoogleMaps = "AIzaSyDcsYlKbJi5SIYzYtZuaXEkTZXiXBLrym8",
+        const keyGoogleMaps = 'AIzaSyDcsYlKbJi5SIYzYtZuaXEkTZXiXBLrym8',
           latitud = res.coords.latitude.toString(),
           longitud = res.coords.longitude.toString();
         Geocode.setApiKey(keyGoogleMaps);
@@ -57,7 +57,7 @@ export function getLocation() {
         Geocode.fromLatLng(latitud, longitud).then(
           (response) => {
             let data = getLocationObject(response.results);
-            dispatch({ type: "SET_LOCATION", data: data });
+            dispatch({ type: 'SET_LOCATION', data: data });
           },
           (error) => {
             console.log(error);
@@ -76,15 +76,15 @@ export function getLocationObject(results) {
     let types = ele.types;
     for (let j = 0; j < types.length; j++) {
       const type = types[j];
-      if (type === "administrative_area_level_3") {
+      if (type === 'administrative_area_level_3') {
         let address_components = ele.address_components;
         for (let k = 0; k < address_components.length; k++) {
           const address = address_components[k];
-          if (address.types[0] === "administrative_area_level_3") {
+          if (address.types[0] === 'administrative_area_level_3') {
             data.comuna = address.long_name;
-          } else if (address.types[0] === "administrative_area_level_1") {
+          } else if (address.types[0] === 'administrative_area_level_1') {
             data.region = address.long_name;
-          } else if (address.types[0] === "country") {
+          } else if (address.types[0] === 'country') {
             data.pais = address.long_name;
           }
         }
@@ -97,36 +97,36 @@ export function getLocationObject(results) {
 }
 export function setOrigen(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_ORIGEN", data });
+    dispatch({ type: 'SET_ORIGEN', data });
   };
 }
 export function setIntegracion(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_INTEGRACION", data });
+    dispatch({ type: 'SET_INTEGRACION', data });
   };
 }
 
 export function setUrlParams(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_URL_PARAMS", data });
+    dispatch({ type: 'SET_URL_PARAMS', data });
   };
 }
 
 export function setRegion(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_REGION", data });
+    dispatch({ type: 'SET_REGION', data });
   };
 }
 //LAUNCHER
 export function closeLauncher() {
   return function action(dispatch) {
-    dispatch({ type: "CLOSE_LAUNCHER" });
-    dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+    dispatch({ type: 'CLOSE_LAUNCHER' });
+    dispatch({ type: 'TOGGLE_MINIMIZED', data: false });
   };
 }
 export function sendNotification(data) {
   return {
-    type: "SET_NOTIFICATION",
+    type: 'SET_NOTIFICATION',
     data,
   };
 }
@@ -137,12 +137,12 @@ export function getCustomParams() {
     dispatch(getCustomParamsStart());
 
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      url: APIURL + "/customize_param",
-      data: { id_cliente: "1" },
+      url: APIURL + '/customize_param',
+      data: { id_cliente: '1' },
     });
     return request.then(
       (response) => {
@@ -150,12 +150,9 @@ export function getCustomParams() {
           //UPDATE COLORS
           setColors(response.data.color_header);
           dispatch(getCustomParamsEnd(response.data));
-          let str_md5v = AES.encrypt(
-            JSON.stringify(response.data),
-            KEY_ENCRYPT
-          ).toString();
-          localStorage.setItem("customParams", str_md5v);
-          window.top.postMessage({ customParams: response.data }, "*");
+          let str_md5v = AES.encrypt(JSON.stringify(response.data), KEY_ENCRYPT).toString();
+          localStorage.setItem('customParams', str_md5v);
+          window.top.postMessage({ customParams: response.data }, '*');
 
           //Si tiene notificación
           if (response.data.settings.bubble === true) {
@@ -166,11 +163,7 @@ export function getCustomParams() {
         }
       },
       (err) => {
-        dispatch(
-          getCustomParamsError(
-            "Error de conexión con el servidor, intente nuevamente"
-          )
-        );
+        dispatch(getCustomParamsError('Error de conexión con el servidor, intente nuevamente'));
       }
     );
   };
@@ -178,62 +171,62 @@ export function getCustomParams() {
 
 function getCustomParamsError(error) {
   return {
-    type: "GET_CUSTOM_PARAMS_ERROR",
+    type: 'GET_CUSTOM_PARAMS_ERROR',
     error,
   };
 }
 
 function getCustomParamsStart() {
   return {
-    type: "GET_CUSTOM_PARAMS_START",
+    type: 'GET_CUSTOM_PARAMS_START',
   };
 }
 
 function getCustomParamsEnd(data) {
   return {
-    type: "GET_CUSTOM_PARAMS_END",
+    type: 'GET_CUSTOM_PARAMS_END',
     data,
   };
 }
 export function setCustomParams(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_CUSTOM_PARAMS", data });
+    dispatch({ type: 'SET_CUSTOM_PARAMS', data });
   };
 }
 export function updateCustomTitle(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_CUSTOM_TITULO", data });
+    dispatch({ type: 'SET_CUSTOM_TITULO', data });
   };
 }
 export function updateCustomSubtitle(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_CUSTOM_SUBTITULO", data });
+    dispatch({ type: 'SET_CUSTOM_SUBTITULO', data });
   };
 }
 export function updateCustomColorHeader(data) {
   setColors(data);
   return function action(dispatch) {
-    dispatch({ type: "SET_CUSTOM_COLOR_HEADER", data });
+    dispatch({ type: 'SET_CUSTOM_COLOR_HEADER', data });
   };
 }
 export function updateCustomColorBtn(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_CUSTOM_COLOR_BTN", data });
+    dispatch({ type: 'SET_CUSTOM_COLOR_BTN', data });
   };
 }
 export function updateCustomLogo(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_CUSTOM_LOGO", data });
+    dispatch({ type: 'SET_CUSTOM_LOGO', data });
   };
 }
 export function updateCustomAvatar(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_CUSTOM_AVATAR", data });
+    dispatch({ type: 'SET_CUSTOM_AVATAR', data });
   };
 }
 export function setColors(colorHeader) {
-  document.documentElement.style.setProperty("--first", colorHeader);
-  document.documentElement.style.setProperty("--laucher", colorHeader);
+  document.documentElement.style.setProperty('--first', colorHeader);
+  document.documentElement.style.setProperty('--laucher', colorHeader);
 }
 //SALUDO
 export function getSaludo() {
@@ -251,25 +244,25 @@ export function getSaludo() {
     const data = {
         general: {
           cid: null,
-          id_cliente: "1",
+          id_cliente: '1',
           origen: origen,
-          rut: getUrlParams(getState, "rut"),
-          user: getUrlParams(getState, "user"),
-          clave: getUrlParams(getState, "clave"),
+          rut: getUrlParams(getState, 'rut'),
+          user: getUrlParams(getState, 'user'),
+          clave: getUrlParams(getState, 'clave'),
         },
         msg: null,
       },
       request = axios({
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        url: APIURL + "/message",
+        url: APIURL + '/message',
         data: {
           ...data,
-          rut: getUrlParams(getState, "rut"),
-          user: getUrlParams(getState, "user"),
-          clave: getUrlParams(getState, "clave"),
+          rut: getUrlParams(getState, 'rut'),
+          user: getUrlParams(getState, 'user'),
+          clave: getUrlParams(getState, 'clave'),
         },
       });
     return request.then(
@@ -277,11 +270,8 @@ export function getSaludo() {
         if (response.status === 200) {
           let item = {};
           item.msg = response.data.msg;
-          let str_md5v = AES.encrypt(
-            JSON.stringify(item),
-            KEY_ENCRYPT
-          ).toString();
-          localStorage.setItem("gr", str_md5v);
+          let str_md5v = AES.encrypt(JSON.stringify(item), KEY_ENCRYPT).toString();
+          localStorage.setItem('gr', str_md5v);
           dispatch(getSaludoEnd(item));
           //Si tiene notificación, la envía
           if (response.data.notification) {
@@ -289,10 +279,8 @@ export function getSaludo() {
           }
           //PRIMER MENSAJE
           const msg_inicial = response.data.msg_inicial;
-          msg_inicial
-            ? (item = msg_inicial)
-            : (item.msg = ["¿Qué puedo hacer por ti?"]);
-          item.send = "from";
+          msg_inicial ? (item = msg_inicial) : (item.msg = ['¿Qué puedo hacer por ti?']);
+          item.send = 'from';
           item.enabled = true;
           dispatch(pushConversation(item));
           dispatch(setNodoId(item.msg[item.msg.length - 1]));
@@ -301,11 +289,7 @@ export function getSaludo() {
         }
       },
       (err) => {
-        dispatch(
-          getSaludoError(
-            "Error de conexión con el servidor, intente nuevamente"
-          )
-        );
+        dispatch(getSaludoError('Error de conexión con el servidor, intente nuevamente'));
       }
     );
   };
@@ -318,32 +302,32 @@ export function sendSaludo(data) {
 
 function getSaludoStart() {
   return {
-    type: "GET_SALUDO_START",
+    type: 'GET_SALUDO_START',
   };
 }
 export function getSaludoEnd(data) {
   return {
-    type: "GET_SALUDO_END",
+    type: 'GET_SALUDO_END',
     data,
   };
 }
 
 function getSaludoError(error) {
   return {
-    type: "GET_SALUDO_ERROR",
+    type: 'GET_SALUDO_ERROR',
     error,
   };
 }
 export function updateSaludo(data) {
   return function action(dispatch) {
-    dispatch({ type: "UPDATE_SALUDO", data: [data] });
-    dispatch({ type: "UPDATE_SALUDO_CONVERSATION", data: [data] });
+    dispatch({ type: 'UPDATE_SALUDO', data: [data] });
+    dispatch({ type: 'UPDATE_SALUDO_CONVERSATION', data: [data] });
   };
 }
 //ASSISTANT
 export function openAssistant() {
   return function action(dispatch) {
-    dispatch({ type: "OPEN_ASSISTANT" });
+    dispatch({ type: 'OPEN_ASSISTANT' });
   };
 }
 
@@ -352,12 +336,12 @@ var asistantInterval = null;
 export function closeAssistant() {
   return function action(dispatch, getState) {
     dispatch(defaultGeneral());
-    dispatch({ type: "CLOSE_ASSISTANT" });
-    dispatch({ type: "SET_NOTIFICATION", data: null });
-    dispatch({ type: "ENABLED_INPUT" });
-    dispatch({ type: "ENABLED_HELP" });
-    dispatch({ type: "TOGGLE_MINIMIZED", data: false });
-    dispatch({ type: "OPEN_LAUNCHER" });
+    dispatch({ type: 'CLOSE_ASSISTANT' });
+    dispatch({ type: 'SET_NOTIFICATION', data: null });
+    dispatch({ type: 'ENABLED_INPUT' });
+    dispatch({ type: 'ENABLED_HELP' });
+    dispatch({ type: 'TOGGLE_MINIMIZED', data: false });
+    dispatch({ type: 'OPEN_LAUNCHER' });
     dispatch(deleteHistory());
     dispatch(closeLynn());
     // if(asistantInterval) {
@@ -369,13 +353,13 @@ export function closeAssistant() {
 }
 export function toggleMinimizedAssistant(data) {
   return function action(dispatch) {
-    dispatch({ type: "TOGGLE_MINIMIZED", data });
-    dispatch({ type: "OPEN_LAUNCHER" });
+    dispatch({ type: 'TOGGLE_MINIMIZED', data });
+    dispatch({ type: 'OPEN_LAUNCHER' });
   };
 }
 export function defaultAssistant() {
   return function action(dispatch) {
-    dispatch({ type: "TOGGLE_MINIMIZED", data: false });
+    dispatch({ type: 'TOGGLE_MINIMIZED', data: false });
   };
 }
 //AYUDA
@@ -383,11 +367,11 @@ export function getAyuda() {
   return function action(dispatch) {
     dispatch(getAyudaStart());
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      url: APIURL + "/preguntas_ejemplo",
+      url: APIURL + '/preguntas_ejemplo',
     });
     return request.then(
       (response) => {
@@ -399,9 +383,7 @@ export function getAyuda() {
         }
       },
       (err) => {
-        dispatch(
-          getAyudaError("Error de conexión con el servidor, intente nuevamente")
-        );
+        dispatch(getAyudaError('Error de conexión con el servidor, intente nuevamente'));
       }
     );
 
@@ -470,63 +452,63 @@ export function getAyuda() {
 
 function getAyudaStart() {
   return {
-    type: "GET_AYUDA_START",
+    type: 'GET_AYUDA_START',
   };
 }
 
 function getAyudaEnd(data) {
   return {
-    type: "GET_AYUDA_END",
+    type: 'GET_AYUDA_END',
     data,
   };
 }
 
 function getAyudaError(error) {
   return {
-    type: "GET_AYUDA_ERROR",
+    type: 'GET_AYUDA_ERROR',
     error,
   };
 }
 export function openHelp() {
   return function action(dispatch) {
-    dispatch({ type: "OPEN_HELP" });
+    dispatch({ type: 'OPEN_HELP' });
   };
 }
 export function closeHelp() {
   return function action(dispatch) {
-    dispatch({ type: "CLOSE_HELP" });
+    dispatch({ type: 'CLOSE_HELP' });
   };
 }
 export function enabledHelp() {
   return function action(dispatch) {
-    dispatch({ type: "ENABLED_HELP" });
+    dispatch({ type: 'ENABLED_HELP' });
   };
 }
 export function disabledHelp() {
   return function action(dispatch) {
-    dispatch({ type: "DISABLED_HELP" });
+    dispatch({ type: 'DISABLED_HELP' });
   };
 }
 export function showWarningHelp() {
   return function action(dispatch) {
-    dispatch({ type: "SHOW_WARNING_HELP" });
+    dispatch({ type: 'SHOW_WARNING_HELP' });
   };
 }
 export function hideWarningHelp() {
   return function action(dispatch) {
-    dispatch({ type: "SHOW_WARNING_HELP_END" });
+    dispatch({ type: 'SHOW_WARNING_HELP_END' });
   };
 }
 //CONVERSATION
 function pushConversation(data) {
   return {
-    type: "PUSH_CONVERSATION",
+    type: 'PUSH_CONVERSATION',
     data,
   };
 }
 export function updateConversationCalendar(data) {
   return function action(dispatch) {
-    dispatch({ type: "UPDATE_CONVERSATION_CALENDAR", data });
+    dispatch({ type: 'UPDATE_CONVERSATION_CALENDAR', data });
   };
 }
 
@@ -534,70 +516,64 @@ function updateConversationError(data) {
   let conv = {};
   conv.msg = [data];
   conv.enabled = true;
-  conv.from = "from";
+  conv.from = 'from';
   if (data.exitoFormulario) {
     conv.exito_formulario = data.exitoFormulario;
   }
-  return { type: "PUSH_CONVERSATIONS_ERROR", data: conv };
+  return { type: 'PUSH_CONVERSATIONS_ERROR', data: conv };
 }
 export function updateConversation(conversationData) {
   // console.log('conversationData:: ', conversationData);
   return function action(dispatch, getState) {
-    const useLynn = getState().assistantStates.getIn(["useLynn"]);
-    const url = useLynn ? LYNN_ENDPOINT : "/message";
+    const useLynn = getState().assistantStates.getIn(['useLynn']);
+    const url = useLynn ? LYNN_ENDPOINT : '/message';
     let data = {};
 
     if (useLynn) {
       data = {
         ...conversationData,
         general: {
-          ...getState().assistantStates.getIn(["lynnData"]),
-          token: getState().generalStates.getIn(["token"]),
+          ...getState().assistantStates.getIn(['lynnData']),
+          token: getState().generalStates.getIn(['token']),
         },
       };
     } else if (
-      sessionStorage.getItem("previous_input")
-      // && Object.keys(conversationData.general.url_params).length > 0) 
-      ||
-      sessionStorage.getItem("previous_input")
+      sessionStorage.getItem('previous_input') ||
+      // && Object.keys(conversationData.general.url_params).length > 0)
+      sessionStorage.getItem('previous_input')
       // && Object.keys(conversationData.general.url_params).length > 0)
     ) {
-      console.log("conversationData:: ", conversationData);
+      console.log('conversationData:: ', conversationData);
       data = {
         ...conversationData,
       };
     } else {
       data = {
         ...conversationData,
-        rut: getUrlParams(getState, "rut"),
-        user: getUrlParams(getState, "user"),
-        clave: getUrlParams(getState, "clave"),
+        rut: getUrlParams(getState, 'rut'),
+        user: getUrlParams(getState, 'user'),
+        clave: getUrlParams(getState, 'clave'),
       };
     }
 
-    console.log("DATA PARA updateConversation", data);
+    console.log('DATA PARA updateConversation', data);
 
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       url: APIURL + url,
       data,
     });
     return request
       .then((response) => {
-        console.log("response.data", response.data);
-        if (
-          response.status === 200 &&
-          response.data.msg !== undefined &&
-          response.data.msg !== null &&
-          response.data.estado.codigoEstado === 200
-        ) {
+        console.log('response.data', response.data);
+        if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
           let item = response.data;
-          item.send = "from";
+          item.send = 'from';
           item.enabled = true;
           // dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
@@ -850,29 +826,25 @@ export function updateConversation(conversationData) {
 function messageResponse(dispatch, data, general) {
   // liftUp LLAMA FORMULARIO FORM
 
-  console.log("messageResponse:: ", data);
-
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
-      case "valoracion":
+      case 'valoracion':
         if (data.general !== undefined) {
           dispatch(setGeneral(data.general));
-          if (data.general.integracion !== undefined)
-            dispatch(setIntegracion(data.general.integracion));
+          if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
         }
-        dispatch({ type: "ENABLED_VALORACION" });
+        dispatch({ type: 'ENABLED_VALORACION' });
         disabledHelp();
         disabledInput();
         dispatch(pushConversation(data));
         break;
-      case "form":
+      case 'form':
         if (data.general !== undefined) {
           dispatch(setGeneral(data.general));
-          if (data.general.integracion !== undefined)
-            dispatch(setIntegracion(data.general.integracion));
+          if (data.general.integracion !== undefined) dispatch(setIntegracion(data.general.integracion));
         }
-        dispatch({ type: "ENABLED_FORM" });
+        dispatch({ type: 'ENABLED_FORM' });
         dispatch(pushConversation(data));
         break;
       default:
@@ -880,7 +852,7 @@ function messageResponse(dispatch, data, general) {
     }
   } else if (data.end_conversation === true) {
     dispatch(pushConversation(data));
-    dispatch({ type: "DISABLED_INPUT" });
+    dispatch({ type: 'DISABLED_INPUT' });
   } else if (data.estado.codigoEstado === 303) {
     dispatch(addLynnData(data.general));
     // SE COMENTA PARA REVISAR INIT DE LYNN
@@ -907,15 +879,15 @@ function messageResponse(dispatch, data, general) {
 function LynnInit(data, general) {
   const newData = {
     ...data,
-    msg: [".... Iniciando Comunicación con Ejecutivo ...."],
+    msg: ['.... Iniciando Comunicación con Ejecutivo ....'],
   };
   return function action(dispatch) {
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      url: APIURL + "/lynn_in",
+      url: APIURL + '/lynn_in',
       data: newData,
     });
     return request.then((response) => {
@@ -935,17 +907,17 @@ function lynnEnd(dispatch, getState) {
 
   // }
   const data = {
-    cid: getState().assistantStates.getIn(["lynnData", "cid"]),
-    sid: getState().assistantStates.getIn(["lynnData", "sid"]),
-    token: getState().assistantStates.getIn(["lynnData", "token"]),
+    cid: getState().assistantStates.getIn(['lynnData', 'cid']),
+    sid: getState().assistantStates.getIn(['lynnData', 'sid']),
+    token: getState().assistantStates.getIn(['lynnData', 'token']),
   };
 
   const request = axios({
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    url: APIURL + "/lynn_end",
+    url: APIURL + '/lynn_end',
     data: data,
   });
   return request.then((response) => {
@@ -964,20 +936,20 @@ function LynnOutInterval(data) {
     // MÉTODO PARA ESCUCHAR LOS POSIBLES MENSAJES DEL EJECUTIVO LYNN
     asistantInterval = setInterval(function() {
       const request = axios({
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        url: APIURL + "/lynn_out",
+        url: APIURL + '/lynn_out',
         data: data,
       });
       return request.then((response) => {
         // console.log("LYNN! OUT", response)
         let item = {};
-        item.send = "from";
+        item.send = 'from';
         item.enabled = true;
-        item.general = getState().assistantStates.getIn(["lynnData"]);
-        if (response.data.textos[0] === "Inicio") {
+        item.general = getState().assistantStates.getIn(['lynnData']);
+        if (response.data.textos[0] === 'Inicio') {
           delete item.msg;
         } else {
           item.msg = response.data.textos;
@@ -986,19 +958,19 @@ function LynnOutInterval(data) {
         dispatch(pushConversation(item));
 
         // SE MANDA POST A LYNEND
-        if (response.data.eventos[0] === "conversationEnd") {
+        if (response.data.eventos[0] === 'conversationEnd') {
           // console.log("LYNEND", data);
           const request = axios({
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
-            url: APIURL + "/lynn_end",
+            url: APIURL + '/lynn_end',
             data: data,
           });
           return request.then((response) => {
             if (response.status === 200) {
-              dispatch({ type: "DISABLED_INPUT" });
+              dispatch({ type: 'DISABLED_INPUT' });
               dispatch(closeLynn());
               clearInterval(asistantInterval);
               return;
@@ -1015,29 +987,26 @@ export function LynnSendFile(file) {
     // console.log('FILE:: ', file);
 
     var form = new FormData();
-    form.append("file", file);
-    form.append("cid", getState().assistantStates.getIn(["lynnData", "cid"]));
-    form.append("sid", getState().assistantStates.getIn(["lynnData", "sid"]));
-    form.append(
-      "token",
-      getState().assistantStates.getIn(["lynnData", "token"])
-    );
+    form.append('file', file);
+    form.append('cid', getState().assistantStates.getIn(['lynnData', 'cid']));
+    form.append('sid', getState().assistantStates.getIn(['lynnData', 'sid']));
+    form.append('token', getState().assistantStates.getIn(['lynnData', 'token']));
 
     const data = {
       general: {
-        ...getState().assistantStates.getIn(["lynnData"]),
-        token: getState().generalStates.getIn(["token"]),
+        ...getState().assistantStates.getIn(['lynnData']),
+        token: getState().generalStates.getIn(['token']),
       },
       file: file,
-      cid: getState().assistantStates.getIn(["lynnData", "cid"]),
-      sid: getState().assistantStates.getIn(["lynnData", "sid"]),
-      token: getState().assistantStates.getIn(["lynnData", "token"]),
+      cid: getState().assistantStates.getIn(['lynnData', 'cid']),
+      sid: getState().assistantStates.getIn(['lynnData', 'sid']),
+      token: getState().assistantStates.getIn(['lynnData', 'token']),
     };
 
     // console.log('FORMDATA:: ', form);
 
     let item = {};
-    item.send = "from";
+    item.send = 'from';
     item.enabled = true;
     item.general = data.general;
     item.msg = [`Enviando archivo: <b>${file.name}</b>`];
@@ -1045,24 +1014,22 @@ export function LynnSendFile(file) {
     dispatch(pushConversation(item));
 
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
         // "Content-Type": "application/x-www-form-urlencoded",
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
-      url: APIURL + "/lynn_in",
+      url: APIURL + '/lynn_in',
       data: form,
     });
     return request.then((response) => {
       // console.log("LynnSendFile: ", response);
 
       if (response.status === 200) {
-        item.msg = ["Archivo enviado exitosamente."]; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
+        item.msg = ['Archivo enviado exitosamente.']; // CAMBIAR POR MENSAJE DEL SERVICIO: EJ: resposese.data.msg
         dispatch(pushConversation(item));
       } else {
-        item.msg = [
-          "El archivo no pudo ser enviado, favor intente nuevamente.",
-        ];
+        item.msg = ['El archivo no pudo ser enviado, favor intente nuevamente.'];
         dispatch(pushConversation(item));
       }
     });
@@ -1074,32 +1041,32 @@ export function setHistory(data) {
       liftUp = lastConversation.liftUp;
     if (liftUp !== undefined) {
       switch (liftUp) {
-        case "valoracion":
-          dispatch({ type: "ENABLED_VALORACION" });
+        case 'valoracion':
+          dispatch({ type: 'ENABLED_VALORACION' });
           break;
-        case "form":
-          dispatch({ type: "ENABLED_FORM" });
+        case 'form':
+          dispatch({ type: 'ENABLED_FORM' });
           break;
         default:
           break;
       }
     }
     dispatch(setGeneral(lastConversation.general));
-    dispatch({ type: "SET_HISTORY", data });
+    dispatch({ type: 'SET_HISTORY', data });
   };
 }
 
 function deleteHistory() {
-  return { type: "DELETE_HISTORY" };
+  return { type: 'DELETE_HISTORY' };
 }
 export function setModal(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_MODAL", data });
+    dispatch({ type: 'SET_MODAL', data });
   };
 }
 //BOTONES
 export function updateConversationButton(data) {
-  console.log("updateConversationButton:: ", data);
+  console.log('updateConversationButton:: ', data);
   // return function action(dispatch) {
   //   dispatch(setGeneral(data.general));
   //   dispatch(pushConversation(data));
@@ -1133,40 +1100,37 @@ export function updateConversationButton(data) {
   // };
   console.log(data.msg[0]);
   switch (data.msg[0]) {
-    case "siValorar":
+    case 'siValorar':
       return function action(dispatch) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         setTimeout(() => {
           let _data = {
             general: data.general,
-            send: "from",
+            send: 'from',
             enabled: true,
-            liftUp: "valoracion",
+            liftUp: 'valoracion',
             withStars: false,
           };
           messageResponse(dispatch, _data);
         }, 500);
       };
-    case "noValorar":
+    case 'noValorar':
       return function action(dispatch) {
-        dispatch({ type: "DISABLED_VALORACION" });
+        dispatch({ type: 'DISABLED_VALORACION' });
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         setTimeout(() => {
           let _data = {
             general: data.general,
-            send: "from",
+            send: 'from',
             enabled: true,
-            msg: [
-              "Lamentamos que no quieras.",
-              "Recuerda que si vuelves a necesitar ayuda, estoy acá las 24 horas del día.",
-            ],
+            msg: ['Lamentamos que no quieras.', 'Recuerda que si vuelves a necesitar ayuda, estoy acá las 24 horas del día.'],
           };
           messageResponse(dispatch, _data);
         }, 500);
       };
-    case "siContacto":
+    case 'siContacto':
       return function action(dispatch) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
@@ -1176,38 +1140,32 @@ export function updateConversationButton(data) {
         dispatch(setGeneral(data.general));
         dispatch(pushConversation(data));
         const request = axios({
-          method: "POST",
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
-          url: APIURL + "/message",
+          url: APIURL + '/message',
           data: {
             ...data,
-            rut: getUrlParams(getState, "rut"),
-            user: getUrlParams(getState, "user"),
-            clave: getUrlParams(getState, "clave"),
+            rut: getUrlParams(getState, 'rut'),
+            user: getUrlParams(getState, 'user'),
+            clave: getUrlParams(getState, 'clave'),
           },
         });
         return request.then(
           (response) => {
-            console.log("RESPONSE MENSAJE 3::", response);
+            console.log('RESPONSE MENSAJE 3::', response);
             if (response.status === 200) {
               let item = response.data;
-              item.send = "from";
+              item.send = 'from';
               item.enabled = true;
 
               const polizasSitioPrivado = window.location.search;
-              console.log("polizasSitioPrivado:: ", polizasSitioPrivado);
+              console.log('polizasSitioPrivado:: ', polizasSitioPrivado);
 
               if (response.data.previous_input) {
-                localStorage.setItem(
-                  "previous_input",
-                  response.data.previous_input
-                );
-                sessionStorage.setItem(
-                  "previous_input",
-                  response.data.previous_input
-                );
+                localStorage.setItem('previous_input', response.data.previous_input);
+                sessionStorage.setItem('previous_input', response.data.previous_input);
 
                 // console.log(localStorage.getItem("previous_input"));
                 // console.log(sessionStorage.getItem("previous_input"));
@@ -1232,17 +1190,17 @@ export function updateConversationButton(data) {
 //INPUT
 export function enabledInput() {
   return function action(dispatch) {
-    dispatch({ type: "ENABLED_INPUT" });
+    dispatch({ type: 'ENABLED_INPUT' });
   };
 }
 export function enableAttachFile() {
   return function action(dispatch) {
-    dispatch({ type: "ENABLED_ATTACH_FILE" });
+    dispatch({ type: 'ENABLED_ATTACH_FILE' });
   };
 }
 export function disabledInput() {
   return function action(dispatch) {
-    dispatch({ type: "DISABLED_INPUT" });
+    dispatch({ type: 'DISABLED_INPUT' });
   };
 }
 export function attachFile(data) {
@@ -1252,12 +1210,9 @@ export function attachFile(data) {
     setTimeout(() => {
       let item;
       item = {
-        files: [
-          "http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg",
-          "http://www.google.com",
-        ],
+        files: ['http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg', 'http://www.google.com'],
       };
-      item.send = "from";
+      item.send = 'from';
       item.enabled = true;
       item.general = data.general;
       dispatch(pushConversation(item));
@@ -1267,7 +1222,7 @@ export function attachFile(data) {
 }
 export function deleteFileForm(data) {
   return function action(dispatch) {
-    dispatch({ type: "DELETE_FILE", data });
+    dispatch({ type: 'DELETE_FILE', data });
   };
 }
 export function attachFileForm(data) {
@@ -1275,11 +1230,10 @@ export function attachFileForm(data) {
     dispatch(attachFileStart());
     setTimeout(() => {
       let files = {
-        name: "imagen",
-        url:
-          "http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg",
+        name: 'imagen',
+        url: 'http://panikors.s3-website-us-east-1.amazonaws.com/wp-content/uploads/2015/01/Panteras-Negras.jpg',
       };
-      dispatch({ type: "SET_FILES", data: files });
+      dispatch({ type: 'SET_FILES', data: files });
       dispatch(attachFileEnd());
     }, 3000);
   };
@@ -1287,109 +1241,106 @@ export function attachFileForm(data) {
 
 function attachFileStart() {
   return {
-    type: "GET_CONVERSATIONS_START",
+    type: 'GET_CONVERSATIONS_START',
   };
 }
 
 function attachFileEnd(data) {
   return {
-    type: "GET_CONVERSATIONS_END",
+    type: 'GET_CONVERSATIONS_END',
   };
 }
 export function openEmoji() {
   return function action(dispatch) {
-    dispatch({ type: "OPEN_EMOJI" });
+    dispatch({ type: 'OPEN_EMOJI' });
   };
 }
 export function closeEmoji() {
   return function action(dispatch) {
-    dispatch({ type: "CLOSE_EMOJI" });
+    dispatch({ type: 'CLOSE_EMOJI' });
   };
 }
 export function openVoice() {
   return function action(dispatch) {
-    dispatch({ type: "OPEN_VOICE" });
+    dispatch({ type: 'OPEN_VOICE' });
   };
 }
 export function closeVoice() {
   return function action(dispatch) {
-    dispatch({ type: "CLOSE_VOICE" });
+    dispatch({ type: 'CLOSE_VOICE' });
   };
 }
 //VALORACIÓN
 export function setStar(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_STARS_VALORACION", data });
-    dispatch({ type: "SET_BUTTON_VALORACION", data: true });
+    dispatch({ type: 'SET_STARS_VALORACION', data });
+    dispatch({ type: 'SET_BUTTON_VALORACION', data: true });
   };
 }
 export function setOverStar(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_OVER_STAR_VALORACION", data });
+    dispatch({ type: 'SET_OVER_STAR_VALORACION', data });
   };
 }
 export function setCommentValoracion(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_COMMENT_VALORACION", data });
+    dispatch({ type: 'SET_COMMENT_VALORACION', data });
   };
 }
 export function setServicioValoracion(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_SERVICIO_VALORACION", data });
+    dispatch({ type: 'SET_SERVICIO_VALORACION', data });
   };
 }
 export function setPudoResolverValoracion(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_PUDO_RESOLVER_VALORACION", data });
+    dispatch({ type: 'SET_PUDO_RESOLVER_VALORACION', data });
   };
 }
 export function setErrorValoracion(data) {
   return function action(dispatch) {
-    dispatch({ type: "SET_ERROR_VALORACION", data });
+    dispatch({ type: 'SET_ERROR_VALORACION', data });
     setTimeout(() => {
-      dispatch({ type: "SET_ERROR_VALORACION", data: false });
+      dispatch({ type: 'SET_ERROR_VALORACION', data: false });
     }, 4000);
   };
 }
 export function sendValoracion(data, general) {
   return function action(dispatch) {
-    dispatch({ type: "GET_CONVERSATIONS_START" });
+    dispatch({ type: 'GET_CONVERSATIONS_START' });
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      url: APIURL + "/valorar",
+      url: APIURL + '/valorar',
       data: data,
     });
     return request.then(
       (response) => {
-        if (
-          response.status === 200 &&
-          response.data.estado.codigoEstado === 200
-        ) {
+        if (response.status === 200 && response.data.estado.codigoEstado === 200) {
           let item = {};
-          item.send = "from";
+          item.send = 'from';
           item.enabled = true;
           item.general = general;
-          item.msg = ["exito_formulario"];
+          item.msg = ['exito_formulario'];
           dispatch(updateConversation(item));
-          dispatch({ type: "GET_CONVERSATIONS_END" });
+          dispatch({ type: 'GET_CONVERSATIONS_END' });
         } else {
-          let msg = ["error_formulario"];
+          let msg = ['error_formulario'];
           dispatch(updateConversationError(msg));
         }
       },
       (err) => {
         dispatch(updateConversationError(err.response.data.msg));
-        dispatch({ type: "GET_CONVERSATIONS_END" });
+        dispatch({ type: 'GET_CONVERSATIONS_END' });
       }
     );
   };
 }
 export function closeValoracion(data) {
   return function action(dispatch) {
-    dispatch({ type: "DISABLED_VALORACION" });
+    dispatch({ type: 'DISABLED_VALORACION' });
     updateConversationButton(data);
   };
 }
@@ -1397,41 +1348,34 @@ export function closeValoracion(data) {
 //LIKE
 export function sendLike(data, general) {
   return function action(dispatch) {
-    dispatch({ type: "GET_CONVERSATIONS_START" });
+    dispatch({ type: 'GET_CONVERSATIONS_START' });
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      url: APIURL + "/valorar",
+      url: APIURL + '/valorar',
       data: data,
     });
     return request.then(
       (response) => {
         // console.log('RESPONSE:: ', response);
 
-        if (
-          response.status === 200 &&
-          response.data.estado.codigoEstado === 200
-        ) {
+        if (response.status === 200 && response.data.estado.codigoEstado === 200) {
           let item = {};
           item.msg = [response.data.respuesta];
-          item.send = "from";
+          item.send = 'from';
           item.enabled = true;
           item.general = general;
           messageResponse(dispatch, item);
         } else {
           dispatch(updateConversationError(response.statusText));
         }
-        dispatch({ type: "GET_CONVERSATIONS_END" });
+        dispatch({ type: 'GET_CONVERSATIONS_END' });
       },
       (err) => {
-        dispatch(
-          updateConversationError(
-            "Disculpa, se ha producido un error al valorar. Puedes continuar con la conversación."
-          )
-        );
-        dispatch({ type: "GET_CONVERSATIONS_END" });
+        dispatch(updateConversationError('Disculpa, se ha producido un error al valorar. Puedes continuar con la conversación.'));
+        dispatch({ type: 'GET_CONVERSATIONS_END' });
       }
     );
   };
@@ -1439,31 +1383,28 @@ export function sendLike(data, general) {
 //FORM
 export function closeForm(data) {
   return function action(dispatch, getState) {
-    dispatch({ type: "DISABLED_FORM" });
+    dispatch({ type: 'DISABLED_FORM' });
     dispatch(setGeneral(data.general));
     dispatch(pushConversation(data));
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
-      url: APIURL + "/message",
+      url: APIURL + '/message',
       data: {
         ...data,
-        rut: getUrlParams(getState, "rut"),
-        user: getUrlParams(getState, "user"),
-        clave: getUrlParams(getState, "clave"),
+        rut: getUrlParams(getState, 'rut'),
+        user: getUrlParams(getState, 'user'),
+        clave: getUrlParams(getState, 'clave'),
       },
     });
     return request.then(
       (response) => {
         // console.log('RESPONSE MENSAJE 4::', response);
-        if (
-          response.status === 200 &&
-          response.data.estado.codigoEstado === 200
-        ) {
+        if (response.status === 200 && response.data.estado.codigoEstado === 200) {
           let item = response.data;
-          item.send = "from";
+          item.send = 'from';
           item.enabled = true;
           dispatch(setNodoId(item.msg[item.msg.length - 1]));
           messageResponse(dispatch, item);
@@ -1481,81 +1422,69 @@ export function closeForm(data) {
 export function sendForm(data, url, general) {
   data.general = general;
   return function action(dispatch, getState) {
-    dispatch({ type: "SEND_FORM_START" });
+    dispatch({ type: 'SEND_FORM_START' });
     const request = axios({
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       url: url,
       data: data,
     });
     return request.then(
       (response) => {
-        if (
-          response.status === 200 &&
-          response.data.estado.codigoEstado === 200
-        ) {
+        if (response.status === 200 && response.data.estado.codigoEstado === 200) {
           let item = {};
           //item.msg = [response.data.respuesta];
-          item.msg = ["exito_formulario"];
-          item.send = "to";
+          item.msg = ['exito_formulario'];
+          item.send = 'to';
           item.enabled = false;
           item.general = general;
           //updateConversation(item);
           // messageResponse(dispatch, item);
-          dispatch({ type: "DISABLED_FORM" });
+          dispatch({ type: 'DISABLED_FORM' });
           const request = axios({
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
-            url: APIURL + "/message",
+            url: APIURL + '/message',
             data: {
               ...item,
-              rut: getUrlParams(getState, "rut"),
-              user: getUrlParams(getState, "user"),
-              clave: getUrlParams(getState, "clave"),
+              rut: getUrlParams(getState, 'rut'),
+              user: getUrlParams(getState, 'user'),
+              clave: getUrlParams(getState, 'clave'),
             },
           });
           return request
             .then((response) => {
               // console.log('RESPONSE MENSAJE 5::', response);
-              if (
-                response.status === 200 &&
-                response.data.estado.codigoEstado === 200
-              ) {
-                dispatch({ type: "SEND_FORM_END" });
+              if (response.status === 200 && response.data.estado.codigoEstado === 200) {
+                dispatch({ type: 'SEND_FORM_END' });
                 let item = response.data;
-                item.send = "from";
+                item.send = 'from';
                 item.enabled = true;
                 dispatch(setNodoId(item.msg[item.msg.length - 1]));
                 messageResponse(dispatch, item);
               } else if (response.data !== undefined) {
                 dispatch(updateConversationError(response.data.msg));
               } else {
-                dispatch({ type: "SEND_FORM_END" });
+                dispatch({ type: 'SEND_FORM_END' });
                 dispatch(updateConversationError(response.statusText));
               }
             })
             .catch((err) => {
-              dispatch({ type: "SEND_FORM_END" });
+              dispatch({ type: 'SEND_FORM_END' });
               dispatch(updateConversationError(err.response.data.msg));
             });
         } else {
-          dispatch(
-            updateConversationError((response.statusText = "error_formulario"))
-          );
-          dispatch({ type: "DISABLED_FORM" });
+          dispatch(updateConversationError((response.statusText = 'error_formulario')));
+          dispatch({ type: 'DISABLED_FORM' });
         }
       },
       (err) => {
-        dispatch({ type: "DISABLED_FORM" });
-        dispatch(
-          updateConversationError(
-            err.response === undefined ? err.message : err.response.data.msg
-          )
-        );
+        dispatch({ type: 'DISABLED_FORM' });
+        dispatch(updateConversationError(err.response === undefined ? err.message : err.response.data.msg));
       }
     );
 
@@ -1588,64 +1517,64 @@ export function sendForm(data, url, general) {
 //RESPONSIVE
 export function responsive(data) {
   return function action(dispatch) {
-    dispatch({ type: "RESPONSIVE", data });
+    dispatch({ type: 'RESPONSIVE', data });
   };
 }
 //VOICE
 export function enabledVoice() {
   return function action(dispatch) {
-    dispatch({ type: "ENABLED_VOICE" });
+    dispatch({ type: 'ENABLED_VOICE' });
   };
 }
 export function disabledVoice() {
   return function action(dispatch) {
-    dispatch({ type: "DISABLED_VOICE" });
+    dispatch({ type: 'DISABLED_VOICE' });
   };
 }
 
 // getUrlParams
 export function getUrlParams(getState, urlParam) {
-  const paramValue = getState().generalStates.getIn(["url_params", urlParam]);
-  if (paramValue === "null") return null;
+  const paramValue = getState().generalStates.getIn(['url_params', urlParam]);
+  if (paramValue === 'null') return null;
   return paramValue;
 }
 
 export function startLynn() {
   return function action(dispatch) {
-    dispatch({ type: "USE_LYNN", data: true });
+    dispatch({ type: 'USE_LYNN', data: true });
   };
 }
 
 export function closeLynn() {
   return function action(dispatch) {
-    dispatch({ type: "USE_LYNN", data: false });
+    dispatch({ type: 'USE_LYNN', data: false });
   };
 }
 
 export function addLynnData(data) {
   return function action(dispatch) {
-    dispatch({ type: "LYNN_DATA", data: data });
+    dispatch({ type: 'LYNN_DATA', data: data });
   };
 }
 
 export function sendInputValue(dispatch, data) {
-  console.log("sendInputValue:: ", data);
+  console.log('sendInputValue:: ', data);
 
   dispatch(setGeneral(data.general));
   dispatch(pushConversation(data));
   const request = axios({
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    url: APIURL + "/message",
+    url: APIURL + '/message',
     data: { data },
   });
   return request.then(
     (response) => {
-      console.log("RESPONSE sendInputValue::", response);
+      console.log('RESPONSE sendInputValue::', response);
       if (response.status === 200) {
-        console.log("RESPONSE DATA sendInputValue", response.data);
+        console.log('RESPONSE DATA sendInputValue', response.data);
         // dispatch(pushConversation(data));
       }
     },
