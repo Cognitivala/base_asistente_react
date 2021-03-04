@@ -81,6 +81,9 @@
         css += '.iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%;max-width: 375px !important;right: 0px;bottom: 0px; }';
         css += '.iframe-cognitive-assistant-container.minimized{ height: 100px;width: 100%;max-width: 100px;right: 10px;bottom: 0px;}';
         css += '.cognitive-iframe {height: 100%;width: 100%;border: 0 none;}';
+
+        css += '@media screen and (max-width: 328px){ .iframe-cognitive-assistant-container active assistant{ max-width : 328px !important; } ';
+
         css += '@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.assistant{ border-radius: 0px; height: 100% ; top: 0; left: 0; right: 0; bottom: 0; max-width:100%; } ';
         css += '@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.notification{bottom: 55px} ';
         css += '@media screen and (max-width: 767px){ input[type="text"],input[type="number"],input[type="email"],input[type="tel"],input[type="password"] {font-size: 16px !important;} }'
