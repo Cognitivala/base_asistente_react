@@ -73,26 +73,26 @@
         const head = document.head;
         let css = '',
           style = document.createElement('style');
-  
-        css += '.iframe-cognitive-assistant-container {overflow: hidden;border: none;position: fixed;bottom: 10px;right: 10px;background-color: transparent;opacity: 0;transform: translate3d(0,100%,0);transition: transform opacity height 350ms ease;pointer-events: none;transition-timing-function: cubic-bezier(0.56, 1.19, 0.2, 1.05);z-index: 99999999;border-radius: 5px;}';
-        css += '.iframe-cognitive-assistant-container.active {opacity: 1;transform: translate3d(0,0,0);pointer-events: auto;}';
-        css += '@media only screen and (min-device-width : 320px) and (max-device-width : 374px) { .iframe-cognitive-assistant-container.active{ max-width : 332px !important;} .iframe-cognitive-assistant-container active assistant{ max-width : 332px !important; } }';
+          
+          css += '.iframe-cognitive-assistant-container {overflow: hidden;border: none;position: fixed;bottom: 10px;right: 10px;background-color: transparent;opacity: 0;transform: translate3d(0,100%,0);transition: transform opacity height 350ms ease;pointer-events: none;transition-timing-function: cubic-bezier(0.56, 1.19, 0.2, 1.05);z-index: 99999999;border-radius: 5px;}';
+          css += '.iframe-cognitive-assistant-container.active {opacity: 1;transform: translate3d(0,0,0);pointer-events: auto;}';
+          css += '.iframe-cognitive-assistant-container.notification{ height: 100px; width: 100%; max-width: 100px; box-shadow: none;right: 0;bottom: 0; }';
+          css += '.iframe-cognitive-assistant-container.notification{ height: 100px; width: 100%; max-width: 100px; box-shadow: none;right: 0;bottom: 55px; }';
+          css += '.iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%;max-width: 401px;right: 0px;bottom: 0px; }';
+          css += '.iframe-cognitive-assistant-container.minimized{ height: 100px;width: 100%;max-width: 100px;right: 10px;bottom: 0px;}';
+          css += '.cognitive-iframe {height: 100%;width: 100%;border: 0 none;}';
+          css += '@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.assistant{ border-radius: 0px; height: 100% ; top: 0; left: 0; right: 0; bottom: 0; max-width:100%; } ';
+          css += '@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.notification{bottom: 55px} ';
+          css += '.iframe-cognitive-assistant-container.minimized{max-width: none; bottom:0; left:0; right:0;} }';
+          css += '@media screen and (min-width: 1000px) and (max-width: 1200px){ .iframe-cognitive-assistant-container.assistant{ width: 45% }  }';
 
-        css += '.iframe-cognitive-assistant-container.notification{ height: 100px; width: 100%; max-width: 100px; box-shadow: none;right: 0;bottom: 55px; }';
+          css += '@media screen and (max-width: 320px) {.iframe-cognitive-assistant-container { overflow: hidden;border: none;position: fixed !important;bottom: 10px;right: 10px;background-color: transparent;opacity: 0;transform: translate3d(0,100%,0);transition: transform opacity height 350ms ease;pointer-events: none;transition-timing-function: cubic-bezier(0.56, 1.19, 0.2, 1.05);z-index: 99999999;border-radius: 5px;}.iframe-cognitive-assistant-container.active {opacity: 1;transform: translate3d(0,0,0);pointer-events: auto; width:332px !important}.iframe-cognitive-assistant-container.notification{ height: 100px; width: 100%; max-width: 100px; box-shadow: none;right: 0;bottom: 55px; }.iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 332px;max-width: 100% !important;right: 0px;bottom: 0px; }.iframe-cognitive-assistant-container.minimized{ height: 100px;width: 100%;max-width: 100px;right: 10px;bottom: 0px;}.cognitive-iframe {height: 100%;width: 100%;border: 0 none;}.iframe-cognitive-assistant-container.assistant{ border-radius: 0px; height: 100% ; top: 0; left: 0; right: 0; bottom: 0; max-width:100%; }.iframe-cognitive-assistant-container.minimized{max-width: none; bottom:0; left:0; right:0;} }.iframe-cognitive-assistant-container.assistant{ width: 45% } }';
 
-        css += '.iframe-cognitive-assistant-container.assistant{ height: 100vh;width: 100%;max-width: 100% !important;right: 0px;bottom: 0px; }';
-        //css += '@media only screen and (min-device-width : 320px) and (max-device-width : 374px) { .iframe-cognitive-assistant-container.assistant { max-width: 332px !important;} }';
+          css += '@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.assistant{ width: 100% } } ';
+          css += '@media only screen and (min-width: 768px){ .iframe-cognitive-assistant-container.assistant{ width: 100% } }';
 
-        css += '.iframe-cognitive-assistant-container.minimized{ height: 100px;width: 100%;max-width: 100px;right: 10px;bottom: 0px;}';
-        css += '.cognitive-iframe {height: 100%;width: 100%;border: 0 none;}';
-        css += '@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.assistant{ border-radius: 0px; height: 100% ; top: 0; left: 0; right: 0; bottom: 0; max-width:100%; } ';
-        css += '@media screen and (max-width: 767px){ .iframe-cognitive-assistant-container.notification{bottom: 55px} ';
-        css += '@media screen and (max-width: 767px){ input[type="text"],input[type="number"],input[type="email"],input[type="tel"],input[type="password"] {font-size: 16px !important;} }'
-        css += '.iframe-cognitive-assistant-container.minimized{max-width: none; bottom:0; left:0; right:0;} }';
-        css += '@media screen and (min-width: 1000px) and (max-width: 1200px){ .iframe-cognitive-assistant-container.assistant{ width: 45% }  }';
-  
+
         style.type = 'text/css';
-  
         style.appendChild(document.createTextNode(css));
         head.appendChild(style);
       }
