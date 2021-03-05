@@ -2026,6 +2026,36 @@ table {
 
 /*------------------------------------------------------------------------------Media Queries */
 
+@media screen and (max-width: 320px) {
+    .iframe-cognitive-assistant-container {
+        width: 100%;
+        max-width: 100%;
+    }
+    .cognitive-assistant-notification-container {
+        min-width: 280px;
+    }
+    .iframe-cognitive-assistant-container {
+        height: auto;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+    .cognitive-iframe {
+        height: calc(100% - 80px);
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select:focus
+    {
+        font-size: 16px !important;
+    }
+}
+
+
 @media screen and (max-width: 767px) {
     .iframe-cognitive-assistant-container {
         width: 100%;
@@ -2048,7 +2078,9 @@ table {
     input[type="number"],
     input[type="email"],
     input[type="tel"],
-    input[type="password"] {
+    input[type="password"],
+    select:focus
+    {
         font-size: 16px !important;
     }
 }
