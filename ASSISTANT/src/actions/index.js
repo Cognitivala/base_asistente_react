@@ -5,6 +5,8 @@ import AES from "crypto-js/aes";
 import { KEY_ENCRYPT } from "./key-encrypt";
 import { isMobile } from 'react-device-detect';
 
+var intervalFreshChat = null;
+
 //GENERAL
 function defaultGeneral() {
     return {
@@ -542,10 +544,6 @@ function updateConversationError(data) {
 export function updateConversation(data) {
 
     return function action(dispatch, getState) {
-
-
-        // console.log('updateConversation DATA.GENERAL:: ', data.general);
-
         // SE AGREGA VARIABLE email_user 
         const queryString = window.location.href.toString().split(window.location.host)[1];
         if (queryString === '/asistente/?ejecutivo_amsa=true' || queryString.length > 11) {
@@ -588,8 +586,6 @@ export function updateConversation(data) {
         });
         return request
             .then(response => {
-                console.log('message updateConversation:: ', response.data);
-                // console.log('message updateConversation MSG:: ', response.data.msg);
                 if (
                     response.status === 200 &&
                     response.data.msg !== undefined &&
@@ -611,9 +607,6 @@ export function updateConversation(data) {
                             }
                         }
                     }
-
-                    console.log('updateConversation Item:: ', item)
-
                     // dispatch(setNodoId(item.msg[item.msg.length - 1]));
                     messageResponse(dispatch, item);
                 } else {
@@ -863,7 +856,6 @@ export function updateConversation(data) {
 }
 
 function messageResponse(dispatch, data) {
-    // console.log('messageResponse:: ', data);
     if (data.liftUp !== undefined) {
         //Si trae para levantar modales
         switch (data.liftUp) {
@@ -891,8 +883,10 @@ function messageResponse(dispatch, data) {
     } else if (data.end_conversation === true) {
         dispatch(pushConversation(data));
         dispatch({ type: "DISABLED_INPUT" });
+    } else if (data.freshchat){
+        showMessageResponse(dispatch, data)
     } else {
-        // console.log('data.general ', data)
+        clearInterval(intervalFreshChat)
         if (data.general !== undefined) {
             dispatch(setGeneral(data.general));
             if (data.general.region !== undefined) {
@@ -936,9 +930,6 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-
-    console.log('updateConversationButton:: ', data)
-
     switch (data.msg[0]) {
         case "siValorar":
             return function action(dispatch) {
@@ -1014,7 +1005,6 @@ export function updateConversationButton(data) {
                 });
                 return request.then(
                     response => {
-                        // console.log('RESPONSE MENSAJE 3::');
                         if (response.status === 200) {
                             let item = response.data;
                             item.send = "from";
@@ -1187,8 +1177,6 @@ export function sendValoracion(data, general) {
                     dispatch(updateConversation(item));
                     dispatch({ type: "GET_CONVERSATIONS_END" });
 
-                    console.log('ITEM GENERAL:: ', item.general);
-
                 } else {
                     let msg = ['error_formulario'];
                     dispatch(updateConversationError(msg));
@@ -1210,8 +1198,8 @@ export function closeValoracion(data) {
 
 //LIKE
 export function sendLike(data, general) {
-    console.log('sendLike:: ', data)
-    console.log('sendLike:: ', general)
+    /* console.log('sendLike:: ', data)
+    console.log('sendLike:: ', general) */
 
     data.id_data_canal = 123;
     data.input = "www";
@@ -1244,9 +1232,6 @@ export function sendLike(data, general) {
             data: data
         });
         return request.then(response => {
-
-                console.log('sendLike response:: ', response);
-
                 if (
                     response.status === 200 &&
                     response.data.estado.codigoEstado === 200
@@ -1258,10 +1243,9 @@ export function sendLike(data, general) {
                     item.general = general;
                     item.msg = ['exito_formulario'];
 
-                    console.log('sendLike:: ', item.general);
+                    /* console.log('sendLike:: ', item.general); */
                     dispatch(updateConversation(item));
                     // dispatch({ type: "GET_CONVERSATIONS_END" });
-
                     // messageResponse(dispatch, item);
 
                 } else {
@@ -1487,3 +1471,48 @@ export function getUrlParams(getState, urlParam) {
     if (paramValue === "null") return null;
     return paramValue;
 }
+
+  //Funcion para determinar termino de converzacion
+export const showMessageResponse = (dispatch, data) => {
+    if (intervalFreshChat) {
+      clearInterval(intervalFreshChat);
+    }
+  
+    intervalFreshChat = setInterval(function() {
+      const urlApi = APIURL + '/freshchat_endpoint';
+      const { general, msg } = data;
+      general.origen = 1;
+      general.id_cliente = 1
+  
+      const newData = { general, msg };
+      const configHeaders = {
+        headers: { 'Content-Type': 'application/json' },
+      };
+  
+      axios
+        .post(urlApi, newData, configHeaders)
+        .then(async (response) => {
+          const dataResponse = response.data;
+          if (dataResponse.estado.codigoEstado === 200) {
+            if (!dataResponse.freshchat) {
+              let item = data;
+              item.msg = dataResponse.msg;
+              await dispatch(pushConversation(data));
+              setTimeout(async () => {
+                  item.msg = [""];
+                  await dispatch(updateConversation(item))
+              }, 500);
+              clearInterval(intervalFreshChat);
+  
+            } else {
+              let item = data;
+              item.msg = dataResponse.msg;
+              dispatch(pushConversation(data));
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }, 4000);
+  };
