@@ -52,7 +52,7 @@ export default class ConversationButtons extends Component {
       botones = buttons.map((map, i) => {
         let idAux = uuidv4();
         return (
-          <button id={idAux} data-index={idAux} key={i} className={mainCss.Btn + " " + mainCss.BtnBig} data-msg={map.get("value")} onClick={this.sendButtonresponse} >
+          <button style={{width:'100%'}} id={idAux} data-index={idAux} key={i} className={mainCss.Btn + " " + mainCss.BtnBig} data-msg={map.get("value")} onClick={this.sendButtonresponse} >
             {map.get("title")}
           </button>
         );
