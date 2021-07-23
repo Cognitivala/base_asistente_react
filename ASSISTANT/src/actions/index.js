@@ -589,7 +589,6 @@ export function updateConversation(conversationData) {
     });
     return request
       .then((response) => {
-        console.log("response.data", response.data);
         if (
           response.status === 200 &&
           response.data.msg !== undefined &&
@@ -849,9 +848,6 @@ export function updateConversation(conversationData) {
 
 function messageResponse(dispatch, data, general) {
   // liftUp LLAMA FORMULARIO FORM
-
-  console.log("messageResponse:: ", data);
-
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -885,6 +881,9 @@ function messageResponse(dispatch, data, general) {
     dispatch(addLynnData(data.general));
     // SE COMENTA PARA REVISAR INIT DE LYNN
     dispatch(LynnInit(data, general));
+  } else if (data.estado.codigoEstado === 400) {
+    dispatch({ type: "OPEN_HELP" }); // opciones listado
+    // dispatch(updateConversationError('Hubo un error favor contactar')); // mensaje burbuja
   }
   // else if (data.previous_input) {
   //     console.log('data.previous_input: ', data.previous_input);
@@ -1099,7 +1098,7 @@ export function setModal(data) {
 }
 //BOTONES
 export function updateConversationButton(data) {
-  console.log("updateConversationButton:: ", data);
+  // console.log("updateConversationButton:: ", data);
   // return function action(dispatch) {
   //   dispatch(setGeneral(data.general));
   //   dispatch(pushConversation(data));
@@ -1131,7 +1130,7 @@ export function updateConversationButton(data) {
   //     }
   //   );
   // };
-  console.log(data.msg[0]);
+  // console.log(data.msg[0]);
   switch (data.msg[0]) {
     case "siValorar":
       return function action(dispatch) {
