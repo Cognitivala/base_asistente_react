@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class FormHeader extends Component {
   constructor(props) {
@@ -13,8 +13,8 @@ export default class FormHeader extends Component {
       conversation = {
         general,
         msg: [msg],
-        send: "to",
-        enabled: false
+        send: 'to',
+        enabled: false,
       };
     this.props.closeForm(conversation);
   }
@@ -29,12 +29,9 @@ export default class FormHeader extends Component {
             <i className="fas fa-times" data-msg={closeMsg} />
           </button>
         </div> */}
-        <div className={mainCss.Icon}>
-        </div>
+        <div className={mainCss.Icon}></div>
         <p>
-          {textA !== undefined ? textA : null}{" "}
-          <strong>{textStrong !== undefined ? textStrong : null}</strong>{" "}
-          {textB !== undefined ? textB : null}
+          {textA !== undefined ? textA : null} <strong>{textStrong !== undefined ? textStrong : null}</strong> {textB !== undefined ? textB : null}
         </p>
       </div>
     );
@@ -51,6 +48,6 @@ FormHeader.propTypes = {
   textB: PropTypes.string.isRequired,
   textStrong: PropTypes.string.isRequired,
   // closeMsg: PropTypes.string.isRequired,
-  colorHeader: PropTypes.string.isRequired,
-  mainCss: PropTypes.object.isRequired
-}
+  // colorHeader: PropTypes.string.isRequired,
+  mainCss: PropTypes.object.isRequired,
+};
