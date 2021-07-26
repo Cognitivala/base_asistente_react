@@ -570,8 +570,7 @@ export function updateConversation(conversationData) {
     });
     return request
       .then((response) => {
-        // console.log('response.data', response.data);
-        debugger;
+        console.log('response.data', response.data);
         if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = 'from';
@@ -1159,7 +1158,7 @@ export function updateConversationButton(data) {
         });
         return request.then(
           (response) => {
-            // console.log('RESPONSE MENSAJE 3::', response);
+            console.log('RESPONSE MENSAJE 3::', response);
             if (response.status === 200) {
               let item = response.data;
               item.send = 'from';
@@ -1406,7 +1405,7 @@ export function closeForm(data) {
     });
     return request.then(
       (response) => {
-        // console.log('RESPONSE MENSAJE 4::', response);
+        console.log('RESPONSE MENSAJE 4::', response);
         if (response.status === 200 && response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = 'from';
@@ -1463,7 +1462,7 @@ export function sendForm(data, url, general) {
           });
           return request
             .then((response) => {
-              // console.log('RESPONSE MENSAJE 5::', response);
+              console.log('RESPONSE MENSAJE 5::', response);
               if (response.status === 200 && response.data.estado.codigoEstado === 200) {
                 dispatch({ type: 'SEND_FORM_END' });
                 let item = response.data;
@@ -1577,7 +1576,7 @@ export function sendInputValue(dispatch, data) {
   });
   return request.then(
     (response) => {
-      // console.log('RESPONSE sendInputValue::', response);
+      console.log('RESPONSE sendInputValue::', response);
       if (response.status === 200) {
         // console.log('RESPONSE DATA sendInputValue', response.data);
         // dispatch(pushConversation(data));
