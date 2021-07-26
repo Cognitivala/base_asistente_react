@@ -825,7 +825,7 @@ export function updateConversation(conversationData) {
 
 function messageResponse(dispatch, data, general) {
   // liftUp LLAMA FORMULARIO FORM
-
+  debugger;
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
