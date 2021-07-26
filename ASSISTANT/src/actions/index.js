@@ -858,8 +858,9 @@ function messageResponse(dispatch, data, general) {
     // SE COMENTA PARA REVISAR INIT DE LYNN
     dispatch(LynnInit(data, general));
   } else if (data.estado.codigoEstado === 400) {
-    dispatch({ type: "OPEN_HELP" }); // opciones listado
-    // dispatch(updateConversationError('Hubo un error favor contactar')); // mensaje burbuja
+    // dispatch({ type: "OPEN_HELP" }); // opciones listado
+    dispatch(updateConversationError('Lo sentimos pero ha ocurrido un error. Vuelve a intentarlo y si el error persiste inténtalo más tarde.')); // mensaje burbuja
+    dispatch({ type: 'GET_CONVERSATIONS_END' });
   }
   // else if (data.previous_input) {
   //     console.log('data.previous_input: ', data.previous_input);
