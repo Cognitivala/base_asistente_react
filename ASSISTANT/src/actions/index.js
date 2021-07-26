@@ -41,7 +41,7 @@ export function getLocation() {
           resolve(position);
         },
         () => {
-          console.log('Permiso denegado');
+          // console.log('Permiso denegado');
           //reject(new Error("Permission denied"));
         }
       );
@@ -60,12 +60,12 @@ export function getLocation() {
             dispatch({ type: 'SET_LOCATION', data: data });
           },
           (error) => {
-            console.log(error);
+            // console.log(error);
           }
         );
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 }
@@ -570,7 +570,7 @@ export function updateConversation(conversationData) {
     });
     return request
       .then((response) => {
-        console.log('response.data', response.data);
+        // console.log('response.data', response.data);
         if(response.status === 200 && response.data.estado.codigoEstado === 400){
           dispatch(updateConversationError('Lo sentimos pero ha ocurrido un error. Vuelve a intentarlo y si el error persiste inténtalo más tarde.')); // mensaje burbuja
           dispatch({ type: 'GET_CONVERSATIONS_END' });
@@ -829,7 +829,6 @@ export function updateConversation(conversationData) {
 
 function messageResponse(dispatch, data, general) {
   // liftUp LLAMA FORMULARIO FORM
-  debugger;
   if (data.liftUp !== undefined) {
     //Si trae para levantar modales
     switch (data.liftUp) {
@@ -1162,7 +1161,7 @@ export function updateConversationButton(data) {
         });
         return request.then(
           (response) => {
-            console.log('RESPONSE MENSAJE 3::', response);
+            // console.log('RESPONSE MENSAJE 3::', response);
             if (response.status === 200) {
               let item = response.data;
               item.send = 'from';
@@ -1409,7 +1408,7 @@ export function closeForm(data) {
     });
     return request.then(
       (response) => {
-        console.log('RESPONSE MENSAJE 4::', response);
+        // console.log('RESPONSE MENSAJE 4::', response);
         if (response.status === 200 && response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = 'from';
@@ -1466,7 +1465,7 @@ export function sendForm(data, url, general) {
           });
           return request
             .then((response) => {
-              console.log('RESPONSE MENSAJE 5::', response);
+              // console.log('RESPONSE MENSAJE 5::', response);
               if (response.status === 200 && response.data.estado.codigoEstado === 200) {
                 dispatch({ type: 'SEND_FORM_END' });
                 let item = response.data;
@@ -1580,7 +1579,7 @@ export function sendInputValue(dispatch, data) {
   });
   return request.then(
     (response) => {
-      console.log('RESPONSE sendInputValue::', response);
+      // console.log('RESPONSE sendInputValue::', response);
       if (response.status === 200) {
         // console.log('RESPONSE DATA sendInputValue', response.data);
         // dispatch(pushConversation(data));
