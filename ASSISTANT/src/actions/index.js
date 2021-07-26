@@ -571,6 +571,7 @@ export function updateConversation(conversationData) {
     return request
       .then((response) => {
         // console.log('response.data', response.data);
+        debugger;
         if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = 'from';
