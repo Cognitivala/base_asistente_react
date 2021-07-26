@@ -571,7 +571,11 @@ export function updateConversation(conversationData) {
     return request
       .then((response) => {
         console.log('response.data', response.data);
-        if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
+        if(response.status === 200 && response.data.estado.codigoEstado === 400){
+          dispatch(updateConversationError('Lo sentimos pero ha ocurrido un error. Vuelve a intentarlo y si el error persiste inténtalo más tarde.')); // mensaje burbuja
+          dispatch({ type: 'GET_CONVERSATIONS_END' });
+        }else 
+          if (response.status === 200 && response.data.msg !== undefined && response.data.msg !== null && response.data.estado.codigoEstado === 200) {
           let item = response.data;
           item.send = 'from';
           item.enabled = true;
