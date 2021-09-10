@@ -33,31 +33,34 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
         debugger;
         var divAsistente = document.getElementById("ifrm-assitant");
-        console.log(divAsistente);
-        console.log('console de prueba para crear iframe');
-        var div = document.createElement("div"),
-            ifrm = document.createElement("iframe");
-        ifrm.setAttribute("id", "ifrm-assitant");
-        ifrm.classList.add("iframe-cognitive-assistant-container");
-        ifrm.classList.add("active");
-        ifrm.classList.add("notification");
-        ifrm.setAttribute("allow", "geolocation *;");
-        ifrm.setAttribute("allow", "microphone *;");
-        ifrm.setAttribute("src", this.src);
-        ifrm.setAttribute("data-origin", this.origin);
-        div.appendChild(ifrm);
-        document.body.appendChild(div);
-        this.basicStylesSetUp();
 
-        window.onmessage = function (e) {
-          if (e.data.test !== undefined) {
-            var mensaje = e.data.test[0].msg;
+        if (divAsistente === null || divAsistente === undefined) {
+          console.log(divAsistente);
+          console.log('console de prueba para crear iframe');
+          var div = document.createElement("div"),
+              ifrm = document.createElement("iframe");
+          ifrm.setAttribute("id", "ifrm-assitant");
+          ifrm.classList.add("iframe-cognitive-assistant-container");
+          ifrm.classList.add("active");
+          ifrm.classList.add("notification");
+          ifrm.setAttribute("allow", "geolocation *;");
+          ifrm.setAttribute("allow", "microphone *;");
+          ifrm.setAttribute("src", this.src);
+          ifrm.setAttribute("data-origin", this.origin);
+          div.appendChild(ifrm);
+          document.body.appendChild(div);
+          this.basicStylesSetUp();
 
-            _this.styleIframe(mensaje);
-          } else if (e.data.responsiveFunc !== undefined) {
-            _this.responsiveFunc();
-          }
-        };
+          window.onmessage = function (e) {
+            if (e.data.test !== undefined) {
+              var mensaje = e.data.test[0].msg;
+
+              _this.styleIframe(mensaje);
+            } else if (e.data.responsiveFunc !== undefined) {
+              _this.responsiveFunc();
+            }
+          };
+        }
       }
     }, {
       key: "styleIframe",

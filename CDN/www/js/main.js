@@ -15,31 +15,35 @@
         createIframe() {
             debugger;
             var divAsistente = document.getElementById("ifrm-assitant");
+
+            if(divAsistente === null || divAsistente === undefined){
+
             console.log(divAsistente);
             console.log('console de prueba para crear iframe');
 
             var div = document.createElement("div"),
                 ifrm = document.createElement("iframe");
 
-            ifrm.setAttribute("id", "ifrm-assitant");
-            ifrm.classList.add("iframe-cognitive-assistant-container");
-            ifrm.classList.add("active");
-            ifrm.classList.add("notification");
-            ifrm.setAttribute("allow", "geolocation *;");
-            ifrm.setAttribute("allow", "microphone *;");
-            ifrm.setAttribute("src", this.src);
-            ifrm.setAttribute("data-origin", this.origin);
-            div.appendChild(ifrm);
-            document.body.appendChild(div);
-            this.basicStylesSetUp();
-            window.onmessage = e => {
-                if (e.data.test !== undefined) {
-                    const mensaje = e.data.test[0].msg;
-                    this.styleIframe(mensaje);
-                } else if (e.data.responsiveFunc !== undefined) {
-                    this.responsiveFunc();
-                }
-            };
+                ifrm.setAttribute("id", "ifrm-assitant");
+                ifrm.classList.add("iframe-cognitive-assistant-container");
+                ifrm.classList.add("active");
+                ifrm.classList.add("notification");
+                ifrm.setAttribute("allow", "geolocation *;");
+                ifrm.setAttribute("allow", "microphone *;");
+                ifrm.setAttribute("src", this.src);
+                ifrm.setAttribute("data-origin", this.origin);
+                div.appendChild(ifrm);
+                document.body.appendChild(div);
+                this.basicStylesSetUp();
+                window.onmessage = e => {
+                    if (e.data.test !== undefined) {
+                        const mensaje = e.data.test[0].msg;
+                        this.styleIframe(mensaje);
+                    } else if (e.data.responsiveFunc !== undefined) {
+                        this.responsiveFunc();
+                    }
+                };
+            }
         }
 
         styleIframe(classStyle) {
