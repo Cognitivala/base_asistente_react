@@ -13,13 +13,9 @@
         }
 
         createIframe() {
-            debugger;
             var divAsistente = document.getElementById("ifrm-assitant");
 
             if(divAsistente === null || divAsistente === undefined){
-
-            console.log(divAsistente);
-            console.log('console de prueba para crear iframe');
 
             var div = document.createElement("div"),
                 ifrm = document.createElement("iframe");
