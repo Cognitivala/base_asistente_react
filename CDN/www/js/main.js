@@ -16,6 +16,7 @@
             debugger;
             var divAsistente = document.getElementById("ifrm-assitant");
             console.log(divAsistente);
+            console.log('console de prueba para crear iframe');
 
             var div = document.createElement("div"),
                 ifrm = document.createElement("iframe");
@@ -32,7 +33,6 @@
             document.body.appendChild(div);
             this.basicStylesSetUp();
             window.onmessage = e => {
-                debugger;
                 if (e.data.test !== undefined) {
                     const mensaje = e.data.test[0].msg;
                     this.styleIframe(mensaje);
