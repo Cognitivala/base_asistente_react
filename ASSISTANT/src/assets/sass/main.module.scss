@@ -261,7 +261,8 @@ textarea {
   }
   &.HeaderMore {
     grid-template: {
-      rows: 48% calc(52% - 5.7rem) 5.7rem;
+      // rows: 48% calc(52% - 5.7rem) 5.7rem;
+      rows: 34% calc(66% - 5.7rem) 5.7rem;
     }
     height: calc(100vh - 9rem);
   }
