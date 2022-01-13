@@ -1,8 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { v4 as uuidv4 } from 'uuid';
-
-import './conversation-buttons.css';
 
 export default class ConversationButtons extends Component {
   constructor(props) {
@@ -11,48 +8,29 @@ export default class ConversationButtons extends Component {
   }
 
   sendButtonresponse(event) {
-
-    const { generalStates } = this.props;
-    const general = generalStates.toJS();
-    // console.log(generalStates);
-    // console.log('general:: ', general);
-
-    const index = event.currentTarget.dataset.index;
-    
-    var element = document.getElementById(index);
-    element.classList.toggle("botonActive");
-    
-    // if (general.end_conversation) {
-    //   // console.log('end_conversation::>', true);
-    //   element.classList.toggle("undefined");
-    // } else{
-    //   // console.log('end_conversation::>', false);
-    //   element.classList.toggle("botonActive");
-    // }
-
-    const $item = event.target;
-    const msg = $item.dataset.msg.toString();
-    
-
-    const conversation = {
+    const $item = event.target,
+      msg = $item.dataset.msg.toString();
+    const { generalStates } = this.props,
+      general = generalStates.toJS(),
+      conversation = {
         general,
         msg: [msg],
         send: "to",
-        enabled: false,
-        // end_conversation: false
+        enabled: false
       };
-    // console.log('conversation:: ', conversation);
     this.props.updateConversationButton(conversation);
   }
-
-
 
   render() {
     const { buttons, animation, send, mainCss } = this.props,
       botones = buttons.map((map, i) => {
-        let idAux = uuidv4();
         return (
-          <button style={{width:'100%'}} id={idAux} data-index={idAux} key={i} className={mainCss.Btn + " " + mainCss.BtnBig} data-msg={map.get("value")} onClick={this.sendButtonresponse} >
+          <button
+            key={i}
+            className={mainCss.Btn + " " + mainCss.BtnBig}
+            data-msg={map.get("value")}
+            onClick={this.sendButtonresponse}
+          >
             {map.get("title")}
           </button>
         );

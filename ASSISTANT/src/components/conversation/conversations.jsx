@@ -3,6 +3,8 @@ import * as Immutable from "immutable";
 import IsFetching from "../modules/is-fetching";
 import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
+import ConversationVote  from "./conversation-vote";
+import ConversationCandidates  from "./conversation-candidates";
 import ConversationSelects from "./conversation-selects";
 
 import Valoracion from "../valoracion/valoracion";
@@ -223,6 +225,9 @@ export default class Conversations extends Component {
       const conversation = map, enabled = conversation.get("enabled");
       let retorno = [];
       if (enabled !== undefined && enabled) {
+
+        console.log(conversation);
+
         const buttons = conversation.get("buttons"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
@@ -243,7 +248,7 @@ export default class Conversations extends Component {
           retorno.push(
             <ConversationMsg
               // key={j*333}
-              avatar={avatar}
+              avatar={'https://i.ibb.co/vmzNH5q/logo-robot-mutual.jpg'}
               msgs={msg}
               animation={animation}
               send={send}
@@ -259,7 +264,7 @@ export default class Conversations extends Component {
         if (buttons !== undefined) {
           retorno.push(
             <ConversationButtons
-              // key={j * 10}
+              key={j * 10}
               buttons={buttons}
               animation={animation}
               send={send}
@@ -269,6 +274,39 @@ export default class Conversations extends Component {
             />
           );
         }
+
+        // if (buttons !== undefined) {
+        //   retorno.push(
+        //     <fragment>
+              
+        //       <ConversationCandidates 
+        //         buttons={buttons}
+        //         mainCss={mainCss}
+        //       />
+
+        //       {/* <ConversationVote 
+        //         buttons={buttons}
+        //         animation={animation}
+        //         send={send}
+        //         updateConversationButton={updateConversationButton}
+        //         generalStates={generalStates}
+        //         mainCss={mainCss}
+        //       /> */}
+        //       <div className={mainCss.ConversationBubble+" "+mainCss.Buttons + " " + animation + send}>
+        //             <button
+        //               key={'hola'}
+        //               className={mainCss.BtnVote}
+        //               data-msg={map.get("value")}
+        //               onClick={this.sendButtonresponse}
+        //             >
+        //               Emitir mi Voto 1/6
+        //             </button>
+
+        //       </div>
+
+        //     </fragment>
+        //   );
+        // }
 
         if (selects !== undefined) {
           retorno.push(
