@@ -33,20 +33,20 @@ export default class ConversationVote extends Component {
       botones = buttons.map((map, i) => {
         let idAux = uuidv4();
         return (
-            <div className={mainCss.containerVote}>
+            <div className={mainCss.containerVote} key={i}>
 
                 <div className={mainCss.grid__col12}>
-                  <h1>Votación Comité Paritario Nº5</h1>
+                  <h1>{ map.get("nombre") }</h1>
                 </div>
                 <div className={mainCss.grid__col12}>
-                  <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.</p>
+                  <p>{ map.get("descripcion")}</p>
                 </div>
 
                 <div className={mainCss.grid__col1}>
                     <i className={mainCss.IconUser} />
                 </div>
                 <div className={mainCss.grid__col11}>
-                  <h2>5 candidatos</h2>
+                  <h2>{ map.get("candidatos") } candidatos</h2>
                 </div>
 
                 <div className={mainCss.grid__col1}>
@@ -54,11 +54,11 @@ export default class ConversationVote extends Component {
                 </div>
 
                 <div className={mainCss.grid__col11 + " " + mainCss.final}>
-                  <p>Finaliza en 3 días <span>En curso</span></p>
+                  <p>{ map.get("finaliza")} <span>{ map.get("estado") }</span></p>
                 </div>
 
                 <div className={mainCss.grid__col11 + " " + mainCss.date} >
-                  2021/11/02 - 2021/11/06
+                  { map.get("fechas") }
                 </div>
 
             </div>

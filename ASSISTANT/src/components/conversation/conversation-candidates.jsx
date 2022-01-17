@@ -6,61 +6,95 @@ import './conversation-buttons.css';
 
 export default class ConversationCandidates extends Component {
   constructor(props) {
-    super(props);
-    this.sendButtonresponse = this.sendButtonresponse.bind(this);
+      super(props);
+      // this.state = {
+      //   selectButtons: []
+      // };
+      this.state = {
+        selectedOption: '',
+        totalOptions: 0,
+        booleanOption: 0
+      };
+      this.sendButtonresponse = this.sendButtonresponse.bind(this);
+      this.toggleSelectButton = this.toggleSelectButton.bind(this);
   }
 
   sendButtonresponse(event) {
-    const { generalStates } = this.props;
-    const general = generalStates.toJS();
-    const index = event.currentTarget.dataset.index;
-    var element = document.getElementById(index);
-        element.classList.toggle("botonActive");
-    const $item = event.target;
-    const msg = $item.dataset.msg.toString();
-    const conversation = {
+    const { generalStates } = this.props,
+      general = generalStates.toJS(),
+      conversation = {
         general,
-        msg: [msg],
+        msg: [`{vote_id: ${this.state.selectedOption}, id_election: ${this.state.selectedOption}}`],
         send: "to",
-        enabled: false,
-        // end_conversation: false
+        enabled: false
       };
-    // console.log('conversation:: ', conversation);
+      console.log(conversation);
     this.props.updateConversationButton(conversation);
   }
+
+  toggleSelectButton(event) {
+    this.setState({
+      selectedOption: parseInt(event.target.value),
+      booleanOption: (event.target.value ? 1 : 0)
+    });
+  }
+  
   render() {
+    let contador = 0;
     const { buttons, animation, send, mainCss } = this.props,
+
       botones = buttons.map((map, i) => {
+        contador ++;
         let idAux = uuidv4();
+        let cargo = map.get('cargo');
+        let result_cargo = cargo.replace('<br>', '<br/>');
+
         return (
             <div className={mainCss.containerCandidates}
+              key={i}
                 // onClick={() => dispatch({ type: "select", item })}
                 >
                 <div className={mainCss.grid__col1}>
                     <input
+                        key={ i *20}
+                        button={ map }
                         type="radio"
-                        className={mainCss.option_input + " " + mainCss.radio}
-                        name="test"
-                        
-                        // onChange={validateFunc.bind(this, validate, name)}
+                        className={ mainCss.option_input + " " + mainCss.radio }
+                        name="postulantes"
+                        value={ map.get("id_candidate") }
+                        onChange={ this.toggleSelectButton }
                     />
                 </div>
                 <div className={mainCss.grid__col4}>
-                  <h2>Andrea Palazuelo</h2>
-                  <p>Gerente BU<br/>Business Unit Salud</p>
-                  <p>1 año y 8 meses de antiguedad</p>
+                  <h2>{ map.get("nombre")}</h2>
+                  <p>{ result_cargo }</p>
+                  <p>{ map.get("antiguedad") }</p>
                 </div>
 
                 <div className={mainCss.grid__col1}>
-                    <i className={mainCss.IconUser} />
+                    <i className={ map.get('sexo') == 'masculino' ? mainCss.IconMale : mainCss.IconFemale } />
                 </div>
             </div>
         );
-      });
+      }),
+
+      botonSubmit = (
+        <div className={mainCss.ConversationBubble+" "+mainCss.Buttons + " " + animation + send}>
+          <button
+                key={'emitir-voto'}
+                className={mainCss.BtnVote}
+                onClick={this.sendButtonresponse}
+                disabled={this.state.booleanOption ? false : true }
+              >
+                Emitir mi Voto {`${this.state.booleanOption}/${contador}`}
+            </button>
+        </div>
+      );
 
     return (
       <div className={mainCss.ConversationBubble+" "+mainCss.Buttons + " " + animation + send}>
-        {botones}
+        { botones }
+        { botonSubmit }
       </div>
     );
   }

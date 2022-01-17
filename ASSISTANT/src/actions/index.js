@@ -200,10 +200,10 @@ export function getCustomParams() {
                     
                     //DATA HARCODEADA
                     // setColors('#505050');
-                    setColors('#C4D600');
+                    // setColors('#C4D600');
 
                     //UPDATE COLORS
-                    // setColors(response.data.color_header);
+                    setColors(response.data.color_header);
                     dispatch(getCustomParamsEnd(response.data));
                     let str_md5v = AES.encrypt(JSON.stringify(response.data), KEY_ENCRYPT).toString();
                     localStorage.setItem("customParams", str_md5v);

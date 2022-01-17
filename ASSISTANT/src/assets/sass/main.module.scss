@@ -1959,6 +1959,7 @@ textarea {
     grid-template-columns: repeat(6, 1fr);
     margin-bottom: 10px;
 
+
     .grid--gap10{ grid-gap: 10px; }
     .cols{ padding: 20px; text-align: center; }
     .grid__col1{ grid-column: span 1; }
@@ -1973,21 +1974,6 @@ textarea {
     .grid__col10{ grid-column: span 10; }
     .grid__col11{ grid-column: span 11; }
     .grid__col12{ grid-column: span 12; }
-
-    .containerCandidates i {
-        transition: all 200ms linear;
-        display: block;
-        background-position: 50% 50%;
-        background-repeat: no-repeat;
-        &.IconCalendar {
-            background-image: url("../images/icon-calendar.svg");
-            height: 3.3rem;
-        }
-        &.IconUser {
-            background-image: url("../images/icon-user.svg");
-            height: 3.3rem;
-        }
-    }
 
     @keyframes click-wave {
         0% {
@@ -2063,6 +2049,28 @@ textarea {
         border-radius: 50%;
       }
 }
+.containerCandidates i {
+    transition: all 200ms linear;
+    display: block;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    &.IconMale {
+        background-image: url("../images/icon-male.svg");
+        height: 3.3rem;
+    }
+    &.IconFemale {
+        background-image: url("../images/icon-female.svg");
+        height: 3.3rem;
+    }
+}
+.containerCandidates h2 {
+    margin: 6px 0 2px 0;
+    color: #5d5d5d;
+}
+.containerCandidates p {
+    margin: 6px 0 2px 0;
+    color: #5d5d5d;
+}
 .BtnVote {
     @extend .ButtonReset;
     cursor: pointer;
@@ -2077,7 +2085,7 @@ textarea {
     font-size: 1.4rem;
     background: var(--first);
     // background: var(--bg-back);
-    margin: 0 0.4rem;
+    margin: 8px 0.4rem;
     color: var(--bg-back);
     // color: var(--first);
     @include border-radius(0.8rem);

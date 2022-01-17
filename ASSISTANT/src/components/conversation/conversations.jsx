@@ -56,6 +56,8 @@ export default class Conversations extends Component {
       conversations = conversationsStates.get('conversations'),
       conversation = conversations.get(-1),
       buttons = conversation.get("buttons"),
+      vote = conversation.get("vote"),
+      elections = conversation.get("elections"),
       selects = conversation.get("selects"),
       multibuttons = conversation.get("multibuttons"),
       datepicker = conversation.get("datepicker"),
@@ -96,6 +98,8 @@ export default class Conversations extends Component {
     if (sizeConv > 1) {
       const lastConversation = conversationsStates.get("conversations").get(-1),
         buttons = lastConversation.get("buttons"),
+        vote = lastConversation.get("vote"),
+        elections = lastConversation.get("elections"),
         selects = lastConversation.get("selects"),
         multibuttons = lastConversation.get("multibuttons"),
         help = customParamsStates.getIn(["customParams", "settings", "help"]),
@@ -107,6 +111,8 @@ export default class Conversations extends Component {
         end_conversation = lastConversation.get("end_conversation");
       if (
         buttons !== undefined ||
+        vote !== undefined ||
+        elections !== undefined ||
         selects !== undefined ||
         liftUp !== undefined ||
         multibuttons !== undefined ||
@@ -142,6 +148,8 @@ export default class Conversations extends Component {
         largo = conversations.size - 1;
       conversations.forEach((conversation,i) => {
         const buttons = conversation.get("buttons"),
+        vote = conversation.get("vote"),
+        elections = conversation.get("elections"),
         multibuttons = conversation.get("multibuttons"),
         selects = conversation.get("selects"),
         msg = conversation.get("msg"),
@@ -156,6 +164,8 @@ export default class Conversations extends Component {
         withStars = conversation.get("withStars"),
         map = {
           buttons: buttons !== undefined ? buttons.toJS() : buttons,
+          vote: vote !== undefined ? vote.toJS() : vote,
+          elections: elections !== undefined ? elections.toJS() : elections,
           selects: selects !== undefined ? selects.toJS() : selects,
           multibuttons:
             multibuttons !== undefined ? multibuttons.toJS() : multibuttons,
@@ -226,9 +236,21 @@ export default class Conversations extends Component {
       let retorno = [];
       if (enabled !== undefined && enabled) {
 
-        console.log(conversation);
+        // debugger;
+        // console.log('hola');
+        // console.log(conversation.get("context")['inicia_votacion']);
+
+        // var officers = conversation.get("context");
+
+        //     officers.forEach(function (officer) {
+        //       console.log(officer.conversation_id);
+        //       // officersIds.push(officer.id);
+        //     });
+
 
         const buttons = conversation.get("buttons"),
+          elections = conversation.get("elections"),
+          vote = conversation.get("vote"),
           selects = conversation.get("selects"),
           msg = conversation.get("msg"),
           send = conversation.get("send"),
@@ -275,38 +297,34 @@ export default class Conversations extends Component {
           );
         }
 
-        // if (buttons !== undefined) {
-        //   retorno.push(
-        //     <fragment>
-              
-        //       <ConversationCandidates 
-        //         buttons={buttons}
-        //         mainCss={mainCss}
-        //       />
+        if(vote !== undefined){
+          retorno.push(
+              <ConversationVote 
+                  // key={j * 20}
+                  buttons={vote}
+                  animation={animation}
+                  send={send}
+                  updateConversationButton={updateConversationButton}
+                  generalStates={generalStates}
+                  mainCss={mainCss}
 
-        //       {/* <ConversationVote 
-        //         buttons={buttons}
-        //         animation={animation}
-        //         send={send}
-        //         updateConversationButton={updateConversationButton}
-        //         generalStates={generalStates}
-        //         mainCss={mainCss}
-        //       /> */}
-        //       <div className={mainCss.ConversationBubble+" "+mainCss.Buttons + " " + animation + send}>
-        //             <button
-        //               key={'hola'}
-        //               className={mainCss.BtnVote}
-        //               data-msg={map.get("value")}
-        //               onClick={this.sendButtonresponse}
-        //             >
-        //               Emitir mi Voto 1/6
-        //             </button>
+                  
+              />
+          );
+        }
 
-        //       </div>
-
-        //     </fragment>
-        //   );
-        // }
+        if(elections !== undefined){
+          retorno.push(
+              <ConversationCandidates 
+                  buttons={elections}
+                  mainCss={mainCss}
+                  animation={animation}
+                  send={send}
+                  updateConversationButton={updateConversationButton}
+                  generalStates={generalStates}
+                />
+          );
+        }
 
         if (selects !== undefined) {
           retorno.push(
