@@ -29,7 +29,7 @@ export default class ConversationCandidates extends Component {
     const voto_id = vote.find(item => item.get("vote_id"))
     let conversation = {
       general,
-      msg: [`{"vote_id": ${voto_id.get("vote_id")}, "id_election": ${this.state.selectedOption}, "id_candidate": ${this.state.id_candidate}}`],
+      msg: [`{"vote_id": ${voto_id.get("vote_id")}, "id_election": ${voto_id.get("id_election")}, "id_candidate": ${this.state.id_candidate}}`],
       send: "to",
       enabled: false
     };
