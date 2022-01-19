@@ -21,21 +21,24 @@ export default class ConversationCandidates extends Component {
   }
 
   sendButtonresponse(event) {
-    const { generalStates, buttons } = this.props,
-      general = generalStates.toJS(),
-      conversation = {
-        general,
-        msg: [`{"vote_id": ${this.state.selectedOption}, "id_election": ${this.state.selectedOption}, "id_candidate": ${this.state.id_candidate}}`],
-        send: "to",
-        enabled: false
-      };
+    const { generalStates, buttons, conversationsStates } = this.props
+    let conversations = conversationsStates.get('conversations')
+    let conversationState = conversations.get(-1)
+    let vote = conversationState.get("vote")
+    let general = generalStates.toJS()
+    const voto_id = vote.find(item => item.get("vote_id"))
+    let conversation = {
+      general,
+      msg: [`{"vote_id": ${voto_id.get("vote_id")}, "id_election": ${this.state.selectedOption}, "id_candidate": ${this.state.id_candidate}}`],
+      send: "to",
+      enabled: false
+    };
     this.props.updateConversationButton(conversation);
   }
 
   toggleSelectButton(event) {
-    const { buttons } = this.props;
+    const { buttons } = this.props
     let idCandidate = buttons.find(item => item.get("id_candidate") === event.target.value)
-    //console.log("ID cadidate:", idCandidate.get("id_candidate"));
 
     this.setState({
       selectedOption: parseInt(event.target.value),

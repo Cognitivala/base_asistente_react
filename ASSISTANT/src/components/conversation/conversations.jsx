@@ -3,8 +3,8 @@ import * as Immutable from "immutable";
 import IsFetching from "../modules/is-fetching";
 import ConversationMsg from "./conversation-msg";
 import ConversationButtons from "./conversation-buttons";
-import ConversationVote  from "./conversation-vote";
-import ConversationCandidates  from "./conversation-candidates";
+import ConversationVote from "./conversation-vote";
+import ConversationCandidates from "./conversation-candidates";
 import ConversationSelects from "./conversation-selects";
 
 import Valoracion from "../valoracion/valoracion";
@@ -31,7 +31,7 @@ export default class Conversations extends Component {
   }
 
   componentDidUpdate(nextProps) {
-    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)){
+    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)) {
       this.scrollToBottom();
       this.setHistory();
       this.toggleEnabled();
@@ -39,7 +39,7 @@ export default class Conversations extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)){
+    if (!Immutable.is(nextProps.conversationsStates, this.props.conversationsStates)) {
       this.handleScroll();
     }
   }
@@ -50,8 +50,8 @@ export default class Conversations extends Component {
   }
 
 
-  componentWillMount(){
-    
+  componentWillMount() {
+
     const { conversationsStates, disabledInput } = this.props,
       conversations = conversationsStates.get('conversations'),
       conversation = conversations.get(-1),
@@ -65,14 +65,14 @@ export default class Conversations extends Component {
       attach = conversation.get("attach"),
       like = conversation.get("like"),
       withStars = conversation.get("withStars");
-      if(buttons || selects || multibuttons || datepicker || files || attach || like || withStars){
-        disabledInput();
-      }
+    if (buttons || selects || multibuttons || datepicker || files || attach || like || withStars) {
+      disabledInput();
+    }
   }
 
   verAsistencia(value) {
     // console.log('Asistencia:: ', value);
-    this.setState({asistencia: value});
+    this.setState({ asistencia: value });
   }
 
   handleScroll(event) {
@@ -80,20 +80,20 @@ export default class Conversations extends Component {
       sizeConv = conversationsStates.get("conversations").size;
     if (sizeConv > 1) {
       toggleHeaderMore(false);
-    } else if(sizeConv===1) {
+    } else if (sizeConv === 1) {
       toggleHeaderMore(true)
-    } else if(moreHeader) {
+    } else if (moreHeader) {
       toggleHeaderMore(true);
     }
   }
 
   toggleEnabled() {
     const {
-        ayudaStates,
-        inputStates,
-        customParamsStates,
-        conversationsStates
-      } = this.props,
+      ayudaStates,
+      inputStates,
+      customParamsStates,
+      conversationsStates
+    } = this.props,
       sizeConv = conversationsStates.get("conversations").size;
     if (sizeConv > 1) {
       const lastConversation = conversationsStates.get("conversations").get(-1),
@@ -119,8 +119,8 @@ export default class Conversations extends Component {
         datepicker !== undefined ||
         attach !== undefined ||
         (like !== undefined && like) ||
-         (rating !== undefined && rating) ||
-         (end_conversation !== undefined && end_conversation)
+        (rating !== undefined && rating) ||
+        (end_conversation !== undefined && end_conversation)
       ) {
         if (help && ayudaStates.get("open")) this.props.closeHelp();
         if ((help && ayudaStates.get("enabled"))) this.props.disabledHelp();
@@ -146,42 +146,42 @@ export default class Conversations extends Component {
     ) {
       let hc = [],
         largo = conversations.size - 1;
-      conversations.forEach((conversation,i) => {
+      conversations.forEach((conversation, i) => {
         const buttons = conversation.get("buttons"),
-        vote = conversation.get("vote"),
-        elections = conversation.get("elections"),
-        multibuttons = conversation.get("multibuttons"),
-        selects = conversation.get("selects"),
-        msg = conversation.get("msg"),
-        send = conversation.get("send"),
-        liftUp = conversation.get("liftUp"),
-        enabled = conversation.get("enabled"),
-        form = conversation.get("form"),
-        datepicker = conversation.get("datepicker"),
-        files = conversation.get("files"),
-        attach = conversation.get("attach"),
-        like = conversation.get("like"),
-        withStars = conversation.get("withStars"),
-        map = {
-          buttons: buttons !== undefined ? buttons.toJS() : buttons,
-          vote: vote !== undefined ? vote.toJS() : vote,
-          elections: elections !== undefined ? elections.toJS() : elections,
-          selects: selects !== undefined ? selects.toJS() : selects,
-          multibuttons:
-            multibuttons !== undefined ? multibuttons.toJS() : multibuttons,
-          msg: msg !== undefined ? msg.toJS() : msg,
-          send: send !== undefined ? send : send,
-          liftUp: liftUp !== undefined ? liftUp : liftUp,
-          enabled: enabled !== undefined ? enabled : enabled,
-          form: form !== undefined ? form : form,
-          datepicker: datepicker !== undefined ? datepicker : datepicker,
-          files: files !== undefined ? files : files,
-          attach: attach !== undefined ? attach.toJS() : attach,
-          like: like !== undefined ? like : like,
-          withStars: withStars !== undefined ? withStars : withStars
-        };
-      if (largo === i) map.general = conversation.get("general").toJS();
-      hc.push(map);
+          vote = conversation.get("vote"),
+          elections = conversation.get("elections"),
+          multibuttons = conversation.get("multibuttons"),
+          selects = conversation.get("selects"),
+          msg = conversation.get("msg"),
+          send = conversation.get("send"),
+          liftUp = conversation.get("liftUp"),
+          enabled = conversation.get("enabled"),
+          form = conversation.get("form"),
+          datepicker = conversation.get("datepicker"),
+          files = conversation.get("files"),
+          attach = conversation.get("attach"),
+          like = conversation.get("like"),
+          withStars = conversation.get("withStars"),
+          map = {
+            buttons: buttons !== undefined ? buttons.toJS() : buttons,
+            vote: vote !== undefined ? vote.toJS() : vote,
+            elections: elections !== undefined ? elections.toJS() : elections,
+            selects: selects !== undefined ? selects.toJS() : selects,
+            multibuttons:
+              multibuttons !== undefined ? multibuttons.toJS() : multibuttons,
+            msg: msg !== undefined ? msg.toJS() : msg,
+            send: send !== undefined ? send : send,
+            liftUp: liftUp !== undefined ? liftUp : liftUp,
+            enabled: enabled !== undefined ? enabled : enabled,
+            form: form !== undefined ? form : form,
+            datepicker: datepicker !== undefined ? datepicker : datepicker,
+            files: files !== undefined ? files : files,
+            attach: attach !== undefined ? attach.toJS() : attach,
+            like: like !== undefined ? like : like,
+            withStars: withStars !== undefined ? withStars : withStars
+          };
+        if (largo === i) map.general = conversation.get("general").toJS();
+        hc.push(map);
       });
       let str_md5v = AES.encrypt(JSON.stringify(hc), KEY_ENCRYPT).toString();
       localStorage.setItem("hc", str_md5v);
@@ -201,7 +201,7 @@ export default class Conversations extends Component {
       increment = 20,
       _this = this;
 
-    var animateScroll = function() {
+    var animateScroll = function () {
       currentTime += increment;
       var val = _this.easeInOutQuad(currentTime, start, change, duration);
       element.scrollTop = val;
@@ -222,16 +222,16 @@ export default class Conversations extends Component {
 
   fillConversation() {
     const {
-        updateConversation, updateConversationButton,
-        conversationsStates, customParamsStates,
-        generalStates, mainCss
-      } = this.props,
+      updateConversation, updateConversationButton,
+      conversationsStates, customParamsStates,
+      generalStates, mainCss
+    } = this.props,
       sizeConversation = conversationsStates.get("conversations").size,
       avatar = customParamsStates.getIn(["customParams", "avatar"]),
       colorHeader = customParamsStates.getIn(["customParams", "colorHeader"]),
       userImg = customParamsStates.getIn(["customParams", "userImg"]);
 
-    return React.Children.toArray (conversationsStates.get("conversations").map((map, j) => {
+    return React.Children.toArray(conversationsStates.get("conversations").map((map, j) => {
       const conversation = map, enabled = conversation.get("enabled");
       let retorno = [];
       if (enabled !== undefined && enabled) {
@@ -263,10 +263,10 @@ export default class Conversations extends Component {
           rating = conversation.get("rating"),
           last = j + 1 === sizeConversation ? true : false,
           withStars = conversation.get("withStars"),
-          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued+" "; //Si es la última conversa
+          animation = last ? "animated-av fadeInUp-av " : mainCss.Bloqued + " "; //Si es la última conversa
         if (msg !== undefined) {
           const { sendLike } = this.props;
-          
+
           retorno.push(
             <ConversationMsg
               // key={j*333}
@@ -297,32 +297,33 @@ export default class Conversations extends Component {
           );
         }
 
-        if(vote !== undefined){
+        if (vote !== undefined) {
           retorno.push(
-              <ConversationVote 
-                  // key={j * 20}
-                  buttons={vote}
-                  animation={animation}
-                  send={send}
-                  updateConversationButton={updateConversationButton}
-                  generalStates={generalStates}
-                  mainCss={mainCss}
+            <ConversationVote
+              // key={j * 20}
+              buttons={vote}
+              animation={animation}
+              send={send}
+              updateConversationButton={updateConversationButton}
+              generalStates={generalStates}
+              mainCss={mainCss}
 
-                  
-              />
+
+            />
           );
         }
 
-        if(elections !== undefined){
+        if (elections !== undefined) {
           retorno.push(
-              <ConversationCandidates 
-                  buttons={elections}
-                  mainCss={mainCss}
-                  animation={animation}
-                  send={send}
-                  updateConversationButton={updateConversationButton}
-                  generalStates={generalStates}
-                />
+            <ConversationCandidates
+              buttons={elections}
+              mainCss={mainCss}
+              animation={animation}
+              send={send}
+              updateConversationButton={updateConversationButton}
+              generalStates={generalStates}
+              conversationsStates={conversationsStates}
+            />
           );
         }
 
@@ -447,14 +448,14 @@ export default class Conversations extends Component {
                 break;
               case "form":
                 const {
-                    formularioStates,
-                    closeForm,
-                    generalStates,
-                    attachFileForm,
-                    sendForm,
-                    deleteFileForm,
-                    customParamsStates
-                  } = this.props,
+                  formularioStates,
+                  closeForm,
+                  generalStates,
+                  attachFileForm,
+                  sendForm,
+                  deleteFileForm,
+                  customParamsStates
+                } = this.props,
                   enabledFormulario = formularioStates.get("enabled"),
                   form = conversation.get("form");
 
@@ -480,8 +481,8 @@ export default class Conversations extends Component {
               default:
                 break;
             }
-          } 
-          
+          }
+
           if (like !== undefined && like) {
 
             const { sendLike, conversationsStates, generalStates } = this.props;
@@ -495,32 +496,32 @@ export default class Conversations extends Component {
                 mainCss={mainCss}
               />
             );
-          } 
-          else if ( this.state.asistencia === true) {
+          }
+          else if (this.state.asistencia === true) {
             const { sendValoracion, generalStates } = this.props;
             retorno.push(
-              <FormAsistencia 
-              // key={`${j} * ${j} * 535`} 
-              generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormAsistencia
+                // key={`${j} * ${j} * 535`} 
+                generalStates={generalStates} sendValoracion={sendValoracion} />
             )
           }
-          else if ( rating ) {
+          else if (rating) {
             const { sendValoracion, generalStates } = this.props;
             // <FormValoracion  key={`${j}+1`} mainCss={mainCss} generalStates={generalStates} sendValoracion={sendValoracion} />
             retorno.push(
-              <FormularioValoracion 
-              // key={`${j} * 55`} 
-              generalStates={generalStates} sendValoracion={sendValoracion} />
+              <FormularioValoracion
+                // key={`${j} * 55`} 
+                generalStates={generalStates} sendValoracion={sendValoracion} />
             );
           }
-          
+
         }
       }
       return retorno;
     }));
   }
 
-  
+
 
   render() {
     const { ayudaStates, inputStates, conversationsStates, customParamsStates, mainCss } = this.props;
@@ -530,7 +531,7 @@ export default class Conversations extends Component {
       <IsFetching isFetching={conversationsStates.get("isFetching")} showChildren={true} colorHeader={colorHeader} mainCss={mainCss}>
         <section
           // onScroll={this.handleScroll}
-          className={ mainCss.ConversationHolder + " " + css + cssHolder }
+          className={mainCss.ConversationHolder + " " + css + cssHolder}
           data-conversation="" ref={this.test}
         >
           {this.fillConversation()}
