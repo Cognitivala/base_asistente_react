@@ -270,7 +270,7 @@ export default class Conversations extends Component {
           retorno.push(
             <ConversationMsg
               // key={j*333}
-              avatar={'https://i.ibb.co/vmzNH5q/logo-robot-mutual.jpg'}
+              avatar={avatar}
               msgs={msg}
               animation={animation}
               send={send}
